@@ -2,7 +2,7 @@ import { CLINIC_INFO, SITE_CONFIG } from "@/lib/constants";
 import type { WithContext, Dentist } from "schema-dts";
 
 export function LocalBusinessSchema() {
-  const schema: WithContext<Dentist> = {
+  const schema = {
     "@context": "https://schema.org",
     "@type": "Dentist",
     name: CLINIC_INFO.name,
@@ -51,7 +51,7 @@ export function LocalBusinessSchema() {
     },
     paymentAccepted: "Efectivo, Tarjeta de crédito, Tarjeta de débito, Transferencia",
     currenciesAccepted: "EUR",
-  };
+  } as WithContext<Dentist>;
 
   return (
     <script
