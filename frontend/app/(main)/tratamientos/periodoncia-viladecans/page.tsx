@@ -222,7 +222,7 @@ export default function PeriodonciaPage() {
             <div className="bg-white rounded-2xl p-6 shadow-lg">
               <h3 className="text-xl font-bold mb-3">Cirugía Periodontal</h3>
               <p className="text-slate-700 leading-relaxed">
-                En casos de periodontitis avanzada con bolsas muy profundas (>6mm), puede ser necesaria 
+                En casos de periodontitis avanzada con bolsas muy profundas (&gt;6mm), puede ser necesaria 
                 <strong> cirugía periodontal</strong> para acceder a las zonas más profundas y eliminar el tejido 
                 infectado. Realizamos colgajos periodontales mínimamente invasivos con sutura reabsorbible. 
                 Permite limpiar a fondo las raíces y remodelar el hueso.
