@@ -6,7 +6,7 @@ import {
   IsDateString,
 } from 'class-validator';
 
-export class N8nPostDto {
+export class N8nBlogPostDto {
   @IsString()
   title: string;
 
