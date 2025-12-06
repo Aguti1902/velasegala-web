@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import {
   Calendar,
   Phone,
@@ -46,12 +46,7 @@ export default function AdminAppointmentsPage() {
   const [statusFilter, setStatusFilter] = useState("ALL");
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
 
-  useEffect(() => {
-    fetchAppointments();
-    fetchStats();
-  }, [statusFilter]);
-
-  const fetchAppointments = async () => {
+  const fetchAppointments = useCallback(async () => {
     try {
       const url = statusFilter === "ALL" 
         ? `${process.env.NEXT_PUBLIC_API_URL}/appointments`
@@ -74,9 +69,9 @@ export default function AdminAppointmentsPage() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [statusFilter]);
 
-  const fetchStats = async () => {
+  const fetchStats = useCallback(async () => {
     try {
       const token = document.cookie
         .split("; ")
@@ -96,7 +91,12 @@ export default function AdminAppointmentsPage() {
     } catch (error) {
       console.error("Error al cargar estadísticas:", error);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchAppointments();
+    fetchStats();
+  }, [fetchAppointments, fetchStats]);
 
   const updateStatus = async (id: string, newStatus: string) => {
     try {

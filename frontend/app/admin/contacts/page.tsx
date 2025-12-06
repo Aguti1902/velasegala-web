@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import {
   Mail,
   Phone,
@@ -46,22 +46,7 @@ export default function AdminContactsPage() {
   const [statusFilter, setStatusFilter] = useState("ALL");
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
 
-  useEffect(() => {
-    fetchContacts();
-    fetchStats();
-  }, [statusFilter]);
-
-  // Recarga automática cada minuto
-  useEffect(() => {
-    const interval = setInterval(() => {
-      fetchContacts();
-      fetchStats();
-    }, 60000); // 60 segundos
-
-    return () => clearInterval(interval);
-  }, [statusFilter]);
-
-  const fetchContacts = async () => {
+  const fetchContacts = useCallback(async () => {
     try {
       const url = statusFilter === "ALL" 
         ? `${process.env.NEXT_PUBLIC_API_URL}/contacts`
@@ -84,9 +69,9 @@ export default function AdminContactsPage() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [statusFilter]);
 
-  const fetchStats = async () => {
+  const fetchStats = useCallback(async () => {
     try {
       const token = document.cookie
         .split("; ")
@@ -106,7 +91,22 @@ export default function AdminContactsPage() {
     } catch (error) {
       console.error("Error al cargar estadísticas:", error);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchContacts();
+    fetchStats();
+  }, [fetchContacts, fetchStats]);
+
+  // Recarga automática cada minuto
+  useEffect(() => {
+    const interval = setInterval(() => {
+      fetchContacts();
+      fetchStats();
+    }, 60000); // 60 segundos
+
+    return () => clearInterval(interval);
+  }, [fetchContacts, fetchStats]);
 
   const updateStatus = async (id: string, newStatus: string) => {
     try {

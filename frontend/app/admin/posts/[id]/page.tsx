@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import {
@@ -52,31 +53,9 @@ export default function AdminPostEditPage() {
   const [isSaving, setIsSaving] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
 
-  useEffect(() => {
-    fetchCategoriesAndTags();
-    if (!isNewPost) {
-      fetchPost();
-    }
-  }, [isNewPost, postId]);
-
-  const fetchCategoriesAndTags = async () => {
-    try {
-      const [categoriesRes, tagsRes] = await Promise.all([
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/categories`),
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/tags`),
-      ]);
-
-      const categoriesData = await categoriesRes.json();
-      const tagsData = await tagsRes.json();
-
-      setCategories(categoriesData || []);
-      setTags(tagsData || []);
-    } catch (error) {
-      console.error("Error al cargar categorías y tags:", error);
-    }
-  };
-
-  const fetchPost = async () => {
+  const fetchPost = useCallback(async () => {
+    if (!postId || isNewPost) return;
+    
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/posts/${postId}`
@@ -103,7 +82,31 @@ export default function AdminPostEditPage() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [postId, isNewPost]);
+
+  const fetchCategoriesAndTags = useCallback(async () => {
+    try {
+      const [categoriesRes, tagsRes] = await Promise.all([
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/categories`),
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/tags`),
+      ]);
+
+      const categoriesData = await categoriesRes.json();
+      const tagsData = await tagsRes.json();
+
+      setCategories(categoriesData || []);
+      setTags(tagsData || []);
+    } catch (error) {
+      console.error("Error al cargar categorías y tags:", error);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchCategoriesAndTags();
+    if (!isNewPost) {
+      fetchPost();
+    }
+  }, [isNewPost, fetchPost, fetchCategoriesAndTags]);
 
   const generateSlug = (title: string) => {
     return title
@@ -395,13 +398,12 @@ Respuesta...
             />
             {formData.featuredImageUrl && (
               <div className="mt-4 rounded-xl overflow-hidden border border-gray-200">
-                <img
-                  src={formData.featuredImageUrl}
-                  alt="Preview"
-                  className="w-full h-40 object-cover"
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).src =
-                      "https://via.placeholder.com/400x200?text=Imagen+no+disponible";
+                <div
+                  className="w-full h-40 bg-gray-100 bg-cover bg-center"
+                  style={{
+                    backgroundImage: `url(${formData.featuredImageUrl})`,
+                  backgroundSize: "cover",
+                    backgroundPosition: "center",
                   }}
                 />
               </div>

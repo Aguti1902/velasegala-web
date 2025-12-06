@@ -79,7 +79,15 @@ export default async function BlogPostPage({
 
   return (
     <>
-      <ArticleSchema post={post} />
+      <ArticleSchema
+        title={post.title}
+        description={post.excerpt || post.metaDescription || ""}
+        publishedDate={post.publishAt}
+        modifiedDate={post.publishAt}
+        authorName="Clínica Dental Vela-Segalà"
+        imageUrl={post.featuredImage || `${process.env.NEXT_PUBLIC_SITE_URL || 'https://velasegala-web-emc8.vercel.app'}/images/logo.png`}
+        slug={post.slug}
+      />
       <FAQSchema faqs={[]} />
 
       {/* Hero */}
