@@ -111,10 +111,15 @@ CREATE TABLE "ContactSubmission" (
     "email" TEXT NOT NULL,
     "phone" TEXT NOT NULL,
     "message" TEXT NOT NULL,
+    "treatment" TEXT,
+    "status" TEXT NOT NULL DEFAULT 'pending',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "ContactSubmission_pkey" PRIMARY KEY ("id")
 );
+
+-- CreateIndex
+CREATE INDEX "ContactSubmission_status_idx" ON "ContactSubmission"("status");
 
 -- CreateTable
 CREATE TABLE "AppointmentRequest" (
