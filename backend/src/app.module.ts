@@ -7,6 +7,8 @@ import { CategoriesModule } from './categories/categories.module';
 import { TagsModule } from './tags/tags.module';
 import { TreatmentsModule } from './treatments/treatments.module';
 import { WebhooksModule } from './webhooks/webhooks.module';
+import { ContactsModule } from './contacts/contacts.module';
+import { AppointmentsModule } from './appointments/appointments.module';
 
 @Module({
   imports: [
@@ -20,6 +22,8 @@ import { WebhooksModule } from './webhooks/webhooks.module';
     TagsModule,
     TreatmentsModule,
     WebhooksModule,
+    ContactsModule,
+    AppointmentsModule,
   ],
 })
 export class AppModule {}
