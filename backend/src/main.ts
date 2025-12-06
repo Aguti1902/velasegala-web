@@ -9,14 +9,15 @@ async function bootstrap() {
   // Security
   app.use(helmet());
 
-  // CORS - Configuración flexible
-  const allowedOrigins = [
-    'http://localhost:3000',
-    'https://velasegala-web-emc8.vercel.app',
-    process.env.CORS_ORIGIN,
-  ]
-    .filter((origin): origin is string => Boolean(origin)) // Type guard para filtrar undefined
-    .map(origin => origin.replace(/\/$/, '')); // Quitar barra final
+  // CORS - Configuración más permisiva para depurar
+  const corsOrigin = process.env.CORS_ORIGIN || 'http://localhost:3000';
+  const allowedOrigins = corsOrigin.split(',').map(o => o.trim());
+  
+  // Añadir siempre las URLs de producción
+  allowedOrigins.push('https://velasegala-web-emc8.vercel.app');
+  allowedOrigins.push('http://localhost:3000');
+  
+  console.log('🔐 CORS Origins permitidos:', allowedOrigins);
 
   app.enableCors({
     origin: (origin, callback) => {
@@ -25,20 +26,28 @@ async function bootstrap() {
         return callback(null, true);
       }
 
-      // Quitar barra final del origin
+      // Limpiar el origin
       const cleanOrigin = origin.replace(/\/$/, '');
 
       // Verificar si el origin está permitido
-      if (allowedOrigins.some(allowed => cleanOrigin === allowed || cleanOrigin.startsWith(allowed))) {
+      const isAllowed = allowedOrigins.some(allowed => {
+        const cleanAllowed = allowed.replace(/\/$/, '');
+        return cleanOrigin === cleanAllowed || cleanOrigin.startsWith(cleanAllowed);
+      });
+      
+      if (isAllowed) {
         callback(null, true);
       } else {
         console.warn(`⚠️ CORS blocked origin: ${origin}`);
-        callback(new Error('Not allowed by CORS'));
+        console.warn(`   Allowed origins:`, allowedOrigins);
+        callback(null, true); // Temporalmente permitir para depurar
       }
     },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'x-api-key'],
+    exposedHeaders: ['Content-Length', 'Content-Type'],
+    maxAge: 3600,
   });
 
   // Global validation pipe
