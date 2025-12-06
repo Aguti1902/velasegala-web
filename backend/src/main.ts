@@ -9,13 +9,17 @@ async function bootstrap() {
   // Security
   app.use(helmet());
 
-  // CORS - Configuración más permisiva para depurar
-  const corsOrigin = process.env.CORS_ORIGIN || 'http://localhost:3000';
-  const allowedOrigins = corsOrigin.split(',').map(o => o.trim());
+  // CORS - Permitir frontend de Vercel y desarrollo local
+  const allowedOrigins = [
+    'https://velasegala-web-emc8.vercel.app',
+    'http://localhost:3000',
+  ];
   
-  // Añadir siempre las URLs de producción
-  allowedOrigins.push('https://velasegala-web-emc8.vercel.app');
-  allowedOrigins.push('http://localhost:3000');
+  // Añadir CORS_ORIGIN de variables de entorno si existe
+  if (process.env.CORS_ORIGIN) {
+    const customOrigins = process.env.CORS_ORIGIN.split(',').map(o => o.trim());
+    allowedOrigins.push(...customOrigins);
+  }
   
   console.log('🔐 CORS Origins permitidos:', allowedOrigins);
 
@@ -26,13 +30,13 @@ async function bootstrap() {
         return callback(null, true);
       }
 
-      // Limpiar el origin
+      // Limpiar trailing slashes
       const cleanOrigin = origin.replace(/\/$/, '');
 
-      // Verificar si el origin está permitido
+      // Verificar si está en la lista de permitidos
       const isAllowed = allowedOrigins.some(allowed => {
         const cleanAllowed = allowed.replace(/\/$/, '');
-        return cleanOrigin === cleanAllowed || cleanOrigin.startsWith(cleanAllowed);
+        return cleanOrigin === cleanAllowed;
       });
       
       if (isAllowed) {
@@ -40,7 +44,8 @@ async function bootstrap() {
       } else {
         console.warn(`⚠️ CORS blocked origin: ${origin}`);
         console.warn(`   Allowed origins:`, allowedOrigins);
-        callback(null, true); // Temporalmente permitir para depurar
+        // En producción, bloquear; en desarrollo, permitir
+        callback(null, process.env.NODE_ENV !== 'production');
       }
     },
     credentials: true,
