@@ -95,7 +95,7 @@ export default function AdminLoginPage() {
                     setFormData({ ...formData, email: e.target.value })
                   }
                   className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
-                  placeholder="admin@velasegala.com"
+                  placeholder="Correo electrónico"
                 />
               </div>
             </div>
@@ -158,18 +158,6 @@ export default function AdminLoginPage() {
               )}
             </button>
           </form>
-
-          {/* Credenciales de prueba (solo para desarrollo) */}
-          {process.env.NODE_ENV === "development" && (
-            <div className="mt-6 pt-6 border-t border-gray-200">
-              <p className="text-xs text-gray-500 text-center mb-2">
-                Credenciales de prueba:
-              </p>
-              <p className="text-xs text-gray-600 text-center font-mono">
-                admin@velasegala.com / Admin123!
-              </p>
-            </div>
-          )}
         </div>
 
         {/* Footer */}
