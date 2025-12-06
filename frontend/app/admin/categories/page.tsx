@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Plus, Edit, Trash2, FolderTree, MoreVertical } from "lucide-react";
 import { getApiUrl } from "@/lib/config";
+import { fetchWithAuth, getAdminToken } from "@/lib/auth";
 
 interface Category {
   id: string;
@@ -56,10 +57,13 @@ export default function AdminCategoriesPage() {
     }
 
     try {
-      const token = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("admin_token="))
-        ?.split("=")[1];
+      const token = getAdminToken();
+
+      if (!token) {
+        alert("No se encontró el token de autenticación. Por favor, inicia sesión de nuevo.");
+        window.location.href = "/admin/login";
+        return;
+      }
 
       const url = editingCategory
         ? `${getApiUrl()}/categories/${editingCategory.id}`
@@ -67,11 +71,12 @@ export default function AdminCategoriesPage() {
 
       const method = editingCategory ? "PATCH" : "POST";
 
-      const response = await fetch(url, {
+      console.log(`Enviando ${method} a:`, url);
+
+      const response = await fetchWithAuth(url, {
         method,
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           name: formData.name,
@@ -79,18 +84,27 @@ export default function AdminCategoriesPage() {
         }),
       });
 
+      console.log("Response status:", response.status);
+
       if (response.ok) {
         fetchCategories();
         setShowModal(false);
         setEditingCategory(null);
         setFormData({ name: "", slug: "" });
       } else {
-        const error = await response.json();
-        alert(`Error: ${error.message || "No se pudo guardar la categoría"}`);
+        const errorText = await response.text();
+        console.error("Error response:", errorText);
+        
+        try {
+          const error = JSON.parse(errorText);
+          alert(`Error: ${error.message || "No se pudo guardar la categoría"}`);
+        } catch {
+          alert(`Error ${response.status}: No se pudo guardar la categoría`);
+        }
       }
     } catch (error) {
       console.error("Error al guardar categoría:", error);
-      alert("Error al guardar la categoría");
+      alert("Error al guardar la categoría: " + (error as Error).message);
     }
   };
 
@@ -100,18 +114,10 @@ export default function AdminCategoriesPage() {
     }
 
     try {
-      const token = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("admin_token="))
-        ?.split("=")[1];
-
-      const response = await fetch(
+      const response = await fetchWithAuth(
         `${getApiUrl()}/categories/${id}`,
         {
           method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
         }
       );
 
