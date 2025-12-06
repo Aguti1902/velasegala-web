@@ -14,7 +14,9 @@ async function bootstrap() {
     'http://localhost:3000',
     'https://velasegala-web-emc8.vercel.app',
     process.env.CORS_ORIGIN,
-  ].filter(Boolean).map(origin => origin?.replace(/\/$/, '')); // Quitar barra final
+  ]
+    .filter((origin): origin is string => Boolean(origin)) // Type guard para filtrar undefined
+    .map(origin => origin.replace(/\/$/, '')); // Quitar barra final
 
   app.enableCors({
     origin: (origin, callback) => {
