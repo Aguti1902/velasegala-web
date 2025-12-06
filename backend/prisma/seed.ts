@@ -16,10 +16,10 @@ async function main() {
   console.log('✅ Base de datos limpiada');
 
   // Crear usuario admin
-  const hashedPassword = await bcrypt.hash('admin123456', 10);
+  const hashedPassword = await bcrypt.hash('Admin123!', 10);
   const admin = await prisma.user.create({
     data: {
-      email: 'admin@clinicadentalviladecans.com',
+      email: 'admin@velasegala.com',
       name: 'Dr. Admin',
       password: hashedPassword,
       role: 'admin',
@@ -541,7 +541,7 @@ La primera visita al dentista en Viladecans es el primer paso para mantener una 
 
   console.log('\n🎉 Seed completado con éxito!');
   console.log('\n📝 Datos creados:');
-  console.log(`   - 1 usuario admin (email: ${admin.email}, password: admin123456)`);
+  console.log(`   - 1 usuario admin (email: ${admin.email}, password: Admin123!)`);
   console.log(`   - ${treatments.length} tratamientos`);
   console.log(`   - ${categories.length} categorías`);
   console.log(`   - ${tags.length} tags`);
