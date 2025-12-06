@@ -11,7 +11,6 @@ import {
   Menu,
   X,
   Mail,
-  Calendar,
 } from "lucide-react";
 import { useState } from "react";
 import Image from "next/image";
@@ -22,7 +21,6 @@ const navigation = [
   { name: "Categorías", href: "/admin/categories", icon: FolderTree },
   { name: "Etiquetas", href: "/admin/tags", icon: Tags },
   { name: "Contactos", href: "/admin/contacts", icon: Mail },
-  { name: "Citas", href: "/admin/appointments", icon: Calendar },
 ];
 
 export default function AdminLayout({

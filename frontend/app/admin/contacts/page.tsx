@@ -51,6 +51,16 @@ export default function AdminContactsPage() {
     fetchStats();
   }, [statusFilter]);
 
+  // Recarga automática cada minuto
+  useEffect(() => {
+    const interval = setInterval(() => {
+      fetchContacts();
+      fetchStats();
+    }, 60000); // 60 segundos
+
+    return () => clearInterval(interval);
+  }, [statusFilter]);
+
   const fetchContacts = async () => {
     try {
       const url = statusFilter === "ALL" 

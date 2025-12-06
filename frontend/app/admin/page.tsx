@@ -24,6 +24,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import { GoogleAnalyticsWidget } from "@/components/admin/GoogleAnalyticsWidget";
 
 interface Stats {
   totalPosts: number;
@@ -241,45 +242,17 @@ export default function AdminDashboard() {
         </div>
       </div>
 
-      {/* Charts */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Views Chart */}
-        <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
-          <div className="flex items-center justify-between mb-6">
-            <div>
-              <h3 className="text-lg font-bold text-black mb-1">
-                Visitas Diarias
-              </h3>
-              <p className="text-sm text-gray-600">Última semana</p>
-            </div>
-            <div className="w-10 h-10 bg-purple-100 rounded-xl flex items-center justify-center">
-              <TrendingUp className="w-5 h-5 text-purple-600" />
-            </div>
-          </div>
-          <ResponsiveContainer width="100%" height={250}>
-            <LineChart data={viewsData}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-              <XAxis dataKey="name" stroke="#666" fontSize={12} />
-              <YAxis stroke="#666" fontSize={12} />
-              <Tooltip
-                contentStyle={{
-                  backgroundColor: "#fff",
-                  border: "1px solid #e5e5e5",
-                  borderRadius: "8px",
-                }}
-              />
-              <Line
-                type="monotone"
-                dataKey="views"
-                stroke="#8b5cf6"
-                strokeWidth={3}
-                dot={{ fill: "#8b5cf6", r: 4 }}
-              />
-            </LineChart>
-          </ResponsiveContainer>
+      {/* Google Analytics Section */}
+      <div className="mt-8">
+        <div className="mb-6">
+          <h2 className="text-2xl font-bold text-black mb-2">Estadísticas del Sitio Web</h2>
+          <p className="text-gray-600">Datos de Google Analytics en tiempo real</p>
         </div>
+        <GoogleAnalyticsWidget />
+      </div>
 
-        {/* Posts Chart */}
+      {/* Blog Posts Chart */}
+      <div className="mt-8">
         <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
           <div className="flex items-center justify-between mb-6">
             <div>
