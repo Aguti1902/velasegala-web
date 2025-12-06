@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Plus, Edit, Trash2, FolderTree, MoreVertical } from "lucide-react";
+import { getApiUrl } from "@/lib/config";
 
 interface Category {
   id: string;
@@ -27,7 +28,7 @@ export default function AdminCategoriesPage() {
 
   const fetchCategories = async () => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/categories`);
+      const response = await fetch(`${getApiUrl()}/categories`);
       const data = await response.json();
       setCategories(data || []);
     } catch (error) {
@@ -61,8 +62,8 @@ export default function AdminCategoriesPage() {
         ?.split("=")[1];
 
       const url = editingCategory
-        ? `${process.env.NEXT_PUBLIC_API_URL}/categories/${editingCategory.id}`
-        : `${process.env.NEXT_PUBLIC_API_URL}/categories`;
+        ? `${getApiUrl()}/categories/${editingCategory.id}`
+        : `${getApiUrl()}/categories`;
 
       const method = editingCategory ? "PATCH" : "POST";
 
@@ -105,7 +106,7 @@ export default function AdminCategoriesPage() {
         ?.split("=")[1];
 
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/categories/${id}`,
+        `${getApiUrl()}/categories/${id}`,
         {
           method: "DELETE",
           headers: {

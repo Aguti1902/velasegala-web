@@ -25,6 +25,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { GoogleAnalyticsWidget } from "@/components/admin/GoogleAnalyticsWidget";
+import { getApiUrl } from "@/lib/config";
 
 interface Stats {
   totalPosts: number;
@@ -81,22 +82,18 @@ export default function AdminDashboard() {
   useEffect(() => {
     const fetchStats = async () => {
       try {
+        const apiUrl = getApiUrl();
+        
         // Obtener posts
-        const postsResponse = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/posts`
-        );
+        const postsResponse = await fetch(`${apiUrl}/posts`);
         const postsData = await postsResponse.json();
 
         // Obtener categorías
-        const categoriesResponse = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/categories`
-        );
+        const categoriesResponse = await fetch(`${apiUrl}/categories`);
         const categoriesData = await categoriesResponse.json();
 
         // Obtener tags
-        const tagsResponse = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/tags`
-        );
+        const tagsResponse = await fetch(`${apiUrl}/tags`);
         const tagsData = await tagsResponse.json();
 
         const posts = postsData.data || [];

@@ -13,6 +13,7 @@ import {
   Trash2,
   Download,
 } from "lucide-react";
+import { getApiUrl } from "@/lib/config";
 
 interface Appointment {
   id: string;
@@ -49,8 +50,8 @@ export default function AdminAppointmentsPage() {
   const fetchAppointments = useCallback(async () => {
     try {
       const url = statusFilter === "ALL" 
-        ? `${process.env.NEXT_PUBLIC_API_URL}/appointments`
-        : `${process.env.NEXT_PUBLIC_API_URL}/appointments?status=${statusFilter}`;
+        ? `${getApiUrl()}/appointments`
+        : `${getApiUrl()}/appointments?status=${statusFilter}`;
       
       const token = document.cookie
         .split("; ")
@@ -79,7 +80,7 @@ export default function AdminAppointmentsPage() {
         ?.split("=")[1];
 
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/appointments/stats/overview`,
+        `${getApiUrl()}/appointments/stats/overview`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -106,7 +107,7 @@ export default function AdminAppointmentsPage() {
         ?.split("=")[1];
 
       await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/appointments/${id}/status?status=${newStatus}`,
+        `${getApiUrl()}/appointments/${id}/status?status=${newStatus}`,
         {
           method: "PATCH",
           headers: {
@@ -134,7 +135,7 @@ export default function AdminAppointmentsPage() {
         .find((row) => row.startsWith("admin_token="))
         ?.split("=")[1];
 
-      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/appointments/${id}`, {
+      await fetch(`${getApiUrl()}/appointments/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,

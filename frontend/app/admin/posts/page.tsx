@@ -16,6 +16,7 @@ import {
   Clock,
   FileEdit,
 } from "lucide-react";
+import { getApiUrl } from "@/lib/config";
 
 interface Post {
   id: string;
@@ -63,7 +64,7 @@ export default function AdminPostsPage() {
 
   const fetchPosts = async () => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/posts`);
+      const response = await fetch(`${getApiUrl()}/posts`);
       const data = await response.json();
       setPosts(data.data || []);
       setFilteredPosts(data.data || []);
@@ -86,7 +87,7 @@ export default function AdminPostsPage() {
         ?.split("=")[1];
 
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/posts/${id}`,
+        `${getApiUrl()}/posts/${id}`,
         {
           method: "DELETE",
           headers: {
@@ -115,7 +116,7 @@ export default function AdminPostsPage() {
         ?.split("=")[1];
 
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/posts/${id}`,
+        `${getApiUrl()}/posts/${id}`,
         {
           method: "PATCH",
           headers: {

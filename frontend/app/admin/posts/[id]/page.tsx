@@ -16,6 +16,7 @@ import {
   Tag,
   FolderTree,
 } from "lucide-react";
+import { getApiUrl } from "@/lib/config";
 
 interface Category {
   id: string;
@@ -58,7 +59,7 @@ export default function AdminPostEditPage() {
     
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/posts/${postId}`
+        `${getApiUrl()}/posts/${postId}`
       );
       const post = await response.json();
 
@@ -87,8 +88,8 @@ export default function AdminPostEditPage() {
   const fetchCategoriesAndTags = useCallback(async () => {
     try {
       const [categoriesRes, tagsRes] = await Promise.all([
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/categories`),
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/tags`),
+        fetch(`${getApiUrl()}/categories`),
+        fetch(`${getApiUrl()}/tags`),
       ]);
 
       const categoriesData = await categoriesRes.json();
@@ -141,8 +142,8 @@ export default function AdminPostEditPage() {
         ?.split("=")[1];
 
       const url = isNewPost
-        ? `${process.env.NEXT_PUBLIC_API_URL}/posts`
-        : `${process.env.NEXT_PUBLIC_API_URL}/posts/${postId}`;
+        ? `${getApiUrl()}/posts`
+        : `${getApiUrl()}/posts/${postId}`;
 
       const method = isNewPost ? "POST" : "PATCH";
 

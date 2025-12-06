@@ -13,6 +13,7 @@ import {
   MoreVertical,
   Download,
 } from "lucide-react";
+import { getApiUrl } from "@/lib/config";
 
 interface Contact {
   id: string;
@@ -49,8 +50,8 @@ export default function AdminContactsPage() {
   const fetchContacts = useCallback(async () => {
     try {
       const url = statusFilter === "ALL" 
-        ? `${process.env.NEXT_PUBLIC_API_URL}/contacts`
-        : `${process.env.NEXT_PUBLIC_API_URL}/contacts?status=${statusFilter}`;
+        ? `${getApiUrl()}/contacts`
+        : `${getApiUrl()}/contacts?status=${statusFilter}`;
       
       const token = document.cookie
         .split("; ")
@@ -79,7 +80,7 @@ export default function AdminContactsPage() {
         ?.split("=")[1];
 
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/contacts/stats/overview`,
+        `${getApiUrl()}/contacts/stats/overview`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -116,7 +117,7 @@ export default function AdminContactsPage() {
         ?.split("=")[1];
 
       await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/contacts/${id}/status?status=${newStatus}`,
+        `${getApiUrl()}/contacts/${id}/status?status=${newStatus}`,
         {
           method: "PATCH",
           headers: {
@@ -144,7 +145,7 @@ export default function AdminContactsPage() {
         .find((row) => row.startsWith("admin_token="))
         ?.split("=")[1];
 
-      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/contacts/${id}`, {
+      await fetch(`${getApiUrl()}/contacts/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,

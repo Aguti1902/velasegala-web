@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Plus, Edit, Trash2, Tag, MoreVertical } from "lucide-react";
+import { getApiUrl } from "@/lib/config";
 
 interface TagType {
   id: string;
@@ -27,7 +28,7 @@ export default function AdminTagsPage() {
 
   const fetchTags = async () => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/tags`);
+      const response = await fetch(`${getApiUrl()}/tags`);
       const data = await response.json();
       setTags(data || []);
     } catch (error) {
@@ -61,8 +62,8 @@ export default function AdminTagsPage() {
         ?.split("=")[1];
 
       const url = editingTag
-        ? `${process.env.NEXT_PUBLIC_API_URL}/tags/${editingTag.id}`
-        : `${process.env.NEXT_PUBLIC_API_URL}/tags`;
+        ? `${getApiUrl()}/tags/${editingTag.id}`
+        : `${getApiUrl()}/tags`;
 
       const method = editingTag ? "PATCH" : "POST";
 
@@ -105,7 +106,7 @@ export default function AdminTagsPage() {
         ?.split("=")[1];
 
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/tags/${id}`,
+        `${getApiUrl()}/tags/${id}`,
         {
           method: "DELETE",
           headers: {
