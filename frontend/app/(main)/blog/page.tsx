@@ -50,11 +50,24 @@ export default function BlogPage() {
         const apiUrl = getApiUrl();
         console.log("🔗 Fetching blog data from:", apiUrl);
         
-        // Obtener posts publicados
-        const postsResponse = await fetch(`${apiUrl}/posts?status=PUBLISHED`);
-        if (!postsResponse.ok) {
-          throw new Error(`Posts API error: ${postsResponse.status}`);
+        if (!apiUrl || apiUrl.includes('undefined')) {
+          console.error("❌ API URL is invalid:", apiUrl);
+          throw new Error("API URL no configurada correctamente");
         }
+        
+        // Obtener posts publicados
+        const postsUrl = `${apiUrl}/posts?status=PUBLISHED`;
+        console.log("📤 Fetching posts from:", postsUrl);
+        
+        const postsResponse = await fetch(postsUrl);
+        console.log("📥 Posts response status:", postsResponse.status);
+        
+        if (!postsResponse.ok) {
+          const errorText = await postsResponse.text();
+          console.error("❌ Posts API error:", postsResponse.status, errorText);
+          throw new Error(`Posts API error: ${postsResponse.status} - ${errorText}`);
+        }
+        
         const postsData = await postsResponse.json();
         console.log("📝 Posts data:", postsData);
         // El backend devuelve { data: [...], total: number }
@@ -62,8 +75,14 @@ export default function BlogPage() {
         setPosts(postsArray);
 
         // Obtener categorías
-        const categoriesResponse = await fetch(`${apiUrl}/categories`);
+        const categoriesUrl = `${apiUrl}/categories`;
+        console.log("📤 Fetching categories from:", categoriesUrl);
+        const categoriesResponse = await fetch(categoriesUrl);
+        console.log("📥 Categories response status:", categoriesResponse.status);
+        
         if (!categoriesResponse.ok) {
+          const errorText = await categoriesResponse.text();
+          console.error("❌ Categories API error:", categoriesResponse.status, errorText);
           throw new Error(`Categories API error: ${categoriesResponse.status}`);
         }
         const categoriesData = await categoriesResponse.json();
@@ -72,8 +91,14 @@ export default function BlogPage() {
         setCategories(categoriesArray);
 
         // Obtener tags
-        const tagsResponse = await fetch(`${apiUrl}/tags`);
+        const tagsUrl = `${apiUrl}/tags`;
+        console.log("📤 Fetching tags from:", tagsUrl);
+        const tagsResponse = await fetch(tagsUrl);
+        console.log("📥 Tags response status:", tagsResponse.status);
+        
         if (!tagsResponse.ok) {
+          const errorText = await tagsResponse.text();
+          console.error("❌ Tags API error:", tagsResponse.status, errorText);
           throw new Error(`Tags API error: ${tagsResponse.status}`);
         }
         const tagsData = await tagsResponse.json();

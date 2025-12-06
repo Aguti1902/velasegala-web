@@ -2,6 +2,8 @@ import { Controller, Post, Body, UseGuards } from '@nestjs/common';
 import { WebhooksService } from './webhooks.service';
 import { N8nBlogPostDto } from './dto/n8n-post.dto';
 import { ApiKeyGuard } from '../auth/guards/api-key.guard';
+import { PrismaService } from '../prisma/prisma.service';
+import { PublishStatus } from '@prisma/client';
 
 @Controller('webhooks')
 export class WebhooksController {
