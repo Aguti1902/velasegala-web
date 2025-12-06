@@ -40,7 +40,8 @@ lerna-debug.log*
 .env.*.local
 
 # Prisma
-prisma/migrations/**
-!prisma/migrations/.gitkeep
+# Las migraciones DEBEN estar en Git para deployments
+# prisma/migrations/** ← COMENTADO para que se suban las migraciones
+
 
 
