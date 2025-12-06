@@ -141,7 +141,11 @@ model ContactSubmission {
   email     String
   phone     String
   message   String   @db.Text
+  treatment String?  // Tratamiento de interés
+  status    String   @default("pending") // pending, contacted, converted
   createdAt DateTime @default(now())
+  
+  @@index([status])
 }
 
 // ===== APPOINTMENT REQUEST (Solicitudes de cita) =====
