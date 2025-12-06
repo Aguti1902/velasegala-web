@@ -34,6 +34,12 @@ vela-segala/
 │   │   │   ├── tratamientos/               # Tratamientos
 │   │   │   ├── blog/                       # Blog con filtros
 │   │   │   └── contacto/                   # Contacto
+│   │   ├── admin/     # Dashboard Admin
+│   │   │   ├── page.tsx                    # Dashboard principal
+│   │   │   ├── posts/                      # Gestión artículos
+│   │   │   ├── categories/                 # Gestión categorías
+│   │   │   ├── tags/                       # Gestión tags
+│   │   │   └── login/                      # Login admin
 │   │   └── layout.tsx
 │   ├── components/    # Componentes React
 │   ├── lib/          # Utilidades
@@ -45,7 +51,7 @@ vela-segala/
 │   │   ├── categories/    # Categorías
 │   │   ├── tags/          # Etiquetas
 │   │   ├── webhooks/      # n8n integration
-│   │   └── auth/          # Autenticación
+│   │   └── auth/          # Autenticación JWT
 │   └── prisma/
 │       └── schema.prisma  # Schema de DB
 │
@@ -174,6 +180,7 @@ Ver documentación completa en: [`backend/INSTRUCCIONES_BACKEND.md`](./backend/I
 - ✅ **SEO Optimizado** para Viladecans
 - ✅ **12 Páginas de Tratamientos** con contenido extenso
 - ✅ **Blog con Filtros** por categorías y etiquetas
+- ✅ **Dashboard de Administración** completo
 - ✅ **Reseñas de Google** en carrusel
 - ✅ **Google Maps** integrado
 - ✅ **Formulario de Contacto** con validación
@@ -189,6 +196,16 @@ Ver documentación completa en: [`backend/INSTRUCCIONES_BACKEND.md`](./backend/I
 - ✅ **Filtros avanzados** y paginación
 - ✅ **Validación de datos** con class-validator
 - ✅ **Gestión automática** de categorías/tags
+
+### Dashboard Admin
+- ✅ **Dashboard con Estadísticas** y gráficos
+- ✅ **Gestión de Artículos** (crear, editar, eliminar, publicar)
+- ✅ **Editor de Markdown** con preview en tiempo real
+- ✅ **Gestión de Categorías** y Tags con CRUD
+- ✅ **Filtros y Búsqueda** avanzada de artículos
+- ✅ **Programación de Publicaciones** con fechas
+- ✅ **SEO Optimization** por artículo (meta title, description)
+- ✅ **Revisión de Borradores** creados por IA
 
 ### SEO
 - ✅ Schema.org: LocalBusiness, Dentist, FAQPage, Article
@@ -215,9 +232,12 @@ Ver documentación completa en: [`backend/INSTRUCCIONES_BACKEND.md`](./backend/I
 
 ## 📚 Documentación Adicional
 
-- [Instrucciones Backend](./backend/INSTRUCCIONES_BACKEND.md) - API, endpoints, n8n
-- [Actualizar Reseñas](./COMO_ACTUALIZAR_RESEÑAS.md) - Cómo gestionar reseñas de Google
-- [Instrucciones Iniciales](./INSTRUCCIONES.md) - Contexto y requisitos del proyecto
+- [**Dashboard Admin**](./DASHBOARD_ADMIN.md) - Guía completa del panel de administración
+- [**Agente de IA para Blog**](./N8N_AGENTE_IA_BLOG.md) - Configuración n8n para artículos automáticos
+- [**Deployment**](./DEPLOYMENT.md) - Despliegue en Vercel y Railway
+- [**Instrucciones Backend**](./backend/INSTRUCCIONES_BACKEND.md) - API, endpoints, n8n
+- [**Actualizar Reseñas**](./COMO_ACTUALIZAR_RESEÑAS.md) - Cómo gestionar reseñas de Google
+- [**Instrucciones Iniciales**](./INSTRUCCIONES.md) - Contexto y requisitos del proyecto
 
 ## 🔒 Variables de Entorno
 
