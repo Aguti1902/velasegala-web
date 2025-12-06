@@ -30,6 +30,11 @@ export default function AdminLayout({
   const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
+  // Si estamos en la página de login, no mostrar el layout del dashboard
+  if (pathname === '/admin/login') {
+    return <>{children}</>;
+  }
+
   const handleLogout = async () => {
     try {
       await fetch('/api/admin/auth/logout', {
