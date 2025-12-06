@@ -21,8 +21,19 @@ export default function AdminLoginPage() {
     setIsLoading(true);
 
     try {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+      
+      if (!apiUrl) {
+        setError("Error de configuración: API URL no definida. Contacta al administrador.");
+        console.error("NEXT_PUBLIC_API_URL is undefined");
+        return;
+      }
+
+      console.log("API URL:", apiUrl); // Para debug
+      console.log("Intentando login en:", `${apiUrl}/auth/login`);
+
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
+        `${apiUrl}/auth/login`,
         {
           method: "POST",
           headers: {
@@ -31,6 +42,9 @@ export default function AdminLoginPage() {
           body: JSON.stringify(formData),
         }
       );
+
+      console.log("Response status:", response.status);
+      console.log("Response headers:", response.headers);
 
       const data = await response.json();
 
