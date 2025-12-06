@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Plus, Edit, Trash2, Tag, MoreVertical } from "lucide-react";
 import { getApiUrl } from "@/lib/config";
+import { fetchWithAuth, getAdminToken } from "@/lib/auth";
 
 interface TagType {
   id: string;
@@ -56,22 +57,16 @@ export default function AdminTagsPage() {
     }
 
     try {
-      const token = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("admin_token="))
-        ?.split("=")[1];
-
       const url = editingTag
         ? `${getApiUrl()}/tags/${editingTag.id}`
         : `${getApiUrl()}/tags`;
 
       const method = editingTag ? "PATCH" : "POST";
 
-      const response = await fetch(url, {
+      const response = await fetchWithAuth(url, {
         method,
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           name: formData.name,
@@ -100,20 +95,9 @@ export default function AdminTagsPage() {
     }
 
     try {
-      const token = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("admin_token="))
-        ?.split("=")[1];
-
-      const response = await fetch(
-        `${getApiUrl()}/tags/${id}`,
-        {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await fetchWithAuth(`${getApiUrl()}/tags/${id}`, {
+        method: "DELETE",
+      });
 
       if (response.ok) {
         fetchTags();

@@ -17,6 +17,7 @@ import {
   FileEdit,
 } from "lucide-react";
 import { getApiUrl } from "@/lib/config";
+import { fetchWithAuth } from "@/lib/auth";
 
 interface Post {
   id: string;
@@ -81,20 +82,9 @@ export default function AdminPostsPage() {
     }
 
     try {
-      const token = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("admin_token="))
-        ?.split("=")[1];
-
-      const response = await fetch(
-        `${getApiUrl()}/posts/${id}`,
-        {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await fetchWithAuth(`${getApiUrl()}/posts/${id}`, {
+        method: "DELETE",
+      });
 
       if (response.ok) {
         setPosts(posts.filter((post) => post.id !== id));
@@ -110,22 +100,13 @@ export default function AdminPostsPage() {
 
   const handlePublish = async (id: string) => {
     try {
-      const token = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("admin_token="))
-        ?.split("=")[1];
-
-      const response = await fetch(
-        `${getApiUrl()}/posts/${id}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ publishStatus: "PUBLISHED" }),
-        }
-      );
+      const response = await fetchWithAuth(`${getApiUrl()}/posts/${id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ publishStatus: "PUBLISHED" }),
+      });
 
       if (response.ok) {
         fetchPosts();

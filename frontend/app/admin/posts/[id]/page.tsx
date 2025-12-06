@@ -17,6 +17,7 @@ import {
   FolderTree,
 } from "lucide-react";
 import { getApiUrl } from "@/lib/config";
+import { fetchWithAuth, getAdminToken } from "@/lib/auth";
 
 interface Category {
   id: string;
@@ -136,10 +137,13 @@ export default function AdminPostEditPage() {
     setIsSaving(true);
 
     try {
-      const token = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("admin_token="))
-        ?.split("=")[1];
+      const token = getAdminToken();
+
+      if (!token) {
+        alert("No se encontró el token de autenticación. Por favor, inicia sesión de nuevo.");
+        window.location.href = "/admin/login";
+        return;
+      }
 
       const url = isNewPost
         ? `${getApiUrl()}/posts`
@@ -147,33 +151,59 @@ export default function AdminPostEditPage() {
 
       const method = isNewPost ? "POST" : "PATCH";
 
-      const response = await fetch(url, {
+      console.log(`Guardando artículo (${method}):`, url);
+      console.log("Datos:", formData);
+
+      // Preparar datos según el DTO del backend
+      const payload = {
+        title: formData.title,
+        slug: formData.slug,
+        content: formData.content,
+        excerpt: formData.excerpt || null,
+        featuredImage: formData.featuredImageUrl || null,
+        metaTitle: formData.metaTitle || formData.title,
+        metaDescription: formData.metaDescription || formData.excerpt,
+        publishStatus: formData.publishStatus,
+        publishAt: formData.publishAt,
+        categories: formData.categories, // El DTO espera 'categories', no 'categoryIds'
+        tags: formData.tags, // El DTO espera 'tags', no 'tagIds'
+      };
+
+      console.log("Payload:", payload);
+
+      const response = await fetchWithAuth(url, {
         method,
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({
-          ...formData,
-          categoryIds: formData.categories,
-          tagIds: formData.tags,
-        }),
+        body: JSON.stringify(payload),
       });
+
+      console.log("Response status:", response.status);
 
       if (response.ok) {
         const data = await response.json();
+        alert("✅ Artículo guardado correctamente");
         if (isNewPost) {
           router.push(`/admin/posts/${data.id}`);
         } else {
-          alert("Artículo guardado correctamente");
+          // Recargar datos
+          fetchPost();
         }
       } else {
-        const error = await response.json();
-        alert(`Error: ${error.message || "No se pudo guardar el artículo"}`);
+        const errorText = await response.text();
+        console.error("Error response:", errorText);
+        
+        try {
+          const error = JSON.parse(errorText);
+          alert(`Error: ${JSON.stringify(error.message || error)}`);
+        } catch {
+          alert(`Error ${response.status}: No se pudo guardar el artículo`);
+        }
       }
     } catch (error) {
       console.error("Error al guardar artículo:", error);
-      alert("Error al guardar el artículo");
+      alert("Error al guardar el artículo: " + (error as Error).message);
     } finally {
       setIsSaving(false);
     }
