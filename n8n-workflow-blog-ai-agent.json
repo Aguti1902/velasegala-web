@@ -1,0 +1,240 @@
+{
+  "name": "Agente IA - Artículos Blog Dental Viladecans",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "days",
+              "daysInterval": 1
+            }
+          ]
+        }
+      },
+      "name": "Ejecutar cada día",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "topic",
+              "value": "={{ [\"Implantes Dentales\", \"Ortodoncia Invisible\", \"Blanqueamiento Dental\", \"Cuidado Dental Infantil\", \"Salud de las Encías\", \"Estética Dental\", \"Urgencias Dentales\", \"Brackets vs Invisalign\", \"Limpieza Dental Profesional\", \"Caries Dental Prevención\"][Math.floor(Math.random() * 10)] }}"
+            },
+            {
+              "name": "location",
+              "value": "Viladecans"
+            },
+            {
+              "name": "clinic_name",
+              "value": "Clínica Dental Vela-Segalà"
+            }
+          ]
+        }
+      },
+      "name": "Configurar tema",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [450, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://www.googleapis.com/customsearch/v1",
+        "method": "GET",
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "key",
+              "value": "TU_GOOGLE_API_KEY"
+            },
+            {
+              "name": "cx",
+              "value": "TU_SEARCH_ENGINE_ID"
+            },
+            {
+              "name": "q",
+              "value": "={{ $json.topic }} {{ $json.location }} consejos tratamiento dental"
+            },
+            {
+              "name": "num",
+              "value": "5"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "name": "Buscar en Google",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [650, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all()[0].json.items || [];\n\nconst searchResults = items.map(item => ({\n  title: item.title,\n  snippet: item.snippet,\n  link: item.link\n}));\n\nconst combinedText = searchResults\n  .map(r => `${r.title}\\n${r.snippet}`)\n  .join('\\n\\n');\n\nreturn [{\n  json: {\n    searchResults,\n    combinedText,\n    topic: $('Configurar tema').item.json.topic,\n    location: $('Configurar tema').item.json.location,\n    clinic_name: $('Configurar tema').item.json.clinic_name\n  }\n}];"
+      },
+      "name": "Procesar resultados",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [850, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://api.openai.com/v1/chat/completions",
+        "method": "POST",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openAiApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": []
+        },
+        "jsonBody": "={\n  \"model\": \"gpt-4o-mini\",\n  \"messages\": [\n    {\n      \"role\": \"system\",\n      \"content\": \"Eres un redactor experto en contenido dental SEO. Escribes artículos informativos, profesionales y optimizados para SEO local en español.\"\n    },\n    {\n      \"role\": \"user\",\n      \"content\": \"Escribe un artículo de blog completo sobre: {{ $json.topic }} en {{ $json.location }}\\n\\nInformación de referencia:\\n{{ $json.combinedText }}\\n\\nRequisitos:\\n1. Título atractivo con la palabra clave principal y {{ $json.location }}\\n2. Introducción de 2 párrafos que enganche al lector\\n3. 5-7 secciones con subtítulos H2 (##)\\n4. Cada sección con 2-3 párrafos informativos\\n5. Incluir consejos prácticos y accionables\\n6. Mencionar sutilmente '{{ $json.clinic_name }}' en la conclusión\\n7. Sección FAQ con 3-5 preguntas frecuentes (usar ### para H3)\\n8. Conclusión con llamada a la acción (CTA) para pedir cita\\n9. Formato Markdown correcto\\n10. 1500-2000 palabras\\n11. Lenguaje natural, cercano y profesional\\n12. Optimizado para SEO local ({{ $json.location }}, Baix Llobregat, Barcelona)\\n\\nDevuelve SOLO el artículo en Markdown, sin introducciones ni explicaciones adicionales.\"\n    }\n  ],\n  \"temperature\": 0.7,\n  \"max_tokens\": 3000\n}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "name": "Generar artículo con ChatGPT",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [1050, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const openAIResponse = $input.all()[0].json.choices[0].message.content;\nconst previousData = $('Procesar resultados').item.json;\n\nfunction slugify(text) {\n  return text\n    .toLowerCase()\n    .normalize('NFD')\n    .replace(/[\\u0300-\\u036f]/g, '')\n    .replace(/[^a-z0-9]+/g, '-')\n    .replace(/^-+|-+$/g, '');\n}\n\nconst lines = openAIResponse.split('\\n');\nlet title = lines[0].replace(/^#\\s+/, '');\n\nif (!title.toLowerCase().includes(previousData.location.toLowerCase())) {\n  title = `${title} en ${previousData.location}`;\n}\n\nconst contentWithoutTitle = lines.slice(1).join('\\n').trim();\nconst excerpt = contentWithoutTitle\n  .replace(/^#+ /gm, '')\n  .substring(0, 160)\n  .trim() + '...';\n\nconst categoryMap = {\n  'Implantes': ['Implantes Dentales', 'Tratamientos'],\n  'Ortodoncia': ['Ortodoncia', 'Tratamientos'],\n  'Invisalign': ['Ortodoncia', 'Tratamientos'],\n  'Blanqueamiento': ['Estética Dental', 'Tratamientos'],\n  'Infantil': ['Odontopediatría', 'Salud Bucodental'],\n  'Niños': ['Odontopediatría', 'Salud Bucodental'],\n  'Encías': ['Periodoncia', 'Salud Bucodental'],\n  'Estética': ['Estética Dental', 'Tratamientos'],\n  'Urgencias': ['Urgencias Dentales', 'Salud Bucodental'],\n  'Brackets': ['Ortodoncia', 'Tratamientos'],\n  'Limpieza': ['Higiene Dental', 'Prevención'],\n  'Caries': ['Salud Bucodental', 'Prevención']\n};\n\nconst tagMap = {\n  'Implantes': ['implantes dentales viladecans', 'precio implantes dentales'],\n  'Ortodoncia': ['ortodoncia invisible viladecans', 'brackets'],\n  'Invisalign': ['invisalign viladecans', 'ortodoncia invisible'],\n  'Blanqueamiento': ['blanqueamiento dental viladecans', 'dientes blancos'],\n  'Infantil': ['odontopediatría', 'dentista niños viladecans'],\n  'Niños': ['odontopediatría', 'dentista niños viladecans'],\n  'Encías': ['enfermedad periodontal', 'salud encías'],\n  'Estética': ['estética dental', 'diseño sonrisa'],\n  'Urgencias': ['urgencias dentales', 'dolor dental'],\n  'Brackets': ['brackets', 'ortodoncia tradicional'],\n  'Limpieza': ['limpieza dental', 'profilaxis'],\n  'Caries': ['prevención caries', 'salud dental']\n};\n\nlet categories = ['Salud Bucodental'];\nlet tags = ['consejos dentales', 'viladecans'];\n\nfor (const [key, cats] of Object.entries(categoryMap)) {\n  if (previousData.topic.includes(key)) {\n    categories = cats;\n    break;\n  }\n}\n\nfor (const [key, tagList] of Object.entries(tagMap)) {\n  if (previousData.topic.includes(key)) {\n    tags = [...tags, ...tagList];\n    break;\n  }\n}\n\nreturn [{\n  json: {\n    title,\n    slug: slugify(title),\n    content: openAIResponse,\n    excerpt,\n    categories: [...new Set(categories)],\n    tags: [...new Set(tags)],\n    metaTitle: title,\n    metaDescription: excerpt\n  }\n}];"
+      },
+      "name": "Preparar datos artículo",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1250, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://api.unsplash.com/search/photos",
+        "method": "GET",
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "query",
+              "value": "=dental {{ $('Procesar resultados').item.json.topic }}"
+            },
+            {
+              "name": "client_id",
+              "value": "TU_UNSPLASH_ACCESS_KEY"
+            },
+            {
+              "name": "per_page",
+              "value": "1"
+            },
+            {
+              "name": "orientation",
+              "value": "landscape"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "name": "Buscar imagen Unsplash",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [1450, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const previousData = $('Preparar datos artículo').item.json;\nconst unsplashData = $input.all()[0].json;\n\nlet featuredImageUrl = null;\n\nif (unsplashData.results && unsplashData.results.length > 0) {\n  featuredImageUrl = unsplashData.results[0].urls.regular;\n}\n\nreturn [{\n  json: {\n    ...previousData,\n    featuredImageUrl\n  }\n}];"
+      },
+      "name": "Añadir imagen",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1650, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://velasegala-web-production.up.railway.app/api/webhooks/n8n/blog-post",
+        "method": "POST",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "x-api-key",
+              "value": "={{ $env.N8N_API_KEY }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": "={\n  \"title\": \"{{ $json.title }}\",\n  \"slug\": \"{{ $json.slug }}\",\n  \"content\": {{ JSON.stringify($json.content) }},\n  \"excerpt\": \"{{ $json.excerpt }}\",\n  \"featuredImageUrl\": \"{{ $json.featuredImageUrl }}\",\n  \"categories\": {{ JSON.stringify($json.categories) }},\n  \"tags\": {{ JSON.stringify($json.tags) }},\n  \"metaTitle\": \"{{ $json.metaTitle }}\",\n  \"metaDescription\": \"{{ $json.metaDescription }}\",\n  \"publishStatus\": \"published\",\n  \"publishAt\": \"{{ $now.toISO() }}\"\n}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "name": "Publicar en la web",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [1850, 300]
+    }
+  ],
+  "connections": {
+    "Ejecutar cada día": {
+      "main": [[{"node": "Configurar tema", "type": "main", "index": 0}]]
+    },
+    "Configurar tema": {
+      "main": [[{"node": "Buscar en Google", "type": "main", "index": 0}]]
+    },
+    "Buscar en Google": {
+      "main": [[{"node": "Procesar resultados", "type": "main", "index": 0}]]
+    },
+    "Procesar resultados": {
+      "main": [[{"node": "Generar artículo con ChatGPT", "type": "main", "index": 0}]]
+    },
+    "Generar artículo con ChatGPT": {
+      "main": [[{"node": "Preparar datos artículo", "type": "main", "index": 0}]]
+    },
+    "Preparar datos artículo": {
+      "main": [[{"node": "Buscar imagen Unsplash", "type": "main", "index": 0}]]
+    },
+    "Buscar imagen Unsplash": {
+      "main": [[{"node": "Añadir imagen", "type": "main", "index": 0}]]
+    },
+    "Añadir imagen": {
+      "main": [[{"node": "Publicar en la web", "type": "main", "index": 0}]]
+    }
+  },
+  "settings": {}
+}
+
