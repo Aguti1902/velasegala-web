@@ -273,7 +273,7 @@ El precio de los implantes dentales en Viladecans depende de múltiples factores
         metaDescription:
           'Precio de implantes dentales en Viladecans: desde 800€. Descubre qué factores influyen, qué incluye el precio y opciones de financiación. Primera visita gratis.',
         publishStatus: PublishStatus.PUBLISHED,
-        publishAt: new Date('2025-01-15'),
+        publishAt: new Date('2024-12-01'),
         authorId: admin.id,
         categories: {
           connect: [
@@ -385,7 +385,7 @@ Invisalign es adecuado para la mayoría de casos, desde apiñamiento leve hasta 
         metaDescription:
           'Ortodoncia invisible en Viladecans: ventajas, duración (12-18 meses), cuidados y precio desde 2.500€. Sistema Invisalign certificado. Primera visita gratis.',
         publishStatus: PublishStatus.PUBLISHED,
-        publishAt: new Date('2025-01-10'),
+        publishAt: new Date('2024-11-25'),
         authorId: admin.id,
         categories: {
           connect: [
@@ -525,7 +525,7 @@ La primera visita al dentista en Viladecans es el primer paso para mantener una 
         metaDescription:
           'Primera visita al dentista en Viladecans: qué incluye, cómo prepararte y qué esperar. Visita gratuita con exploración completa y presupuesto. Sin dolor.',
         publishStatus: PublishStatus.PUBLISHED,
-        publishAt: new Date('2025-01-05'),
+        publishAt: new Date('2024-11-20'),
         authorId: admin.id,
         categories: {
           connect: [{ id: categories[3].id }],

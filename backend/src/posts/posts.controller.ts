@@ -43,6 +43,10 @@ export class PostsController {
     // Filtro por estado de publicación
     if (status) {
       where.publishStatus = status;
+      // Si es PUBLISHED, también filtrar por fecha
+      if (status === PublishStatus.PUBLISHED) {
+        where.publishAt = { lte: new Date() };
+      }
     } else {
       // Por defecto solo mostrar publicados
       where.publishStatus = PublishStatus.PUBLISHED;

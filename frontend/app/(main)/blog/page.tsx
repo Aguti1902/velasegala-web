@@ -48,23 +48,42 @@ export default function BlogPage() {
     const fetchData = async () => {
       try {
         const apiUrl = getApiUrl();
+        console.log("🔗 Fetching blog data from:", apiUrl);
         
         // Obtener posts publicados
         const postsResponse = await fetch(`${apiUrl}/posts?status=PUBLISHED`);
+        if (!postsResponse.ok) {
+          throw new Error(`Posts API error: ${postsResponse.status}`);
+        }
         const postsData = await postsResponse.json();
-        setPosts(postsData.data || []);
+        console.log("📝 Posts data:", postsData);
+        // El backend devuelve { data: [...], total: number }
+        const postsArray = Array.isArray(postsData) ? postsData : (postsData.data || []);
+        setPosts(postsArray);
 
         // Obtener categorías
         const categoriesResponse = await fetch(`${apiUrl}/categories`);
+        if (!categoriesResponse.ok) {
+          throw new Error(`Categories API error: ${categoriesResponse.status}`);
+        }
         const categoriesData = await categoriesResponse.json();
-        setCategories(categoriesData || []);
+        console.log("📁 Categories data:", categoriesData);
+        const categoriesArray = Array.isArray(categoriesData) ? categoriesData : (categoriesData.data || []);
+        setCategories(categoriesArray);
 
         // Obtener tags
         const tagsResponse = await fetch(`${apiUrl}/tags`);
+        if (!tagsResponse.ok) {
+          throw new Error(`Tags API error: ${tagsResponse.status}`);
+        }
         const tagsData = await tagsResponse.json();
-        setTags(tagsData || []);
+        console.log("🏷️ Tags data:", tagsData);
+        const tagsArray = Array.isArray(tagsData) ? tagsData : (tagsData.data || []);
+        setTags(tagsArray);
       } catch (error) {
-        console.error("Error al cargar datos del blog:", error);
+        console.error("❌ Error al cargar datos del blog:", error);
+        // Mostrar mensaje de error al usuario
+        alert("Error al cargar el blog. Por favor, recarga la página.");
       } finally {
         setIsLoading(false);
       }
