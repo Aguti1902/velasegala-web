@@ -63,7 +63,7 @@ export default function AdminLayout({
           <div className="flex items-center justify-between p-6 border-b border-gray-800">
             <div className="flex items-center gap-3">
               <Image
-                src="/images/Logos/Isotipo.png"
+                src="/images/Logos/Isotipo blanco.png"
                 alt="Vela-Segalà"
                 width={40}
                 height={40}

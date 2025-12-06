@@ -29,6 +29,6 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: [], // Deshabilitado temporalmente para debugging
+  matcher: '/admin/:path*',
 };
 
