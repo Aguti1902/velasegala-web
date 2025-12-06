@@ -1,6 +1,7 @@
 import { Controller, Post, UseGuards } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { PublishStatus } from '@prisma/client';
 
 @Controller('admin')
 @UseGuards(JwtAuthGuard)
@@ -12,7 +13,7 @@ export class AdminController {
     // Actualizar fechas de posts con fechas futuras
     const updated = await this.prisma.post.updateMany({
       where: {
-        publishStatus: 'PUBLISHED',
+        publishStatus: PublishStatus.PUBLISHED,
         publishAt: {
           gt: new Date(),
         },
