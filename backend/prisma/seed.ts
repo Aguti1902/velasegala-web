@@ -6,19 +6,30 @@ const prisma = new PrismaClient();
 async function main() {
   console.log('🌱 Iniciando seed de la base de datos...');
 
-  // Limpiar base de datos
-  await prisma.post.deleteMany();
-  await prisma.category.deleteMany();
-  await prisma.tag.deleteMany();
-  await prisma.treatment.deleteMany();
-  await prisma.user.deleteMany();
-
-  console.log('✅ Base de datos limpiada');
-
-  // Crear usuario admin
-  const hashedPassword = await bcrypt.hash('Admin123!', 10);
-  const admin = await prisma.user.create({
+  // Actualizar fechas de posts con fechas futuras (sin borrar)
+  const updatedPosts = await prisma.post.updateMany({
+    where: {
+      publishStatus: PublishStatus.PUBLISHED,
+      publishAt: {
+        gt: new Date(),
+      },
+    },
     data: {
+      publishAt: new Date('2024-11-01'),
+    },
+  });
+  console.log(`✅ Fechas actualizadas en ${updatedPosts.count} posts`);
+
+  // Crear o actualizar usuario admin
+  const hashedPassword = await bcrypt.hash('Admin123!', 10);
+  const admin = await prisma.user.upsert({
+    where: { email: 'admin@velasegala.com' },
+    update: {
+      password: hashedPassword,
+      name: 'Dr. Admin',
+      role: 'admin',
+    },
+    create: {
       email: 'admin@velasegala.com',
       name: 'Dr. Admin',
       password: hashedPassword,
@@ -26,7 +37,17 @@ async function main() {
     },
   });
 
-  console.log('✅ Usuario admin creado:', admin.email);
+  console.log('✅ Usuario admin listo:', admin.email);
+
+  // Verificar si ya hay posts (no crear datos de ejemplo si ya existen)
+  const existingPostsCount = await prisma.post.count();
+  if (existingPostsCount > 0) {
+    console.log(`✅ Ya existen ${existingPostsCount} posts. Saltando creación de datos de ejemplo.`);
+    console.log('\n🎉 Seed completado!');
+    return;
+  }
+
+  console.log('📝 Creando datos de ejemplo...');
 
   // Crear tratamientos
   const treatments = await Promise.all([
