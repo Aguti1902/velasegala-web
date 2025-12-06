@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Eye, EyeOff, Lock, Mail } from "lucide-react";
+import { API_URL } from "@/lib/config";
 
 export default function AdminLoginPage() {
   const router = useRouter();
@@ -21,30 +22,22 @@ export default function AdminLoginPage() {
     setIsLoading(true);
 
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-      
-      if (!apiUrl) {
-        setError("Error de configuración: API URL no definida. Contacta al administrador.");
-        console.error("NEXT_PUBLIC_API_URL is undefined");
-        return;
+      console.log("🔗 API URL:", API_URL);
+      console.log("📤 Intentando login en:", `${API_URL}/auth/login`);
+
+      const response = await fetch(`${API_URL}/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      console.log("📥 Response status:", response.status);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
-
-      console.log("API URL:", apiUrl); // Para debug
-      console.log("Intentando login en:", `${apiUrl}/auth/login`);
-
-      const response = await fetch(
-        `${apiUrl}/auth/login`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        }
-      );
-
-      console.log("Response status:", response.status);
-      console.log("Response headers:", response.headers);
 
       const data = await response.json();
 
