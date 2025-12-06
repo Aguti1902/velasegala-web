@@ -19,7 +19,7 @@ export class CreatePostDto {
   excerpt?: string;
 
   @IsOptional()
-  @IsUrl()
+  @IsString()
   featuredImage?: string;
 
   @IsOptional()

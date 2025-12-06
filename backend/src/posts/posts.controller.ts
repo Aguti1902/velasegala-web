@@ -21,8 +21,22 @@ export class PostsController {
 
   @Post()
   @UseGuards(JwtAuthGuard)
-  create(@Body() createPostDto: CreatePostDto) {
-    return this.postsService.create(createPostDto);
+  async create(@Body() createPostDto: CreatePostDto) {
+    try {
+      console.log('📥 Recibiendo petición para crear post:', {
+        title: createPostDto.title,
+        slug: createPostDto.slug,
+        hasContent: !!createPostDto.content,
+        categories: createPostDto.categories,
+        tags: createPostDto.tags,
+        publishStatus: createPostDto.publishStatus,
+      });
+      
+      return await this.postsService.create(createPostDto);
+    } catch (error) {
+      console.error('❌ Error en el controlador al crear post:', error);
+      throw error;
+    }
   }
 
   @Get()

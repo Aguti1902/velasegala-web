@@ -9,67 +9,104 @@ export class PostsService {
   constructor(private prisma: PrismaService) {}
 
   async create(createPostDto: CreatePostDto) {
-    const { categories, tags, ...postData } = createPostDto;
+    try {
+      const { categories, tags, ...postData } = createPostDto;
 
-    // Verificar si el slug ya existe
-    const existingPost = await this.prisma.post.findUnique({
-      where: { slug: postData.slug },
-    });
+      console.log('📝 Creando post con datos:', {
+        title: postData.title,
+        slug: postData.slug,
+        categories,
+        tags,
+        publishStatus: postData.publishStatus,
+        publishAt: postData.publishAt,
+      });
 
-    if (existingPost) {
-      throw new BadRequestException(`Post with slug "${postData.slug}" already exists`);
+      // Establecer valores por defecto si no existen
+      if (!postData.publishStatus) {
+        postData.publishStatus = PublishStatus.DRAFT;
+      }
+
+      // Si publishStatus es PUBLISHED pero no hay publishAt, usar fecha actual
+      if (postData.publishStatus === PublishStatus.PUBLISHED && !postData.publishAt) {
+        postData.publishAt = new Date();
+      }
+
+      // Convertir publishAt a Date si es string
+      if (postData.publishAt && typeof postData.publishAt === 'string') {
+        postData.publishAt = new Date(postData.publishAt);
+      }
+
+      // Verificar si el slug ya existe
+      const existingPost = await this.prisma.post.findUnique({
+        where: { slug: postData.slug },
+      });
+
+      if (existingPost) {
+        throw new BadRequestException(`Post with slug "${postData.slug}" already exists`);
+      }
+
+      // Crear o conectar categorías
+      const categoryConnections = categories && categories.length > 0
+        ? await Promise.all(
+            categories.map(async (categoryName) => {
+              const category = await this.prisma.category.upsert({
+                where: { slug: this.slugify(categoryName) },
+                update: {},
+                create: {
+                  name: categoryName,
+                  slug: this.slugify(categoryName),
+                },
+              });
+              return { id: category.id };
+            })
+          )
+        : [];
+
+      // Crear o conectar tags
+      const tagConnections = tags && tags.length > 0
+        ? await Promise.all(
+            tags.map(async (tagName) => {
+              const tag = await this.prisma.tag.upsert({
+                where: { slug: this.slugify(tagName) },
+                update: {},
+                create: {
+                  name: tagName,
+                  slug: this.slugify(tagName),
+                },
+              });
+              return { id: tag.id };
+            })
+          )
+        : [];
+
+      console.log('✅ Categorías y tags preparados:', {
+        categories: categoryConnections.length,
+        tags: tagConnections.length,
+      });
+
+      const post = await this.prisma.post.create({
+        data: {
+          ...postData,
+          categories: categoryConnections.length > 0 ? {
+            connect: categoryConnections,
+          } : undefined,
+          tags: tagConnections.length > 0 ? {
+            connect: tagConnections,
+          } : undefined,
+        },
+        include: {
+          categories: true,
+          tags: true,
+          author: true,
+        },
+      });
+
+      console.log('✅ Post creado exitosamente:', post.id);
+      return post;
+    } catch (error) {
+      console.error('❌ Error al crear post:', error);
+      throw error;
     }
-
-    // Crear o conectar categorías
-    const categoryConnections = categories
-      ? await Promise.all(
-          categories.map(async (categoryName) => {
-            const category = await this.prisma.category.upsert({
-              where: { slug: this.slugify(categoryName) },
-              update: {},
-              create: {
-                name: categoryName,
-                slug: this.slugify(categoryName),
-              },
-            });
-            return { id: category.id };
-          })
-        )
-      : [];
-
-    // Crear o conectar tags
-    const tagConnections = tags
-      ? await Promise.all(
-          tags.map(async (tagName) => {
-            const tag = await this.prisma.tag.upsert({
-              where: { slug: this.slugify(tagName) },
-              update: {},
-              create: {
-                name: tagName,
-                slug: this.slugify(tagName),
-              },
-            });
-            return { id: tag.id };
-          })
-        )
-      : [];
-
-    return this.prisma.post.create({
-      data: {
-        ...postData,
-        categories: {
-          connect: categoryConnections,
-        },
-        tags: {
-          connect: tagConnections,
-        },
-      },
-      include: {
-        categories: true,
-        tags: true,
-        author: true,
-      },
-    });
   }
 
   async findAll(params: {
