@@ -26,8 +26,13 @@ export function BlogSection() {
       try {
         const apiUrl = getApiUrl();
         const response = await fetch(`${apiUrl}/posts?status=PUBLISHED&limit=3`);
+        if (!response.ok) {
+          throw new Error(`Posts API error: ${response.status}`);
+        }
         const data = await response.json();
-        setPosts(data.data || []);
+        // El backend devuelve { data: [...], total: number }
+        const postsArray = Array.isArray(data) ? data : (data.data || []);
+        setPosts(postsArray);
       } catch (error) {
         console.error("Error al cargar posts:", error);
       } finally {
