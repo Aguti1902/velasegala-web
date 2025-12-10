@@ -74,7 +74,7 @@ export function Header() {
               alt="Clínica Dental Viladecans - Vela-Segalà"
               width={200}
               height={60}
-              className="h-12 w-auto"
+              className="h-10 w-auto"
               priority
             />
           </Link>
