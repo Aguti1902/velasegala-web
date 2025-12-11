@@ -317,7 +317,26 @@ export class PostsService {
     }
 
     // Auto-generar slug si no se proporciona
-    const postSlug = slug || this.slugify(title);
+    let postSlug = slug || this.slugify(title);
+
+    // Verificar si el slug ya existe y hacer único
+    let slugExists = await this.prisma.post.findUnique({
+      where: { slug: postSlug },
+    });
+
+    let counter = 1;
+    const originalSlug = postSlug;
+
+    while (slugExists) {
+      postSlug = `${originalSlug}-${counter}`;
+      console.log(`⚠️ Slug duplicado detectado, intentando con: ${postSlug}`);
+      slugExists = await this.prisma.post.findUnique({
+        where: { slug: postSlug },
+      });
+      counter++;
+    }
+
+    console.log(`✅ Usando slug único: ${postSlug}`);
 
     return this.create({
       title,
