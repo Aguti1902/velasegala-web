@@ -306,7 +306,7 @@ export class PostsService {
     });
 
     // Convertir publishStatus de minúsculas a mayúsculas
-    let status = PublishStatus.DRAFT;
+    let status: PublishStatus = PublishStatus.DRAFT;
     if (publishStatus) {
       const statusMap: { [key: string]: PublishStatus } = {
         'draft': PublishStatus.DRAFT,
