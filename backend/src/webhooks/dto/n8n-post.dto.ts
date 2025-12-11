@@ -26,14 +26,10 @@ export class N8nBlogPostDto {
   featuredImageUrl?: string;
 
   @IsOptional()
-  @IsArray()
-  @IsString({ each: true })
-  categories?: string[];
+  categories?: string[] | string; // Puede venir como array o string separado por comas
 
   @IsOptional()
-  @IsArray()
-  @IsString({ each: true })
-  tags?: string[];
+  tags?: string[] | string; // Puede venir como array o string separado por comas
 
   @IsOptional()
   @IsString()

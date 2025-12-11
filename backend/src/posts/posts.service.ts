@@ -303,7 +303,41 @@ export class PostsService {
       categories,
       tags,
       publishStatus,
+      featuredImageUrl,
     });
+
+    // Parsear categorías (pueden venir como string "cat1,cat2" o como array)
+    let parsedCategories: string[] = [];
+    if (categories) {
+      if (typeof categories === 'string') {
+        // Si es string, intentar parsear como JSON o dividir por comas
+        try {
+          parsedCategories = JSON.parse(categories);
+        } catch {
+          parsedCategories = categories.split(',').map(c => c.trim()).filter(c => c.length > 0);
+        }
+      } else if (Array.isArray(categories)) {
+        parsedCategories = categories.filter(c => c && c.trim().length > 0);
+      }
+    }
+
+    // Parsear tags (pueden venir como string "tag1,tag2" o como array)
+    let parsedTags: string[] = [];
+    if (tags) {
+      if (typeof tags === 'string') {
+        // Si es string, intentar parsear como JSON o dividir por comas
+        try {
+          parsedTags = JSON.parse(tags);
+        } catch {
+          parsedTags = tags.split(',').map(t => t.trim()).filter(t => t.length > 0);
+        }
+      } else if (Array.isArray(tags)) {
+        parsedTags = tags.filter(t => t && t.trim().length > 0);
+      }
+    }
+
+    console.log('✅ Categorías parseadas:', parsedCategories);
+    console.log('✅ Tags parseados:', parsedTags);
 
     // Convertir publishStatus de minúsculas a mayúsculas
     let status: PublishStatus = PublishStatus.DRAFT;
@@ -337,19 +371,20 @@ export class PostsService {
     }
 
     console.log(`✅ Usando slug único: ${postSlug}`);
+    console.log(`📸 Imagen destacada: ${featuredImageUrl || 'ninguna'}`);
 
     return this.create({
       title,
       slug: postSlug,
       content,
       excerpt,
-      featuredImage: featuredImageUrl,
+      featuredImage: featuredImageUrl || null,
       metaTitle,
       metaDescription,
       publishStatus: status,
       publishAt: publishAt ? new Date(publishAt) : undefined,
-      categories,
-      tags,
+      categories: parsedCategories,
+      tags: parsedTags,
     });
   }
 
