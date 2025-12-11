@@ -59,3 +59,11 @@ migrations/
 # Misc
 .turbo
 
+# Large image files (not for Git)
+images/
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.webp
+
