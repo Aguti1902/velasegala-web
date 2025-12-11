@@ -297,15 +297,37 @@ export class PostsService {
       publishAt,
     } = data;
 
+    console.log('📡 Recibiendo post desde n8n:', {
+      title,
+      hasContent: !!content,
+      categories,
+      tags,
+      publishStatus,
+    });
+
+    // Convertir publishStatus de minúsculas a mayúsculas
+    let status = PublishStatus.DRAFT;
+    if (publishStatus) {
+      const statusMap: { [key: string]: PublishStatus } = {
+        'draft': PublishStatus.DRAFT,
+        'published': PublishStatus.PUBLISHED,
+        'scheduled': PublishStatus.SCHEDULED,
+      };
+      status = statusMap[publishStatus.toLowerCase()] || PublishStatus.DRAFT;
+    }
+
+    // Auto-generar slug si no se proporciona
+    const postSlug = slug || this.slugify(title);
+
     return this.create({
       title,
-      slug,
+      slug: postSlug,
       content,
       excerpt,
       featuredImage: featuredImageUrl,
       metaTitle,
       metaDescription,
-      publishStatus: publishStatus || PublishStatus.DRAFT,
+      publishStatus: status,
       publishAt: publishAt ? new Date(publishAt) : undefined,
       categories,
       tags,
