@@ -1,0 +1,23 @@
+{
+  "name": "Blog Clínica Dental Vela Segalà",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 10 * * 1,3,5"
+            }
+          ]
+        }
+      },
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1,
+      "position": [880, 752],
+      "id": "3e5ec58d-d881-4664-a649-643be9b1469e"
+    }
+  ]
+}
+

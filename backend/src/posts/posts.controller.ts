@@ -43,7 +43,7 @@ export class PostsController {
   findAll(
     @Query('page') page?: string,
     @Query('limit') limit?: string,
-    @Query('status') status?: PublishStatus,
+    @Query('status') status?: string,
     @Query('category') category?: string,
     @Query('tag') tag?: string,
     @Query('search') search?: string,
@@ -55,17 +55,18 @@ export class PostsController {
     const where: any = {};
 
     // Filtro por estado de publicación
-    if (status) {
+    if (status && status !== 'ALL') {
       where.publishStatus = status;
       // Si es PUBLISHED, también filtrar por fecha
-      if (status === PublishStatus.PUBLISHED) {
+      if (status === 'PUBLISHED') {
         where.publishAt = { lte: new Date() };
       }
-    } else {
-      // Por defecto solo mostrar publicados
+    } else if (!status) {
+      // Por defecto solo mostrar publicados (para web pública)
       where.publishStatus = PublishStatus.PUBLISHED;
       where.publishAt = { lte: new Date() };
     }
+    // Si status === 'ALL', no aplicar ningún filtro de estado
 
     // Filtro por categoría
     if (category) {

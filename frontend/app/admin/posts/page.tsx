@@ -65,7 +65,9 @@ export default function AdminPostsPage() {
 
   const fetchPosts = async () => {
     try {
-      const response = await fetch(`${getApiUrl()}/posts`);
+      // Admin debe ver todos los posts sin importar el estado
+      // Pasamos limit=100 para obtener más posts (ajusta según necesites)
+      const response = await fetch(`${getApiUrl()}/posts?limit=100&status=ALL`);
       const data = await response.json();
       setPosts(data.data || []);
       setFilteredPosts(data.data || []);
