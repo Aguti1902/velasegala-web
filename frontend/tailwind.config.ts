@@ -36,9 +36,8 @@ const config: Config = {
         },
       },
       fontFamily: {
-        raleway: ['Raleway', 'Arial', 'sans-serif'],
-        sans: ['Raleway', 'Arial', 'sans-serif'],
-        heading: ['Raleway', 'Arial', 'sans-serif'],
+        sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
+        heading: ['var(--font-poppins)', 'system-ui', 'sans-serif'],
       },
       typography: {
         DEFAULT: {

@@ -1,7 +1,7 @@
 import Link from "next/link";
-import Image from "next/image";
 import { CLINIC_INFO } from "@/lib/constants";
 import { Calendar, Award, Shield } from "lucide-react";
+import VideoPlayer from "@/components/ui/VideoPlayer";
 
 export function Hero() {
   return (
@@ -68,15 +68,16 @@ export function Hero() {
             </div>
           </div>
 
-          {/* Imagen */}
+          {/* Video */}
           <div className="relative">
-            <div className="aspect-[4/3] bg-gradient-to-br from-gray-50 to-gray-100 rounded-3xl shadow-xl overflow-hidden relative">
-              <Image
-                src="/images/instalaciones-vela-segala.webp"
-                alt="Clínica Dental Vela-Segalà Viladecans - Instalaciones Modernas"
-                fill
-                className="object-cover"
-                priority
+            <div className="aspect-[4/3] rounded-3xl shadow-2xl overflow-hidden relative">
+              <VideoPlayer
+                src="/videos/VelaSegala_2024_Edit.mp4"
+                poster="/images/instalaciones-vela-segala.webp"
+                autoPlay={true}
+                loop={true}
+                muted={true}
+                className="w-full h-full"
               />
             </div>
             {/* Badge flotante */}
