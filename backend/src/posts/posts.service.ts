@@ -281,6 +281,18 @@ export class PostsService {
     });
   }
 
+  async bulkDelete(ids: string[]) {
+    const result = await this.prisma.post.deleteMany({
+      where: {
+        id: {
+          in: ids,
+        },
+      },
+    });
+
+    return result.count;
+  }
+
   // Método para crear post desde n8n
   async createFromN8n(data: any) {
     const {

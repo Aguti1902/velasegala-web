@@ -38,6 +38,8 @@ export default function AdminPostsPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("ALL");
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
+  const [selectedPosts, setSelectedPosts] = useState<string[]>([]);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
     fetchPosts();
@@ -122,6 +124,63 @@ export default function AdminPostsPage() {
     }
   };
 
+  const handleSelectAll = () => {
+    if (selectedPosts.length === filteredPosts.length) {
+      setSelectedPosts([]);
+    } else {
+      setSelectedPosts(filteredPosts.map((post) => post.id));
+    }
+  };
+
+  const handleSelectPost = (id: string) => {
+    if (selectedPosts.includes(id)) {
+      setSelectedPosts(selectedPosts.filter((postId) => postId !== id));
+    } else {
+      setSelectedPosts([...selectedPosts, id]);
+    }
+  };
+
+  const handleBulkDelete = async () => {
+    if (selectedPosts.length === 0) {
+      alert("No hay artículos seleccionados");
+      return;
+    }
+
+    if (
+      !confirm(
+        `¿Estás seguro de que quieres eliminar ${selectedPosts.length} artículo(s)?`
+      )
+    ) {
+      return;
+    }
+
+    setIsDeleting(true);
+
+    try {
+      const response = await fetchWithAuth(`${getApiUrl()}/posts/bulk-delete`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ ids: selectedPosts }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        alert(`✅ ${data.message}`);
+        setSelectedPosts([]);
+        fetchPosts();
+      } else {
+        alert("Error al eliminar los artículos");
+      }
+    } catch (error) {
+      console.error("Error al eliminar artículos:", error);
+      alert("Error al eliminar los artículos");
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
   const getStatusBadge = (status: string) => {
     switch (status) {
       case "PUBLISHED":
@@ -170,19 +229,56 @@ export default function AdminPostsPage() {
           <p className="text-gray-600">
             Gestiona todos los artículos del blog
           </p>
+          {selectedPosts.length > 0 && (
+            <p className="text-sm text-blue-600 font-medium mt-2">
+              {selectedPosts.length} artículo(s) seleccionado(s)
+            </p>
+          )}
         </div>
-        <Link
-          href="/admin/posts/new"
-          className="inline-flex items-center gap-2 bg-black text-white px-6 py-3 rounded-xl font-bold hover:shadow-xl transition-all"
-        >
-          <Plus className="w-5 h-5" />
-          Nuevo Artículo
-        </Link>
+        <div className="flex items-center gap-3">
+          {selectedPosts.length > 0 && (
+            <button
+              onClick={handleBulkDelete}
+              disabled={isDeleting}
+              className="inline-flex items-center gap-2 bg-red-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-red-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <Trash2 className="w-5 h-5" />
+              {isDeleting ? "Eliminando..." : `Eliminar ${selectedPosts.length}`}
+            </button>
+          )}
+          <Link
+            href="/admin/posts/new"
+            className="inline-flex items-center gap-2 bg-black text-white px-6 py-3 rounded-xl font-bold hover:shadow-xl transition-all"
+          >
+            <Plus className="w-5 h-5" />
+            Nuevo Artículo
+          </Link>
+        </div>
       </div>
 
       {/* Filters */}
       <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
         <div className="flex flex-col md:flex-row gap-4">
+          {/* Select All Checkbox */}
+          {filteredPosts.length > 0 && (
+            <div className="flex items-center">
+              <label className="flex items-center gap-2 cursor-pointer group">
+                <input
+                  type="checkbox"
+                  checked={
+                    selectedPosts.length === filteredPosts.length &&
+                    filteredPosts.length > 0
+                  }
+                  onChange={handleSelectAll}
+                  className="w-5 h-5 rounded border-gray-300 text-black focus:ring-black cursor-pointer"
+                />
+                <span className="text-sm font-medium text-gray-700 group-hover:text-black transition-colors">
+                  Todos
+                </span>
+              </label>
+            </div>
+          )}
+
           {/* Search */}
           <div className="flex-1 relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -259,9 +355,23 @@ export default function AdminPostsPage() {
           {filteredPosts.map((post) => (
             <div
               key={post.id}
-              className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-all"
+              className={`bg-white rounded-2xl p-6 shadow-lg border transition-all ${
+                selectedPosts.includes(post.id)
+                  ? "border-blue-500 bg-blue-50"
+                  : "border-gray-100 hover:shadow-xl"
+              }`}
             >
               <div className="flex items-start justify-between gap-4">
+                {/* Checkbox */}
+                <div className="flex items-start pt-1">
+                  <input
+                    type="checkbox"
+                    checked={selectedPosts.includes(post.id)}
+                    onChange={() => handleSelectPost(post.id)}
+                    className="w-5 h-5 rounded border-gray-300 text-black focus:ring-black cursor-pointer"
+                  />
+                </div>
+
                 <div className="flex-1 min-w-0">
                   {/* Title and Status */}
                   <div className="flex items-start gap-3 mb-3">

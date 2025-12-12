@@ -123,4 +123,21 @@ export class PostsController {
   remove(@Param('id') id: string) {
     return this.postsService.remove(id);
   }
+
+  @Post('bulk-delete')
+  @UseGuards(JwtAuthGuard)
+  async bulkDelete(@Body('ids') ids: string[]) {
+    console.log('🗑️ Eliminación en batch:', ids);
+    
+    if (!ids || !Array.isArray(ids) || ids.length === 0) {
+      throw new Error('No se proporcionaron IDs para eliminar');
+    }
+
+    const deleted = await this.postsService.bulkDelete(ids);
+    
+    return {
+      message: `Se eliminaron ${deleted} posts`,
+      deleted,
+    };
+  }
 }
