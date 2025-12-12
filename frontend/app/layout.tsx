@@ -93,7 +93,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" className={raleway.variable}>
-      <body className="font-sans antialiased">
+      <body className="font-raleway antialiased">
         <LocalBusinessSchema />
         {children}
       </body>
