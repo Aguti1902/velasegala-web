@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
-import { ContactForm } from "@/components/forms/ContactForm";
+import { MultiStepContactForm } from "@/components/forms/MultiStepContactForm";
 import { CLINIC_INFO } from "@/lib/constants";
 import { Calendar, Clock, CheckCircle, Phone, Award } from "lucide-react";
 
@@ -133,7 +133,7 @@ export default function PedirCitaPage() {
               </div>
 
               <div className="bg-white rounded-3xl shadow-xl p-8">
-                <ContactForm />
+                <MultiStepContactForm />
               </div>
             </div>
 
