@@ -50,9 +50,11 @@ async function bootstrap() {
     },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'x-api-key'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'x-api-key', 'Accept'],
     exposedHeaders: ['Content-Length', 'Content-Type'],
-    maxAge: 3600,
+    maxAge: 7200,
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
   });
 
   // Global validation pipe
