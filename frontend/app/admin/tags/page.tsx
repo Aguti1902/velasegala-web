@@ -4,6 +4,9 @@ import { useEffect, useState } from "react";
 import { Plus, Edit, Trash2, Tag, MoreVertical } from "lucide-react";
 import { getApiUrl } from "@/lib/config";
 import { fetchWithAuth, getAdminToken } from "@/lib/auth";
+import Toast from "@/components/ui/Toast";
+import ConfirmModal from "@/components/ui/ConfirmModal";
+import { useToast } from "@/hooks/useToast";
 
 interface TagType {
   id: string;
@@ -22,6 +25,18 @@ export default function AdminTagsPage() {
     slug: "",
   });
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
+  const [confirmModal, setConfirmModal] = useState<{
+    isOpen: boolean;
+    title: string;
+    message: string;
+    onConfirm: () => void;
+  }>({
+    isOpen: false,
+    title: "",
+    message: "",
+    onConfirm: () => {},
+  });
+  const { toasts, hideToast, success, error, warning } = useToast();
 
   useEffect(() => {
     fetchTags();
@@ -52,7 +67,7 @@ export default function AdminTagsPage() {
     e.preventDefault();
 
     if (!formData.name) {
-      alert("El nombre es obligatorio");
+      warning("El nombre es obligatorio");
       return;
     }
 
@@ -79,36 +94,42 @@ export default function AdminTagsPage() {
         setShowModal(false);
         setEditingTag(null);
         setFormData({ name: "", slug: "" });
+        success(editingTag ? "Etiqueta actualizada correctamente" : "Etiqueta creada correctamente");
       } else {
-        const error = await response.json();
-        alert(`Error: ${error.message || "No se pudo guardar la etiqueta"}`);
+        const errorData = await response.json();
+        error(`Error: ${errorData.message || "No se pudo guardar la etiqueta"}`);
       }
-    } catch (error) {
-      console.error("Error al guardar etiqueta:", error);
-      alert("Error al guardar la etiqueta");
+    } catch (err) {
+      console.error("Error al guardar etiqueta:", err);
+      error("Error al guardar la etiqueta");
     }
   };
 
-  const handleDelete = async (id: string) => {
-    if (!confirm("¿Estás seguro de que quieres eliminar esta etiqueta?")) {
-      return;
-    }
+  const handleDelete = (id: string) => {
+    setConfirmModal({
+      isOpen: true,
+      title: "Eliminar etiqueta",
+      message: "¿Estás seguro de que quieres eliminar esta etiqueta? Esta acción no se puede deshacer.",
+      onConfirm: async () => {
+        setConfirmModal({ ...confirmModal, isOpen: false });
+        try {
+          const response = await fetchWithAuth(`${getApiUrl()}/tags/${id}`, {
+            method: "DELETE",
+          });
 
-    try {
-      const response = await fetchWithAuth(`${getApiUrl()}/tags/${id}`, {
-        method: "DELETE",
-      });
-
-      if (response.ok) {
-        fetchTags();
-        setActiveMenu(null);
-      } else {
-        alert("Error al eliminar la etiqueta");
-      }
-    } catch (error) {
-      console.error("Error al eliminar etiqueta:", error);
-      alert("Error al eliminar la etiqueta");
-    }
+          if (response.ok) {
+            fetchTags();
+            setActiveMenu(null);
+            success("Etiqueta eliminada correctamente");
+          } else {
+            error("Error al eliminar la etiqueta");
+          }
+        } catch (err) {
+          console.error("Error al eliminar etiqueta:", err);
+          error("Error al eliminar la etiqueta");
+        }
+      },
+    });
   };
 
   const openEditModal = (tag: TagType) => {
@@ -304,6 +325,25 @@ export default function AdminTagsPage() {
           </div>
         </div>
       )}
+
+      {/* Toasts */}
+      {toasts.map((toast) => (
+        <Toast
+          key={toast.id}
+          message={toast.message}
+          type={toast.type}
+          onClose={() => hideToast(toast.id)}
+        />
+      ))}
+
+      {/* Confirm Modal */}
+      <ConfirmModal
+        isOpen={confirmModal.isOpen}
+        title={confirmModal.title}
+        message={confirmModal.message}
+        onConfirm={confirmModal.onConfirm}
+        onCancel={() => setConfirmModal({ ...confirmModal, isOpen: false })}
+      />
     </div>
   );
 }

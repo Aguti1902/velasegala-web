@@ -18,6 +18,9 @@ import {
 } from "lucide-react";
 import { getApiUrl } from "@/lib/config";
 import { fetchWithAuth } from "@/lib/auth";
+import Toast from "@/components/ui/Toast";
+import ConfirmModal from "@/components/ui/ConfirmModal";
+import { useToast } from "@/hooks/useToast";
 
 interface Post {
   id: string;
@@ -40,6 +43,18 @@ export default function AdminPostsPage() {
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const [selectedPosts, setSelectedPosts] = useState<string[]>([]);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [confirmModal, setConfirmModal] = useState<{
+    isOpen: boolean;
+    title: string;
+    message: string;
+    onConfirm: () => void;
+  }>({
+    isOpen: false,
+    title: "",
+    message: "",
+    onConfirm: () => {},
+  });
+  const { toasts, hideToast, success, error } = useToast();
 
   useEffect(() => {
     fetchPosts();
@@ -80,26 +95,31 @@ export default function AdminPostsPage() {
     }
   };
 
-  const handleDelete = async (id: string) => {
-    if (!confirm("¿Estás seguro de que quieres eliminar este artículo?")) {
-      return;
-    }
+  const handleDelete = (id: string) => {
+    setConfirmModal({
+      isOpen: true,
+      title: "Eliminar artículo",
+      message: "¿Estás seguro de que quieres eliminar este artículo? Esta acción no se puede deshacer.",
+      onConfirm: async () => {
+        setConfirmModal({ ...confirmModal, isOpen: false });
+        try {
+          const response = await fetchWithAuth(`${getApiUrl()}/posts/${id}`, {
+            method: "DELETE",
+          });
 
-    try {
-      const response = await fetchWithAuth(`${getApiUrl()}/posts/${id}`, {
-        method: "DELETE",
-      });
-
-      if (response.ok) {
-        setPosts(posts.filter((post) => post.id !== id));
-        setActiveMenu(null);
-      } else {
-        alert("Error al eliminar el artículo");
-      }
-    } catch (error) {
-      console.error("Error al eliminar artículo:", error);
-      alert("Error al eliminar el artículo");
-    }
+          if (response.ok) {
+            setPosts(posts.filter((post) => post.id !== id));
+            setActiveMenu(null);
+            success("Artículo eliminado correctamente");
+          } else {
+            error("Error al eliminar el artículo");
+          }
+        } catch (err) {
+          console.error("Error al eliminar artículo:", err);
+          error("Error al eliminar el artículo");
+        }
+      },
+    });
   };
 
   const handlePublish = async (id: string) => {
@@ -115,12 +135,13 @@ export default function AdminPostsPage() {
       if (response.ok) {
         fetchPosts();
         setActiveMenu(null);
+        success("Artículo publicado correctamente");
       } else {
-        alert("Error al publicar el artículo");
+        error("Error al publicar el artículo");
       }
-    } catch (error) {
-      console.error("Error al publicar artículo:", error);
-      alert("Error al publicar el artículo");
+    } catch (err) {
+      console.error("Error al publicar artículo:", err);
+      error("Error al publicar el artículo");
     }
   };
 
@@ -140,45 +161,45 @@ export default function AdminPostsPage() {
     }
   };
 
-  const handleBulkDelete = async () => {
+  const handleBulkDelete = () => {
     if (selectedPosts.length === 0) {
-      alert("No hay artículos seleccionados");
+      error("No hay artículos seleccionados");
       return;
     }
 
-    if (
-      !confirm(
-        `¿Estás seguro de que quieres eliminar ${selectedPosts.length} artículo(s)?`
-      )
-    ) {
-      return;
-    }
+    setConfirmModal({
+      isOpen: true,
+      title: "Eliminar artículos",
+      message: `¿Estás seguro de que quieres eliminar ${selectedPosts.length} artículo(s)? Esta acción no se puede deshacer.`,
+      onConfirm: async () => {
+        setConfirmModal({ ...confirmModal, isOpen: false });
+        setIsDeleting(true);
 
-    setIsDeleting(true);
+        try {
+          const response = await fetchWithAuth(`${getApiUrl()}/posts/bulk-delete`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ ids: selectedPosts }),
+          });
 
-    try {
-      const response = await fetchWithAuth(`${getApiUrl()}/posts/bulk-delete`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ ids: selectedPosts }),
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        alert(`✅ ${data.message}`);
-        setSelectedPosts([]);
-        fetchPosts();
-      } else {
-        alert("Error al eliminar los artículos");
-      }
-    } catch (error) {
-      console.error("Error al eliminar artículos:", error);
-      alert("Error al eliminar los artículos");
-    } finally {
-      setIsDeleting(false);
-    }
+          if (response.ok) {
+            const data = await response.json();
+            success(data.message || `${selectedPosts.length} artículos eliminados`);
+            setSelectedPosts([]);
+            fetchPosts();
+          } else {
+            error("Error al eliminar los artículos");
+          }
+        } catch (err) {
+          console.error("Error al eliminar artículos:", err);
+          error("Error al eliminar los artículos");
+        } finally {
+          setIsDeleting(false);
+        }
+      },
+    });
   };
 
   const getStatusBadge = (status: string) => {
@@ -494,6 +515,25 @@ export default function AdminPostsPage() {
           ))}
         </div>
       )}
+
+      {/* Toasts */}
+      {toasts.map((toast) => (
+        <Toast
+          key={toast.id}
+          message={toast.message}
+          type={toast.type}
+          onClose={() => hideToast(toast.id)}
+        />
+      ))}
+
+      {/* Confirm Modal */}
+      <ConfirmModal
+        isOpen={confirmModal.isOpen}
+        title={confirmModal.title}
+        message={confirmModal.message}
+        onConfirm={confirmModal.onConfirm}
+        onCancel={() => setConfirmModal({ ...confirmModal, isOpen: false })}
+      />
     </div>
   );
 }

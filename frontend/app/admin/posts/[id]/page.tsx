@@ -18,6 +18,8 @@ import {
 } from "lucide-react";
 import { getApiUrl } from "@/lib/config";
 import { fetchWithAuth, getAdminToken } from "@/lib/auth";
+import Toast from "@/components/ui/Toast";
+import { useToast } from "@/hooks/useToast";
 
 interface Category {
   id: string;
@@ -54,6 +56,7 @@ export default function AdminPostEditPage() {
   const [isLoading, setIsLoading] = useState(!isNewPost);
   const [isSaving, setIsSaving] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
+  const { toasts, hideToast, success, error, warning } = useToast();
 
   const fetchPost = useCallback(async () => {
     if (!postId || isNewPost) return;
@@ -130,7 +133,7 @@ export default function AdminPostEditPage() {
 
   const handleSave = async () => {
     if (!formData.title || !formData.content) {
-      alert("El título y el contenido son obligatorios");
+      warning("El título y el contenido son obligatorios");
       return;
     }
 
@@ -140,8 +143,10 @@ export default function AdminPostEditPage() {
       const token = getAdminToken();
 
       if (!token) {
-        alert("No se encontró el token de autenticación. Por favor, inicia sesión de nuevo.");
-        window.location.href = "/admin/login";
+        error("No se encontró el token de autenticación. Por favor, inicia sesión de nuevo.");
+        setTimeout(() => {
+          window.location.href = "/admin/login";
+        }, 2000);
         return;
       }
 
@@ -183,7 +188,7 @@ export default function AdminPostEditPage() {
 
       if (response.ok) {
         const data = await response.json();
-        alert("✅ Artículo guardado correctamente");
+        success("Artículo guardado correctamente");
         if (isNewPost) {
           router.push(`/admin/posts/${data.id}`);
         } else {
@@ -195,15 +200,15 @@ export default function AdminPostEditPage() {
         console.error("Error response:", errorText);
         
         try {
-          const error = JSON.parse(errorText);
-          alert(`Error: ${JSON.stringify(error.message || error)}`);
+          const errorData = JSON.parse(errorText);
+          error(`Error: ${JSON.stringify(errorData.message || errorData)}`);
         } catch {
-          alert(`Error ${response.status}: No se pudo guardar el artículo`);
+          error(`Error ${response.status}: No se pudo guardar el artículo`);
         }
       }
-    } catch (error) {
-      console.error("Error al guardar artículo:", error);
-      alert("Error al guardar el artículo: " + (error as Error).message);
+    } catch (err) {
+      console.error("Error al guardar artículo:", err);
+      error("Error al guardar el artículo: " + (err as Error).message);
     } finally {
       setIsSaving(false);
     }
@@ -564,6 +569,16 @@ Respuesta...
           </div>
         </div>
       </div>
+
+      {/* Toasts */}
+      {toasts.map((toast) => (
+        <Toast
+          key={toast.id}
+          message={toast.message}
+          type={toast.type}
+          onClose={() => hideToast(toast.id)}
+        />
+      ))}
     </div>
   );
 }

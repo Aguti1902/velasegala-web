@@ -4,6 +4,9 @@ import { useEffect, useState } from "react";
 import { Plus, Edit, Trash2, FolderTree, MoreVertical } from "lucide-react";
 import { getApiUrl } from "@/lib/config";
 import { fetchWithAuth, getAdminToken } from "@/lib/auth";
+import Toast from "@/components/ui/Toast";
+import ConfirmModal from "@/components/ui/ConfirmModal";
+import { useToast } from "@/hooks/useToast";
 
 interface Category {
   id: string;
@@ -22,6 +25,18 @@ export default function AdminCategoriesPage() {
     slug: "",
   });
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
+  const [confirmModal, setConfirmModal] = useState<{
+    isOpen: boolean;
+    title: string;
+    message: string;
+    onConfirm: () => void;
+  }>({
+    isOpen: false,
+    title: "",
+    message: "",
+    onConfirm: () => {},
+  });
+  const { toasts, hideToast, success, error, warning } = useToast();
 
   useEffect(() => {
     fetchCategories();
@@ -52,7 +67,7 @@ export default function AdminCategoriesPage() {
     e.preventDefault();
 
     if (!formData.name) {
-      alert("El nombre es obligatorio");
+      warning("El nombre es obligatorio");
       return;
     }
 
@@ -60,8 +75,10 @@ export default function AdminCategoriesPage() {
       const token = getAdminToken();
 
       if (!token) {
-        alert("No se encontró el token de autenticación. Por favor, inicia sesión de nuevo.");
-        window.location.href = "/admin/login";
+        error("No se encontró el token de autenticación. Por favor, inicia sesión de nuevo.");
+        setTimeout(() => {
+          window.location.href = "/admin/login";
+        }, 2000);
         return;
       }
 
@@ -91,46 +108,52 @@ export default function AdminCategoriesPage() {
         setShowModal(false);
         setEditingCategory(null);
         setFormData({ name: "", slug: "" });
+        success(editingCategory ? "Categoría actualizada correctamente" : "Categoría creada correctamente");
       } else {
         const errorText = await response.text();
         console.error("Error response:", errorText);
         
         try {
-          const error = JSON.parse(errorText);
-          alert(`Error: ${error.message || "No se pudo guardar la categoría"}`);
+          const errorData = JSON.parse(errorText);
+          error(`Error: ${errorData.message || "No se pudo guardar la categoría"}`);
         } catch {
-          alert(`Error ${response.status}: No se pudo guardar la categoría`);
+          error(`Error ${response.status}: No se pudo guardar la categoría`);
         }
       }
-    } catch (error) {
-      console.error("Error al guardar categoría:", error);
-      alert("Error al guardar la categoría: " + (error as Error).message);
+    } catch (err) {
+      console.error("Error al guardar categoría:", err);
+      error("Error al guardar la categoría: " + (err as Error).message);
     }
   };
 
-  const handleDelete = async (id: string) => {
-    if (!confirm("¿Estás seguro de que quieres eliminar esta categoría?")) {
-      return;
-    }
+  const handleDelete = (id: string) => {
+    setConfirmModal({
+      isOpen: true,
+      title: "Eliminar categoría",
+      message: "¿Estás seguro de que quieres eliminar esta categoría? Esta acción no se puede deshacer.",
+      onConfirm: async () => {
+        setConfirmModal({ ...confirmModal, isOpen: false });
+        try {
+          const response = await fetchWithAuth(
+            `${getApiUrl()}/categories/${id}`,
+            {
+              method: "DELETE",
+            }
+          );
 
-    try {
-      const response = await fetchWithAuth(
-        `${getApiUrl()}/categories/${id}`,
-        {
-          method: "DELETE",
+          if (response.ok) {
+            fetchCategories();
+            setActiveMenu(null);
+            success("Categoría eliminada correctamente");
+          } else {
+            error("Error al eliminar la categoría");
+          }
+        } catch (err) {
+          console.error("Error al eliminar categoría:", err);
+          error("Error al eliminar la categoría");
         }
-      );
-
-      if (response.ok) {
-        fetchCategories();
-        setActiveMenu(null);
-      } else {
-        alert("Error al eliminar la categoría");
-      }
-    } catch (error) {
-      console.error("Error al eliminar categoría:", error);
-      alert("Error al eliminar la categoría");
-    }
+      },
+    });
   };
 
   const openEditModal = (category: Category) => {
@@ -326,6 +349,25 @@ export default function AdminCategoriesPage() {
           </div>
         </div>
       )}
+
+      {/* Toasts */}
+      {toasts.map((toast) => (
+        <Toast
+          key={toast.id}
+          message={toast.message}
+          type={toast.type}
+          onClose={() => hideToast(toast.id)}
+        />
+      ))}
+
+      {/* Confirm Modal */}
+      <ConfirmModal
+        isOpen={confirmModal.isOpen}
+        title={confirmModal.title}
+        message={confirmModal.message}
+        onConfirm={confirmModal.onConfirm}
+        onCancel={() => setConfirmModal({ ...confirmModal, isOpen: false })}
+      />
     </div>
   );
 }
