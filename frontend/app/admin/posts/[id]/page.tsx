@@ -40,7 +40,7 @@ export default function AdminPostEditPage() {
     slug: "",
     content: "",
     excerpt: "",
-    featuredImageUrl: "",
+    featuredImage: "",
     metaTitle: "",
     metaDescription: "",
     publishStatus: "DRAFT" as "DRAFT" | "PUBLISHED" | "SCHEDULED",
@@ -69,7 +69,7 @@ export default function AdminPostEditPage() {
         slug: post.slug || "",
         content: post.content || "",
         excerpt: post.excerpt || "",
-        featuredImageUrl: post.featuredImageUrl || "",
+        featuredImage: post.featuredImage || "",
         metaTitle: post.metaTitle || "",
         metaDescription: post.metaDescription || "",
         publishStatus: post.publishStatus || "DRAFT",
@@ -160,7 +160,7 @@ export default function AdminPostEditPage() {
         slug: formData.slug,
         content: formData.content,
         excerpt: formData.excerpt || null,
-        featuredImage: formData.featuredImageUrl || null,
+        featuredImage: formData.featuredImage || null,
         metaTitle: formData.metaTitle || formData.title,
         metaDescription: formData.metaDescription || formData.excerpt,
         publishStatus: formData.publishStatus,
@@ -420,19 +420,19 @@ Respuesta...
             </h3>
             <input
               type="url"
-              value={formData.featuredImageUrl}
+              value={formData.featuredImage}
               onChange={(e) =>
-                setFormData({ ...formData, featuredImageUrl: e.target.value })
+                setFormData({ ...formData, featuredImage: e.target.value })
               }
               className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-black text-sm"
               placeholder="https://ejemplo.com/imagen.jpg"
             />
-            {formData.featuredImageUrl && (
+            {formData.featuredImage && (
               <div className="mt-4 rounded-xl overflow-hidden border border-gray-200">
                 <div
                   className="w-full h-40 bg-gray-100 bg-cover bg-center"
                   style={{
-                    backgroundImage: `url(${formData.featuredImageUrl})`,
+                    backgroundImage: `url(${formData.featuredImage})`,
                   backgroundSize: "cover",
                     backgroundPosition: "center",
                   }}
