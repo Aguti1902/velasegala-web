@@ -61,8 +61,8 @@ export default function BlogPage() {
           throw new Error("API URL no configurada correctamente");
         }
         
-        // Obtener posts publicados
-        const postsUrl = `${apiUrl}/posts?status=PUBLISHED`;
+        // Obtener posts publicados (todos, sin límite)
+        const postsUrl = `${apiUrl}/posts?status=PUBLISHED&limit=100`;
         console.log("📤 Fetching posts from:", postsUrl);
         
         const postsResponse = await fetch(postsUrl);
