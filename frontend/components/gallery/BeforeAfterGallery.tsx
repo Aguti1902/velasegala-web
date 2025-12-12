@@ -90,6 +90,7 @@ export function BeforeAfterGallery() {
                   alt={image.title}
                   fill
                   className="object-cover group-hover:scale-110 transition-transform duration-300"
+                  unoptimized
                 />
                 {/* Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
@@ -132,6 +133,8 @@ export function BeforeAfterGallery() {
               alt={RESULTS_IMAGES[selectedImage].title}
               fill
               className="object-contain"
+              unoptimized
+              priority
             />
             {/* Info */}
             <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 text-white">

@@ -85,6 +85,8 @@ export function BeforeAfterSlider({
           fill
           className="object-cover"
           draggable={false}
+          unoptimized
+          priority
         />
         {/* Label DESPUÉS */}
         <div className="absolute top-4 right-4 bg-green-600 text-white px-4 py-2 rounded-full font-bold text-sm shadow-lg">
@@ -105,6 +107,8 @@ export function BeforeAfterSlider({
           fill
           className="object-cover"
           draggable={false}
+          unoptimized
+          priority
         />
         {/* Label ANTES */}
         <div className="absolute top-4 left-4 bg-red-600 text-white px-4 py-2 rounded-full font-bold text-sm shadow-lg">
