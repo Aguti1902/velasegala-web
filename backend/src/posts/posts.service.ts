@@ -288,7 +288,7 @@ export class PostsService {
       slug,
       content,
       excerpt,
-      featuredImageUrl,
+      featuredImage,
       categories,
       tags,
       metaTitle,
@@ -303,7 +303,7 @@ export class PostsService {
       categories,
       tags,
       publishStatus,
-      featuredImageUrl,
+      featuredImage,
     });
 
     // Parsear categorías (pueden venir como string "cat1,cat2" o como array)
@@ -371,14 +371,14 @@ export class PostsService {
     }
 
     console.log(`✅ Usando slug único: ${postSlug}`);
-    console.log(`📸 Imagen destacada: ${featuredImageUrl || 'ninguna'}`);
+    console.log(`📸 Imagen destacada: ${featuredImage || 'ninguna'}`);
 
     return this.create({
       title,
       slug: postSlug,
       content,
       excerpt,
-      featuredImage: featuredImageUrl || null,
+      featuredImage: featuredImage || null,
       metaTitle,
       metaDescription,
       publishStatus: status,

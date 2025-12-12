@@ -13,7 +13,7 @@ export class WebhooksController {
   @UseGuards(ApiKeyGuard)
   async createPostFromN8n(@Body() n8nBlogPostDto: N8nBlogPostDto) {
     console.log('🔍 WEBHOOK RECIBIDO - Payload completo:', JSON.stringify(n8nBlogPostDto, null, 2));
-    console.log('📸 featuredImageUrl:', n8nBlogPostDto.featuredImageUrl);
+    console.log('📸 featuredImage:', n8nBlogPostDto.featuredImage);
     console.log('📁 categories (type):', typeof n8nBlogPostDto.categories, '| value:', n8nBlogPostDto.categories);
     console.log('🏷️ tags (type):', typeof n8nBlogPostDto.tags, '| value:', n8nBlogPostDto.tags);
     
