@@ -84,8 +84,13 @@ export function BeforeAfterSlider({
           className="absolute inset-0 w-full h-full object-cover"
           draggable={false}
         />
-        {/* Label DESPUÉS */}
-        <div className="absolute top-4 right-4 bg-green-600 text-white px-4 py-2 rounded-full font-bold text-sm shadow-lg z-10">
+        {/* Label DESPUÉS - Se oculta cuando el slider está muy a la derecha */}
+        <div 
+          className="absolute top-4 right-4 bg-black text-white px-4 py-2 rounded-full font-bold text-sm shadow-lg z-10 transition-opacity duration-200"
+          style={{
+            opacity: sliderPosition > 85 ? 0 : 1,
+          }}
+        >
           {afterLabel}
         </div>
       </div>
@@ -103,8 +108,13 @@ export function BeforeAfterSlider({
           className="absolute inset-0 w-full h-full object-cover"
           draggable={false}
         />
-        {/* Label ANTES */}
-        <div className="absolute top-4 left-4 bg-red-600 text-white px-4 py-2 rounded-full font-bold text-sm shadow-lg z-10">
+        {/* Label ANTES - Se oculta cuando el slider está muy a la izquierda */}
+        <div 
+          className="absolute top-4 left-4 bg-gray-700 text-white px-4 py-2 rounded-full font-bold text-sm shadow-lg z-10 transition-opacity duration-200"
+          style={{
+            opacity: sliderPosition < 15 ? 0 : 1,
+          }}
+        >
           {beforeLabel}
         </div>
       </div>
