@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { CLINIC_INFO } from "@/lib/constants";
-import { Drill, CheckCircle, Clock, Shield, Award, Calendar, Users, Microscope, Activity, ChevronRight, Phone, MapPin } from "lucide-react";
+import { Drill, CheckCircle, Clock, Shield, Award, Calendar, Users, Microscope, Activity, ChevronRight, Phone, MapPin, Smile, Heart, Zap, Star } from "lucide-react";
 import { BeforeAfterSlider } from "@/components/ui/BeforeAfterSlider";
 
 const TREATMENT_FAQS = [
@@ -21,7 +21,7 @@ const TREATMENT_FAQS = [
   {
     question: "¿Es doloroso ponerse un implante dental?",
     answer:
-      "No, el procedimiento se realiza con anestesia local efectiva, por lo que no sentirás dolor durante la colocación del implante. Después de la cirugía puede haber molestias leves durante 2-3 días que se controlan perfectamente con analgésicos comunes como ibuprofeno. La mayoría de nuestros pacientes en Viladecans nos dicen que fue mucho más fácil y menos doloroso de lo que esperaban.",
+      "No, el procedimiento se realiza con anestesia local efectiva, por lo que no sentirás dolor durante la colocación del implante. Después de la cirugía puede haber molestias leves durante 2-3 días que se controlan perfectamente con analgésicos comunes como ibuprofeno. La mayoría de nuestros pacientes en Viladecans nos dicen que fue mucho más fácil y menos doloroso de lo que esperaban. Además, ofrecemos sedación consciente para pacientes con miedo o ansiedad.",
   },
   {
     question: "¿Cuánto duran los implantes dentales?",
@@ -38,26 +38,34 @@ const TREATMENT_FAQS = [
     answer:
       "En nuestra clínica dental de Viladecans utilizamos únicamente implantes dentales de las marcas líderes mundiales: Straumann (Suiza), Nobel Biocare (Suecia) y Zimmer (EEUU). Estas marcas ofrecen las mayores garantías de éxito, la mejor osteointegración y estudios científicos con más de 30 años de seguimiento. Todas ellas con certificación internacional y garantías de por vida.",
   },
+  {
+    question: "¿Puedo ponerme dientes el mismo día?",
+    answer:
+      "Sí, somos especialistas en implantes de carga inmediata en Viladecans. En casos adecuados, podemos colocar el implante y la prótesis provisional el mismo día, para que salgas de la clínica con dientes. Esto es posible gracias a la cirugía guiada por ordenador y nuestra experiencia de más de 15 años en implantología.",
+  },
 ];
 
 export const metadata: Metadata = {
   title: "Implantes Dentales en Viladecans | Especialistas Vela-Segalà",
   description:
-    `Implantes dentales en Viladecans. Especialistas con +15 años de experiencia. Marcas premium Straumann y Nobel Biocare. Primera visita gratuita. Financiación sin intereses. Clínica Vela-Segalà Viladecans.`,
+    `Implantes dentales en Viladecans con el Dr. Xavier Vela, eminencia en implantología. Especialistas con +15 años de experiencia. Marcas premium Straumann y Nobel Biocare. Técnica BOPT. Primera visita gratuita. Financiación sin intereses. Dientes en el día. Sedación consciente disponible. Llama al ${CLINIC_INFO.phoneDisplay}`,
   keywords: [
     "implantes dentales viladecans",
-    "implantología dental viladecans",
+    "implantología viladecans",
+    "doctor vela implantes",
     "precio implantes dentales viladecans",
-    "cuanto cuesta un implante dental en viladecans",
-    "implantes dentales baratos viladecans",
+    "cuanto cuesta un implante dental viladecans",
+    "dentista implantes viladecans",
     "clinica implantes viladecans",
     "implantes straumann viladecans",
-    "implantes nobel biocare viladecans",
+    "implantes carga inmediata viladecans",
+    "dientes en el dia viladecans",
+    "sedacion consciente implantes",
   ],
   openGraph: {
     title: "Implantes Dentales en Viladecans | Especialistas Vela-Segalà",
     description:
-      "Recupera tus dientes con implantes dentales de calidad premium. Especialistas con +15 años. Primera visita gratuita y financiación sin intereses.",
+      "Recupera tus dientes con implantes dentales de calidad premium. Dr. Xavier Vela, eminencia en implantología. +15 años de experiencia. Primera visita gratuita.",
     images: ["/images/implantes-dentales-viladecans.jpg"],
   },
 };
@@ -83,63 +91,65 @@ export default function ImplantesDentalesPage() {
           <div className="mt-8 grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <div className="inline-block bg-black text-white px-4 py-2 rounded-lg text-sm font-bold mb-4">
-                IMPLANTOLOGÍA DENTAL AVANZADA
+                DR. XAVIER VELA · EMINENCIA EN IMPLANTOLOGÍA
               </div>
               <h1 className="text-4xl md:text-5xl font-bold text-black mb-6">
                 Implantes Dentales en Viladecans
               </h1>
-              <p className="text-xl text-slate-700 mb-4 leading-relaxed">
-                Recupera la funcionalidad y estética de tus dientes con{" "}
-                <strong>implantes dentales de última generación en Viladecans</strong>. Los doctores Xavier Vela 
-                y Maribel Segalà, especialistas con más de 15 años de experiencia, dirigen personalmente todos los 
-                tratamientos de implantología.
+              <p className="text-xl text-slate-700 mb-4 leading-relaxed font-semibold">
+                Recupera tus dientes perdidos con el mejor tratamiento de implantes dentales en Viladecans
               </p>
               <p className="text-lg text-slate-600 mb-6 leading-relaxed">
-                Somos <strong>pioneros en España en la técnica BOPT para implantes dentales</strong>, que permite 
-                resultados más naturales y predecibles. Utilizamos únicamente <strong>implantes premium Straumann 
-                y Nobel Biocare</strong> con más del 98% de éxito y garantía de por vida.
+                La <strong>implantología</strong> es la mejor opción para reemplazar las piezas dentales perdidas y 
+                <strong> no perder la función y la estética dental</strong>. En Clínicas Vela-Segalà, el <strong>Dr. Xavier Vela</strong>, 
+                reconocido especialista en implantología, y su equipo médico te ayudarán a recuperar tu sonrisa.
               </p>
               
-              <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-6 shadow-lg mb-6 border border-gray-200">
-                <div className="mb-4">
-                  <div className="flex items-center gap-2 text-sm text-slate-600 mb-1">
-                    <Clock className="w-4 h-4" />
-                    Duración del tratamiento
+              <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-6 shadow-lg mb-6 border-2 border-black/5">
+                <div className="grid grid-cols-2 gap-4 mb-4">
+                  <div>
+                    <div className="text-3xl font-bold text-black">+15 años</div>
+                    <div className="text-xs text-slate-600">de experiencia</div>
                   </div>
-                  <div className="text-3xl font-bold text-black">
-                    3-6 meses
+                  <div>
+                    <div className="text-3xl font-bold text-black">98%</div>
+                    <div className="text-xs text-slate-600">tasa de éxito</div>
                   </div>
-                  <div className="text-xs text-slate-500">Proceso completo</div>
                 </div>
                 <div className="space-y-2 text-sm text-slate-700">
                   <div className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 flex-shrink-0" />
-                    Financiación sin intereses hasta 12 meses
+                    <CheckCircle className="w-4 h-4 flex-shrink-0 text-black" />
+                    <strong>Primera visita y diagnóstico 3D gratuito</strong>
                   </div>
                   <div className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 flex-shrink-0" />
-                    Primera visita y diagnóstico 3D gratuito
+                    <CheckCircle className="w-4 h-4 flex-shrink-0 text-black" />
+                    Dientes en el día - Carga inmediata
                   </div>
                   <div className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 flex-shrink-0" />
+                    <CheckCircle className="w-4 h-4 flex-shrink-0 text-black" />
                     Implantes premium Straumann y Nobel Biocare
                   </div>
                   <div className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 flex-shrink-0" />
-                    Garantía de por vida en implantes
+                    <CheckCircle className="w-4 h-4 flex-shrink-0 text-black" />
+                    Sedación consciente disponible
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4 flex-shrink-0 text-black" />
+                    Financiación sin intereses hasta 12 meses
                   </div>
                 </div>
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link href="/pedir-cita" className="btn-primary text-center">
+                <Link href="/pedir-cita" className="inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white bg-black rounded-2xl hover:shadow-xl hover:scale-105 transition-all">
                   Pedir Cita Gratuita
                 </Link>
                 <a
                   href={`tel:${CLINIC_INFO.phone}`}
-                  className="btn-secondary text-center"
+                  className="inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-black bg-white border-2 border-black rounded-2xl hover:bg-black hover:text-white transition-all"
                 >
-                  Llamar: {CLINIC_INFO.phoneDisplay}
+                  <Phone className="w-5 h-5 mr-2" />
+                  {CLINIC_INFO.phoneDisplay}
                 </a>
               </div>
             </div>
@@ -157,297 +167,369 @@ export default function ImplantesDentalesPage() {
         </div>
       </section>
 
-      {/* Qué son los implantes */}
+      {/* No es solo estética */}
       <section className="section-padding bg-white">
-        <div className="container-custom max-w-4xl">
-          <h2 className="text-3xl md:text-4xl font-bold text-black mb-6">
-            ¿Qué son los Implantes Dentales?
-          </h2>
-          <p className="text-lg text-slate-700 mb-4 leading-relaxed">
-            Los <strong>implantes dentales</strong> son raíces artificiales de titanio biocompatible que se insertan 
-            en el hueso maxilar o mandibular para sustituir dientes perdidos o ausentes. Sobre estos implantes se coloca 
-            una corona o prótesis que imita perfectamente el aspecto, función y sensación de un diente natural.
-          </p>
-          <p className="text-lg text-slate-700 mb-4 leading-relaxed">
-            En nuestra <strong>clínica dental de Viladecans</strong> utilizamos <strong>implantes dentales de marcas 
-            líderes mundiales</strong> como Straumann (Suiza), Nobel Biocare (Suecia) y Zimmer (EEUU), que ofrecen las 
-            mayores tasas de éxito (superiores al 98%), la mejor osteointegración y durabilidad certificada con estudios 
-            científicos de más de 30 años de seguimiento.
-          </p>
-          <p className="text-lg text-slate-700 mb-6 leading-relaxed">
-            Los doctores <strong>Xavier Vela y Maribel Segalà</strong> son especialistas en implantología dental con 
-            certificación internacional y pioneros en España en la aplicación de la <strong>técnica BOPT</strong> 
-            (Biologically Oriented Preparation Technique) para implantes, que permite resultados estéticos mucho más 
-            naturales y predecibles a largo plazo.
-          </p>
+        <div className="container-custom">
+          <div className="max-w-3xl mx-auto text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-black mb-6">
+              No es solo estética
+            </h2>
+            <p className="text-lg text-slate-600 leading-relaxed">
+              Queremos ayudarte a <strong>recuperar la funcionalidad total de tu boca y frenar la degeneración de hueso</strong>.
+            </p>
+          </div>
 
-          <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-8 shadow-lg border border-gray-200">
-            <h3 className="text-2xl font-bold mb-4">Tipos de Implantes Dentales que Realizamos</h3>
-            <div className="grid md:grid-cols-2 gap-6">
-              <div>
-                <h4 className="font-bold mb-2 flex items-center gap-2">
-                  <CheckCircle className="w-5 h-5" />
-                  Implantes Unitarios
-                </h4>
-                <p className="text-slate-600 text-sm leading-relaxed">
-                  Para reemplazar un único diente perdido sin afectar a los dientes adyacentes.
-                </p>
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            <div className="text-center">
+              <div className="w-16 h-16 bg-black rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <Smile className="w-8 h-8 text-white" />
               </div>
-              <div>
-                <h4 className="font-bold mb-2 flex items-center gap-2">
-                  <CheckCircle className="w-5 h-5" />
-                  Implantes Múltiples
-                </h4>
-                <p className="text-slate-600 text-sm leading-relaxed">
-                  Para reemplazar varios dientes perdidos con puentes sobre implantes.
-                </p>
+              <h3 className="font-bold text-lg mb-2">Recupera tu sonrisa</h3>
+              <p className="text-slate-600 text-sm">
+                Restituimos tu sonrisa con resultados naturales y estéticos
+              </p>
+            </div>
+            <div className="text-center">
+              <div className="w-16 h-16 bg-black rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <Activity className="w-8 h-8 text-white" />
               </div>
-              <div>
-                <h4 className="font-bold mb-2 flex items-center gap-2">
-                  <CheckCircle className="w-5 h-5" />
-                  Implantes de Arcada Completa
-                </h4>
-                <p className="text-slate-600 text-sm leading-relaxed">
-                  All-on-4 o All-on-6 para rehabilitar toda una arcada con solo 4-6 implantes.
-                </p>
+              <h3 className="font-bold text-lg mb-2">Función masticatoria</h3>
+              <p className="text-slate-600 text-sm">
+                Recupera la capacidad de masticar y pronunciar con claridad
+              </p>
+            </div>
+            <div className="text-center">
+              <div className="w-16 h-16 bg-black rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <Shield className="w-8 h-8 text-white" />
               </div>
-              <div>
-                <h4 className="font-bold mb-2 flex items-center gap-2">
-                  <CheckCircle className="w-5 h-5" />
-                  Implantes Inmediatos
-                </h4>
-                <p className="text-slate-600 text-sm leading-relaxed">
-                  Colocación del implante el mismo día de la extracción dental.
-                </p>
+              <h3 className="font-bold text-lg mb-2">Frena la pérdida ósea</h3>
+              <p className="text-slate-600 text-sm">
+                Evita la reabsorción ósea y mantén la estructura facial
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-12 text-center">
+            <p className="text-lg text-slate-700 mb-6">
+              Con el tiempo, la falta de dientes te provocará <strong>dificultades al masticar o al pronunciar palabras con claridad</strong> y 
+              la reabsorción ósea avanzará inevitablemente.
+            </p>
+            <p className="text-xl font-bold text-black mb-6">
+              Podemos solucionar esto con un tratamiento de implantes dentales en Viladecans.
+            </p>
+            <Link
+              href="/pedir-cita"
+              className="inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white bg-black rounded-2xl hover:shadow-xl hover:scale-105 transition-all"
+            >
+              Pedir Cita Ahora
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Beneficios de los implantes */}
+      <section className="section-padding bg-gradient-to-b from-gray-50 to-white">
+        <div className="container-custom">
+          <div className="max-w-3xl mx-auto text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-black mb-6">
+              Beneficios de los Implantes Dentales
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+            <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow">
+              <div className="w-12 h-12 bg-black text-white rounded-xl flex items-center justify-center mb-4">
+                <CheckCircle className="w-6 h-6" />
               </div>
+              <h3 className="font-bold text-lg mb-2">Función completa</h3>
+              <p className="text-slate-600 text-sm">
+                Recuperas la función masticatoria por completo al recuperar las piezas perdidas
+              </p>
+            </div>
+            <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow">
+              <div className="w-12 h-12 bg-black text-white rounded-xl flex items-center justify-center mb-4">
+                <Smile className="w-6 h-6" />
+              </div>
+              <h3 className="font-bold text-lg mb-2">Estética natural</h3>
+              <p className="text-slate-600 text-sm">
+                Restituimos tu sonrisa con resultados indistinguibles de dientes naturales
+              </p>
+            </div>
+            <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow">
+              <div className="w-12 h-12 bg-black text-white rounded-xl flex items-center justify-center mb-4">
+                <Shield className="w-6 h-6" />
+              </div>
+              <h3 className="font-bold text-lg mb-2">Protege tus dientes</h3>
+              <p className="text-slate-600 text-sm">
+                Los dientes naturales contiguos no se dañan ni se tallan
+              </p>
+            </div>
+            <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow">
+              <div className="w-12 h-12 bg-black text-white rounded-xl flex items-center justify-center mb-4">
+                <Heart className="w-6 h-6" />
+              </div>
+              <h3 className="font-bold text-lg mb-2">Proceso sencillo</h3>
+              <p className="text-slate-600 text-sm">
+                Tratamiento rutinario e indoloro con anestesia local o sedación
+              </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Beneficios */}
-      <section className="section-padding bg-gray-50">
-        <div className="container-custom">
-          <h2 className="text-3xl md:text-4xl font-bold text-black mb-8 text-center">
-            Ventajas de los Implantes Dentales en Viladecans
-          </h2>
-          <p className="text-center text-slate-600 mb-12 max-w-3xl mx-auto">
-            Los implantes dentales son la mejor solución para reemplazar dientes perdidos. Estas son las principales 
-            ventajas de elegir implantes frente a otras alternativas como puentes o prótesis removibles.
-          </p>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[
-              {
-                icon: <Shield className="w-10 h-10" />,
-                title: "Misma Función que un Diente Natural",
-                description:
-                  "Podrás comer, hablar y sonreír con total normalidad y confianza. Los implantes se integran con el hueso y funcionan exactamente igual que tus dientes naturales.",
-              },
-              {
-                icon: <Award className="w-10 h-10" />,
-                title: "Resultado Estético Perfecto",
-                description:
-                  "Nadie notará que llevas un implante dental. Con la técnica BOPT conseguimos que el implante y la corona se integren perfectamente con el resto de tu sonrisa de forma totalmente natural.",
-              },
-              {
-                icon: <Users className="w-10 h-10" />,
-                title: "Preserva el Hueso Maxilar",
-                description:
-                  "Los implantes dentales evitan la reabsorción ósea que ocurre cuando falta un diente. Mantienen la estructura facial y previenen el envejecimiento prematuro del rostro.",
-              },
-              {
-                icon: <Calendar className="w-10 h-10" />,
-                title: "Duran Toda la Vida",
-                description:
-                  "Con cuidados adecuados y revisiones anuales en nuestra clínica de Viladecans, los implantes pueden durar para siempre. Tasa de éxito superior al 98%.",
-              },
-              {
-                icon: <CheckCircle className="w-10 h-10" />,
-                title: "No Afecta Dientes Vecinos",
-                description:
-                  "A diferencia de los puentes dentales tradicionales, no hay que tallar ni dañar los dientes sanos adyacentes. Los implantes son independientes.",
-              },
-              {
-                icon: <Microscope className="w-10 h-10" />,
-                title: "Tecnología Avanzada",
-                description:
-                  "Utilizamos escáner intraoral 3D, TAC dental, cirugía guiada por ordenador y técnica BOPT para máxima precisión y resultados predecibles.",
-              },
-            ].map((benefit, index) => (
-              <div key={index} className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-shadow">
-                <div className="mb-4 p-3 bg-gray-50 rounded-xl inline-block">
-                  {benefit.icon}
-                </div>
-                <h3 className="font-bold text-lg text-black mb-3">
-                  {benefit.title}
-                </h3>
-                <p className="text-slate-600 text-sm leading-relaxed">{benefit.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Proceso */}
+      {/* Proceso de colocación - 5 pasos */}
       <section className="section-padding bg-white">
-        <div className="container-custom max-w-4xl">
-          <h2 className="text-3xl md:text-4xl font-bold text-black mb-4 text-center">
-            Proceso del Tratamiento de Implantes Dentales en Viladecans
-          </h2>
-          <p className="text-center text-slate-600 mb-12 max-w-2xl mx-auto">
-            Te explicamos paso a paso cómo es el proceso completo de colocación de implantes dentales en nuestra 
-            clínica de Viladecans. Transparencia total en cada fase del tratamiento.
-          </p>
-          <div className="space-y-6">
+        <div className="container-custom">
+          <div className="max-w-3xl mx-auto text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-black mb-6">
+              Así Colocamos un Implante Dental en Nuestra Clínica de Viladecans
+            </h2>
+          </div>
+
+          <div className="max-w-4xl mx-auto space-y-6">
             {[
               {
-                step: "1",
-                icon: <Calendar className="w-6 h-6" />,
-                title: "Primera Visita Gratuita y Estudio Completo",
-                description:
-                  "Evaluamos tu caso con radiografías digitales, TAC dental 3D y escáner intraoral. Planificamos tu tratamiento de forma virtual y te mostramos el resultado final antes de empezar. Te explicamos todo el proceso y te damos un presupuesto detallado sin compromiso. También evaluamos si es necesario injerto de hueso o elevación de seno maxilar.",
+                number: "1",
+                title: "Estudio previo en profundidad",
+                description: "Diagnóstico dirigido por el Dr. Vela, eminencia en implantología. Realizamos un escáner 3D completo para visualizar la forma y tamaño del hueso.",
+                icon: Microscope,
               },
               {
-                step: "2",
-                icon: <Drill className="w-6 h-6" />,
-                title: "Colocación del Implante Dental",
-                description:
-                  "Con anestesia local efectiva, insertamos el implante de titanio en el hueso mediante cirugía mínimamente invasiva. Utilizamos cirugía guiada por ordenador para máxima precisión. La intervención dura entre 30-60 minutos por implante y es totalmente indolora. En casos de implantes inmediatos, extraemos el diente y colocamos el implante en la misma sesión.",
+                number: "2",
+                title: "Colocación del implante",
+                description: "Es un proceso quirúrgico rutinario e indoloro con anestesia local. Duración: 30-60 minutos por implante.",
+                icon: Drill,
               },
               {
-                step: "3",
-                icon: <Clock className="w-6 h-6" />,
-                title: "Osteointegración (2-4 meses)",
-                description:
-                  "El implante se integra progresivamente con el hueso maxilar o mandibular. Este proceso de osteointegración dura entre 2-4 meses dependiendo de la calidad del hueso. Durante este tiempo llevas una prótesis provisional estética para que no notes la falta del diente. Hacemos seguimiento con revisiones periódicas.",
+                number: "3",
+                title: "Cicatrización y cuidados",
+                description: "Osteointegración del tornillo implantado con el hueso. Proceso natural que tarda 2-4 meses.",
+                icon: Clock,
               },
               {
-                step: "4",
-                icon: <Award className="w-6 h-6" />,
-                title: "Colocación de la Corona Definitiva",
-                description:
-                  "Una vez integrado el implante dental completamente, tomamos medidas digitales con escáner 3D y fabricamos tu corona personalizada de porcelana o zirconio en nuestro laboratorio colaborador. La corona se diseña específicamente para tu boca, imitando el color, forma y translucidez de tus dientes naturales. La colocamos y ajustamos perfectamente tu oclusión.",
+                number: "4",
+                title: "Colocación de la corona",
+                description: "Tu nuevo diente definitivo. Corona cerámica personalizada con estética y función perfecta.",
+                icon: Smile,
               },
               {
-                step: "5",
-                icon: <CheckCircle className="w-6 h-6" />,
-                title: "Revisiones Periódicas y Mantenimiento",
-                description:
-                  "Hacemos seguimiento a largo plazo para asegurar el éxito del implante dental. Recomendamos una revisión cada 6-12 meses en nuestra clínica de Viladecans, donde comprobamos el estado del implante, realizamos limpieza profesional y radiografías de control. El mantenimiento es clave para la durabilidad de tus implantes.",
+                number: "5",
+                title: "Revisiones periódicas",
+                description: "Para garantizar el éxito a largo plazo. Verificamos el hueso, ajustes y la salud de la encía.",
+                icon: CheckCircle,
               },
-            ].map((step) => (
+            ].map((step, index) => (
               <div
-                key={step.step}
-                className="flex gap-6 bg-gradient-to-br from-gray-50 to-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow"
+                key={index}
+                className="flex gap-6 items-start bg-gradient-to-br from-gray-50 to-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all"
               >
                 <div className="flex-shrink-0 w-14 h-14 bg-black text-white rounded-2xl flex items-center justify-center font-bold text-2xl">
-                  {step.step}
+                  {step.number}
                 </div>
-                <div>
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="p-2 bg-gray-100 rounded-lg">
-                      {step.icon}
-                    </div>
-                    <h3 className="font-bold text-xl text-black">
-                      {step.title}
-                    </h3>
-                  </div>
+                <div className="flex-1">
+                  <h3 className="text-xl font-bold text-black mb-2 flex items-center gap-3">
+                    <step.icon className="w-6 h-6" />
+                    {step.title}
+                  </h3>
                   <p className="text-slate-600 leading-relaxed">{step.description}</p>
                 </div>
               </div>
             ))}
           </div>
+
+          <div className="mt-12 text-center">
+            <Link
+              href="/pedir-cita"
+              className="inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white bg-black rounded-2xl hover:shadow-xl hover:scale-105 transition-all"
+            >
+              Pedir Cita Gratuita
+            </Link>
+          </div>
         </div>
       </section>
 
-      {/* Marcas de Implantes */}
-      <section className="section-padding bg-gray-50">
-        <div className="container-custom max-w-4xl">
-          <h2 className="text-3xl md:text-4xl font-bold text-black mb-6 text-center">
-            Implantes Dentales de Marcas Premium
-          </h2>
-          <p className="text-center text-slate-600 mb-12 max-w-2xl mx-auto">
-            En nuestra clínica dental de Viladecans trabajamos únicamente con las mejores marcas de implantes dentales 
-            del mundo, con estudios científicos que avalan su éxito a largo plazo.
-          </p>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="bg-white rounded-2xl p-6 shadow-lg text-center">
-              <div className="text-2xl font-bold mb-2">Straumann</div>
-              <div className="text-sm text-slate-600 mb-4">Suiza - Líder Mundial</div>
-              <p className="text-sm text-slate-700 leading-relaxed">
-                Implantes premium con la mayor tasa de éxito del mercado. Superficie SLA para osteointegración rápida.
+      {/* Análisis previo - Tecnología 3D */}
+      <section className="section-padding bg-gradient-to-b from-gray-50 to-white">
+        <div className="container-custom">
+          <div className="grid lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+            <div>
+              <h2 className="text-3xl md:text-4xl font-bold text-black mb-6">
+                Análisis Previo al Tratamiento
+              </h2>
+              <p className="text-lg text-slate-700 mb-4 leading-relaxed">
+                Nuestra clínica cuenta con la más novedosa tecnología, que permite realizar un correcto{" "}
+                <strong>diagnóstico con tecnología 3D</strong>. De esta forma podemos visualizar tanto la forma, 
+                como el tamaño del hueso y de las futuras piezas.
               </p>
+              <p className="text-lg text-slate-700 mb-6 leading-relaxed">
+                En <strong>Clínica Dental Vela-Segalà</strong>, el <strong>Dr. Vela</strong>, reconocido especialista en 
+                implantología, analiza cada caso para ofrecer a nuestros pacientes el mejor tratamiento, siempre basándose 
+                en numerosos estudios y aplicando las técnicas más innovadoras.
+              </p>
+              <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200">
+                <h3 className="font-bold text-lg mb-4">Incluye en tu primera visita gratuita:</h3>
+                <div className="space-y-3">
+                  <div className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 flex-shrink-0 text-black mt-0.5" />
+                    <span className="text-slate-700">Escáner 3D completo (CBCT)</span>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 flex-shrink-0 text-black mt-0.5" />
+                    <span className="text-slate-700">Planificación digital del tratamiento</span>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 flex-shrink-0 text-black mt-0.5" />
+                    <span className="text-slate-700">Presupuesto detallado sin compromiso</span>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 flex-shrink-0 text-black mt-0.5" />
+                    <span className="text-slate-700">Asesoramiento personalizado del Dr. Vela</span>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="bg-white rounded-2xl p-6 shadow-lg text-center">
-              <div className="text-2xl font-bold mb-2">Nobel Biocare</div>
-              <div className="text-sm text-slate-600 mb-4">Suecia - 60 años</div>
-              <p className="text-sm text-slate-700 leading-relaxed">
-                Pioneros en implantología. Implantes con conexión cónica para máxima estabilidad a largo plazo.
-              </p>
-            </div>
-            <div className="bg-white rounded-2xl p-6 shadow-lg text-center">
-              <div className="text-2xl font-bold mb-2">Zimmer</div>
-              <div className="text-sm text-slate-600 mb-4">EEUU - Premium</div>
-              <p className="text-sm text-slate-700 leading-relaxed">
-                Superficie Trabecular Metal para osteointegración acelerada. Ideales para hueso de baja densidad.
-              </p>
+            <div className="aspect-[4/3] bg-gradient-to-br from-gray-100 to-gray-50 rounded-3xl overflow-hidden shadow-xl relative">
+              <Image
+                src="/images/tecnologia-dentista-viladecans.jpg"
+                alt="Tecnología 3D para implantes dentales - Clínica Vela-Segalà"
+                fill
+                className="object-cover"
+              />
             </div>
           </div>
         </div>
       </section>
 
-      {/* Casos Especiales */}
+      {/* Dientes en el Día - Carga Inmediata */}
       <section className="section-padding bg-white">
-        <div className="container-custom max-w-4xl">
-          <h2 className="text-3xl md:text-4xl font-bold text-black mb-6">
-            Soluciones para Casos Complejos de Implantes
-          </h2>
-          <p className="text-lg text-slate-700 mb-8 leading-relaxed">
-            En nuestra clínica dental de Viladecans somos especialistas en <strong>casos complejos de implantología</strong>. 
-            Si te han dicho que no tienes suficiente hueso o que tu caso es complicado, te recomendamos una segunda opinión con 
-            nuestros especialistas.
-          </p>
-
-          <div className="space-y-6">
-            <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-6 shadow-lg">
-              <h3 className="text-xl font-bold mb-3">Injertos de Hueso y Regeneración Ósea Guiada</h3>
-              <p className="text-slate-700 leading-relaxed">
-                Cuando no hay suficiente hueso para colocar implantes, realizamos <strong>injertos de hueso</strong> autólogo o 
-                biomaterial con técnicas de regeneración ósea guiada (ROG). Utilizamos membranas reabsorbibles y biomateriales 
-                de última generación. En 4-6 meses tendrás el hueso necesario para tus implantes dentales.
-              </p>
+        <div className="container-custom">
+          <div className="grid lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+            <div className="aspect-[4/3] bg-gradient-to-br from-gray-100 to-gray-50 rounded-3xl overflow-hidden shadow-xl relative">
+              <Image
+                src="/images/implantes-dentales-protesis-viladecans.jpg"
+                alt="Implantes de carga inmediata - Dientes en el día"
+                fill
+                className="object-cover"
+              />
             </div>
-
-            <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-6 shadow-lg">
-              <h3 className="text-xl font-bold mb-3">Elevación de Seno Maxilar</h3>
-              <p className="text-slate-700 leading-relaxed">
-                Para casos de poco hueso en la zona posterior del maxilar superior, realizamos <strong>elevación de seno 
-                maxilar</strong> mediante técnicas mínimamente invasivas. Esto permite colocar implantes dentales en zonas donde 
-                parecía imposible. Técnica con tasa de éxito superior al 95%.
+            <div>
+              <div className="inline-block bg-black text-white px-4 py-2 rounded-lg text-sm font-bold mb-4">
+                DIENTES EN EL DÍA
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-black mb-6">
+                Recupera tus Dientes en Menos de 24 Horas
+              </h2>
+              <p className="text-lg text-slate-700 mb-4 leading-relaxed">
+                <strong>Reemplazar uno o varios dientes de manera inmediata</strong> y recuperar la sonrisa en el día es posible 
+                gracias a los <strong>implantes de carga inmediata</strong>, un proceso donde el implante dental se coloca en la 
+                misma cita en la que se extrae el diente que se debe reemplazar.
               </p>
+              <p className="text-lg text-slate-700 mb-6 leading-relaxed">
+                En nuestras clínicas dentales de Viladecans somos <strong>especialistas en implantes dentales inmediatos</strong>, 
+                pudiendo colocar la prótesis el mismo día gracias a la cirugía orientada por ordenador.
+              </p>
+
+              <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-6 shadow-lg mb-6">
+                <h3 className="font-bold text-lg mb-4">Ventajas de los implantes inmediatos:</h3>
+                <div className="space-y-3">
+                  <div className="flex items-start gap-3">
+                    <Zap className="w-5 h-5 flex-shrink-0 text-black mt-0.5" />
+                    <span className="text-slate-700"><strong>Ahorro de tiempo:</strong> Dientes el mismo día</span>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 flex-shrink-0 text-black mt-0.5" />
+                    <span className="text-slate-700"><strong>Menos intervenciones:</strong> Todo en una sola cita</span>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <Shield className="w-5 h-5 flex-shrink-0 text-black mt-0.5" />
+                    <span className="text-slate-700"><strong>Reduce la reabsorción ósea</strong></span>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <Smile className="w-5 h-5 flex-shrink-0 text-black mt-0.5" />
+                    <span className="text-slate-700"><strong>Sin esperas:</strong> Sonríe inmediatamente</span>
+                  </div>
+                </div>
+              </div>
+
+              <Link
+                href="/pedir-cita"
+                className="inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white bg-black rounded-2xl hover:shadow-xl hover:scale-105 transition-all"
+              >
+                Quiero Recuperar Mis Dientes
+              </Link>
             </div>
+          </div>
+        </div>
+      </section>
 
-            <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-6 shadow-lg">
-              <h3 className="text-xl font-bold mb-3">Implantes Zigomáticos</h3>
-              <p className="text-slate-700 leading-relaxed">
-                Para casos de <strong>atrofia severa del maxilar superior</strong>, utilizamos implantes zigomáticos que se anclan 
-                en el hueso cigomático (pómulo). Solución sin injertos para rehabilitar el maxilar completo de forma fija.
+      {/* Sedación Consciente */}
+      <section className="section-padding bg-gradient-to-b from-gray-50 to-white">
+        <div className="container-custom">
+          <div className="grid lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+            <div>
+              <div className="inline-block bg-black text-white px-4 py-2 rounded-lg text-sm font-bold mb-4">
+                ¡ADIÓS AL MIEDO!
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-black mb-6">
+                Sedación Consciente
+              </h2>
+              <p className="text-lg text-slate-700 mb-4 leading-relaxed">
+                Como especialistas en el cuidado y la atención médica, comprendemos que este proceso pueda generar 
+                miedo en algunas personas. Por eso ofrecemos la posibilidad de utilizar <strong>sedación intravenosa 
+                para que el paciente esté relajado</strong> en todo momento.
               </p>
+              <p className="text-lg text-slate-700 mb-6 leading-relaxed">
+                La sedación se lleva a cabo mediante fármacos sedantes que se introducen por vía intravenosa para{" "}
+                <strong>controlar la ansiedad</strong> y que el paciente no sienta ningún tipo de miedo ni malestar.
+              </p>
+              <p className="text-lg text-slate-700 mb-6 leading-relaxed">
+                En las clínicas dentales Vela-Segalà de Viladecans contamos con <strong>expertos anestesistas</strong> que 
+                harán que tu <strong>experiencia con nosotros sea agradable y satisfactoria</strong>.
+              </p>
+
+              <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200">
+                <h3 className="font-bold text-lg mb-4">Beneficios de la sedación consciente:</h3>
+                <div className="space-y-3">
+                  <div className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 flex-shrink-0 text-black mt-0.5" />
+                    <span className="text-slate-700">Elimina el miedo y la ansiedad</span>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 flex-shrink-0 text-black mt-0.5" />
+                    <span className="text-slate-700">Proceso completamente indoloro</span>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 flex-shrink-0 text-black mt-0.5" />
+                    <span className="text-slate-700">Anestesista profesional presente</span>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 flex-shrink-0 text-black mt-0.5" />
+                    <span className="text-slate-700">Recuperación rápida y sin efectos secundarios</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="aspect-[4/3] bg-gradient-to-br from-gray-100 to-gray-50 rounded-3xl overflow-hidden shadow-xl relative">
+              <Image
+                src="/images/visita-clinica-dental-viladecans.jpg"
+                alt="Sedación consciente para implantes dentales"
+                fill
+                className="object-cover"
+              />
             </div>
           </div>
         </div>
       </section>
 
       {/* Resultados - Before/After */}
-      <section className="section-padding bg-gradient-to-b from-white to-gray-50">
+      <section className="section-padding bg-white">
         <div className="container-custom">
           <div className="text-center max-w-3xl mx-auto mb-12">
-            <div className="inline-block bg-green-100 text-green-800 px-4 py-2 rounded-lg text-sm font-bold mb-4">
+            <div className="inline-block bg-black text-white px-4 py-2 rounded-lg text-sm font-bold mb-4">
               CASOS REALES
             </div>
             <h2 className="text-3xl md:text-5xl font-bold text-black mb-6">
-              Resultados de nuestro tratamiento de implantes dentales en Viladecans
+              Casos Clínicos de Nuestro Tratamiento de Implantes Dentales en Viladecans
             </h2>
             <p className="text-lg text-slate-600 leading-relaxed">
               Casos reales de pacientes tratados en nuestra clínica. Desliza el control para ver el antes y el después.
@@ -459,7 +541,7 @@ export default function ImplantesDentalesPage() {
             {/* Caso 1 */}
             <div>
               <h3 className="text-xl font-bold text-black mb-3">
-                Caso 1: Implantes en sector anterior y prótesis BOPT sobre implantes
+                Implantes en sector anterior y prótesis BOPT sobre implantes
               </h3>
               <p className="text-slate-600 mb-6 text-sm leading-relaxed">
                 Rehabilitación completa del sector anterior con implantes dentales y prótesis cerámica BOPT, 
@@ -476,7 +558,7 @@ export default function ImplantesDentalesPage() {
             {/* Caso 2 */}
             <div>
               <h3 className="text-xl font-bold text-black mb-3">
-                Caso 2: Rehabilitación con implantes
+                Rehabilitación con implantes
               </h3>
               <p className="text-slate-600 mb-6 text-sm leading-relaxed">
                 Tratamiento completo de implantología dental con resultados estéticos y funcionales excepcionales. 
@@ -539,17 +621,17 @@ export default function ImplantesDentalesPage() {
       {/* CTA Final */}
       <section className="section-padding bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white">
         <div className="container-custom text-center">
-          <Award className="w-16 h-16 mx-auto mb-6" />
+          <Star className="w-16 h-16 mx-auto mb-6 text-white" />
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            ¿Listo para Recuperar tu Sonrisa con Implantes Dentales?
+            ¿Por Qué Retrasar Más Tu Nueva Sonrisa?
           </h2>
           <p className="text-xl mb-4 text-gray-200 max-w-2xl mx-auto">
-            Pide tu <strong>primera visita gratuita</strong> en nuestra clínica dental de Viladecans y te haremos un 
-            estudio completo con escáner 3D, planificación digital y presupuesto detallado.
+            Queremos ponerte fácil la decisión. Pide tu <strong>primera visita gratuita</strong> en nuestra clínica dental 
+            de Viladecans y te haremos un estudio completo con escáner 3D, planificación digital y presupuesto detallado.
           </p>
           <p className="text-base mb-8 text-gray-300 max-w-2xl mx-auto">
             <strong>Especialistas en implantes dentales en Viladecans</strong> con más de 15 años de experiencia. 
-            Más de 10.000 implantes colocados con éxito. Financiación sin intereses.
+            Más de 10.000 implantes colocados con éxito. Financiación sin intereses. Dientes en el día.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
