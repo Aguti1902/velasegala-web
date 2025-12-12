@@ -41,7 +41,7 @@ export default function Toast({
 
   return (
     <div
-      className={`fixed top-4 right-4 z-[9999] flex items-center gap-3 min-w-[300px] max-w-md p-4 rounded-xl border-l-4 shadow-2xl animate-in slide-in-from-right ${colors[type]}`}
+      className={`fixed top-4 right-4 z-[99999] flex items-center gap-3 min-w-[300px] max-w-md p-4 rounded-xl border-l-4 shadow-2xl animate-in slide-in-from-right ${colors[type]}`}
     >
       <div className="flex-shrink-0">{icons[type]}</div>
       <p className="flex-1 text-sm font-medium">{message}</p>
