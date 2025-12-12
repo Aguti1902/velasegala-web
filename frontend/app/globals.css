@@ -4,8 +4,7 @@
 
 @layer base {
   :root {
-    --font-inter: 'Inter', system-ui, sans-serif;
-    --font-poppins: 'Poppins', system-ui, sans-serif;
+    --font-raleway: 'Raleway', system-ui, sans-serif;
   }
 
   body {

@@ -1,19 +1,13 @@
 import type { Metadata } from "next";
-import { Inter, Poppins } from "next/font/google";
+import { Raleway } from "next/font/google";
 import "./globals.css";
 import { CLINIC_INFO, SITE_CONFIG } from "@/lib/constants";
 import { LocalBusinessSchema } from "@/components/seo/LocalBusinessSchema";
 
-const inter = Inter({
+const raleway = Raleway({
   subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-});
-
-const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-poppins",
+  weight: ["300", "400", "500", "600", "700", "800", "900"],
+  variable: "--font-raleway",
   display: "swap",
 });
 
@@ -98,7 +92,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" className={`${inter.variable} ${poppins.variable}`}>
+    <html lang="es" className={raleway.variable}>
       <body className="font-sans antialiased">
         <LocalBusinessSchema />
         {children}

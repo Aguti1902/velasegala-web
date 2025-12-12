@@ -36,8 +36,8 @@ const config: Config = {
         },
       },
       fontFamily: {
-        sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
-        heading: ['var(--font-poppins)', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-raleway)', 'system-ui', 'sans-serif'],
+        heading: ['var(--font-raleway)', 'system-ui', 'sans-serif'],
       },
       typography: {
         DEFAULT: {
