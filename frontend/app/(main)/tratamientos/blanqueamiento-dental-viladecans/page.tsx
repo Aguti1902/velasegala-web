@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { CLINIC_INFO } from "@/lib/constants";
-import { Sparkles, CheckCircle, Clock, Shield, Award, Smile, Sun, ChevronRight, Phone, MapPin } from "lucide-react";
+import { Sparkles, CheckCircle, Clock, Shield, Award, Smile, Sun, ChevronRight, Phone, MapPin, Star } from "lucide-react";
 
 const TREATMENT_FAQS = [
   {
@@ -93,33 +94,40 @@ export default function BlanqueamientoDentalPage() {
                 personalizadas para casa.
               </p>
               
-              <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-6 shadow-lg mb-6 border border-gray-200">
-                <div className="mb-4">
-                  <div className="flex items-center gap-2 text-sm text-slate-600 mb-1">
-                    <Clock className="w-4 h-4" />
-                    Duración del tratamiento
+              <div className="bg-gradient-to-br from-black to-gray-800 rounded-2xl p-5 shadow-xl mb-6 text-white">
+                <div className="flex items-start justify-between gap-4 mb-4 pb-3 border-b border-white/20">
+                  <div className="flex items-center gap-4">
+                    <div className="text-center">
+                      <div className="text-3xl font-bold leading-tight">1 sesión</div>
+                      <div className="text-[10px] text-gray-300 mt-0.5">45-60 minutos</div>
+                    </div>
+                    <div className="h-10 w-px bg-white/20"></div>
+                    <div className="text-center">
+                      <div className="text-3xl font-bold leading-tight">100%</div>
+                      <div className="text-[10px] text-gray-300 mt-0.5">seguro</div>
+                    </div>
                   </div>
-                  <div className="text-3xl font-bold text-black">
-                    1 sesión
-                  </div>
-                  <div className="text-xs text-slate-500">45-60 minutos en clínica</div>
                 </div>
-                <div className="space-y-2 text-sm text-slate-700">
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 flex-shrink-0" />
-                    Primera visita y valoración gratuita
+                <div className="space-y-2 text-[13px]">
+                  <div className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                    <span className="leading-tight"><strong>Primera visita y valoración gratuita</strong></span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 flex-shrink-0" />
-                    Resultados inmediatos en una sesión
+                  <div className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                    <span className="leading-tight">Resultados inmediatos en una sesión</span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 flex-shrink-0" />
-                    Tratamiento seguro y sin dolor
+                  <div className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                    <span className="leading-tight">Tratamiento seguro y sin dolor</span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 flex-shrink-0" />
-                    Dientes varios tonos más blancos
+                  <div className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                    <span className="leading-tight">Dientes varios tonos más blancos</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                    <span className="leading-tight">Tecnología LED de última generación</span>
                   </div>
                 </div>
               </div>
@@ -137,8 +145,14 @@ export default function BlanqueamientoDentalPage() {
               </div>
             </div>
 
-            <div className="aspect-[4/3] bg-gradient-to-br from-yellow-100 to-amber-50 rounded-3xl overflow-hidden shadow-xl relative flex items-center justify-center">
-              <Sparkles className="w-32 h-32 text-yellow-600" />
+            <div className="aspect-[4/3] bg-gradient-to-br from-gray-100 to-gray-50 rounded-3xl overflow-hidden shadow-xl relative">
+              <Image
+                src="/images/higiene-bucal-viladecans-3.jpg"
+                alt="Blanqueamiento Dental en Viladecans - Clínica Vela-Segalà"
+                fill
+                className="object-cover"
+                priority
+              />
             </div>
           </div>
         </div>
