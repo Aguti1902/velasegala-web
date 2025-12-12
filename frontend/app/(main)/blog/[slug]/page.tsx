@@ -261,7 +261,7 @@ export default async function BlogPostPage({
 
               {/* Content */}
               <div className="prose prose-slate prose-lg max-w-none">
-                <div className="prose-headings:font-bold prose-headings:text-black prose-p:text-slate-700 prose-p:leading-relaxed prose-a:text-black prose-a:font-bold prose-strong:text-black prose-ul:text-slate-700 prose-ol:text-slate-700">
+                <div className="prose-headings:font-bold prose-headings:text-black prose-p:text-slate-700 prose-p:leading-relaxed prose-a:text-black prose-a:font-bold prose-strong:text-black prose-ul:text-slate-700 prose-ol:text-slate-700 [&>h1:first-child]:hidden">
                   <ReactMarkdown remarkPlugins={[remarkGfm]}>
                     {post.content}
                   </ReactMarkdown>
@@ -307,9 +307,9 @@ export default async function BlogPostPage({
               </div>
             </article>
 
-            {/* Sticky Sidebar */}
+            {/* Sticky Sidebar with Independent Scroll */}
             <aside className="space-y-6">
-              <div className="sticky top-8 space-y-6">
+              <div className="sticky top-8 space-y-6 max-h-[calc(100vh-4rem)] overflow-y-auto overflow-x-hidden pr-2 sidebar-scroll">
                 {/* Categorías */}
                 {categories.length > 0 && (
                   <div className="bg-gray-50 rounded-2xl p-6">
