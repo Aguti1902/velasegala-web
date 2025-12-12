@@ -105,37 +105,40 @@ export default function ImplantesDentalesPage() {
                 reconocido especialista en implantología, y su equipo médico te ayudarán a recuperar tu sonrisa.
               </p>
               
-              <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-6 shadow-lg mb-6 border-2 border-black/5">
-                <div className="grid grid-cols-2 gap-4 mb-4">
-                  <div>
-                    <div className="text-3xl font-bold text-black">+15 años</div>
-                    <div className="text-xs text-slate-600">de experiencia</div>
-                  </div>
-                  <div>
-                    <div className="text-3xl font-bold text-black">98%</div>
-                    <div className="text-xs text-slate-600">tasa de éxito</div>
+              <div className="bg-gradient-to-br from-black to-gray-800 rounded-2xl p-5 shadow-xl mb-6 text-white">
+                <div className="flex items-start justify-between gap-4 mb-4 pb-3 border-b border-white/20">
+                  <div className="flex items-center gap-4">
+                    <div className="text-center">
+                      <div className="text-3xl font-bold leading-tight">+15 años</div>
+                      <div className="text-[10px] text-gray-300 mt-0.5">de experiencia</div>
+                    </div>
+                    <div className="h-10 w-px bg-white/20"></div>
+                    <div className="text-center">
+                      <div className="text-3xl font-bold leading-tight">98%</div>
+                      <div className="text-[10px] text-gray-300 mt-0.5">tasa de éxito</div>
+                    </div>
                   </div>
                 </div>
-                <div className="space-y-2 text-sm text-slate-700">
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 flex-shrink-0 text-black" />
-                    <strong>Primera visita y diagnóstico 3D gratuito</strong>
+                <div className="space-y-2 text-[13px]">
+                  <div className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                    <span className="leading-tight"><strong>Primera visita y diagnóstico 3D gratuito</strong></span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 flex-shrink-0 text-black" />
-                    Dientes en el día - Carga inmediata
+                  <div className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                    <span className="leading-tight">Dientes en el día - Carga inmediata</span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 flex-shrink-0 text-black" />
-                    Implantes premium Straumann y Nobel Biocare
+                  <div className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                    <span className="leading-tight">Implantes premium Straumann y Nobel Biocare</span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 flex-shrink-0 text-black" />
-                    Sedación consciente disponible
+                  <div className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                    <span className="leading-tight">Sedación consciente disponible</span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 flex-shrink-0 text-black" />
-                    Financiación sin intereses hasta 12 meses
+                  <div className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                    <span className="leading-tight">Financiación sin intereses hasta 12 meses</span>
                   </div>
                 </div>
               </div>
