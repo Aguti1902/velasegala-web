@@ -28,5 +28,40 @@ export class AdminController {
       count: updated.count,
     };
   }
+
+  @Post('delete-old-posts')
+  async deleteOldPosts() {
+    // Obtener el post más reciente
+    const latestPost = await this.prisma.post.findFirst({
+      orderBy: { createdAt: 'desc' },
+      select: { id: true, title: true, createdAt: true },
+    });
+
+    if (!latestPost) {
+      return {
+        message: 'No hay posts en la base de datos',
+        deleted: 0,
+      };
+    }
+
+    // Eliminar todos los posts excepto el más reciente
+    const deleted = await this.prisma.post.deleteMany({
+      where: {
+        id: {
+          not: latestPost.id,
+        },
+      },
+    });
+
+    return {
+      message: `Se eliminaron ${deleted.count} posts`,
+      deleted: deleted.count,
+      kept: {
+        id: latestPost.id,
+        title: latestPost.title,
+        createdAt: latestPost.createdAt,
+      },
+    };
+  }
 }
 
