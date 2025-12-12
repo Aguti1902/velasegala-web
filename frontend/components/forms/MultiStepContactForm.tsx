@@ -100,15 +100,19 @@ export function MultiStepContactForm() {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch(`${getApiUrl()}/contact`, {
+      const response = await fetch(`${getApiUrl()}/appointments`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          ...formData,
-          treatment: formData.treatment || "No especificado",
-          message: formData.message || "Sin mensaje adicional",
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          preferredDate: formData.preferredDate,
+          preferredTime: formData.preferredTime || undefined,
+          treatment: formData.treatment || undefined,
+          message: formData.message || undefined,
         }),
       });
 

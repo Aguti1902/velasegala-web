@@ -1,12 +1,31 @@
-import { Controller, Get, Patch, Delete, Param, Query, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Patch, Delete, Param, Query, Body, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { PrismaService } from '../prisma/prisma.service';
+import { CreateAppointmentDto } from './dto/create-appointment.dto';
 
 @Controller('appointments')
-@UseGuards(JwtAuthGuard)
 export class AppointmentsController {
   constructor(private prisma: PrismaService) {}
 
+  // Public endpoint - No auth required
+  @Post()
+  async create(@Body() createAppointmentDto: CreateAppointmentDto) {
+    return this.prisma.appointmentRequest.create({
+      data: {
+        name: createAppointmentDto.name,
+        email: createAppointmentDto.email,
+        phone: createAppointmentDto.phone,
+        preferredDate: createAppointmentDto.preferredDate,
+        preferredTime: createAppointmentDto.preferredTime,
+        treatment: createAppointmentDto.treatment,
+        message: createAppointmentDto.message,
+        status: 'pending',
+      },
+    });
+  }
+
+  // Protected endpoints - Auth required
+  @UseGuards(JwtAuthGuard)
   @Get()
   async findAll(
     @Query('page') page = '1',
@@ -43,6 +62,7 @@ export class AppointmentsController {
     };
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
   async findOne(@Param('id') id: string) {
     return this.prisma.appointmentRequest.findUnique({
@@ -50,6 +70,7 @@ export class AppointmentsController {
     });
   }
 
+  @UseGuards(JwtAuthGuard)
   @Patch(':id/status')
   async updateStatus(
     @Param('id') id: string,
@@ -61,6 +82,7 @@ export class AppointmentsController {
     });
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   async remove(@Param('id') id: string) {
     return this.prisma.appointmentRequest.delete({
@@ -68,6 +90,7 @@ export class AppointmentsController {
     });
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('stats/overview')
   async getStats() {
     const [total, pending, confirmed, completed] = await Promise.all([
