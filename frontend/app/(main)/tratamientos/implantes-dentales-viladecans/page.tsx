@@ -5,6 +5,7 @@ import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { CLINIC_INFO } from "@/lib/constants";
 import { Drill, CheckCircle, Clock, Shield, Award, Calendar, Users, Microscope, Activity, ChevronRight, Phone, MapPin } from "lucide-react";
+import { BeforeAfterSlider } from "@/components/ui/BeforeAfterSlider";
 
 const TREATMENT_FAQS = [
   {
@@ -434,6 +435,73 @@ export default function ImplantesDentalesPage() {
                 en el hueso cigomático (pómulo). Solución sin injertos para rehabilitar el maxilar completo de forma fija.
               </p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Resultados - Before/After */}
+      <section className="section-padding bg-gradient-to-b from-white to-gray-50">
+        <div className="container-custom">
+          <div className="text-center max-w-3xl mx-auto mb-12">
+            <div className="inline-block bg-green-100 text-green-800 px-4 py-2 rounded-lg text-sm font-bold mb-4">
+              CASOS REALES
+            </div>
+            <h2 className="text-3xl md:text-5xl font-bold text-black mb-6">
+              Resultados de nuestro tratamiento de implantes dentales en Viladecans
+            </h2>
+            <p className="text-lg text-slate-600 leading-relaxed">
+              Casos reales de pacientes tratados en nuestra clínica. Desliza el control para ver el antes y el después.
+            </p>
+          </div>
+
+          {/* Caso 1 */}
+          <div className="mb-16">
+            <h3 className="text-2xl font-bold text-black mb-4 text-center">
+              Caso 1: Implantes en sector anterior y prótesis BOPT sobre implantes
+            </h3>
+            <p className="text-center text-slate-600 mb-6 max-w-2xl mx-auto">
+              Rehabilitación completa del sector anterior con implantes dentales y prótesis cerámica BOPT, 
+              logrando resultados naturales y predecibles.
+            </p>
+            <BeforeAfterSlider
+              beforeImage="/images/implantes-dentales-caso1-antes.jpg"
+              afterImage="/images/implantes-dentales-caso1-despues.jpg"
+              beforeLabel="ANTES"
+              afterLabel="DESPUÉS"
+            />
+          </div>
+
+          {/* Caso 2 */}
+          <div>
+            <h3 className="text-2xl font-bold text-black mb-4 text-center">
+              Caso 2: Rehabilitación con implantes
+            </h3>
+            <p className="text-center text-slate-600 mb-6 max-w-2xl mx-auto">
+              Tratamiento completo de implantología dental con resultados estéticos y funcionales excepcionales.
+            </p>
+            <BeforeAfterSlider
+              beforeImage="/images/implantes-dentales-caso2-antes.jpg"
+              afterImage="/images/implantes-dentales-caso2-despues.jpg"
+              beforeLabel="ANTES"
+              afterLabel="DESPUÉS"
+            />
+          </div>
+
+          {/* CTA dentro de la sección de resultados */}
+          <div className="mt-12 text-center bg-gradient-to-br from-black to-gray-800 rounded-2xl p-8 md:p-12">
+            <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
+              ¿Quieres resultados como estos?
+            </h3>
+            <p className="text-lg text-gray-200 mb-6 max-w-2xl mx-auto">
+              Pide tu primera visita gratuita y te haremos un estudio personalizado con escáner 3D 
+              para planificar tu tratamiento de implantes dentales.
+            </p>
+            <Link
+              href="/pedir-cita"
+              className="inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-black bg-white rounded-xl hover:shadow-2xl hover:scale-105 transition-all"
+            >
+              Pedir Cita Gratuita
+            </Link>
           </div>
         </div>
       </section>
