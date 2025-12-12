@@ -137,52 +137,147 @@ export default function PedirCitaPage() {
               </div>
             </div>
 
-            {/* Sidebar - Otras formas de contacto */}
+            {/* Sidebar - Información y Contacto */}
             <aside className="space-y-6">
-              {/* Llamar Ahora */}
-              <div className="bg-gradient-to-br from-black to-gray-900 rounded-2xl p-8 shadow-xl text-white sticky top-32">
-                <Phone className="w-12 h-12 mb-4" />
-                <h3 className="text-2xl font-bold mb-3">
-                  ¿Prefieres Llamar?
-                </h3>
-                <p className="text-gray-200 mb-6">
-                  Llámanos directamente y te atenderemos enseguida
-                </p>
-                <a
-                  href={`tel:${CLINIC_INFO.phone}`}
-                  className="block bg-white text-black text-center px-6 py-4 rounded-xl font-bold hover:shadow-2xl hover:scale-105 transition-all text-xl"
-                >
-                  {CLINIC_INFO.phoneDisplay}
-                </a>
+              <div className="sticky top-32 space-y-6">
+                {/* Llamar Ahora */}
+                <div className="bg-gradient-to-br from-black to-gray-900 rounded-2xl p-6 shadow-xl text-white">
+                  <Phone className="w-10 h-10 mb-4" />
+                  <h3 className="text-xl font-bold mb-2">
+                    ¿Prefieres Llamar?
+                  </h3>
+                  <p className="text-gray-200 text-sm mb-4">
+                    Llámanos y te atenderemos enseguida
+                  </p>
+                  <a
+                    href={`tel:${CLINIC_INFO.phone}`}
+                    className="block bg-white text-black text-center px-6 py-3 rounded-xl font-bold hover:shadow-2xl hover:scale-105 transition-all text-lg mb-4"
+                  >
+                    {CLINIC_INFO.phoneDisplay}
+                  </a>
 
-                {/* Horario */}
-                <div className="mt-6 pt-6 border-t border-gray-700">
-                  <div className="flex items-center gap-2 mb-3">
-                    <Clock className="w-5 h-5" />
-                    <span className="font-bold">Horario de Atención</span>
-                  </div>
-                  <div className="space-y-2 text-sm text-gray-300">
-                    <p><span className="font-medium">Lunes a Jueves:</span><br />9:00 - 14:00 y 15:00 - 20:00</p>
-                    <p><span className="font-medium">Viernes:</span><br />9:00 - 15:00</p>
+                  {/* Horario */}
+                  <div className="pt-4 border-t border-gray-700">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Clock className="w-4 h-4" />
+                      <span className="font-bold text-sm">Horario de Atención</span>
+                    </div>
+                    <div className="space-y-1 text-xs text-gray-300">
+                      <p><span className="font-medium">Lunes a Jueves:</span><br />9:00 - 14:00 y 15:00 - 20:00</p>
+                      <p><span className="font-medium">Viernes:</span><br />9:00 - 15:00</p>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              {/* Urgencias */}
-              <div className="bg-red-50 border border-red-200 rounded-2xl p-6">
-                <div className="flex items-center gap-2 text-red-700 mb-3">
-                  <Calendar className="w-6 h-6" />
-                  <h3 className="text-lg font-bold">¿Urgencia Dental?</h3>
+                {/* Qué Esperar */}
+                <div className="bg-gradient-to-br from-blue-50 to-white rounded-2xl p-6 shadow-lg border border-blue-100">
+                  <h3 className="text-lg font-bold text-black mb-4">
+                    ¿Qué Ocurre Después?
+                  </h3>
+                  <div className="space-y-4">
+                    <div className="flex gap-3">
+                      <div className="flex-shrink-0 w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-sm">
+                        1
+                      </div>
+                      <div>
+                        <p className="text-sm font-semibold text-black">Revisamos tu solicitud</p>
+                        <p className="text-xs text-slate-600">En menos de 2 horas laborables</p>
+                      </div>
+                    </div>
+                    <div className="flex gap-3">
+                      <div className="flex-shrink-0 w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-sm">
+                        2
+                      </div>
+                      <div>
+                        <p className="text-sm font-semibold text-black">Te llamamos</p>
+                        <p className="text-xs text-slate-600">Para confirmar fecha y hora</p>
+                      </div>
+                    </div>
+                    <div className="flex gap-3">
+                      <div className="flex-shrink-0 w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-sm">
+                        3
+                      </div>
+                      <div>
+                        <p className="text-sm font-semibold text-black">¡Listo!</p>
+                        <p className="text-xs text-slate-600">Tu cita está confirmada</p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <p className="text-sm text-slate-700 mb-4">
-                  Si tienes dolor intenso o una emergencia dental, llámanos inmediatamente.
-                </p>
-                <a
-                  href={`tel:${CLINIC_INFO.phone}`}
-                  className="block bg-red-600 text-white text-center px-4 py-3 rounded-xl font-bold hover:bg-red-700 transition-colors"
-                >
-                  Llamar Urgencias
-                </a>
+
+                {/* Primera Visita Incluye */}
+                <div className="bg-gradient-to-br from-green-50 to-white rounded-2xl p-6 shadow-lg border border-green-100">
+                  <h3 className="text-lg font-bold text-black mb-4">
+                    Primera Visita Incluye
+                  </h3>
+                  <div className="space-y-3">
+                    <div className="flex items-start gap-2">
+                      <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                      <p className="text-sm text-slate-700">Revisión completa bucodental</p>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                      <p className="text-sm text-slate-700">Diagnóstico con tecnología 3D</p>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                      <p className="text-sm text-slate-700">Plan de tratamiento personalizado</p>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                      <p className="text-sm text-slate-700">Presupuesto sin compromiso</p>
+                    </div>
+                  </div>
+                  <div className="mt-4 pt-4 border-t border-green-200">
+                    <p className="text-lg font-bold text-green-700 text-center">
+                      100% Gratuita
+                    </p>
+                  </div>
+                </div>
+
+                {/* Por Qué Elegirnos */}
+                <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-6 shadow-lg border border-gray-200">
+                  <h3 className="text-lg font-bold text-black mb-4">
+                    Por Qué Elegirnos
+                  </h3>
+                  <div className="space-y-3 text-sm text-slate-700">
+                    <div className="flex items-center gap-2">
+                      <Award className="w-4 h-4 text-black" />
+                      <span><strong>+15 años</strong> de experiencia</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Award className="w-4 h-4 text-black" />
+                      <span><strong>Tecnología 3D</strong> avanzada</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Award className="w-4 h-4 text-black" />
+                      <span><strong>Financiación</strong> sin intereses</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Award className="w-4 h-4 text-black" />
+                      <span><strong>Garantía</strong> en tratamientos</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Ubicación */}
+                <div className="bg-gradient-to-br from-slate-800 to-black rounded-2xl p-6 shadow-xl text-white">
+                  <h3 className="text-lg font-bold mb-3">
+                    📍 Estamos en Viladecans
+                  </h3>
+                  <p className="text-sm text-gray-300 mb-4">
+                    {CLINIC_INFO.address.street}<br />
+                    {CLINIC_INFO.address.postalCode} {CLINIC_INFO.address.city}
+                  </p>
+                  <a
+                    href="https://maps.app.goo.gl/UHo15sKZYEH34pe76"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block bg-white text-black text-center px-4 py-2 rounded-xl font-bold hover:shadow-xl hover:scale-105 transition-all text-sm"
+                  >
+                    Ver en Google Maps
+                  </a>
+                </div>
               </div>
             </aside>
           </div>
