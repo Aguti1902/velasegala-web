@@ -37,6 +37,8 @@ interface Post {
   content: string;
 }
 
+const POSTS_PER_PAGE = 6;
+
 export default function BlogPage() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
@@ -45,6 +47,7 @@ export default function BlogPage() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
   const { toasts, hideToast, error } = useToast();
 
   useEffect(() => {
@@ -151,6 +154,19 @@ export default function BlogPage() {
 
     return filtered;
   }, [posts, selectedCategory, selectedTags, searchQuery]);
+
+  // Calcular paginación
+  const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE);
+  const paginatedPosts = useMemo(() => {
+    const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
+    const endIndex = startIndex + POSTS_PER_PAGE;
+    return filteredPosts.slice(startIndex, endIndex);
+  }, [filteredPosts, currentPage]);
+
+  // Resetear página cuando cambian los filtros
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedCategory, selectedTags, searchQuery]);
 
   const toggleTag = (tagSlug: string) => {
     setSelectedTags((prev) =>
@@ -351,7 +367,7 @@ export default function BlogPage() {
                 </div>
               ) : (
                 <div className="grid md:grid-cols-2 gap-8">
-                  {filteredPosts.map((post) => (
+                  {paginatedPosts.map((post) => (
                     <article
                       key={post.id}
                       className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-[1.02]"
@@ -416,6 +432,43 @@ export default function BlogPage() {
                       </div>
                     </article>
                   ))}
+                </div>
+              )}
+
+              {/* Paginación */}
+              {totalPages > 1 && (
+                <div className="mt-12 flex items-center justify-center gap-2">
+                  <button
+                    onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                    disabled={currentPage === 1}
+                    className="px-4 py-2 rounded-lg border border-gray-300 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  >
+                    Anterior
+                  </button>
+
+                  <div className="flex gap-2">
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                      <button
+                        key={page}
+                        onClick={() => setCurrentPage(page)}
+                        className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                          currentPage === page
+                            ? "bg-black text-white"
+                            : "border border-gray-300 hover:bg-gray-50"
+                        }`}
+                      >
+                        {page}
+                      </button>
+                    ))}
+                  </div>
+
+                  <button
+                    onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                    disabled={currentPage === totalPages}
+                    className="px-4 py-2 rounded-lg border border-gray-300 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  >
+                    Siguiente
+                  </button>
                 </div>
               )}
             </div>
