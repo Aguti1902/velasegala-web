@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { WHY_CHOOSE_US } from "@/lib/constants";
 import { Award, Microscope, Gift, CreditCard, Heart, DollarSign } from "lucide-react";
 
@@ -24,7 +25,7 @@ export function WhyChooseUs() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
           {WHY_CHOOSE_US.slice(0, 3).map((item, index) => (
             <div
               key={index}
@@ -39,6 +40,26 @@ export function WhyChooseUs() {
               <p className="text-slate-600 text-sm leading-relaxed line-clamp-4">{item.description}</p>
             </div>
           ))}
+        </div>
+
+        {/* Imagen de Tecnología */}
+        <div className="relative aspect-[16/7] rounded-3xl overflow-hidden shadow-2xl">
+          <Image
+            src="/images/tecnologia-clinica-dental-viladecans.jpg"
+            alt="Tecnología avanzada Clínica Dental Vela-Segalà Viladecans"
+            fill
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
+            <div className="p-8 text-white">
+              <h3 className="text-2xl md:text-3xl font-bold mb-2">
+                Tecnología de Última Generación
+              </h3>
+              <p className="text-gray-200 max-w-2xl">
+                Equipamiento 3D de vanguardia para diagnósticos precisos y tratamientos mínimamente invasivos
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </section>

@@ -68,16 +68,26 @@ export function Hero() {
             </div>
           </div>
 
-          {/* Imagen */}
+          {/* Video Hero */}
           <div className="relative">
             <div className="aspect-[4/3] bg-gradient-to-br from-gray-50 to-gray-100 rounded-3xl shadow-xl overflow-hidden relative">
-              <Image
-                src="/images/instalaciones-vela-segala.webp"
-                alt="Clínica Dental Vela-Segalà Viladecans - Instalaciones Modernas"
-                fill
-                className="object-cover"
-                priority
-              />
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full h-full object-cover"
+              >
+                <source src="/videos/VelaSegala_2024_Edit.mp4" type="video/mp4" />
+                {/* Fallback a imagen si el video no carga */}
+                <Image
+                  src="/images/equipo-dentistas-vela-segala-viladecans.jpg"
+                  alt="Clínica Dental Vela-Segalà Viladecans - Equipo de Dentistas"
+                  fill
+                  className="object-cover"
+                  priority
+                />
+              </video>
             </div>
             {/* Badge flotante */}
             <div className="absolute -bottom-4 -left-4 bg-black text-white shadow-2xl p-5 rounded-2xl">

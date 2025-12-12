@@ -98,6 +98,26 @@ export function DoctorsSection() {
           </div>
         </div>
 
+        {/* Foto del Equipo Completo */}
+        <div className="mt-12">
+          <div className="relative aspect-[16/6] rounded-3xl overflow-hidden shadow-2xl">
+            <Image
+              src="/images/equipo-dentistas-vela-segala-viladecans.jpg"
+              alt="Equipo completo Clínica Dental Vela-Segalà Viladecans"
+              fill
+              className="object-cover"
+            />
+          </div>
+          <div className="text-center mt-6">
+            <p className="text-lg font-bold text-black mb-2">
+              Nuestro Equipo de Especialistas
+            </p>
+            <p className="text-slate-600">
+              Profesionales altamente cualificados comprometidos con tu sonrisa
+            </p>
+          </div>
+        </div>
+
       </div>
     </section>
   );
