@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
-import { ContactForm } from "@/components/forms/ContactForm";
 import { CLINIC_INFO } from "@/lib/constants";
 import { MapPin, Phone, Mail, Clock, Calendar } from "lucide-react";
 
@@ -37,13 +36,13 @@ export default function ContactoPage() {
             ]}
           />
 
-          <div className="mt-8">
+          <div className="mt-8 text-center max-w-3xl mx-auto">
             <h1 className="text-4xl md:text-5xl font-bold text-black mb-6">
               Contacto
             </h1>
-            <p className="text-xl text-slate-700 mb-8 max-w-3xl">
+            <p className="text-xl text-slate-700 leading-relaxed">
               Estamos aquí para ayudarte. Contacta con nuestra <strong>clínica dental en Viladecans</strong> por 
-              teléfono, email o rellena el formulario y te responderemos lo antes posible.
+              teléfono, email o visítanos directamente en nuestras instalaciones.
             </p>
           </div>
         </div>
@@ -74,9 +73,18 @@ export default function ContactoPage() {
                 <p className="text-lg text-slate-700 mb-2 font-medium">
                   {CLINIC_INFO.address.street}
                 </p>
-                <p className="text-lg text-slate-700">
+                <p className="text-lg text-slate-700 mb-4">
                   {CLINIC_INFO.address.postalCode} {CLINIC_INFO.address.city}, {CLINIC_INFO.address.region}
                 </p>
+                <a
+                  href="https://maps.app.goo.gl/UHo15sKZYEH34pe76"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 bg-black text-white px-6 py-3 rounded-xl font-bold hover:shadow-xl hover:scale-105 transition-all"
+                >
+                  <MapPin className="w-5 h-5" />
+                  Ver en Google Maps
+                </a>
               </div>
             </div>
 
@@ -165,26 +173,8 @@ export default function ContactoPage() {
         </div>
       </section>
 
-      {/* Formulario de Contacto */}
-      <section className="section-padding bg-gray-50">
-        <div className="container-custom max-w-4xl">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-black mb-4">
-              Envíanos un Mensaje
-            </h2>
-            <p className="text-lg text-slate-600">
-              Rellena el formulario y nos pondremos en contacto contigo lo antes posible
-            </p>
-          </div>
-
-          <div className="bg-white rounded-3xl shadow-xl p-8 md:p-12">
-            <ContactForm />
-          </div>
-        </div>
-      </section>
-
       {/* Mapa */}
-      <section className="section-padding bg-white">
+      <section className="section-padding bg-gray-50">
         <div className="container-custom">
           <h2 className="text-3xl md:text-4xl font-bold text-black mb-8 text-center">
             Cómo Llegar a Nuestra Clínica
@@ -216,7 +206,40 @@ export default function ContactoPage() {
         </div>
       </section>
 
+      {/* Preguntas Frecuentes de Contacto */}
+      <section className="section-padding bg-white">
+        <div className="container-custom max-w-4xl">
+          <h2 className="text-3xl md:text-4xl font-bold text-black mb-8 text-center">
+            Preguntas Frecuentes
+          </h2>
+          <div className="space-y-4">
+            <div className="bg-gray-50 rounded-2xl p-6">
+              <h3 className="text-lg font-bold text-black mb-2">
+                ¿Cuánto tarda en responderse un mensaje?
+              </h3>
+              <p className="text-slate-700">
+                Normalmente respondemos en menos de 24 horas laborables. Si es urgente, te recomendamos llamar directamente al {CLINIC_INFO.phoneDisplay}.
+              </p>
+            </div>
+            <div className="bg-gray-50 rounded-2xl p-6">
+              <h3 className="text-lg font-bold text-black mb-2">
+                ¿Puedo pedir cita por WhatsApp?
+              </h3>
+              <p className="text-slate-700">
+                Sí, puedes contactarnos por teléfono o email. Próximamente habilitaremos WhatsApp para mayor comodidad.
+              </p>
+            </div>
+            <div className="bg-gray-50 rounded-2xl p-6">
+              <h3 className="text-lg font-bold text-black mb-2">
+                ¿Dónde puedo aparcar?
+              </h3>
+              <p className="text-slate-700">
+                Disponemos de aparcamiento gratuito en la zona. Te recomendamos llegar unos minutos antes de tu cita para encontrar sitio fácilmente.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
     </>
   );
 }
-
