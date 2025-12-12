@@ -3,19 +3,23 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    --font-raleway: 'Raleway', system-ui, sans-serif;
+  * {
+    font-family: 'Raleway', Arial, sans-serif !important;
   }
 
   body {
     @apply bg-white text-slate-900;
-    font-family: var(--font-raleway);
+    font-family: 'Raleway', Arial, sans-serif !important;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-raleway;
+    font-family: 'Raleway', Arial, sans-serif !important;
     font-weight: 700;
+  }
+
+  input, textarea, select, button {
+    font-family: 'Raleway', Arial, sans-serif !important;
   }
 }
 
