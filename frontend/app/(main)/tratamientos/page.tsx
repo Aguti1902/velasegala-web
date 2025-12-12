@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     title: "Tratamientos Dentales en Viladecans | Clínica Vela-Segalà",
     description:
       "Todos los tratamientos dentales que necesitas. Especialistas con +15 años de experiencia. Primera visita gratuita.",
-    images: ["/images/instalaciones-vela-segala.webp"],
+    images: ["/images/cabina-dentista-viladecans.jpg"],
   },
 };
 

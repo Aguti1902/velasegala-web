@@ -76,7 +76,7 @@ export default function ClinicaPage() {
             
             <div className="aspect-[4/3] bg-gradient-to-br from-gray-100 to-gray-50 rounded-3xl overflow-hidden shadow-xl relative">
               <Image
-                src="/images/instalaciones-vela-segala.webp"
+                src="/images/cabina-dentista-viladecans-2.jpg"
                 alt="Instalaciones Clínica Dental Vela-Segalà Viladecans"
                 fill
                 className="object-cover"

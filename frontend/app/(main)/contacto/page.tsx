@@ -56,7 +56,7 @@ export default function ContactoPage() {
             <div className="order-2 lg:order-1 flex flex-col h-full">
               <div className="flex-1 bg-gradient-to-br from-gray-100 to-gray-50 rounded-3xl overflow-hidden shadow-xl relative min-h-[500px]">
                 <Image
-                  src="/images/instalaciones-vela-segala.webp"
+                  src="/images/recepcion-clinica-viladecans-2.jpg"
                   alt="Recepción Clínica Dental Vela-Segalà Viladecans"
                   fill
                   className="object-cover"

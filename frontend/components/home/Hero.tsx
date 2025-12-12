@@ -73,7 +73,7 @@ export function Hero() {
             <div className="aspect-[4/3] rounded-3xl shadow-2xl overflow-hidden relative">
               <VideoPlayer
                 src="/videos/VelaSegala_2024_Edit.mov"
-                poster="/images/instalaciones-vela-segala.webp"
+                poster="/images/recepcion-clinica-viladecans.jpg"
                 autoPlay={true}
                 loop={true}
                 muted={true}

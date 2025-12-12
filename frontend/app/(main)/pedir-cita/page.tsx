@@ -250,7 +250,7 @@ export default function PedirCitaPage() {
             </h2>
             <div className="relative aspect-[16/9] rounded-3xl overflow-hidden shadow-2xl">
               <Image
-                src="/images/instalaciones-vela-segala.webp"
+                src="/images/cabina-dentista-viladecans.jpg"
                 alt="Instalaciones Clínica Dental Vela-Segalà Viladecans"
                 fill
                 className="object-cover"
