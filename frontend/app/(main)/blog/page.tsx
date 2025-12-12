@@ -7,6 +7,8 @@ import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { Search, Calendar, Clock, Tag, Folder } from "lucide-react";
 import { getApiUrl } from "@/lib/config";
 import { formatDate, calculateReadingTime } from "@/lib/utils";
+import Toast from "@/components/ui/Toast";
+import { useToast } from "@/hooks/useToast";
 
 interface Category {
   id: string;
@@ -43,6 +45,7 @@ export default function BlogPage() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const { toasts, hideToast, error } = useToast();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -105,10 +108,10 @@ export default function BlogPage() {
         console.log("🏷️ Tags data:", tagsData);
         const tagsArray = Array.isArray(tagsData) ? tagsData : (tagsData.data || []);
         setTags(tagsArray);
-      } catch (error) {
-        console.error("❌ Error al cargar datos del blog:", error);
+      } catch (err) {
+        console.error("❌ Error al cargar datos del blog:", err);
         // Mostrar mensaje de error al usuario
-        alert("Error al cargar el blog. Por favor, recarga la página.");
+        error("Error al cargar el blog. Por favor, recarga la página.");
       } finally {
         setIsLoading(false);
       }
@@ -419,6 +422,16 @@ export default function BlogPage() {
           </div>
         </div>
       </section>
+
+      {/* Toasts */}
+      {toasts.map((toast) => (
+        <Toast
+          key={toast.id}
+          message={toast.message}
+          type={toast.type}
+          onClose={() => hideToast(toast.id)}
+        />
+      ))}
     </>
   );
 }

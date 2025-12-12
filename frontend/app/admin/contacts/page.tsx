@@ -14,6 +14,9 @@ import {
   Download,
 } from "lucide-react";
 import { getApiUrl } from "@/lib/config";
+import ConfirmModal from "@/components/ui/ConfirmModal";
+import Toast from "@/components/ui/Toast";
+import { useToast } from "@/hooks/useToast";
 
 interface Contact {
   id: string;
@@ -46,6 +49,18 @@ export default function AdminContactsPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [statusFilter, setStatusFilter] = useState("ALL");
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
+  const [confirmModal, setConfirmModal] = useState<{
+    isOpen: boolean;
+    title: string;
+    message: string;
+    onConfirm: () => void;
+  }>({
+    isOpen: false,
+    title: "",
+    message: "",
+    onConfirm: () => {},
+  });
+  const { toasts, hideToast, success, error } = useToast();
 
   const fetchContacts = useCallback(async () => {
     try {
@@ -134,10 +149,19 @@ export default function AdminContactsPage() {
     }
   };
 
-  const deleteContact = async (id: string) => {
-    if (!confirm("¿Estás seguro de que quieres eliminar este contacto?")) {
-      return;
-    }
+  const deleteContact = (id: string) => {
+    setConfirmModal({
+      isOpen: true,
+      title: "Eliminar contacto",
+      message: "¿Estás seguro de que quieres eliminar este contacto? Esta acción no se puede deshacer.",
+      onConfirm: async () => {
+        setConfirmModal({ ...confirmModal, isOpen: false });
+        await deleteContactConfirmed(id);
+      },
+    });
+  };
+
+  const deleteContactConfirmed = async (id: string) => {
 
     try {
       const token = document.cookie
@@ -145,18 +169,24 @@ export default function AdminContactsPage() {
         .find((row) => row.startsWith("admin_token="))
         ?.split("=")[1];
 
-      await fetch(`${getApiUrl()}/contacts/${id}`, {
+      const response = await fetch(`${getApiUrl()}/contacts/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
 
-      fetchContacts();
-      fetchStats();
-      setActiveMenu(null);
-    } catch (error) {
-      console.error("Error al eliminar contacto:", error);
+      if (response.ok) {
+        fetchContacts();
+        fetchStats();
+        setActiveMenu(null);
+        success("Contacto eliminado correctamente");
+      } else {
+        error("Error al eliminar el contacto");
+      }
+    } catch (err) {
+      console.error("Error al eliminar contacto:", err);
+      error("Error al eliminar el contacto");
     }
   };
 
@@ -425,6 +455,25 @@ export default function AdminContactsPage() {
           ))}
         </div>
       )}
+
+      {/* Toasts */}
+      {toasts.map((toast) => (
+        <Toast
+          key={toast.id}
+          message={toast.message}
+          type={toast.type}
+          onClose={() => hideToast(toast.id)}
+        />
+      ))}
+
+      {/* Confirm Modal */}
+      <ConfirmModal
+        isOpen={confirmModal.isOpen}
+        title={confirmModal.title}
+        message={confirmModal.message}
+        onConfirm={confirmModal.onConfirm}
+        onCancel={() => setConfirmModal({ ...confirmModal, isOpen: false })}
+      />
     </div>
   );
 }

@@ -36,8 +36,8 @@ export async function fetchWithAuth(url: string, options: RequestInit = {}): Pro
   if (response.status === 401) {
     clearAdminToken();
     if (typeof window !== 'undefined') {
-      alert('Tu sesión ha expirado. Por favor, inicia sesión de nuevo.');
-      window.location.href = '/admin/login';
+      // Redirigir silenciosamente al login
+      window.location.href = '/admin/login?expired=true';
     }
   }
   
