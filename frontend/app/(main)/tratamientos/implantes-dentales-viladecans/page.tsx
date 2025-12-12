@@ -454,37 +454,40 @@ export default function ImplantesDentalesPage() {
             </p>
           </div>
 
-          {/* Caso 1 */}
-          <div className="mb-16">
-            <h3 className="text-2xl font-bold text-black mb-4 text-center">
-              Caso 1: Implantes en sector anterior y prótesis BOPT sobre implantes
-            </h3>
-            <p className="text-center text-slate-600 mb-6 max-w-2xl mx-auto">
-              Rehabilitación completa del sector anterior con implantes dentales y prótesis cerámica BOPT, 
-              logrando resultados naturales y predecibles.
-            </p>
-            <BeforeAfterSlider
-              beforeImage="/images/implantes-dentales-caso1-antes.jpg"
-              afterImage="/images/implantes-dentales-caso1-despues.jpg"
-              beforeLabel="ANTES"
-              afterLabel="DESPUÉS"
-            />
-          </div>
+          {/* Grid de 2 columnas para los casos */}
+          <div className="grid md:grid-cols-2 gap-8 md:gap-12">
+            {/* Caso 1 */}
+            <div>
+              <h3 className="text-xl font-bold text-black mb-3">
+                Caso 1: Implantes en sector anterior y prótesis BOPT sobre implantes
+              </h3>
+              <p className="text-slate-600 mb-6 text-sm leading-relaxed">
+                Rehabilitación completa del sector anterior con implantes dentales y prótesis cerámica BOPT, 
+                logrando resultados naturales y predecibles.
+              </p>
+              <BeforeAfterSlider
+                beforeImage="/images/implantes-dentales-caso1-antes.jpg"
+                afterImage="/images/implantes-dentales-caso1-despues.jpg"
+                beforeLabel="ANTES"
+                afterLabel="DESPUÉS"
+              />
+            </div>
 
-          {/* Caso 2 */}
-          <div>
-            <h3 className="text-2xl font-bold text-black mb-4 text-center">
-              Caso 2: Rehabilitación con implantes
-            </h3>
-            <p className="text-center text-slate-600 mb-6 max-w-2xl mx-auto">
-              Tratamiento completo de implantología dental con resultados estéticos y funcionales excepcionales.
-            </p>
-            <BeforeAfterSlider
-              beforeImage="/images/implantes-dentales-caso2-antes.jpg"
-              afterImage="/images/implantes-dentales-caso2-despues.jpg"
-              beforeLabel="ANTES"
-              afterLabel="DESPUÉS"
-            />
+            {/* Caso 2 */}
+            <div>
+              <h3 className="text-xl font-bold text-black mb-3">
+                Caso 2: Rehabilitación con implantes
+              </h3>
+              <p className="text-slate-600 mb-6 text-sm leading-relaxed">
+                Tratamiento completo de implantología dental con resultados estéticos y funcionales excepcionales.
+              </p>
+              <BeforeAfterSlider
+                beforeImage="/images/implantes-dentales-caso2-antes.jpg"
+                afterImage="/images/implantes-dentales-caso2-despues.jpg"
+                beforeLabel="ANTES"
+                afterLabel="DESPUÉS"
+              />
+            </div>
           </div>
 
           {/* CTA dentro de la sección de resultados */}
