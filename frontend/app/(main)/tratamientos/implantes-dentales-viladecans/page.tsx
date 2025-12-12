@@ -480,9 +480,7 @@ export default function ImplantesDentalesPage() {
               </h3>
               <p className="text-slate-600 mb-6 text-sm leading-relaxed">
                 Tratamiento completo de implantología dental con resultados estéticos y funcionales excepcionales. 
-                Rehabilitación total mediante implantes dentales premium Straumann, devolviendo al paciente su 
-                capacidad de masticación, fonética y estética dental. Proceso realizado con planificación digital 
-                3D para máxima precisión y resultados predecibles.
+                Rehabilitación total mediante implantes dentales premium.
               </p>
               <BeforeAfterSlider
                 beforeImage="/images/implantes-dentales-caso2-antes.jpg"
