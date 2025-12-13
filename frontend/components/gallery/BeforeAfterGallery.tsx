@@ -1,163 +1,131 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
-import { X, ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { BeforeAfterSlider } from "@/components/ui/BeforeAfterSlider";
 
-interface BeforeAfterImage {
-  src: string;
+interface BeforeAfterCase {
+  beforeImage: string;
+  afterImage: string;
   title: string;
-  treatment: string;
+  description: string;
 }
 
-const RESULTS_IMAGES: BeforeAfterImage[] = [
+const CASES: BeforeAfterCase[] = [
   {
-    src: "/images/fotos-resultados-clinica-dental-viladecans.jpg",
-    title: "Resultado 1",
-    treatment: "Tratamiento Dental",
+    beforeImage: "/images/caso1-antes.png",
+    afterImage: "/images/caso1-despues.png",
+    title: "Caso 1: Ortodoncia Invisible",
+    description: "Corrección de apiñamiento dental con ortodoncia invisible. Resultados en 12 meses.",
   },
   {
-    src: "/images/fotos-resultados-clinica-dental-viladecans-2.jpg",
-    title: "Resultado 2",
-    treatment: "Tratamiento Dental",
+    beforeImage: "/images/caso2-antes.png",
+    afterImage: "/images/caso2-despues.png",
+    title: "Caso 2: Estética Dental",
+    description: "Rehabilitación completa con carillas dentales. Transformación total de la sonrisa.",
   },
   {
-    src: "/images/fotos-resultados-clinica-dental-viladecans-3.jpg",
-    title: "Resultado 3",
-    treatment: "Tratamiento Dental",
+    beforeImage: "/images/caso3-antes.png",
+    afterImage: "/images/caso3-despues.png",
+    title: "Caso 3: Implantes Dentales",
+    description: "Implantes dentales con prótesis cerámica. Recuperación total de la funcionalidad.",
   },
   {
-    src: "/images/fotos-resultados-clinica-dental-viladecans-4.jpg",
-    title: "Resultado 4",
-    treatment: "Tratamiento Dental",
-  },
-  {
-    src: "/images/fotos-resultados-clinica-dental-viladecans-5.jpg",
-    title: "Resultado 5",
-    treatment: "Tratamiento Dental",
+    beforeImage: "/images/caso4-antes.png",
+    afterImage: "/images/caso4-despues.png",
+    title: "Caso 4: Blanqueamiento Dental",
+    description: "Blanqueamiento dental profesional. Dientes varios tonos más blancos.",
   },
 ];
 
 export function BeforeAfterGallery() {
-  const [selectedImage, setSelectedImage] = useState<number | null>(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-  const openLightbox = (index: number) => {
-    setSelectedImage(index);
+  const nextSlide = () => {
+    setCurrentIndex((prev) => (prev + 1) % CASES.length);
   };
 
-  const closeLightbox = () => {
-    setSelectedImage(null);
-  };
-
-  const nextImage = () => {
-    if (selectedImage !== null) {
-      setSelectedImage((selectedImage + 1) % RESULTS_IMAGES.length);
-    }
-  };
-
-  const prevImage = () => {
-    if (selectedImage !== null) {
-      setSelectedImage(
-        (selectedImage - 1 + RESULTS_IMAGES.length) % RESULTS_IMAGES.length
-      );
-    }
+  const prevSlide = () => {
+    setCurrentIndex((prev) => (prev - 1 + CASES.length) % CASES.length);
   };
 
   return (
-    <>
-      <section className="section-padding bg-gradient-to-b from-white to-gray-50">
-        <div className="container-custom">
-          <div className="text-center max-w-3xl mx-auto mb-12">
-            <h2 className="text-3xl md:text-5xl font-bold text-black mb-6">
-              Resultados Reales de Nuestros Pacientes
-            </h2>
-            <p className="text-lg text-slate-600">
-              Casos reales tratados en nuestra clínica dental de Viladecans.
-              Cada sonrisa cuenta una historia de éxito.
+    <section className="section-padding bg-gradient-to-b from-white to-gray-50">
+      <div className="container-custom">
+        <div className="text-center max-w-3xl mx-auto mb-12">
+          <div className="inline-block bg-black text-white px-4 py-2 rounded-lg text-sm font-bold mb-4">
+            CASOS REALES
+          </div>
+          <h2 className="text-3xl md:text-5xl font-bold text-black mb-6">
+            Resultados Reales de Nuestros Pacientes
+          </h2>
+          <p className="text-lg text-slate-600 leading-relaxed">
+            Casos reales tratados en nuestra clínica dental de Viladecans.
+            Desliza el control para ver el antes y el después de cada tratamiento.
+          </p>
+        </div>
+
+        {/* Carrusel */}
+        <div className="relative max-w-5xl mx-auto">
+          {/* Caso actual */}
+          <div className="mb-8">
+            <h3 className="text-2xl font-bold text-black mb-3 text-center">
+              {CASES[currentIndex].title}
+            </h3>
+            <p className="text-slate-600 mb-6 text-center max-w-2xl mx-auto">
+              {CASES[currentIndex].description}
             </p>
-          </div>
-
-          {/* Grid de Imágenes */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {RESULTS_IMAGES.map((image, index) => (
-              <div
-                key={index}
-                onClick={() => openLightbox(index)}
-                className="group relative aspect-[4/3] bg-gray-100 rounded-2xl overflow-hidden cursor-pointer shadow-lg hover:shadow-2xl transition-all hover:scale-105"
-              >
-                <Image
-                  src={image.src}
-                  alt={image.title}
-                  fill
-                  className="object-cover group-hover:scale-110 transition-transform duration-300"
-                  unoptimized
-                />
-                {/* Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
-                  <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
-                    <p className="font-bold">{image.treatment}</p>
-                    <p className="text-sm text-gray-200">Click para ampliar</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Lightbox Modal */}
-      {selectedImage !== null && (
-        <div className="fixed inset-0 z-[99999] bg-black/95 flex items-center justify-center p-4">
-          {/* Close Button */}
-          <button
-            onClick={closeLightbox}
-            className="absolute top-4 right-4 w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/20 transition-all"
-            aria-label="Cerrar"
-          >
-            <X className="w-6 h-6 text-white" />
-          </button>
-
-          {/* Previous Button */}
-          <button
-            onClick={prevImage}
-            className="absolute left-4 w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/20 transition-all"
-            aria-label="Anterior"
-          >
-            <ChevronLeft className="w-6 h-6 text-white" />
-          </button>
-
-          {/* Image */}
-          <div className="relative w-full max-w-5xl aspect-[4/3]">
-            <Image
-              src={RESULTS_IMAGES[selectedImage].src}
-              alt={RESULTS_IMAGES[selectedImage].title}
-              fill
-              className="object-contain"
-              unoptimized
-              priority
+            
+            <BeforeAfterSlider
+              beforeImage={CASES[currentIndex].beforeImage}
+              afterImage={CASES[currentIndex].afterImage}
+              beforeLabel="ANTES"
+              afterLabel="DESPUÉS"
             />
-            {/* Info */}
-            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 text-white">
-              <p className="text-xl font-bold">
-                {RESULTS_IMAGES[selectedImage].treatment}
-              </p>
-              <p className="text-sm text-gray-300">
-                {selectedImage + 1} de {RESULTS_IMAGES.length}
-              </p>
-            </div>
           </div>
 
-          {/* Next Button */}
-          <button
-            onClick={nextImage}
-            className="absolute right-4 w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/20 transition-all"
-            aria-label="Siguiente"
-          >
-            <ChevronRight className="w-6 h-6 text-white" />
-          </button>
+          {/* Botones de navegación */}
+          <div className="flex items-center justify-center gap-4 mt-8">
+            <button
+              onClick={prevSlide}
+              className="w-12 h-12 bg-black text-white rounded-full flex items-center justify-center hover:bg-gray-800 transition-all shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
+              aria-label="Caso anterior"
+            >
+              <ChevronLeft className="w-6 h-6" />
+            </button>
+
+            {/* Indicadores */}
+            <div className="flex gap-2">
+              {CASES.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentIndex(index)}
+                  className={`h-2 rounded-full transition-all ${
+                    index === currentIndex
+                      ? "w-8 bg-black"
+                      : "w-2 bg-gray-300 hover:bg-gray-400"
+                  }`}
+                  aria-label={`Ir al caso ${index + 1}`}
+                />
+              ))}
+            </div>
+
+            <button
+              onClick={nextSlide}
+              className="w-12 h-12 bg-black text-white rounded-full flex items-center justify-center hover:bg-gray-800 transition-all shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
+              aria-label="Caso siguiente"
+            >
+              <ChevronRight className="w-6 h-6" />
+            </button>
+          </div>
+
+          {/* Contador */}
+          <p className="text-center text-slate-500 text-sm mt-4">
+            Caso {currentIndex + 1} de {CASES.length}
+          </p>
         </div>
-      )}
-    </>
+      </div>
+    </section>
   );
 }
 
