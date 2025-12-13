@@ -171,7 +171,7 @@ export function Header() {
                   </button>
                   {mobileTreatmentsOpen && (
                     <div className="pl-4 pb-2">
-                      {MAIN_TREATMENTS.map((treatment) => (
+                      {MAIN_TREATMENTS.slice(0, 8).map((treatment) => (
                         <Link
                           key={treatment.slug}
                           href={`/tratamientos/${treatment.slug}`}
