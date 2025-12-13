@@ -15,26 +15,38 @@ const CASES: BeforeAfterCase[] = [
   {
     beforeImage: "/images/caso1-antes.png",
     afterImage: "/images/caso1-despues.png",
-    title: "Ortodoncia Invisible",
-    description: "Corrección de apiñamiento dental con ortodoncia invisible. Resultados en 12 meses.",
+    title: "Carillas Dentales",
+    description: "Rehabilitación completa con carillas de porcelana. Transformación total de la sonrisa con resultados naturales.",
   },
   {
     beforeImage: "/images/caso2-antes.png",
     afterImage: "/images/caso2-despues.png",
-    title: "Estética Dental",
-    description: "Rehabilitación completa con carillas dentales. Transformación total de la sonrisa.",
+    title: "Sonrisa Gingival",
+    description: "Corrección de sonrisa gingival con estética periodontal. Mejora de proporciones y armonía dental.",
   },
   {
     beforeImage: "/images/caso3-antes.png",
     afterImage: "/images/caso3-despues.png",
-    title: "Implantes Dentales",
-    description: "Implantes dentales con prótesis cerámica. Recuperación total de la funcionalidad.",
+    title: "Carillas Dentales",
+    description: "Diseño de sonrisa con carillas cerámicas. Resultado estético excepcional y funcional.",
   },
   {
     beforeImage: "/images/caso4-antes.png",
     afterImage: "/images/caso4-despues.png",
     title: "Blanqueamiento Dental",
-    description: "Blanqueamiento dental profesional. Dientes varios tonos más blancos.",
+    description: "Blanqueamiento dental profesional con tecnología LED. Dientes varios tonos más blancos.",
+  },
+  {
+    beforeImage: "/images/implantes-dentales-caso1-antes.jpg",
+    afterImage: "/images/implantes-dentales-caso1-despues.jpg",
+    title: "Implantes Dentales",
+    description: "Implantes en sector anterior y prótesis BOPT sobre implantes. Resultados naturales y predecibles.",
+  },
+  {
+    beforeImage: "/images/implantes-dentales-caso2-antes.jpg",
+    afterImage: "/images/implantes-dentales-caso2-despues.jpg",
+    title: "Implantes Dentales",
+    description: "Rehabilitación con implantes dentales premium. Recuperación total de la funcionalidad y estética.",
   },
 ];
 
