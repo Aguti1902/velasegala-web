@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { CLINIC_INFO } from "@/lib/constants";
-import { Smile, CheckCircle, Clock, Shield, Award, Calendar, Users, Eye, ChevronRight, Phone, MapPin } from "lucide-react";
+import { Smile, CheckCircle, Clock, Shield, Award, Calendar, Users, Eye, ChevronRight, Phone, MapPin, Star, Sparkles, Heart } from "lucide-react";
 
 const TREATMENT_FAQS = [
   {
@@ -40,9 +40,9 @@ const TREATMENT_FAQS = [
 ];
 
 export const metadata: Metadata = {
-  title: "Ortodoncia Invisible Invisalign en Viladecans | Vela-Segalà",
+  title: "Ortodoncia Invisible Invisalign en Viladecans | Clínica Vela-Segalà",
   description:
-    "Ortodoncia invisible Invisalign en Viladecans. Especialistas certificados con +15 años de experiencia. Alineadores transparentes y removibles. Primera visita gratuita. Financiación sin intereses.",
+    `Ortodoncia invisible Invisalign en Viladecans. Ortodoncistas certificados con +15 años de experiencia. Alineadores transparentes removibles. Sin brackets metálicos. Primera visita gratuita. Financiación sin intereses. Llama al ${CLINIC_INFO.phoneDisplay}`,
   keywords: [
     "ortodoncia invisible viladecans",
     "invisalign viladecans",
@@ -50,11 +50,14 @@ export const metadata: Metadata = {
     "alineadores transparentes viladecans",
     "ortodoncia sin brackets viladecans",
     "invisalign certificado viladecans",
+    "férulas transparentes viladecans",
+    "ortodoncista viladecans",
+    "ortodoncia removible viladecans",
   ],
   openGraph: {
-    title: "Ortodoncia Invisible Invisalign en Viladecans | Vela-Segalà",
+    title: "Ortodoncia Invisible Invisalign en Viladecans | Clínica Vela-Segalà",
     description:
-      "Alinea tus dientes de forma discreta con ortodoncia invisible Invisalign. Especialistas certificados con +15 años. Primera visita gratuita.",
+      "Transforma tu sonrisa sin brackets metálicos. Alineadores transparentes removibles. Ortodoncistas certificados con +15 años. Primera visita gratuita.",
     images: ["/images/ortodoncia-invisalign-viladecans.jpg"],
   },
 };
@@ -85,45 +88,55 @@ export default function OrtodonciaInvisiblePage() {
               <h1 className="text-4xl md:text-5xl font-bold text-black mb-6">
                 Ortodoncia Invisible en Viladecans
               </h1>
-              <p className="text-xl text-slate-700 mb-4 leading-relaxed">
-                Alinea tus dientes de forma discreta con{" "}
-                <strong>ortodoncia invisible Invisalign en Viladecans</strong>. Los doctores Xavier Vela 
-                y Maribel Segalà son <strong>ortodoncistas especializados certificados Invisalign</strong> con 
-                más de 15 años de experiencia en ortodoncia para adultos y adolescentes.
+              <p className="text-xl text-slate-700 mb-4 leading-relaxed font-semibold">
+                Transforma tu sonrisa sin necesidad de colocar aparatos metálicos sobre tus dientes
+              </p>
+              <p className="text-lg text-slate-600 mb-4 leading-relaxed">
+                En <strong>Clínicas Vela-Segalà de Viladecans</strong> podemos transformar tu sonrisa con{" "}
+                <strong>ortodoncia invisible</strong>. Para aquellos que busquen un tratamiento de ortodoncia{" "}
+                <strong>muy discreto y casi imperceptible a la vista</strong>, la ortodoncia invisible es la 
+                alternativa idónea.
               </p>
               <p className="text-lg text-slate-600 mb-6 leading-relaxed">
-                Corrige apiñamiento, diastemas, sobremordida y mordida cruzada con <strong>alineadores 
-                transparentes removibles</strong> prácticamente invisibles. Resultados visibles desde el 
-                primer mes sin brackets metálicos ni alambres.
+                Sistema de <strong>férulas transparentes fabricadas a medida</strong> con tecnología 3D. Los{" "}
+                <strong>alineadores son removibles</strong>, permitiéndote extraer y colocar la ortodoncia con 
+                completa autonomía. Ortodoncistas certificados con más de 15 años de experiencia.
               </p>
               
-              <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-6 shadow-lg mb-6 border border-gray-200">
-                <div className="mb-4">
-                  <div className="flex items-center gap-2 text-sm text-slate-600 mb-1">
-                    <Clock className="w-4 h-4" />
-                    Duración del tratamiento
+              <div className="bg-gradient-to-br from-black to-gray-800 rounded-2xl p-5 shadow-xl mb-6 text-white">
+                <div className="flex items-start justify-between gap-4 mb-4 pb-3 border-b border-white/20">
+                  <div className="flex items-center gap-4">
+                    <div className="text-center">
+                      <div className="text-3xl font-bold leading-tight">6-18 meses</div>
+                      <div className="text-[10px] text-gray-300 mt-0.5">duración media</div>
+                    </div>
+                    <div className="h-10 w-px bg-white/20"></div>
+                    <div className="text-center">
+                      <div className="text-3xl font-bold leading-tight">100%</div>
+                      <div className="text-[10px] text-gray-300 mt-0.5">removible</div>
+                    </div>
                   </div>
-                  <div className="text-3xl font-bold text-black">
-                    12-18 meses
-                  </div>
-                  <div className="text-xs text-slate-500">Según complejidad del caso</div>
                 </div>
-                <div className="space-y-2 text-sm text-slate-700">
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 flex-shrink-0" />
-                    Financiación sin intereses hasta 12 meses
+                <div className="space-y-2 text-[13px]">
+                  <div className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                    <span className="leading-tight"><strong>Primera visita y estudio 3D gratuito</strong></span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 flex-shrink-0" />
-                    Primera visita y estudio 3D gratuito
+                  <div className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                    <span className="leading-tight">Ortodoncistas certificados Invisalign</span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 flex-shrink-0" />
-                    Ortodoncistas certificados Invisalign
+                  <div className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                    <span className="leading-tight">Prácticamente invisible y removible</span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 flex-shrink-0" />
-                    Prácticamente invisible y removible
+                  <div className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                    <span className="leading-tight">Come y bebe lo que quieras</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                    <span className="leading-tight">Financiación sin intereses hasta 12 meses</span>
                   </div>
                 </div>
               </div>
@@ -154,28 +167,78 @@ export default function OrtodonciaInvisiblePage() {
         </div>
       </section>
 
-      {/* Qué es Invisalign */}
+      {/* Férulas transparentes a medida */}
       <section className="section-padding bg-white">
+        <div className="container-custom">
+          <div className="grid lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+            <div className="aspect-[4/3] bg-gradient-to-br from-gray-100 to-gray-50 rounded-3xl overflow-hidden shadow-xl relative order-2 lg:order-1">
+              <Image
+                src="/images/ortodoncia-clinica-dental-viladecans.jpg"
+                alt="Férulas transparentes de ortodoncia invisible fabricadas a medida"
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div className="order-1 lg:order-2">
+              <h2 className="text-3xl md:text-4xl font-bold text-black mb-6">
+                Ortodoncia Invisible: Férulas Transparentes Fabricadas a tu Medida
+              </h2>
+              <p className="text-lg text-slate-700 mb-4 leading-relaxed">
+                La <strong>ortodoncia invisible</strong> es un sistema de <strong>férulas de material invisible</strong> que, 
+                gracias a una estrategia de micromovimientos dentarios, son capaces de colocar las piezas dentales en la 
+                posición correcta.
+              </p>
+              <p className="text-lg text-slate-700 mb-6 leading-relaxed">
+                Los <strong>alineadores son removibles</strong>, lo que permite al paciente <strong>extraer y colocar la 
+                ortodoncia en sus dientes con completa autonomía</strong>. Podrás llevar a cabo tus higienes diarias con 
+                total normalidad y comer cualquier tipo de alimento.
+              </p>
+              
+              <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-6 shadow-lg mb-6">
+                <h3 className="font-bold text-lg mb-4">Las ventajas para el bienestar del paciente:</h3>
+                <div className="space-y-3">
+                  <div className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 flex-shrink-0 text-black mt-0.5" />
+                    <span className="text-slate-700"><strong>Higiene diaria normal:</strong> Cepillado y uso de hilo dental sin obstáculos</span>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 flex-shrink-0 text-black mt-0.5" />
+                    <span className="text-slate-700"><strong>Sin restricciones alimentarias:</strong> Come cualquier tipo de alimento</span>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 flex-shrink-0 text-black mt-0.5" />
+                    <span className="text-slate-700"><strong>Comodidad superior:</strong> Sin alambres ni brackets que causen rozaduras</span>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 flex-shrink-0 text-black mt-0.5" />
+                    <span className="text-slate-700"><strong>Autonomía total:</strong> Tú decides cuándo quitártelos</span>
+                  </div>
+                </div>
+              </div>
+
+              <p className="text-base text-slate-600 leading-relaxed">
+                Las ventajas para el bienestar del paciente, durante el proceso de corrección de la posición bucodental, 
+                son <strong>ampliamente superiores respecto a otros sistemas tradicionales</strong>.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Qué es Invisalign */}
+      <section className="section-padding bg-gray-50">
         <div className="container-custom max-w-4xl">
-          <h2 className="text-3xl md:text-4xl font-bold text-black mb-6">
-            ¿Qué es la Ortodoncia Invisible Invisalign?
-          </h2>
-          <p className="text-lg text-slate-700 mb-4 leading-relaxed">
-            <strong>Invisalign</strong> es el sistema de ortodoncia invisible líder mundial que utiliza 
-            alineadores transparentes hechos a medida con tecnología 3D para mover tus dientes gradualmente 
-            hasta la posición deseada. A diferencia de los brackets tradicionales, los alineadores Invisalign 
-            son prácticamente invisibles, removibles y mucho más cómodos.
-          </p>
-          <p className="text-lg text-slate-700 mb-4 leading-relaxed">
-            En nuestra <strong>clínica dental de Viladecans</strong> somos <strong>especialistas certificados 
-            Invisalign</strong> con formación internacional. Utilizamos escáner intraoral 3D para diseñar tu 
-            tratamiento de forma digital y mostrarte el resultado final antes de empezar.
-          </p>
-          <p className="text-lg text-slate-700 mb-6 leading-relaxed">
-            Cada 1-2 semanas cambias a un nuevo juego de alineadores que van moviendo tus dientes de forma 
-            progresiva y controlada. Puedes quitártelos para comer, beber y cepillarte los dientes, lo que 
-            facilita enormemente la higiene oral durante el tratamiento.
-          </p>
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-black mb-6">
+              ¿Cómo Será tu Tratamiento de Ortodoncia Invisible en Viladecans?
+            </h2>
+            <p className="text-lg text-slate-700 leading-relaxed max-w-3xl mx-auto">
+              Nuestros <strong>expertos en ortodoncia invisible en Viladecans</strong> escucharán qué es aquello que 
+              deseas transformar de tu sonrisa, cómo imaginas los resultados y cuáles son tus expectativas. En{" "}
+              <strong>Clínicas Vela-Segalà comenzaremos tu tratamiento con un estudio diagnóstico en profundidad</strong> con 
+              tecnología dental digital.
+            </p>
+          </div>
 
           <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-8 shadow-lg border border-gray-200">
             <h3 className="text-2xl font-bold mb-4">Casos que Tratamos con Ortodoncia Invisible</h3>
@@ -239,53 +302,121 @@ export default function OrtodonciaInvisiblePage() {
         </div>
       </section>
 
+      {/* Mucho más que estética */}
+      <section className="section-padding bg-white">
+        <div className="container-custom">
+          <div className="grid lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+            <div>
+              <h2 className="text-3xl md:text-4xl font-bold text-black mb-6">
+                Ortodoncia Invisible: Mucho Más Que Estética Dental
+              </h2>
+              <p className="text-lg text-slate-700 mb-4 leading-relaxed">
+                Con la corrección de la posición de los dientes no solo ayudamos al paciente a recuperar la armonía 
+                visual de su sonrisa, también <strong>garantizamos que se alcanza una mordida perfecta</strong>.
+              </p>
+              <p className="text-lg text-slate-700 mb-6 leading-relaxed">
+                Evitando así <strong>problemas de masticación, fonética, pérdida de hueso, dolores de cabeza e incluso 
+                problemas de bruxismo o en la ATM</strong> (Articulación Temporomandibular).
+              </p>
+
+              <div className="bg-gradient-to-br from-black to-gray-800 text-white rounded-2xl p-6 shadow-xl mb-6">
+                <h3 className="font-bold text-xl mb-4 flex items-center gap-2">
+                  <Heart className="w-6 h-6" />
+                  Beneficios para tu salud:
+                </h3>
+                <div className="space-y-3 text-sm">
+                  <div className="flex items-start gap-3">
+                    <Star className="w-5 h-5 flex-shrink-0 mt-0.5" />
+                    <span>Mejora la masticación y digestión de alimentos</span>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <Star className="w-5 h-5 flex-shrink-0 mt-0.5" />
+                    <span>Corrige problemas de fonética y pronunciación</span>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <Star className="w-5 h-5 flex-shrink-0 mt-0.5" />
+                    <span>Previene la pérdida de hueso dental</span>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <Star className="w-5 h-5 flex-shrink-0 mt-0.5" />
+                    <span>Reduce dolores de cabeza y mandibulares</span>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <Star className="w-5 h-5 flex-shrink-0 mt-0.5" />
+                    <span>Alivia problemas de bruxismo y ATM</span>
+                  </div>
+                </div>
+              </div>
+
+              <p className="text-lg text-slate-700 mb-4 leading-relaxed">
+                Además, convivir con una sonrisa que te produce inseguridades conlleva una <strong>carga emocional que 
+                afecta directamente a tu salud mental</strong>.
+              </p>
+              <p className="text-xl font-bold text-black">
+                En Clínicas Vela-Segalà llevamos muchos años acompañando a nuestros pacientes en la transformación 
+                de su sonrisa.
+              </p>
+            </div>
+            <div className="aspect-[4/3] bg-gradient-to-br from-gray-100 to-gray-50 rounded-3xl overflow-hidden shadow-xl relative">
+              <Image
+                src="/images/dentistas-clinica-dental-viladecans-5.jpg"
+                alt="Ortodoncistas expertos en Viladecans"
+                fill
+                className="object-cover"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Ventajas */}
       <section className="section-padding bg-gray-50">
         <div className="container-custom">
-          <h2 className="text-3xl md:text-4xl font-bold text-black mb-8 text-center">
-            Ventajas de la Ortodoncia Invisible en Viladecans
+          <h2 className="text-3xl md:text-4xl font-bold text-black mb-6 text-center">
+            ¿Cuáles son las Ventajas de la Ortodoncia Invisible?
           </h2>
-          <p className="text-center text-slate-600 mb-12 max-w-3xl mx-auto">
-            Descubre por qué cada vez más pacientes en Viladecans eligen ortodoncia invisible Invisalign 
-            frente a los brackets tradicionales.
+          <p className="text-center text-slate-700 mb-12 max-w-3xl mx-auto text-lg leading-relaxed">
+            Elegir tu tratamiento de <strong>ortodoncia invisible en Clínicas Vela-Segalà de Viladecans</strong> te 
+            garantizará conseguir los mejores resultados y una sonrisa con la que siempre has soñado. A continuación, 
+            te detallamos sus múltiples ventajas:
           </p>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
               {
                 icon: <Eye className="w-10 h-10" />,
-                title: "Prácticamente Invisible",
+                title: "Sonríe sin Interrupciones",
                 description:
-                  "Los alineadores son transparentes y apenas se notan. Nadie sabrá que llevas ortodoncia a menos que se lo digas. Perfecto para adultos y adolescentes.",
+                  "Disfruta de una solución prácticamente invisible que te permita sonreír como siempre lo has hecho mientras alineas tus dientes. Ideal para quienes desean mejorar su sonrisa discretamente, sin comprometer su imagen profesional o social.",
               },
               {
                 icon: <Users className="w-10 h-10" />,
-                title: "Removible y Cómodo",
+                title: "Comodidad Durante Todo el Proceso",
                 description:
-                  "Puedes quitarte los alineadores para comer, beber, cepillarte los dientes o en eventos especiales. Sin restricciones alimentarias ni alambres que causen rozaduras.",
+                  "Experimenta el ajuste personalizado de los alineadores diseñados específicamente para tus dientes. Disfruta de un tratamiento sin las molestias de los brackets tradicionales, sin irritaciones ni interrupciones en tu vida diaria.",
               },
               {
-                icon: <Shield className="w-10 h-10" />,
-                title: "Mejor Higiene Oral",
+                icon: <Sparkles className="w-10 h-10" />,
+                title: "Te Permite Comer y Beber lo que Quieras",
                 description:
-                  "Al ser removibles, puedes cepillarte y usar hilo dental con normalidad. Esto reduce el riesgo de caries y enfermedades periodontales durante el tratamiento.",
-              },
-              {
-                icon: <Calendar className="w-10 h-10" />,
-                title: "Menos Visitas a la Clínica",
-                description:
-                  "Solo necesitas acudir cada 6-8 semanas para revisiones. Recibes varios juegos de alineadores y los cambias tú mismo en casa cada 1-2 semanas.",
+                  "Los tratamientos de ortodoncia invisible te permiten poder retirar tus alineadores para comer, beber y realizar tu rutina de higiene dental. Este beneficio clave elimina las complicaciones asociadas con otros tipos de aparatos.",
               },
               {
                 icon: <Award className="w-10 h-10" />,
-                title: "Resultados Predecibles",
+                title: "Un Tratamiento Preciso con Resultado Final",
                 description:
-                  "Con tecnología 3D te mostramos el resultado final antes de empezar. Puedes ver cómo quedarán tus dientes al finalizar el tratamiento de ortodoncia invisible.",
+                  "Observa el avance esperado de tu tratamiento mediante las visualizaciones en 3D avanzadas que te mostraremos antes de comenzar. Nuestra tecnología permite prever los resultados con claridad desde el inicio.",
               },
               {
-                icon: <Smile className="w-10 h-10" />,
-                title: "Sin Urgencias",
+                icon: <Calendar className="w-10 h-10" />,
+                title: "Menos Visitas al Dentista",
                 description:
-                  "No hay brackets que se despeguen ni alambres que se claven. Los alineadores son suaves y no causan urgencias dentales inesperadas.",
+                  "Disfruta de la eficiencia de menos citas, disponiendo de más tiempo para ti sin sacrificar la efectividad del tratamiento. Las visitas programadas se centrarán en el seguimiento de tu progreso, haciéndolas más eficientes y menos frecuentes.",
+              },
+              {
+                icon: <Shield className="w-10 h-10" />,
+                title: "Es el Tratamiento Más Seguro",
+                description:
+                  "Un tratamiento de ortodoncia invisible te permite minimizar riesgos durante actividades físicas y deportivas. Los alineadores eliminan el peligro de cortes y heridas comunes de otros tratamientos. Ideal si llevas un ritmo de vida dinámico y activo.",
               },
             ].map((benefit, index) => (
               <div key={index} className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-shadow">
@@ -306,55 +437,34 @@ export default function OrtodonciaInvisiblePage() {
       <section className="section-padding bg-white">
         <div className="container-custom max-w-4xl">
           <h2 className="text-3xl md:text-4xl font-bold text-black mb-4 text-center">
-            Proceso del Tratamiento de Ortodoncia Invisible
+            Fases del Tratamiento de Ortodoncia Invisible en Viladecans
           </h2>
           <p className="text-center text-slate-600 mb-12 max-w-2xl mx-auto">
-            Te explicamos paso a paso cómo funciona el tratamiento con ortodoncia invisible Invisalign 
-            en nuestra clínica de Viladecans.
+            Te explicamos paso a paso cómo funciona el tratamiento con ortodoncia invisible en nuestra clínica de 
+            Viladecans. Un proceso claro, predecible y cómodo desde el primer día.
           </p>
           <div className="space-y-6">
             {[
               {
                 step: "1",
                 icon: <Calendar className="w-6 h-6" />,
-                title: "Primera Visita Gratuita y Estudio 3D",
+                title: "Fase de Inicio y Fabricación de Alineadores",
                 description:
-                  "Evaluamos tu caso con escáner intraoral 3D, fotografías y radiografías digitales. Diseñamos tu tratamiento de forma virtual con el software ClinCheck y te mostramos el resultado final antes de empezar. Te explicamos la duración estimada y te damos un presupuesto detallado sin compromiso.",
+                  "Obtenemos una reproducción en 3D de la forma y posición de tus dientes gracias a nuestro escáner intraoral, evitando así el uso de los moldes de pasta convencionales. Con esta imagen virtual podemos trazar la estrategia de micromovimientos que deben seguir los dientes para alcanzar la sonrisa final deseada: sana y bonita. Con la estrategia trazada, ortodoncista y paciente, podréis visualizar cómo será tu futura sonrisa incluso antes de comenzar a usar los primeros alineadores.",
               },
               {
                 step: "2",
                 icon: <Smile className="w-6 h-6" />,
-                title: "Fabricación de tus Alineadores Personalizados",
+                title: "Comienzo del Tratamiento de Ortodoncia Invisible",
                 description:
-                  "Enviamos tu estudio digital a los laboratorios Invisalign en Estados Unidos, donde fabrican tus alineadores transparentes a medida con tecnología SmartTrack. Cada juego de alineadores está numerado y diseñado específicamente para mover tus dientes de forma progresiva.",
+                  "Deberás acudir a consulta de forma periódica para recoger tu nuevo par de férulas y recibir una revisión que nos garantice que el tratamiento sigue el desarrollo esperado. La duración de un tratamiento de ortodoncia invisible varía según el problema de malposición dentario o maloclusión que sufra el paciente. Generalmente oscila entre 6 y 18 meses.",
               },
               {
                 step: "3",
-                icon: <CheckCircle className="w-6 h-6" />,
-                title: "Colocación de Ataches y Entrega de Alineadores",
-                description:
-                  "Te colocamos pequeños ataches (relieves de composite del color del diente) en algunos dientes para mejorar el agarre de los alineadores. Te entregamos los primeros juegos de alineadores y te explicamos cómo usarlos correctamente. Debes llevarlos 22 horas al día.",
-              },
-              {
-                step: "4",
-                icon: <Clock className="w-6 h-6" />,
-                title: "Cambio de Alineadores cada 1-2 Semanas",
-                description:
-                  "Cambias a un nuevo juego de alineadores cada 1-2 semanas según las indicaciones de tu ortodoncista. Cada alineador mueve tus dientes aproximadamente 0,25mm. Puedes quitártelos para comer, beber (excepto agua) y cepillarte los dientes.",
-              },
-              {
-                step: "5",
-                icon: <Award className="w-6 h-6" />,
-                title: "Revisiones cada 6-8 Semanas",
-                description:
-                  "Acudes a nuestra clínica de Viladecans cada 6-8 semanas para que comprobemos que el tratamiento avanza correctamente. En cada revisión te entregamos los siguientes juegos de alineadores. Las visitas son rápidas, de unos 15-20 minutos.",
-              },
-              {
-                step: "6",
                 icon: <Shield className="w-6 h-6" />,
-                title: "Finalización y Retenedores",
+                title: "Final del Tratamiento y Fase de Retención",
                 description:
-                  "Una vez finalizado el tratamiento de ortodoncia invisible, retiramos los ataches y te entregamos retenedores fijos y/o removibles para mantener los resultados. Los retenedores son fundamentales para evitar que los dientes vuelvan a moverse.",
+                  "Cuando nuestros expertos en ortodoncia invisible den la fase correctiva por finalizada, procederemos a garantizar que los resultados se mantienen en el tiempo. Los dientes, si no existe un sistema de retención, tienden a recuperar su posición inicial. En Clínicas Vela-Segalà contamos con distintos sistemas de retención para garantizar que el tratamiento concluye correctamente.",
               },
             ].map((step) => (
               <div
@@ -410,36 +520,38 @@ export default function OrtodonciaInvisiblePage() {
       {/* CTA Final */}
       <section className="section-padding bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white">
         <div className="container-custom text-center">
-          <Smile className="w-16 h-16 mx-auto mb-6" />
+          <Smile className="w-16 h-16 mx-auto mb-6 text-white" />
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            ¿Listo para Transformar tu Sonrisa con Ortodoncia Invisible?
+            Expertos en Ortodoncia Invisible en Viladecans
           </h2>
-          <p className="text-xl mb-4 text-gray-200 max-w-2xl mx-auto">
-            Pide tu <strong>primera visita gratuita</strong> en nuestra clínica dental de Viladecans y te 
-            haremos un estudio completo con escáner 3D y simulación del resultado final.
+          <p className="text-xl mb-4 text-gray-200 max-w-2xl mx-auto leading-relaxed">
+            ¿Quieres una sonrisa nueva? Ponte en manos de nuestros profesionales para conseguir la{" "}
+            <strong>sonrisa sana y bonita que deseas</strong>. Tras muchos años de experiencia transformando sonrisas, 
+            podemos asegurarte que <strong>te va a cambiar la vida</strong>.
           </p>
           <p className="text-base mb-8 text-gray-300 max-w-2xl mx-auto">
-            <strong>Ortodoncistas certificados Invisalign en Viladecans</strong> con más de 15 años de 
-            experiencia. Financiación sin intereses disponible.
+            <strong>Ortodoncistas certificados en Viladecans</strong> con más de 15 años de experiencia. Primera visita 
+            y estudio 3D gratuito. Financiación sin intereses. Alineadores transparentes removibles. Aún no puedes 
+            imaginarte cuánto va a mejorar tu vida.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/pedir-cita"
               className="inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-black bg-white rounded-2xl hover:shadow-2xl hover:scale-105 transition-all"
             >
-              Pedir Cita Gratuita Ahora
+              Quiero una Sonrisa Sana y Bonita
             </Link>
             <a
               href={`tel:${CLINIC_INFO.phone}`}
               className="inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white bg-transparent border-2 border-white rounded-2xl hover:bg-white hover:text-black transition-all"
             >
               <Phone className="w-5 h-5 mr-2" />
-              {CLINIC_INFO.phoneDisplay}
+              Llamar: {CLINIC_INFO.phoneDisplay}
             </a>
           </div>
           <p className="mt-6 text-sm text-gray-400">
             <MapPin className="w-4 h-4 inline mr-1" />
-            {CLINIC_INFO.address.street}, {CLINIC_INFO.address.city} • Financiación sin intereses • Ortodoncistas certificados
+            {CLINIC_INFO.address.street}, {CLINIC_INFO.address.city} • Expertos en transformar sonrisas • Férulas transparentes a medida
           </p>
         </div>
       </section>
