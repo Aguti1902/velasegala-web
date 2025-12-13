@@ -20,9 +20,9 @@ export function DoctorsSection() {
           {/* Dr. Xavier Vela */}
           <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-shadow">
             <div className="flex items-start gap-6 mb-6">
-              <div className="w-24 h-24 rounded-2xl overflow-hidden shadow-xl flex-shrink-0 relative">
+              <div className="w-24 h-24 rounded-full overflow-hidden shadow-xl flex-shrink-0 relative">
                 <Image
-                  src="/images/doctor-xavier-vela.png"
+                  src="/images/xavi1.png"
                   alt="Dr. Xavier Vela - Dentista Viladecans"
                   width={96}
                   height={96}
@@ -60,9 +60,9 @@ export function DoctorsSection() {
           {/* Dra. Maribel Segalà */}
           <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-shadow">
             <div className="flex items-start gap-6 mb-6">
-              <div className="w-24 h-24 rounded-2xl overflow-hidden shadow-xl flex-shrink-0 relative">
+              <div className="w-24 h-24 rounded-full overflow-hidden shadow-xl flex-shrink-0 relative">
                 <Image
-                  src="/images/doctora-maribel-segala-1.png"
+                  src="/images/maribel1.png"
                   alt="Dra. Maribel Segalà - Dentista Viladecans"
                   width={96}
                   height={96}
