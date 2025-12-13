@@ -309,7 +309,7 @@ export default async function BlogPostPage({
 
             {/* Sticky Sidebar with Independent Scroll */}
             <aside className="space-y-6">
-              <div className="sticky top-32 space-y-6 max-h-[calc(100vh-9rem)] overflow-y-auto overflow-x-hidden pr-2 sidebar-scroll">
+              <div className="space-y-6 lg:sticky lg:top-32 lg:max-h-[calc(100vh-9rem)] lg:overflow-y-auto lg:overflow-x-hidden lg:pr-2 sidebar-scroll">
                 {/* Categorías */}
                 {categories.length > 0 && (
                   <div className="bg-gray-50 rounded-2xl p-6">
