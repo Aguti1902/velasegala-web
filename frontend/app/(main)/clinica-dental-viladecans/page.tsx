@@ -369,35 +369,138 @@ export default function ClinicaPage() {
               equipadas. Espacios diseñados pensando en tu comodidad y en ofrecer los tratamientos dentales más avanzados.
             </p>
             <p className="text-base text-slate-600 leading-relaxed">
-              Contamos con <strong>6 gabinetes dentales completamente equipados</strong>, quirófano para cirugía de implantes, 
-              sala de radiología digital 3D, sala de esterilización con autoclave de última generación, laboratorio propio de 
-              prótesis dental y salas de espera amplias y confortables.
+              Contamos con <strong>6 gabinetes dentales completamente equipados</strong>, sala de radiología digital 3D, 
+              sala de esterilización con autoclave de última generación, laboratorio propio de prótesis dental y salas de 
+              espera amplias y confortables con tecnología de última generación.
             </p>
           </div>
           
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="aspect-video bg-gradient-to-br from-gray-100 to-gray-50 rounded-2xl flex items-center justify-center shadow-lg overflow-hidden">
-              <div className="text-center p-6">
-                <div className="text-4xl mb-2">Recepción</div>
-                <div className="text-slate-600">Sala de Espera</div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* Recepción */}
+            <div className="relative">
+              <h3 className="text-2xl font-bold text-black mb-4">Recepción</h3>
+              <p className="text-slate-600 mb-4 text-sm">Sala de Espera</p>
+              <div className="grid grid-cols-3 gap-2">
+                <div className="aspect-square bg-gray-100 rounded-xl overflow-hidden shadow-md relative">
+                  <Image
+                    src="/images/recepcion-clinica-viladecans.jpg"
+                    alt="Recepción Clínica Vela-Segalà Viladecans"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div className="aspect-square bg-gray-100 rounded-xl overflow-hidden shadow-md relative">
+                  <Image
+                    src="/images/recepcion-clinica-viladecans-2.jpg"
+                    alt="Sala de espera Clínica Dental Viladecans"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div className="aspect-square bg-gray-100 rounded-xl overflow-hidden shadow-md relative">
+                  <Image
+                    src="/images/recepcion-clinica-viladecans-3.jpg"
+                    alt="Recepción dentista Viladecans"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
               </div>
             </div>
-            <div className="aspect-video bg-gradient-to-br from-gray-100 to-gray-50 rounded-2xl flex items-center justify-center shadow-lg overflow-hidden">
-              <div className="text-center p-6">
-                <div className="text-4xl mb-2">Gabinetes</div>
-                <div className="text-slate-600">6 Salas de Tratamiento</div>
+
+            {/* Gabinetes */}
+            <div className="relative">
+              <h3 className="text-2xl font-bold text-black mb-4">Gabinetes</h3>
+              <p className="text-slate-600 mb-4 text-sm">6 Salas de Tratamiento</p>
+              <div className="grid grid-cols-3 gap-2">
+                <div className="aspect-square bg-gray-100 rounded-xl overflow-hidden shadow-md relative">
+                  <Image
+                    src="/images/cabina-dentista-viladecans-4.jpg"
+                    alt="Gabinete dental Viladecans"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div className="aspect-square bg-gray-100 rounded-xl overflow-hidden shadow-md relative">
+                  <Image
+                    src="/images/cabina-dentista-viladecans-2.jpg"
+                    alt="Sala de tratamiento dental"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div className="aspect-square bg-gray-100 rounded-xl overflow-hidden shadow-md relative">
+                  <Image
+                    src="/images/cabina-dentista-viladecans.jpg"
+                    alt="Cabina dental equipada"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div className="aspect-square bg-gray-100 rounded-xl overflow-hidden shadow-md relative">
+                  <Image
+                    src="/images/cabina-dentista-viladecans-5.jpg"
+                    alt="Gabinete dental moderno"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div className="aspect-square bg-gray-100 rounded-xl overflow-hidden shadow-md relative">
+                  <Image
+                    src="/images/cabina-dentista-viladecans-3.jpg"
+                    alt="Sala tratamiento Viladecans"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div className="aspect-square bg-gray-100 rounded-xl overflow-hidden shadow-md relative">
+                  <Image
+                    src="/images/cabina-dentista-viladecans-6.jpg"
+                    alt="Gabinete dental completo"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
               </div>
             </div>
-            <div className="aspect-video bg-gradient-to-br from-gray-100 to-gray-50 rounded-2xl flex items-center justify-center shadow-lg overflow-hidden">
-              <div className="text-center p-6">
-                <div className="text-4xl mb-2">Quirófano</div>
-                <div className="text-slate-600">Cirugía de Implantes</div>
-              </div>
-            </div>
-            <div className="aspect-video bg-gradient-to-br from-gray-100 to-gray-50 rounded-2xl flex items-center justify-center shadow-lg overflow-hidden">
-              <div className="text-center p-6">
-                <div className="text-4xl mb-2">Tecnología</div>
-                <div className="text-slate-600">Equipamiento Avanzado</div>
+
+            {/* Tecnología */}
+            <div className="relative">
+              <h3 className="text-2xl font-bold text-black mb-4">Tecnología</h3>
+              <p className="text-slate-600 mb-4 text-sm">Equipamiento Avanzado</p>
+              <div className="grid grid-cols-2 gap-2">
+                <div className="aspect-square bg-gray-100 rounded-xl overflow-hidden shadow-md relative">
+                  <Image
+                    src="/images/visita-clinica-dental-viladecans-6.jpg"
+                    alt="Tecnología dental avanzada"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div className="aspect-square bg-gray-100 rounded-xl overflow-hidden shadow-md relative">
+                  <Image
+                    src="/images/visita-clinica-dental-viladecans-3.jpg"
+                    alt="Equipamiento dental moderno"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div className="aspect-square bg-gray-100 rounded-xl overflow-hidden shadow-md relative">
+                  <Image
+                    src="/images/visita-clinica-dental-viladecans-9.jpg"
+                    alt="Tecnología dental Viladecans"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div className="aspect-square bg-gray-100 rounded-xl overflow-hidden shadow-md relative">
+                  <Image
+                    src="/images/tecnologia-dentista-viladecans.jpg"
+                    alt="Equipos dentales última generación"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
               </div>
             </div>
           </div>
