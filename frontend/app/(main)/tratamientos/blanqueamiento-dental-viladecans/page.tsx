@@ -590,7 +590,7 @@ export default function BlanqueamientoDentalPage() {
                 Quiero Blanquear Mis Dientes
               </Link>
             </div>
-            <div className="aspect-[4/3] bg-gradient-to-br from-gray-100 to-gray-50 rounded-3xl overflow-hidden shadow-xl relative">
+            <div className="aspect-[3/4] bg-gradient-to-br from-gray-100 to-gray-50 rounded-3xl overflow-hidden shadow-xl relative">
               <Image
                 src="/images/blanqueamiento-viladecans.png"
                 alt="Resultados del blanqueamiento dental profesional en Viladecans"
