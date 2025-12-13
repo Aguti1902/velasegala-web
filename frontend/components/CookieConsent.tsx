@@ -58,7 +58,7 @@ export function CookieConsent() {
             <p className="text-sm md:text-base text-slate-600 leading-relaxed mb-4">
               Utilizamos cookies para mejorar tu experiencia en nuestro sitio web, 
               analizar el tráfico y personalizar el contenido. Al hacer clic en 
-              "Aceptar todas", consientes el uso de todas las cookies. También puedes 
+              &quot;Aceptar todas&quot;, consientes el uso de todas las cookies. También puedes 
               personalizar tus preferencias o{" "}
               <Link 
                 href="/politica-cookies" 

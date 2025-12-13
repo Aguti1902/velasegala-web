@@ -121,6 +121,7 @@ export default function BlogPage() {
     };
 
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Filtrar posts
