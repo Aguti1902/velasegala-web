@@ -407,7 +407,8 @@ export default function ImplantesDentalesPage() {
       <section className="section-padding bg-white">
         <div className="container-custom">
           <div className="grid lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
-            <div className="aspect-[4/3] bg-gradient-to-br from-gray-100 to-gray-50 rounded-3xl overflow-hidden shadow-xl relative">
+            {/* Imagen - Desktop: izquierda, Móvil: oculta aquí */}
+            <div className="hidden lg:block aspect-[4/3] bg-gradient-to-br from-gray-100 to-gray-50 rounded-3xl overflow-hidden shadow-xl relative">
               <Image
                 src="/images/implantes-dentales-protesis-viladecans.jpg"
                 alt="Implantes de carga inmediata - Dientes en el día"
@@ -452,6 +453,16 @@ export default function ImplantesDentalesPage() {
                     <span className="text-slate-700"><strong>Sin esperas:</strong> Sonríe inmediatamente</span>
                   </div>
                 </div>
+              </div>
+
+              {/* Imagen - Solo visible en móvil, justo encima del botón */}
+              <div className="lg:hidden aspect-[4/3] bg-gradient-to-br from-gray-100 to-gray-50 rounded-3xl overflow-hidden shadow-xl relative mb-6">
+                <Image
+                  src="/images/implantes-dentales-protesis-viladecans.jpg"
+                  alt="Implantes de carga inmediata - Dientes en el día"
+                  fill
+                  className="object-cover"
+                />
               </div>
 
               <Link
