@@ -10,61 +10,61 @@ interface Message {
 }
 
 const TREATMENT_INFO: { [key: string]: string } = {
-  "implantes dentales": `Los **implantes dentales** en nuestra clínica de Viladecans:
-  
-• Precio: desde 800€ (implante + corona)
-• Duración: 3-6 meses (proceso completo)
-• Marcas premium: Straumann y Nobel Biocare
-• Garantía de por vida
-• Primera visita gratuita con diagnóstico 3D
-• Financiación sin intereses hasta 12 meses
+  "implantes dentales": `🦷 Implantes dentales en Vela Segalà:
+
+💰 Precio: desde 800€ (implante + corona)
+⏱️ Duración: 3-6 meses (proceso completo)
+⭐ Marcas premium: Straumann y Nobel Biocare
+🛡️ Garantía de por vida
+🎁 Primera visita gratuita con diagnóstico 3D
+💳 Financiación sin intereses hasta 12 meses
 
 Los implantes son la mejor solución para reemplazar dientes perdidos. ¿Te gustaría pedir cita?`,
 
-  "ortodoncia invisible": `**Ortodoncia invisible (Invisalign)** en Viladecans:
+  "ortodoncia invisible": `😊 Ortodoncia invisible (Invisalign) en Vela Segalà:
 
-• Sistema de alineadores transparentes y removibles
-• Nadie notará que los llevas
-• Ortodoncistas certificados Invisalign
-• Resultados desde el primer mes
-• Duración: 12-18 meses (promedio)
-• Primera visita gratuita con estudio digital
+✨ Sistema de alineadores transparentes y removibles
+👀 Nadie notará que los llevas
+👨‍⚕️ Ortodoncistas certificados Invisalign
+📈 Resultados desde el primer mes
+⏱️ Duración: 12-18 meses (promedio)
+🎁 Primera visita gratuita con estudio digital
 
 Perfecta para adultos y adolescentes. ¿Quieres más información?`,
 
-  "estética dental": `**Estética dental** en nuestra clínica:
+  "estética dental": `✨ Estética dental en Vela Segalà:
 
-• Carillas de porcelana
-• Blanqueamiento dental profesional
-• Diseño de sonrisa digital (DSD)
-• Reconstrucciones estéticas
-• Resultados naturales y duraderos
-• Primera visita gratuita
+🦷 Carillas de porcelana
+💎 Blanqueamiento dental profesional
+🎨 Diseño de sonrisa digital (DSD)
+🔧 Reconstrucciones estéticas
+⭐ Resultados naturales y duraderos
+🎁 Primera visita gratuita
 
 Transforma tu sonrisa con nuestros especialistas. ¿Te interesa algún tratamiento específico?`,
 
-  "blanqueamiento dental": `**Blanqueamiento dental profesional** en Viladecans:
+  "blanqueamiento dental": `💎 Blanqueamiento dental profesional en Vela Segalà:
 
-• Blanqueamiento en clínica con LED
-• Resultados inmediatos (1 sesión)
-• Seguro y efectivo
-• Elimina manchas y aclara varios tonos
-• También blanqueamiento ambulatorio
-• Desde 199€
+💡 Blanqueamiento en clínica con LED
+⚡ Resultados inmediatos (1 sesión)
+✅ Seguro y efectivo
+🎨 Elimina manchas y aclara varios tonos
+🏠 También blanqueamiento ambulatorio
+💰 Desde 199€
 
 ¿Quieres conseguir una sonrisa más blanca?`,
 
-  "precio": `**Precios** en Clínica Dental Viladecans:
+  "precio": `💰 Precios en Vela Segalà:
 
-• Implantes dentales: desde 800€
-• Ortodoncia invisible: consultar presupuesto
-• Blanqueamiento: desde 199€
-• Primera visita: GRATUITA
-• Financiación sin intereses disponible
+🦷 Implantes dentales: desde 800€
+😊 Ortodoncia invisible: consultar presupuesto
+💎 Blanqueamiento: desde 199€
+🎁 Primera visita: GRATUITA
+💳 Financiación sin intereses disponible
 
 Todos los precios incluyen materiales de primera calidad. ¿Quieres pedir cita gratuita?`,
 
-  "cita": `Para **pedir cita** en nuestra clínica de Viladecans:
+  "cita": `📅 Para pedir cita en Vela Segalà:
 
 📞 Teléfono: 93 658 84 06
 📧 Email: info@clinicadentalviladecans.com
@@ -72,9 +72,9 @@ Todos los precios incluyen materiales de primera calidad. ¿Quieres pedir cita g
 
 También puedes pedir cita online haciendo clic en el botón "Pedir Cita" de la web.
 
-**Primera visita totalmente GRATUITA** con diagnóstico completo.`,
+🎁 Primera visita totalmente GRATUITA con diagnóstico completo.`,
 
-  "horario": `**Horario** de la clínica:
+  "horario": `🕐 Horario de Vela Segalà:
 
 🕐 Lunes a Viernes: 9:00 - 20:00
 🕐 Sábados y Domingos: Cerrado
@@ -94,7 +94,7 @@ export function Chatbot() {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      content: "¡Hola! Soy el asistente virtual de **Clínica Dental Viladecans**. ¿En qué puedo ayudarte hoy? Puedo informarte sobre tratamientos, precios, horarios y citas.",
+      content: "¡Hola! 👋 Soy el asistente virtual de Vela Segalà. ¿En qué puedo ayudarte hoy? Puedo informarte sobre tratamientos, precios, horarios y citas.",
     },
   ]);
   const [input, setInput] = useState("");
@@ -128,16 +128,16 @@ export function Chatbot() {
     } else if (lowerMessage.includes("horario") || lowerMessage.includes("hora")) {
       return TREATMENT_INFO["horario"];
     } else if (lowerMessage.includes("hola") || lowerMessage.includes("buenos") || lowerMessage.includes("buenas")) {
-      return "¡Hola! ¿En qué tratamiento dental estás interesado? Puedo ayudarte con información sobre:\n\n• Implantes dentales\n• Ortodoncia invisible\n• Estética dental\n• Blanqueamiento\n• Precios y citas";
+      return "¡Hola! 👋 ¿En qué tratamiento dental estás interesado? Puedo ayudarte con información sobre:\n\n🦷 Implantes dentales\n😊 Ortodoncia invisible\n✨ Estética dental\n💎 Blanqueamiento\n💰 Precios y citas";
     }
 
     return `Gracias por tu consulta. Para información más específica, te recomiendo:
 
 📞 Llamarnos: 93 658 84 06
 📧 Email: info@clinicadentalviladecans.com
-💬 O pedir tu **primera visita GRATUITA**
+💬 O pedir tu primera visita GRATUITA
 
-¿Hay algo más sobre nuestros tratamientos en Viladecans que quieras saber?`;
+¿Hay algo más sobre nuestros tratamientos en Vela Segalà que quieras saber?`;
   };
 
   const handleSend = () => {
@@ -173,8 +173,12 @@ export function Chatbot() {
       {/* Botón flotante */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`fixed bottom-6 right-6 z-50 flex items-center gap-3 px-6 py-4 bg-black text-white rounded-full shadow-2xl hover:shadow-3xl hover:scale-105 transition-all duration-300 ${
+        className={`fixed bottom-6 right-6 z-50 flex items-center justify-center bg-black text-white shadow-2xl hover:shadow-3xl hover:scale-105 transition-all duration-300 ${
           isOpen ? "scale-0" : "scale-100"
+        } ${
+          // En móvil: completamente redondo, solo icono
+          // En desktop: redondeado con texto
+          "w-14 h-14 sm:w-auto sm:h-auto sm:px-6 sm:py-4 rounded-full sm:gap-3"
         }`}
         aria-label="Abrir chat"
       >
@@ -199,7 +203,7 @@ export function Chatbot() {
               </div>
               <div>
                 <div className="font-bold text-lg">Asistente Virtual</div>
-                <div className="text-xs text-gray-300">Clínica Dental Viladecans</div>
+                <div className="text-xs text-gray-300">Vela Segalà</div>
               </div>
             </div>
             <button
