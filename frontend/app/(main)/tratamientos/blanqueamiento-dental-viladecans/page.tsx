@@ -40,17 +40,21 @@ const TREATMENT_FAQS = [
 ];
 
 export const metadata: Metadata = {
-  title: "Blanqueamiento Dental en Viladecans | Sonrisa Más Blanca",
+  title: "Blanqueamiento Dental en Viladecans | Clínica Vela-Segalà",
   description:
-    "Blanqueamiento dental profesional en Viladecans. Tratamiento en clínica con lámparas LED. Resultados inmediatos y duraderos. Primera visita gratuita. Dientes más blancos y brillantes.",
+    `Blanqueamiento dental profesional en Viladecans. Tecnología LED avanzada. Dientes varios tonos más blancos en 1 sesión. Primera visita gratuita. Tratamiento seguro e indoloro. Llama al ${CLINIC_INFO.phoneDisplay}`,
   keywords: [
     "blanqueamiento dental viladecans",
     "blanqueamiento dental profesional viladecans",
     "blanquear dientes viladecans",
     "dientes blancos viladecans",
+    "blanqueamiento dental led viladecans",
+    "blanqueamiento dental precio viladecans",
+    "blanqueamiento dental casa viladecans",
+    "dentista blanqueamiento viladecans",
   ],
   openGraph: {
-    title: "Blanqueamiento Dental en Viladecans | Sonrisa Más Blanca",
+    title: "Blanqueamiento Dental en Viladecans | Clínica Vela-Segalà",
     description:
       "Consigue una sonrisa más blanca y brillante. Blanqueamiento dental profesional con resultados inmediatos. Primera visita gratuita.",
     images: ["/images/estetica-dental-viladecans.jpg"],
@@ -83,15 +87,19 @@ export default function BlanqueamientoDentalPage() {
               <h1 className="text-4xl md:text-5xl font-bold text-black mb-6">
                 Blanqueamiento Dental en Viladecans
               </h1>
-              <p className="text-xl text-slate-700 mb-4 leading-relaxed">
-                Consigue una sonrisa más blanca y brillante con <strong>blanqueamiento dental profesional en 
-                Viladecans</strong>. Tratamiento en clínica con lámparas LED de última generación para resultados 
-                inmediatos y duraderos.
+              <p className="text-xl text-slate-700 mb-4 leading-relaxed font-semibold">
+                ¿Sabías que cuando sonríes reduces el nivel de estrés y contagias tu felicidad? 
+                No dejes que el color de tus dientes te impida sonreír.
+              </p>
+              <p className="text-lg text-slate-600 mb-4 leading-relaxed">
+                El <strong>blanqueamiento dental profesional en Viladecans</strong> es uno de los mejores tratamientos 
+                para <strong>mejorar el aspecto de tu sonrisa</strong>. En poco tiempo, aclaramos la tonalidad de tus 
+                dientes para que luzcas <strong>una sonrisa más blanca</strong> sin perder su naturalidad.
               </p>
               <p className="text-lg text-slate-600 mb-6 leading-relaxed">
-                Seguro y efectivo. Elimina manchas y decoloración dental causada por café, té, vino, tabaco y 
-                envejecimiento. También ofrecemos <strong>blanqueamiento ambulatorio</strong> con férulas 
-                personalizadas para casa.
+                Tratamiento con <strong>lámparas LED de última generación</strong>. Elimina manchas causadas por café, 
+                té, vino, tabaco y envejecimiento. También ofrecemos <strong>blanqueamiento ambulatorio</strong> con 
+                férulas personalizadas para casa.
               </p>
               
               <div className="bg-gradient-to-br from-black to-gray-800 rounded-2xl p-5 shadow-xl mb-6 text-white">
@@ -158,16 +166,88 @@ export default function BlanqueamientoDentalPage() {
         </div>
       </section>
 
-      {/* Tipos de Blanqueamiento */}
+      {/* Por qué perdemos el color blanco */}
       <section className="section-padding bg-white">
+        <div className="container-custom">
+          <div className="grid lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+            <div className="aspect-[4/3] bg-gradient-to-br from-gray-100 to-gray-50 rounded-3xl overflow-hidden shadow-xl relative order-2 lg:order-1">
+              <Image
+                src="/images/blanqueamiento-dental-perdida-color.jpg"
+                alt="Por qué los dientes pierden el color blanco"
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div className="order-1 lg:order-2">
+              <h2 className="text-3xl md:text-4xl font-bold text-black mb-6">
+                ¿Por Qué Mis Dientes Han Perdido Su Color Blanco?
+              </h2>
+              <p className="text-lg text-slate-700 mb-6 leading-relaxed">
+                El <strong>esmalte de nuestros dientes puede oscurecerse</strong> por diferentes motivos. 
+                Conocer las causas es fundamental para prevenir la decoloración dental.
+              </p>
+              
+              <div className="space-y-3 mb-6">
+                <div className="flex items-start gap-3">
+                  <div className="w-2 h-2 rounded-full bg-black mt-2 flex-shrink-0"></div>
+                  <p className="text-slate-700">
+                    <strong>Alimentos y bebidas con pigmentos fuertes:</strong> café, té, vino tinto, salsas oscuras, remolacha
+                  </p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-2 h-2 rounded-full bg-black mt-2 flex-shrink-0"></div>
+                  <p className="text-slate-700">
+                    <strong>Tabaco:</strong> amarillea los dientes con el tiempo
+                  </p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-2 h-2 rounded-full bg-black mt-2 flex-shrink-0"></div>
+                  <p className="text-slate-700">
+                    <strong>Sarro acumulado:</strong> por higiene dental deficiente
+                  </p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-2 h-2 rounded-full bg-black mt-2 flex-shrink-0"></div>
+                  <p className="text-slate-700">
+                    <strong>Algunos medicamentos:</strong> como las tetraciclinas
+                  </p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-2 h-2 rounded-full bg-black mt-2 flex-shrink-0"></div>
+                  <p className="text-slate-700">
+                    <strong>Descalcificación del esmalte</strong>
+                  </p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-2 h-2 rounded-full bg-black mt-2 flex-shrink-0"></div>
+                  <p className="text-slate-700">
+                    <strong>Envejecimiento natural</strong> de las piezas dentales
+                  </p>
+                </div>
+              </div>
+
+              <p className="text-lg text-slate-700 font-semibold">
+                Con el blanqueamiento dental podemos aclarar varios tonos el color del esmalte y mejorar 
+                significativamente la estética de tu sonrisa.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Tipos de Blanqueamiento */}
+      <section className="section-padding bg-gray-50">
         <div className="container-custom max-w-4xl">
-          <h2 className="text-3xl md:text-4xl font-bold text-black mb-6">
-            Tipos de Blanqueamiento Dental en Viladecans
-          </h2>
-          <p className="text-lg text-slate-700 mb-8 leading-relaxed">
-            En nuestra <strong>clínica dental de Viladecans</strong> ofrecemos dos tipos de blanqueamiento dental 
-            profesional adaptados a tus necesidades.
-          </p>
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-black mb-6">
+              Tipos de Blanqueamiento Dental en Viladecans
+            </h2>
+            <p className="text-lg text-slate-700 mb-4 leading-relaxed max-w-3xl mx-auto">
+              En <strong>Clínicas Vela-Segalà de Viladecans</strong> ofrecemos dos tipos de blanqueamiento dental 
+              profesional adaptados a tus necesidades. Nuestro objetivo es velar por tu bienestar y conseguir que 
+              vuelvas a <strong>disfrutar de tu sonrisa sin complejos</strong>.
+            </p>
+          </div>
 
           <div className="space-y-6">
             <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-6 shadow-lg border-l-4 border-yellow-500">
@@ -214,46 +294,109 @@ export default function BlanqueamientoDentalPage() {
         </div>
       </section>
 
+      {/* Blanqueamiento en casa */}
+      <section className="section-padding bg-white">
+        <div className="container-custom">
+          <div className="grid lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+            <div>
+              <div className="inline-block bg-black text-white px-4 py-2 rounded-lg text-sm font-bold mb-4">
+                BLANQUEAMIENTO DOMICILIARIO
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-black mb-6">
+                Blanqueamiento Dental en Casa
+              </h2>
+              <p className="text-lg text-slate-700 mb-4 leading-relaxed">
+                Tras el <strong>blanqueamiento en la clínica</strong>, proporcionamos al paciente un <strong>kit de 
+                blanqueamiento para aplicar en casa</strong>. Este kit contiene unas <strong>cubetas fabricadas a 
+                medida</strong> y gel blanqueador profesional.
+              </p>
+              <p className="text-lg text-slate-700 mb-6 leading-relaxed">
+                Esta segunda fase del <strong>blanqueamiento dental a domicilio está supervisada por nuestros 
+                especialistas</strong> y ayuda a complementar los resultados del tratamiento en la clínica para 
+                obtener un resultado óptimo y duradero.
+              </p>
+
+              <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-6 shadow-lg mb-6">
+                <h3 className="font-bold text-lg mb-4">Ventajas del blanqueamiento en casa:</h3>
+                <div className="space-y-3">
+                  <div className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 flex-shrink-0 text-black mt-0.5" />
+                    <span className="text-slate-700"><strong>Comodidad:</strong> Lo realizas cuando tú quieras</span>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 flex-shrink-0 text-black mt-0.5" />
+                    <span className="text-slate-700"><strong>Supervisión profesional:</strong> Seguimiento por especialistas</span>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 flex-shrink-0 text-black mt-0.5" />
+                    <span className="text-slate-700"><strong>Complemento perfecto:</strong> Potencia los resultados de clínica</span>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 flex-shrink-0 text-black mt-0.5" />
+                    <span className="text-slate-700"><strong>Mantenimiento:</strong> Conserva la blancura por más tiempo</span>
+                  </div>
+                </div>
+              </div>
+
+              <p className="text-base text-slate-600 leading-relaxed">
+                En las clínicas Vela-Segalà también ofrecemos <strong>consejos de higiene y cuidado dental</strong> 
+                para que realices un buen mantenimiento tras el blanqueamiento y los resultados se mantengan durante 
+                el mayor tiempo posible.
+              </p>
+            </div>
+            <div className="aspect-[4/3] bg-gradient-to-br from-gray-100 to-gray-50 rounded-3xl overflow-hidden shadow-xl relative">
+              <Image
+                src="/images/blanqueamiento-dental-casa.jpg"
+                alt="Blanqueamiento dental en casa - Kit personalizado"
+                fill
+                className="object-cover"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Proceso */}
       <section className="section-padding bg-gray-50">
         <div className="container-custom max-w-4xl">
           <h2 className="text-3xl md:text-4xl font-bold text-black mb-4 text-center">
-            Proceso del Blanqueamiento Dental en Clínica
+            Cómo es el Proceso del Blanqueamiento Dental en Nuestra Clínica
           </h2>
           <p className="text-center text-slate-600 mb-12 max-w-2xl mx-auto">
-            Te explicamos paso a paso cómo realizamos el blanqueamiento dental en nuestra clínica de Viladecans.
+            Te explicamos paso a paso cómo realizamos el blanqueamiento dental en nuestra clínica de Viladecans. 
+            Un tratamiento profesional, seguro y completamente <strong>indoloro</strong>.
           </p>
           <div className="space-y-6">
             {[
               {
                 step: "1",
-                title: "Evaluación y Limpieza Previa",
+                title: "Diagnóstico y Limpieza Dental Profesional",
                 description:
-                  "Evaluamos el color actual de tus dientes con la guía de color Vita. Comprobamos que no tengas caries, enfermedad periodontal ni sensibilidad severa. Realizamos una limpieza dental profesional previa para eliminar sarro y placa, ya que el blanqueamiento funciona mejor sobre dientes limpios.",
+                  "El primer paso es comentar con el paciente sus expectativas y analizar qué factores han causado la decoloración del esmalte. Realizamos una revisión de su salud oral y, si es necesario, una limpieza dental profesional previa para eliminar el exceso de sarro acumulado y asegurarnos de que el blanqueamiento se ejecuta sobre una boca sana.",
               },
               {
                 step: "2",
-                title: "Protección de Encías",
+                title: "Protección y Aislamiento de Encías",
                 description:
-                  "Aplicamos una resina protectora fotopolimerizable sobre las encías para aislarlas y evitar que el gel blanqueador las irrite. También protegemos los labios y la lengua. Esto es fundamental para tu comodidad y seguridad durante el tratamiento.",
+                  "Antes de empezar, protegemos y aislamos las encías. Aplicamos una resina protectora fotopolimerizable sobre las encías para aislarlas y evitar que el gel blanqueador las irrite. También protegemos los labios y la lengua para garantizar tu comodidad y seguridad durante todo el tratamiento.",
               },
               {
                 step: "3",
-                title: "Aplicación del Gel Blanqueador",
+                title: "Aplicación del Gel Blanqueador con Moléculas Activas",
                 description:
-                  "Aplicamos el gel blanqueador de peróxido de hidrógeno al 25-35% sobre la superficie frontal de tus dientes (de canino a canino, superiores e inferiores). El gel actúa penetrando en el esmalte y dentina para descomponer las moléculas de pigmento responsables de las manchas.",
+                  "El blanqueamiento se realiza aplicando un gel que contiene moléculas blanqueadoras de peróxido de hidrógeno al 25-35%. Extendemos el gel sobre la superficie de los dientes. El gel actúa de forma interna en el esmalte y elimina las partículas que han provocado su decoloración.",
               },
               {
                 step: "4",
-                title: "Fotoactivación con Lámpara LED",
+                title: "Activación con Lámpara LED de Última Generación",
                 description:
-                  "Activamos el gel blanqueador con una lámpara LED de última generación durante 15 minutos. La luz acelera la reacción química del blanqueamiento. Repetimos este proceso en 3-4 ciclos retirando el gel usado y aplicando gel fresco cada vez. Total: 45-60 minutos.",
+                  "Utilizamos una lámpara de luz LED que activa la liberación de estas moléculas blanqueadoras. La luz acelera la reacción química del blanqueamiento para obtener resultados más rápidos y efectivos. Repetimos este proceso en 3-4 ciclos de 15 minutos cada uno. Duración total: 45-60 minutos.",
               },
               {
                 step: "5",
-                title: "Aplicación de Desensibilizante",
+                title: "Tratamiento de Desensibilización",
                 description:
-                  "Al finalizar, retiramos todo el gel blanqueador y la protección de encías. Aplicamos un gel desensibilizante con flúor, potasio y calcio para remineralizar el esmalte y prevenir sensibilidad post-blanqueamiento. Te damos instrucciones de cuidados posteriores.",
+                  "Aunque es un tratamiento completamente indoloro, puede provocar algo de sensibilidad dental temporal. Por ello, en nuestra clínica llevamos a cabo un tratamiento de desensibilización con flúor, potasio y calcio que ayuda a mitigar estos efectos con mayor rapidez y remineraliza el esmalte.",
               },
             ].map((step) => (
               <div
@@ -271,6 +414,66 @@ export default function BlanqueamientoDentalPage() {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Beneficios de sonreír */}
+      <section className="section-padding bg-gradient-to-b from-gray-50 to-white">
+        <div className="container-custom">
+          <div className="grid lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+            <div className="aspect-[4/3] bg-gradient-to-br from-gray-100 to-gray-50 rounded-3xl overflow-hidden shadow-xl relative">
+              <Image
+                src="/images/blanqueamiento-dental-sonrisa (1).jpg"
+                alt="Sonrisa blanca y saludable después del blanqueamiento dental"
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div>
+              <h2 className="text-3xl md:text-4xl font-bold text-black mb-6">
+                Sonreír Mejora Tu Autoestima e Inspira Confianza
+              </h2>
+              <p className="text-lg text-slate-700 mb-4 leading-relaxed">
+                <strong>Cuando sonríes reduces el nivel de estrés</strong> y contagias tu felicidad a las personas 
+                que te rodean. Aunque sonreír es algo que muchas veces hacemos de forma mecánica como reacción ante 
+                un estado de ánimo, hay veces que lo evitamos.
+              </p>
+              <p className="text-lg text-slate-700 mb-6 leading-relaxed">
+                Especialmente <strong>si no nos gusta nuestra sonrisa o nos avergüenza el color de nuestros dientes</strong>. 
+                El blanqueamiento dental es uno de los mejores tratamientos que puedes hacerte para mejorar el aspecto 
+                de tu sonrisa.
+              </p>
+
+              <div className="bg-gradient-to-br from-black to-gray-800 text-white rounded-2xl p-6 shadow-xl mb-6">
+                <h3 className="font-bold text-xl mb-4 flex items-center gap-2">
+                  <Smile className="w-6 h-6" />
+                  Beneficios de una sonrisa blanca:
+                </h3>
+                <div className="space-y-3 text-sm">
+                  <div className="flex items-start gap-3">
+                    <Star className="w-5 h-5 flex-shrink-0 mt-0.5" />
+                    <span>Aumenta tu autoestima y confianza personal</span>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <Star className="w-5 h-5 flex-shrink-0 mt-0.5" />
+                    <span>Mejora tu imagen profesional y social</span>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <Star className="w-5 h-5 flex-shrink-0 mt-0.5" />
+                    <span>Te hace parecer más joven y saludable</span>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <Star className="w-5 h-5 flex-shrink-0 mt-0.5" />
+                    <span>Genera una primera impresión positiva</span>
+                  </div>
+                </div>
+              </div>
+
+              <p className="text-xl font-bold text-black">
+                ¡No te prives de sonreír! Recupera la confianza en tu sonrisa.
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -333,6 +536,72 @@ export default function BlanqueamientoDentalPage() {
         </div>
       </section>
 
+      {/* Resultados del blanqueamiento */}
+      <section className="section-padding bg-gradient-to-b from-white to-gray-50">
+        <div className="container-custom">
+          <div className="grid lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+            <div>
+              <div className="inline-block bg-black text-white px-4 py-2 rounded-lg text-sm font-bold mb-4">
+                RESULTADOS INMEDIATOS
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-black mb-6">
+                Dientes Varios Tonos Más Blancos en una Sola Sesión
+              </h2>
+              <p className="text-lg text-slate-700 mb-4 leading-relaxed">
+                El <strong>blanqueamiento dental profesional en nuestra clínica de Viladecans</strong> consigue 
+                resultados inmediatos y visibles desde la primera sesión. Notarás cómo tus dientes se aclaran 
+                varios tonos en solo 45-60 minutos.
+              </p>
+              <p className="text-lg text-slate-700 mb-6 leading-relaxed">
+                Los resultados son <strong>duraderos entre 1-3 años</strong> dependiendo de tus hábitos de higiene 
+                oral y alimentación. Con un buen mantenimiento y siguiendo nuestros consejos, tu sonrisa se mantendrá 
+                blanca y brillante durante mucho tiempo.
+              </p>
+
+              <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-6 shadow-lg border-l-4 border-yellow-500 mb-6">
+                <h3 className="font-bold text-lg mb-4 flex items-center gap-2">
+                  <Sparkles className="w-6 h-6" />
+                  ¿Qué esperar del tratamiento?
+                </h3>
+                <div className="space-y-3 text-slate-700">
+                  <div className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 flex-shrink-0 text-black mt-0.5" />
+                    <span><strong>Resultados inmediatos:</strong> Notarás la diferencia al salir de la clínica</span>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 flex-shrink-0 text-black mt-0.5" />
+                    <span><strong>Tratamiento seguro:</strong> No daña el esmalte dental</span>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 flex-shrink-0 text-black mt-0.5" />
+                    <span><strong>Sin dolor:</strong> Proceso completamente indoloro</span>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 flex-shrink-0 text-black mt-0.5" />
+                    <span><strong>Aspecto natural:</strong> Blancura sin perder naturalidad</span>
+                  </div>
+                </div>
+              </div>
+
+              <Link
+                href="/pedir-cita"
+                className="inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white bg-black rounded-2xl hover:shadow-xl hover:scale-105 transition-all"
+              >
+                Quiero Blanquear Mis Dientes
+              </Link>
+            </div>
+            <div className="aspect-[4/3] bg-gradient-to-br from-gray-100 to-gray-50 rounded-3xl overflow-hidden shadow-xl relative">
+              <Image
+                src="/images/Gemini_Generated_Image_aovmlfaovmlfaovm.png"
+                alt="Resultados del blanqueamiento dental profesional"
+                fill
+                className="object-cover"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* FAQs */}
       <section className="section-padding bg-gray-50">
         <div className="container-custom max-w-3xl">
@@ -362,17 +631,17 @@ export default function BlanqueamientoDentalPage() {
       {/* CTA Final */}
       <section className="section-padding bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white">
         <div className="container-custom text-center">
-          <Sparkles className="w-16 h-16 mx-auto mb-6" />
+          <Smile className="w-16 h-16 mx-auto mb-6 text-white" />
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Consigue una Sonrisa Más Blanca y Brillante
+            ¿Por Qué Esperar Más para Lucir una Sonrisa Radiante?
           </h2>
-          <p className="text-xl mb-4 text-gray-200 max-w-2xl mx-auto">
-            Pide tu <strong>primera visita gratuita</strong> en nuestra clínica dental de Viladecans. 
-            Evaluación completa y presupuesto personalizado sin compromiso.
+          <p className="text-xl mb-4 text-gray-200 max-w-2xl mx-auto leading-relaxed">
+            En <strong>Clínicas Vela-Segalà de Viladecans</strong> queremos que vuelvas a <strong>disfrutar de tu 
+            sonrisa sin complejos</strong>. Pide tu primera visita gratuita y te explicaremos cómo podemos ayudarte.
           </p>
           <p className="text-base mb-8 text-gray-300 max-w-2xl mx-auto">
-            <strong>Blanqueamiento dental profesional en Viladecans</strong>. Resultados inmediatos en una sesión. 
-            Tratamiento seguro y efectivo.
+            <strong>Blanqueamiento dental profesional en Viladecans</strong>. Tecnología LED avanzada. Resultados 
+            inmediatos en una sesión. Tratamiento seguro, indoloro y efectivo. Primera visita y valoración gratuita.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
@@ -386,12 +655,12 @@ export default function BlanqueamientoDentalPage() {
               className="inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white bg-transparent border-2 border-white rounded-2xl hover:bg-white hover:text-black transition-all"
             >
               <Phone className="w-5 h-5 mr-2" />
-              {CLINIC_INFO.phoneDisplay}
+              Llamar: {CLINIC_INFO.phoneDisplay}
             </a>
           </div>
           <p className="mt-6 text-sm text-gray-400">
             <MapPin className="w-4 h-4 inline mr-1" />
-            {CLINIC_INFO.address.street}, {CLINIC_INFO.address.city} • Primera visita gratuita • Resultados inmediatos
+            {CLINIC_INFO.address.street}, {CLINIC_INFO.address.city} • Especialistas en estética dental • Tecnología LED de última generación
           </p>
         </div>
       </section>
