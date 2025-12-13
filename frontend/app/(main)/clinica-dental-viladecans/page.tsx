@@ -528,7 +528,7 @@ export default function ClinicaPage() {
             <div className="text-center">
               <div className="w-80 h-80 mx-auto mb-6 rounded-3xl overflow-hidden shadow-2xl relative">
                 <Image
-                  src="/images/xavi1.png"
+                  src="/images/doctor-xavier-vela.png"
                   alt="Dr. Xavier Vela"
                   fill
                   className="object-cover object-top"
@@ -544,7 +544,7 @@ export default function ClinicaPage() {
             <div className="text-center">
               <div className="w-80 h-80 mx-auto mb-6 rounded-3xl overflow-hidden shadow-2xl relative">
                 <Image
-                  src="/images/maribel1.png"
+                  src="/images/doctora-maribel-segala-1.png"
                   alt="Dra. Maribel Segalà"
                   fill
                   className="object-cover object-top"
