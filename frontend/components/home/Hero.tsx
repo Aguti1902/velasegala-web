@@ -9,7 +9,7 @@ export function Hero() {
       <div className="container-custom section-padding">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Texto */}
-          <div>
+          <div className="order-2 lg:order-1">
             <div className="inline-block bg-black text-white px-4 py-2 rounded-lg text-sm font-bold mb-4">
               CENTRO DE REFERENCIA INTERNACIONAL
             </div>
@@ -69,7 +69,7 @@ export function Hero() {
           </div>
 
           {/* Video */}
-          <div className="relative">
+          <div className="relative order-1 lg:order-2">
             <div className="aspect-[4/3] rounded-3xl shadow-2xl overflow-hidden relative">
               <VideoPlayer
                 src="/videos/VelaSegala_2024_Edit.mov"
@@ -80,8 +80,8 @@ export function Hero() {
                 className="w-full h-full"
               />
             </div>
-            {/* Badge flotante */}
-            <div className="absolute -bottom-4 -left-4 bg-black text-white shadow-2xl p-5 rounded-2xl">
+            {/* Badge flotante - Oculto en móvil */}
+            <div className="hidden md:block absolute -bottom-4 -left-4 bg-black text-white shadow-2xl p-5 rounded-2xl">
               <div className="flex items-center gap-3">
                 <Award className="w-10 h-10" />
                 <div>
