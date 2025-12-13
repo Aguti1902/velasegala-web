@@ -156,7 +156,7 @@ export default function OrtodonciaInvisiblePage() {
 
             <div className="aspect-[4/3] bg-gradient-to-br from-gray-100 to-gray-50 rounded-3xl overflow-hidden shadow-xl relative">
               <Image
-                src="/images/ortodoncia-invisalign-viladecans.jpg"
+                src="/images/invisiline-clinica-dental-viladecans-2.jpg"
                 alt="Ortodoncia Invisible Invisalign en Viladecans - Clínica Vela-Segalà"
                 fill
                 className="object-cover"
@@ -173,7 +173,7 @@ export default function OrtodonciaInvisiblePage() {
           <div className="grid lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
             <div className="aspect-[4/3] bg-gradient-to-br from-gray-100 to-gray-50 rounded-3xl overflow-hidden shadow-xl relative order-2 lg:order-1">
               <Image
-                src="/images/ortodoncia-clinica-dental-viladecans.jpg"
+                src="/images/fase-retencion-ortodoncia-invisible.jpg"
                 alt="Férulas transparentes de ortodoncia invisible fabricadas a medida"
                 fill
                 className="object-cover"
