@@ -1,14 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 import Image from "next/image";
 
 export function LoadingScreen() {
   const [isLoading, setIsLoading] = useState(true);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const pathname = usePathname();
-  const searchParams = useSearchParams();
 
   useEffect(() => {
     // Ocultar loading inicial después de que la página cargue
@@ -34,7 +33,7 @@ export function LoadingScreen() {
     }, 400);
 
     return () => clearTimeout(timer);
-  }, [pathname, searchParams]);
+  }, [pathname]);
 
   if (!isLoading && !isTransitioning) return null;
 
