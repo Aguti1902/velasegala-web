@@ -37,7 +37,7 @@ export function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-[60] w-full bg-white shadow-md">
+    <header className="fixed lg:sticky top-0 z-[60] w-full bg-white shadow-md">
       {/* Top bar con info de contacto */}
       <div className="bg-gradient-to-r from-gray-900 to-black text-white">
         <div className="container-custom">
