@@ -507,46 +507,61 @@ export default function ClinicaPage() {
         </div>
       </section>
 
+      {/* Equipo Médico - Directores */}
+      <section className="relative py-20 overflow-hidden">
+        {/* Imagen de fondo */}
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/images/clinica-vela-segala-expertos-denstistas.png"
+            alt="Clínica Vela-Segalà Viladecans"
+            fill
+            className="object-cover"
+          />
+          {/* Overlay oscuro */}
+          <div className="absolute inset-0 bg-gradient-to-b from-gray-900/95 via-black/90 to-gray-900/95"></div>
+        </div>
+
+        {/* Contenido */}
+        <div className="container-custom relative z-10">
+          <div className="grid md:grid-cols-2 gap-16 max-w-6xl mx-auto">
+            {/* Dr. Xavier Vela */}
+            <div className="text-center">
+              <div className="w-80 h-80 mx-auto mb-6 rounded-3xl overflow-hidden shadow-2xl relative">
+                <Image
+                  src="/images/xavi1.png"
+                  alt="Dr. Xavier Vela"
+                  fill
+                  className="object-cover object-top"
+                />
+              </div>
+              <h3 className="text-3xl font-bold mb-3 text-white">Dr. Xavi Vela</h3>
+              <div className="w-16 h-0.5 bg-white mx-auto mb-4"></div>
+              <p className="text-gray-300 text-sm mb-2">Número de colegiado: 2247 Odontólogo | 26347 Médico</p>
+              <p className="text-gray-400 text-sm">Implantología y estética. Director Clínicas Vela-Segalà</p>
+            </div>
+
+            {/* Dra. Maribel Segalà */}
+            <div className="text-center">
+              <div className="w-80 h-80 mx-auto mb-6 rounded-3xl overflow-hidden shadow-2xl relative">
+                <Image
+                  src="/images/maribel1.png"
+                  alt="Dra. Maribel Segalà"
+                  fill
+                  className="object-cover object-top"
+                />
+              </div>
+              <h3 className="text-3xl font-bold mb-3 text-white">Dra. Maribel Segalà</h3>
+              <div className="w-16 h-0.5 bg-white mx-auto mb-4"></div>
+              <p className="text-gray-300 text-sm mb-2">Número de colegiado: 1379 Odontólogo | 19608 Médico</p>
+              <p className="text-gray-400 text-sm">Implantología y prótesis. Directora Clínicas Vela-Segalà</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Equipo Médico */}
       <section className="section-padding bg-gradient-to-b from-gray-900 to-black text-white">
         <div className="container-custom">
-          {/* Directores */}
-          <div className="mb-20">
-            <div className="grid md:grid-cols-2 gap-12 max-w-5xl mx-auto">
-              {/* Dr. Xavier Vela */}
-              <div className="text-center">
-                <div className="w-64 h-64 mx-auto mb-6 rounded-full overflow-hidden shadow-2xl relative">
-                  <Image
-                    src="/images/doctor-xavier-vela.png"
-                    alt="Dr. Xavier Vela"
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <h3 className="text-3xl font-bold mb-3">Dr. Xavi Vela</h3>
-                <div className="w-12 h-0.5 bg-white mx-auto mb-4"></div>
-                <p className="text-gray-300 text-sm mb-2">Número de colegiado: 2247 Odontólogo | 26347 Médico</p>
-                <p className="text-gray-400 text-sm">Implantología y estética. Director Clínicas Vela-Segalà</p>
-              </div>
-
-              {/* Dra. Maribel Segalà */}
-              <div className="text-center">
-                <div className="w-64 h-64 mx-auto mb-6 rounded-full overflow-hidden shadow-2xl relative">
-                  <Image
-                    src="/images/doctora-maribel-segala-1.png"
-                    alt="Dra. Maribel Segalà"
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <h3 className="text-3xl font-bold mb-3">Dra. Maribel Segalà</h3>
-                <div className="w-12 h-0.5 bg-white mx-auto mb-4"></div>
-                <p className="text-gray-300 text-sm mb-2">Número de colegiado: 1379 Odontólogo | 19608 Médico</p>
-                <p className="text-gray-400 text-sm">Implantología y prótesis. Directora Clínicas Vela-Segalà</p>
-              </div>
-            </div>
-          </div>
-
           {/* Equipo médico */}
           <div className="mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-3">Equipo médico</h2>
