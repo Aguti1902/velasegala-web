@@ -507,6 +507,360 @@ export default function ClinicaPage() {
         </div>
       </section>
 
+      {/* Equipo Médico */}
+      <section className="section-padding bg-gradient-to-b from-gray-900 to-black text-white">
+        <div className="container-custom">
+          {/* Directores */}
+          <div className="mb-20">
+            <div className="grid md:grid-cols-2 gap-12 max-w-5xl mx-auto">
+              {/* Dr. Xavier Vela */}
+              <div className="text-center">
+                <div className="w-64 h-64 mx-auto mb-6 rounded-full overflow-hidden shadow-2xl relative">
+                  <Image
+                    src="/images/doctor-xavier-vela.png"
+                    alt="Dr. Xavier Vela"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <h3 className="text-3xl font-bold mb-3">Dr. Xavi Vela</h3>
+                <div className="w-12 h-0.5 bg-white mx-auto mb-4"></div>
+                <p className="text-gray-300 text-sm mb-2">Número de colegiado: 2247 Odontólogo | 26347 Médico</p>
+                <p className="text-gray-400 text-sm">Implantología y estética. Director Clínicas Vela-Segalà</p>
+              </div>
+
+              {/* Dra. Maribel Segalà */}
+              <div className="text-center">
+                <div className="w-64 h-64 mx-auto mb-6 rounded-full overflow-hidden shadow-2xl relative">
+                  <Image
+                    src="/images/doctora-maribel-segala-1.png"
+                    alt="Dra. Maribel Segalà"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <h3 className="text-3xl font-bold mb-3">Dra. Maribel Segalà</h3>
+                <div className="w-12 h-0.5 bg-white mx-auto mb-4"></div>
+                <p className="text-gray-300 text-sm mb-2">Número de colegiado: 1379 Odontólogo | 19608 Médico</p>
+                <p className="text-gray-400 text-sm">Implantología y prótesis. Directora Clínicas Vela-Segalà</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Equipo médico */}
+          <div className="mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-3">Equipo médico</h2>
+            <div className="w-16 h-0.5 bg-white mx-auto mb-12"></div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+              <div className="text-center">
+                <div className="aspect-[3/4] bg-black rounded-2xl overflow-hidden mb-4 relative">
+                  <Image
+                    src="/images/dra-Nuria-casellas-endoncia.jpg"
+                    alt="Dra. Núria Casellas"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <h4 className="font-bold text-lg mb-1">Dra. Núria Casellas</h4>
+                <p className="text-sm text-gray-400 mb-1">Número de colegiado: 65809</p>
+                <p className="text-sm text-gray-300">Endodoncia</p>
+              </div>
+
+              <div className="text-center">
+                <div className="aspect-[3/4] bg-black rounded-2xl overflow-hidden mb-4 relative">
+                  <Image
+                    src="/images/dra-Marielys-Garciia-Generalista.jpg"
+                    alt="Dra. Marielys García"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <h4 className="font-bold text-lg mb-1">Dra. Marielys García</h4>
+                <p className="text-sm text-gray-400 mb-1">Número de colegiado: 4866</p>
+                <p className="text-sm text-gray-300">Odontología general</p>
+              </div>
+
+              <div className="text-center">
+                <div className="aspect-[3/4] bg-black rounded-2xl overflow-hidden mb-4 relative">
+                  <Image
+                    src="/images/dra-Aurea-Almeida-generalista.jpg"
+                    alt="Dra. Aurea Almeida"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <h4 className="font-bold text-lg mb-1">Dra. Aurea Almeida</h4>
+                <p className="text-sm text-gray-400 mb-1">Número de colegiado: 8688</p>
+                <p className="text-sm text-gray-300">Odontología general</p>
+              </div>
+
+              <div className="text-center">
+                <div className="aspect-[3/4] bg-black rounded-2xl overflow-hidden mb-4 relative">
+                  <Image
+                    src="/images/dr-Luis-Carlos-Garza-estetica-dental.jpg"
+                    alt="Dr. Luis Carlos Garza"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <h4 className="font-bold text-lg mb-1">Dr. Luis Carlos Garza</h4>
+                <p className="text-sm text-gray-400 mb-1">Número de colegiado: 8255</p>
+                <p className="text-sm text-gray-300">Estética Dental</p>
+              </div>
+
+              <div className="text-center">
+                <div className="aspect-[3/4] bg-black rounded-2xl overflow-hidden mb-4 relative">
+                  <Image
+                    src="/images/dr-Albert-Ferre-Periodoncista.jpg"
+                    alt="Dr. Albert Ferré"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <h4 className="font-bold text-lg mb-1">Dr. Albert Ferré</h4>
+                <p className="text-sm text-gray-400 mb-1">Número de colegiado</p>
+                <p className="text-sm text-gray-300">Periodoncia</p>
+              </div>
+
+              <div className="text-center">
+                <div className="aspect-[3/4] bg-black rounded-2xl overflow-hidden mb-4 relative">
+                  <Image
+                    src="/images/dra-Angeles-Pias-ortodoncia.jpg"
+                    alt="Dra. Ángeles Pias"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <h4 className="font-bold text-lg mb-1">Dra. Ángeles Pias</h4>
+                <p className="text-sm text-gray-400 mb-1">Número de colegiado: 743-XI</p>
+                <p className="text-sm text-gray-300">Ortodoncia</p>
+              </div>
+
+              <div className="text-center">
+                <div className="aspect-[3/4] bg-black rounded-2xl overflow-hidden mb-4 relative">
+                  <Image
+                    src="/images/dra-Eva-Pleguezuelos-Odontopediatra-1.jpg"
+                    alt="Dra. Eva Pleguezuelos"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <h4 className="font-bold text-lg mb-1">Dra. Eva Pleguezuelos</h4>
+                <p className="text-sm text-gray-400 mb-1">Número de colegiado: 2791</p>
+                <p className="text-sm text-gray-300">Odontopediatría</p>
+              </div>
+
+              <div className="text-center">
+                <div className="aspect-[3/4] bg-black rounded-2xl overflow-hidden mb-4 relative">
+                  <Image
+                    src="/images/dr-Matias-Del-Rio-Ortodoncia.jpg"
+                    alt="Dr. Matías Del Río"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <h4 className="font-bold text-lg mb-1">Dr. Matías Del Río</h4>
+                <p className="text-sm text-gray-400 mb-1">Número de colegiado: 8893</p>
+                <p className="text-sm text-gray-300">Ortodoncia</p>
+              </div>
+
+              <div className="text-center">
+                <div className="aspect-[3/4] bg-black rounded-2xl overflow-hidden mb-4 relative">
+                  <Image
+                    src="/images/patricia-freire-equipo-clinica-vela-segala.webp"
+                    alt="Dra. Patricia Freire"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <h4 className="font-bold text-lg mb-1">Dra. Patricia Freire</h4>
+                <p className="text-sm text-gray-400 mb-1">Número de colegiado: 36001641</p>
+                <p className="text-sm text-gray-300">Estética dental y Rehabilitadora</p>
+              </div>
+
+              <div className="text-center">
+                <div className="aspect-[3/4] bg-black rounded-2xl overflow-hidden mb-4 relative">
+                  <Image
+                    src="/images/dra-Estibaliz-Azpeitia-Anestesista.jpg"
+                    alt="Dra. Estibaliz Azpeitia"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <h4 className="font-bold text-lg mb-1">Dra. Estibaliz Azpeitia</h4>
+                <p className="text-sm text-gray-400 mb-1">Anestesista</p>
+                <p className="text-sm text-gray-300">Anestesista</p>
+              </div>
+
+              <div className="text-center">
+                <div className="aspect-[3/4] bg-black rounded-2xl overflow-hidden mb-4 relative">
+                  <Image
+                    src="/images/dr-Alberto-Sanchez-anestesista.jpg"
+                    alt="Dr. Alberto Sánchez"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <h4 className="font-bold text-lg mb-1">Dr. Alberto Sánchez</h4>
+                <p className="text-sm text-gray-400 mb-1">Anestesista</p>
+                <p className="text-sm text-gray-300">Anestesista</p>
+              </div>
+
+              <div className="text-center">
+                <div className="aspect-[3/4] bg-black rounded-2xl overflow-hidden mb-4 relative">
+                  <Image
+                    src="/images/dra-Alejandra-Prieto-Anestesista.jpg"
+                    alt="Dra. Alejandra Prieto"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <h4 className="font-bold text-lg mb-1">Dra. Alejandra Prieto</h4>
+                <p className="text-sm text-gray-400 mb-1">Anestesista</p>
+                <p className="text-sm text-gray-300">Anestesista</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Higienistas y Administración */}
+          <div>
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-3">Higienistas y Administración</h2>
+            <div className="w-16 h-0.5 bg-white mx-auto mb-12"></div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+              <div className="text-center">
+                <div className="aspect-[3/4] bg-black rounded-2xl overflow-hidden mb-4 relative">
+                  <Image
+                    src="/images/Olga-Garcia-Higienista.jpg"
+                    alt="Olga García"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <h4 className="font-bold text-lg mb-1">Olga García</h4>
+                <p className="text-sm text-gray-300">Higienista</p>
+              </div>
+
+              <div className="text-center">
+                <div className="aspect-[3/4] bg-black rounded-2xl overflow-hidden mb-4 relative">
+                  <Image
+                    src="/images/Leticia-Garcia-Higienista.jpg"
+                    alt="Leticia García"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <h4 className="font-bold text-lg mb-1">Leticia García</h4>
+                <p className="text-sm text-gray-300">Higienista</p>
+              </div>
+
+              <div className="text-center">
+                <div className="aspect-[3/4] bg-black rounded-2xl overflow-hidden mb-4 relative">
+                  <Image
+                    src="/images/Elisabeth-Higienista.jpg"
+                    alt="Elisabet López"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <h4 className="font-bold text-lg mb-1">Elisabet López</h4>
+                <p className="text-sm text-gray-300">Higienista</p>
+              </div>
+
+              <div className="text-center">
+                <div className="aspect-[3/4] bg-black rounded-2xl overflow-hidden mb-4 relative">
+                  <Image
+                    src="/images/Lourdes-Valdelvira-Higienista.jpg"
+                    alt="Lourdes Valdelvira"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <h4 className="font-bold text-lg mb-1">Lourdes Valdelvira</h4>
+                <p className="text-sm text-gray-300">Higienista</p>
+              </div>
+
+              <div className="text-center">
+                <div className="aspect-[3/4] bg-black rounded-2xl overflow-hidden mb-4 relative">
+                  <Image
+                    src="/images/Paula-Sirvent-Higienista.jpg"
+                    alt="Paula-Sirvent"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <h4 className="font-bold text-lg mb-1">Paula-Sirvent</h4>
+                <p className="text-sm text-gray-300">Higienista</p>
+              </div>
+
+              <div className="text-center">
+                <div className="aspect-[3/4] bg-black rounded-2xl overflow-hidden mb-4 relative">
+                  <Image
+                    src="/images/Nawal-Ziani-Higienista.jpg"
+                    alt="Nawal Ziani"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <h4 className="font-bold text-lg mb-1">Nawal Ziani</h4>
+                <p className="text-sm text-gray-300">Higienista</p>
+              </div>
+
+              <div className="text-center">
+                <div className="aspect-[3/4] bg-black rounded-2xl overflow-hidden mb-4 relative">
+                  <Image
+                    src="/images/Emma-Pelaez-Higienista.jpg"
+                    alt="Emma Pelaez"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <h4 className="font-bold text-lg mb-1">Emma Pelaez</h4>
+                <p className="text-sm text-gray-300">Higienista</p>
+              </div>
+
+              <div className="text-center">
+                <div className="aspect-[3/4] bg-black rounded-2xl overflow-hidden mb-4 relative">
+                  <Image
+                    src="/images/Maria-Teresa-Aymar-Auxiliar.jpg"
+                    alt="Mª Teresa Aymar"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <h4 className="font-bold text-lg mb-1">Mª Teresa Aymar</h4>
+                <p className="text-sm text-gray-300">Auxiliar de Clínica</p>
+              </div>
+
+              <div className="text-center">
+                <div className="aspect-[3/4] bg-black rounded-2xl overflow-hidden mb-4 relative">
+                  <Image
+                    src="/images/Juani-Gallardo-Recepcion.jpg"
+                    alt="Juani Gallardo"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <h4 className="font-bold text-lg mb-1">Juani Gallardo</h4>
+                <p className="text-sm text-gray-300">Recepción</p>
+              </div>
+
+              <div className="text-center">
+                <div className="aspect-[3/4] bg-black rounded-2xl overflow-hidden mb-4 relative">
+                  <Image
+                    src="/images/sonia-mas-recepcion.jpg"
+                    alt="Sonia Mas"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <h4 className="font-bold text-lg mb-1">Sonia Mas</h4>
+                <p className="text-sm text-gray-300">Recepción</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Por qué elegir Vela-Segalà Viladecans */}
       <section className="section-padding bg-gray-50">
         <div className="container-custom">
