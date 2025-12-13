@@ -10,11 +10,11 @@ export function LoadingScreen() {
   const pathname = usePathname();
 
   useEffect(() => {
-    // Ocultar loading inicial después de que la página cargue
+    // Ocultar loading inicial después de que la página cargue (máximo 1 segundo)
     const handleLoad = () => {
       setTimeout(() => {
         setIsLoading(false);
-      }, 800);
+      }, 1000);
     };
 
     if (document.readyState === "complete") {
@@ -26,11 +26,11 @@ export function LoadingScreen() {
   }, []);
 
   useEffect(() => {
-    // Mostrar loading durante transiciones de página
+    // Mostrar loading durante transiciones de página (máximo 1 segundo)
     setIsTransitioning(true);
     const timer = setTimeout(() => {
       setIsTransitioning(false);
-    }, 400);
+    }, 1000);
 
     return () => clearTimeout(timer);
   }, [pathname]);
@@ -38,7 +38,7 @@ export function LoadingScreen() {
   if (!isLoading && !isTransitioning) return null;
 
   return (
-    <div className="fixed inset-0 z-[100] bg-white flex items-center justify-center">
+    <div className="fixed inset-0 z-[100] bg-white flex items-center justify-center lg:hidden">
       <div className="flex flex-col items-center gap-8">
         {/* Isotipo con animación */}
         <div className="relative w-28 h-28 md:w-36 md:h-36">
