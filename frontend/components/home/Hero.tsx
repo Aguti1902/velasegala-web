@@ -7,9 +7,9 @@ export function Hero() {
   return (
     <section className="relative bg-gradient-to-b from-white to-gray-50 overflow-hidden">
       <div className="container-custom section-padding">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Texto */}
-          <div className="order-2 lg:order-1">
+        <div className="flex flex-col lg:grid lg:grid-cols-2 gap-12 items-center">
+          {/* Texto y Botones */}
+          <div className="order-1 w-full">
             <div className="inline-block bg-black text-white px-4 py-2 rounded-lg text-sm font-bold mb-4">
               CENTRO DE REFERENCIA INTERNACIONAL
             </div>
@@ -38,8 +38,8 @@ export function Hero() {
               </Link>
             </div>
 
-            {/* Destacados */}
-            <div className="grid grid-cols-3 gap-4 mt-12 pt-8 border-t border-gray-200">
+            {/* Estadísticas - Solo Desktop */}
+            <div className="hidden lg:grid grid-cols-3 gap-4 mt-12 pt-8 border-t border-gray-200">
               <div className="flex flex-col items-center text-center p-4 bg-gray-50 rounded-xl hover:shadow-md transition-shadow">
                 <Calendar className="w-8 h-8 mb-2" />
                 <div className="text-3xl font-bold text-black mb-1">
@@ -69,7 +69,7 @@ export function Hero() {
           </div>
 
           {/* Video */}
-          <div className="relative order-1 lg:order-2">
+          <div className="relative order-2 w-full">
             <div className="aspect-[4/3] rounded-3xl shadow-2xl overflow-hidden relative">
               <VideoPlayer
                 src="/videos/VelaSegala_2024_Edit.mov"
@@ -91,6 +91,37 @@ export function Hero() {
                   <div className="text-sm font-medium">
                     100% Gratuita
                   </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Estadísticas - Solo Móvil */}
+          <div className="order-3 lg:hidden w-full">
+            <div className="grid grid-cols-3 gap-4 pt-8 border-t border-gray-200">
+              <div className="flex flex-col items-center text-center p-4 bg-gray-50 rounded-xl hover:shadow-md transition-shadow">
+                <Calendar className="w-8 h-8 mb-2" />
+                <div className="text-3xl font-bold text-black mb-1">
+                  {new Date().getFullYear() - parseInt(CLINIC_INFO.founded)}+
+                </div>
+                <div className="text-sm text-slate-700 font-medium">Años de Experiencia</div>
+              </div>
+              <div className="flex flex-col items-center text-center p-4 bg-gray-50 rounded-xl hover:shadow-md transition-shadow">
+                <Award className="w-8 h-8 mb-2" />
+                <div className="text-3xl font-bold text-black mb-1">
+                  4.9/5
+                </div>
+                <div className="text-sm text-slate-700 font-medium">
+                  Valoración Pacientes
+                </div>
+              </div>
+              <div className="flex flex-col items-center text-center p-4 bg-gray-50 rounded-xl hover:shadow-md transition-shadow">
+                <Shield className="w-8 h-8 mb-2" />
+                <div className="text-3xl font-bold text-black mb-1">
+                  100%
+                </div>
+                <div className="text-sm text-slate-700 font-medium">
+                  Garantía Tratamientos
                 </div>
               </div>
             </div>
