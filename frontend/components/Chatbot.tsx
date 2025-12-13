@@ -173,7 +173,7 @@ export function Chatbot() {
       {/* Botón flotante */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`fixed bottom-6 right-6 z-50 flex items-center justify-center bg-black text-white shadow-2xl hover:shadow-3xl hover:scale-105 transition-all duration-300 ${
+        className={`fixed bottom-6 right-6 z-50 flex items-center justify-center bg-black text-white shadow-2xl hover:shadow-3xl hover:scale-105 transition-all duration-300 border border-white ${
           isOpen ? "scale-0" : "scale-100"
         } ${
           // En móvil: completamente redondo, solo icono
@@ -188,7 +188,7 @@ export function Chatbot() {
 
       {/* Ventana del chat */}
       {isOpen && (
-        <div className="fixed bottom-6 right-6 z-50 w-[380px] max-w-[calc(100vw-3rem)] h-[600px] max-h-[calc(100vh-5rem)] bg-white rounded-3xl shadow-2xl flex flex-col overflow-hidden border border-gray-200">
+        <div className="fixed bottom-6 right-6 z-50 w-[380px] max-w-[calc(100vw-3rem)] h-[600px] max-h-[calc(100vh-5rem)] bg-white rounded-3xl shadow-2xl flex flex-col overflow-hidden border border-white">
           {/* Header */}
           <div className="bg-gradient-to-r from-black to-gray-900 text-white p-6 flex items-center justify-between">
             <div className="flex items-center gap-3">
