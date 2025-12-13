@@ -172,7 +172,7 @@ export default function BlanqueamientoDentalPage() {
           <div className="grid lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
             <div className="aspect-[4/3] bg-gradient-to-br from-gray-100 to-gray-50 rounded-3xl overflow-hidden shadow-xl relative order-2 lg:order-1">
               <Image
-                src="/images/blanqueamiento-dental-perdida-color.jpg"
+                src="/images/dentadura-clinica-dental-viladecans-2.jpg"
                 alt="Por qué los dientes pierden el color blanco"
                 fill
                 className="object-cover"
@@ -346,7 +346,7 @@ export default function BlanqueamientoDentalPage() {
             </div>
             <div className="aspect-[4/3] bg-gradient-to-br from-gray-100 to-gray-50 rounded-3xl overflow-hidden shadow-xl relative">
               <Image
-                src="/images/blanqueamiento-dental-casa.jpg"
+                src="/images/higiene-bucal-viladecans-2.jpg"
                 alt="Blanqueamiento dental en casa - Kit personalizado"
                 fill
                 className="object-cover"
@@ -424,7 +424,7 @@ export default function BlanqueamientoDentalPage() {
           <div className="grid lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
             <div className="aspect-[4/3] bg-gradient-to-br from-gray-100 to-gray-50 rounded-3xl overflow-hidden shadow-xl relative">
               <Image
-                src="/images/blanqueamiento-dental-sonrisa (1).jpg"
+                src="/images/visita-clinica-dental-viladecans-5.jpg"
                 alt="Sonrisa blanca y saludable después del blanqueamiento dental"
                 fill
                 className="object-cover"
@@ -592,7 +592,7 @@ export default function BlanqueamientoDentalPage() {
             </div>
             <div className="aspect-[4/3] bg-gradient-to-br from-gray-100 to-gray-50 rounded-3xl overflow-hidden shadow-xl relative">
               <Image
-                src="/images/Gemini_Generated_Image_aovmlfaovmlfaovm.png"
+                src="/images/blanqueamiento-viladecans.png"
                 alt="Resultados del blanqueamiento dental profesional"
                 fill
                 className="object-cover"
