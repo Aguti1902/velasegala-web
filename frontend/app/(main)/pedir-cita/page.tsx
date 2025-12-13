@@ -34,6 +34,7 @@ export default function PedirCitaPage() {
             items={[
               { name: "Pedir Cita", href: "/pedir-cita" },
             ]}
+            centered={true}
           />
 
           <div className="mt-8 text-center max-w-4xl mx-auto">

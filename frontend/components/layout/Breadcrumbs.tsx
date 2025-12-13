@@ -6,17 +6,18 @@ interface BreadcrumbsProps {
     name: string;
     href: string;
   }>;
+  centered?: boolean;
 }
 
-export function Breadcrumbs({ items }: BreadcrumbsProps) {
+export function Breadcrumbs({ items, centered = false }: BreadcrumbsProps) {
   // Siempre incluir Home al principio
   const breadcrumbs = [{ name: "Inicio", href: "/" }, ...items];
 
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} />
-      <nav aria-label="Breadcrumb" className="text-sm text-slate-600">
-        <ol className="flex items-center gap-2 flex-wrap">
+      <nav aria-label="Breadcrumb" className={`text-sm text-slate-600 ${centered ? 'flex justify-center' : ''}`}>
+        <ol className={`flex items-center gap-2 flex-wrap ${centered ? 'justify-center' : ''}`}>
           {breadcrumbs.map((item, index) => (
             <li key={item.href} className="flex items-center gap-2">
               {index > 0 && <span className="text-slate-400">/</span>}

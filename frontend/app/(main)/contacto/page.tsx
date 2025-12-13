@@ -34,6 +34,7 @@ export default function ContactoPage() {
             items={[
               { name: "Contacto", href: "/contacto" },
             ]}
+            centered={true}
           />
 
           <div className="mt-8 text-center max-w-3xl mx-auto">

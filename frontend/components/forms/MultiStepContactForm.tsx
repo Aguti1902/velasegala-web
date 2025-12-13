@@ -100,7 +100,8 @@ export function MultiStepContactForm() {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch(`${getApiUrl()}/appointments`, {
+      // Enviar a appointments
+      const appointmentResponse = await fetch(`${getApiUrl()}/appointments`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -116,8 +117,28 @@ export function MultiStepContactForm() {
         }),
       });
 
-      if (!response.ok) {
-        throw new Error("Error al enviar el formulario");
+      if (!appointmentResponse.ok) {
+        throw new Error("Error al enviar la solicitud de cita");
+      }
+
+      // También enviar a contactos para el dashboard
+      const contactResponse = await fetch(`${getApiUrl()}/contacts`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          message: formData.message || `Solicitud de cita para ${formData.preferredDate}${formData.preferredTime ? ` a las ${formData.preferredTime}` : ''}${formData.treatment ? `. Tratamiento: ${formData.treatment}` : ''}`,
+          treatment: formData.treatment || undefined,
+        }),
+      });
+
+      // No fallar si el contacto no se crea, solo loguear
+      if (!contactResponse.ok) {
+        console.warn("No se pudo crear el contacto, pero la cita se envió correctamente");
       }
 
       success("¡Solicitud enviada! Te contactaremos en menos de 24 horas");

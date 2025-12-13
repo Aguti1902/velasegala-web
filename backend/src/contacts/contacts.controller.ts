@@ -1,13 +1,33 @@
-import { Controller, Get, Patch, Delete, Param, Query, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Patch, Delete, Body, Param, Query, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { PrismaService } from '../prisma/prisma.service';
 
 @Controller('contacts')
-@UseGuards(JwtAuthGuard)
 export class ContactsController {
   constructor(private prisma: PrismaService) {}
 
+  @Post()
+  async create(@Body() data: {
+    name: string;
+    email: string;
+    phone: string;
+    message?: string;
+    treatment?: string;
+  }) {
+    return this.prisma.contactSubmission.create({
+      data: {
+        name: data.name,
+        email: data.email,
+        phone: data.phone,
+        message: data.message || '',
+        treatment: data.treatment,
+        status: 'pending',
+      },
+    });
+  }
+
   @Get()
+  @UseGuards(JwtAuthGuard)
   async findAll(
     @Query('page') page = '1',
     @Query('limit') limit = '20',

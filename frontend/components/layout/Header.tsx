@@ -10,6 +10,7 @@ import { Phone, Mail, Menu, X, ChevronRight, ChevronDown } from "lucide-react";
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [treatmentsMenuOpen, setTreatmentsMenuOpen] = useState(false);
+  const [mobileTreatmentsOpen, setMobileTreatmentsOpen] = useState(false);
   const [closeTimeout, setCloseTimeout] = useState<NodeJS.Timeout | null>(null);
   const pathname = usePathname();
 
@@ -158,16 +159,49 @@ export function Header() {
         {/* Mobile menu */}
         {mobileMenuOpen && (
           <div className="lg:hidden py-4 border-t">
-            {MAIN_NAV.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="block py-3 text-slate-700 hover:text-primary-600 font-medium transition-colors"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                {item.name}
-              </Link>
-            ))}
+            {MAIN_NAV.map((item) =>
+              item.name === "Tratamientos" ? (
+                <div key={item.name}>
+                  <button
+                    onClick={() => setMobileTreatmentsOpen(!mobileTreatmentsOpen)}
+                    className="w-full flex items-center justify-between py-3 text-slate-700 hover:text-primary-600 font-medium transition-colors"
+                  >
+                    <span>{item.name}</span>
+                    <ChevronRight className={`w-5 h-5 transition-transform ${mobileTreatmentsOpen ? 'rotate-90' : ''}`} />
+                  </button>
+                  {mobileTreatmentsOpen && (
+                    <div className="pl-4 pb-2">
+                      {MAIN_TREATMENTS.map((treatment) => (
+                        <Link
+                          key={treatment.slug}
+                          href={`/tratamientos/${treatment.slug}`}
+                          className="block py-2 text-sm text-slate-600 hover:text-primary-600 transition-colors"
+                          onClick={() => setMobileMenuOpen(false)}
+                        >
+                          {treatment.name}
+                        </Link>
+                      ))}
+                      <Link
+                        href="/tratamientos"
+                        className="block py-2 text-sm text-slate-600 hover:text-primary-600 font-bold transition-colors"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        Ver todos los tratamientos →
+                      </Link>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className="block py-3 text-slate-700 hover:text-primary-600 font-medium transition-colors"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {item.name}
+                </Link>
+              )
+            )}
             <Link
               href="/pedir-cita"
               className="block mt-4 text-center btn-primary"
