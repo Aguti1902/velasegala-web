@@ -23,6 +23,9 @@ const TREATMENTS = [
   "Implantes Dentales",
   "Estética Dental",
   "Blanqueamiento Dental",
+  "Periodoncia",
+  "Odontopediatría",
+  "Endodoncia",
   "Otro / No lo sé",
 ];
 
@@ -34,6 +37,112 @@ const TIME_SLOTS = [
   "17:00 - 19:00",
   "19:00 - 20:00",
 ];
+
+// Configuración de disponibilidad por tratamiento
+const TREATMENT_AVAILABILITY: {
+  [key: string]: {
+    days: number[]; // 0 = lunes, 1 = martes, 2 = miércoles, 3 = jueves, 4 = viernes
+    morningOnly?: boolean; // Solo mañana (09:00 - 13:00)
+    afternoonOnly?: boolean; // Solo tarde (15:00 - 20:00)
+  };
+} = {
+  "Limpieza Dental": {
+    days: [0, 1, 2, 3, 4], // lunes, martes, miércoles, jueves, viernes
+    // Horarios especiales manejados en getAvailableTimeSlots
+  },
+  "Revisión General": {
+    days: [1, 3, 4], // martes, jueves, viernes
+    morningOnly: true,
+  },
+  "Periodoncia": {
+    days: [1], // martes
+  },
+  "Odontopediatría": {
+    days: [3], // jueves
+  },
+  "Endodoncia": {
+    days: [3], // jueves
+  },
+  "Ortodoncia Invisible": {
+    days: [1, 2], // martes y miércoles
+    afternoonOnly: true, // solo tarde
+  },
+  "Implantes Dentales": {
+    days: [0, 2], // lunes y miércoles
+  },
+  "Estética Dental": {
+    days: [0, 2], // lunes y miércoles
+  },
+};
+
+// Función para obtener días disponibles según el tratamiento
+const getAvailableDays = (treatment: string): number[] => {
+  if (!treatment || treatment === "Otro / No lo sé") {
+    // Si no hay tratamiento seleccionado, mostrar todos los días
+    return [0, 1, 2, 3, 4];
+  }
+  return TREATMENT_AVAILABILITY[treatment]?.days || [0, 1, 2, 3, 4];
+};
+
+// Función para obtener horarios disponibles según el día y tratamiento
+const getAvailableTimeSlots = (treatment: string, selectedDate: string): string[] => {
+  if (!selectedDate || !treatment || treatment === "Otro / No lo sé") {
+    return TIME_SLOTS;
+  }
+
+  const date = new Date(selectedDate);
+  const dayOfWeek = date.getDay(); // 0 = domingo, 1 = lunes, ..., 6 = sábado
+  // Ajustar: 0 = domingo, 1 = lunes, ..., 6 = sábado
+  // Nuestro sistema: 0 = lunes, 1 = martes, ..., 4 = viernes
+  const dayIndex = dayOfWeek === 0 ? 6 : dayOfWeek - 1; // Convertir a nuestro sistema
+
+  const availability = TREATMENT_AVAILABILITY[treatment];
+  if (!availability) return TIME_SLOTS;
+
+  // Verificar si el día está disponible
+  if (!availability.days.includes(dayIndex)) {
+    return [];
+  }
+
+  // Filtros especiales para Limpieza Dental
+  if (treatment === "Limpieza Dental") {
+    if (dayIndex === 1) {
+      // Martes: solo mañana (09:00-13:00)
+      return TIME_SLOTS.slice(0, 2); // 09:00-11:00, 11:00-13:00
+    }
+    if (dayIndex === 2) {
+      // Miércoles: solo tarde (15:00-20:00)
+      return TIME_SLOTS.slice(3); // 15:00-17:00, 17:00-19:00, 19:00-20:00
+    }
+    if (dayIndex === 4) {
+      // Viernes: solo mañana (09:00-13:00)
+      return TIME_SLOTS.slice(0, 2); // 09:00-11:00, 11:00-13:00
+    }
+    // Lunes (0) y jueves (3): todos los horarios
+    return TIME_SLOTS;
+  }
+
+  // Para otros tratamientos con restricciones
+  if (availability.morningOnly) {
+    return TIME_SLOTS.slice(0, 2); // Solo mañana
+  }
+  if (availability.afternoonOnly) {
+    return TIME_SLOTS.slice(3); // Solo tarde
+  }
+
+  return TIME_SLOTS;
+};
+
+// Función para verificar si un día está disponible
+const isDayAvailable = (date: Date, treatment: string): boolean => {
+  if (!treatment || treatment === "Otro / No lo sé") {
+    return true;
+  }
+  const dayOfWeek = date.getDay();
+  const dayIndex = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+  const availableDays = getAvailableDays(treatment);
+  return availableDays.includes(dayIndex);
+};
 
 export function MultiStepContactForm() {
   const [currentStep, setCurrentStep] = useState(1);
@@ -49,7 +158,7 @@ export function MultiStepContactForm() {
     message: "",
   });
 
-  const totalSteps = 4;
+  const totalSteps = 5;
 
   const updateFormData = (field: keyof FormData, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -82,12 +191,26 @@ export function MultiStepContactForm() {
         }
         return true;
       case 2:
-        if (!formData.preferredDate) {
-          error("Por favor, selecciona una fecha");
+        if (!formData.treatment) {
+          error("Por favor, selecciona un tratamiento");
           return false;
         }
         return true;
       case 3:
+        if (!formData.preferredDate) {
+          error("Por favor, selecciona una fecha");
+          return false;
+        }
+        // Validar que el día sea válido para el tratamiento
+        if (formData.treatment && formData.treatment !== "Otro / No lo sé") {
+          const date = new Date(formData.preferredDate);
+          if (!isDayAvailable(date, formData.treatment)) {
+            error("Este día no está disponible para el tratamiento seleccionado");
+            return false;
+          }
+        }
+        return true;
+      case 4:
         return true; // Mensaje es opcional
       default:
         return true;
@@ -187,7 +310,7 @@ export function MultiStepContactForm() {
 
         {/* Steps Indicators */}
         <div className="flex justify-between mt-6">
-          {[1, 2, 3, 4].map((step) => (
+          {[1, 2, 3, 4, 5].map((step) => (
             <div
               key={step}
               className={`flex items-center justify-center w-10 h-10 rounded-full font-bold transition-all duration-300 ${
@@ -262,64 +385,33 @@ export function MultiStepContactForm() {
           </div>
         )}
 
-        {/* Step 2: Fecha y Hora */}
+        {/* Step 2: Tratamiento */}
         {currentStep === 2 && (
           <div className="space-y-6 animate-in fade-in slide-in-from-right duration-300">
             <div className="text-center mb-8">
               <div className="inline-flex items-center justify-center w-16 h-16 bg-black rounded-2xl mb-4">
-                <Calendar className="w-8 h-8 text-white" />
+                <MessageSquare className="w-8 h-8 text-white" />
               </div>
               <h3 className="text-2xl font-bold text-black mb-2">
-                ¿Cuándo te viene bien?
+                ¿Qué tratamiento necesitas?
               </h3>
               <p className="text-slate-600">
-                Selecciona tu fecha y hora preferida
+                Selecciona el tipo de consulta para mostrarte los horarios disponibles
               </p>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2">
-                Fecha preferida *
-              </label>
-              <input
-                type="date"
-                value={formData.preferredDate}
-                onChange={(e) => updateFormData("preferredDate", e.target.value)}
-                min={new Date().toISOString().split("T")[0]}
-                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-black transition-all"
-              />
-            </div>
-
-            <div>
               <label className="block text-sm font-medium text-slate-700 mb-3">
-                Franja horaria preferida
-              </label>
-              <div className="grid grid-cols-2 gap-3">
-                {TIME_SLOTS.map((slot) => (
-                  <button
-                    key={slot}
-                    type="button"
-                    onClick={() => updateFormData("preferredTime", slot)}
-                    className={`p-3 rounded-xl font-medium transition-all ${
-                      formData.preferredTime === slot
-                        ? "bg-black text-white scale-105 shadow-lg"
-                        : "bg-gray-100 text-slate-700 hover:bg-gray-200"
-                    }`}
-                  >
-                    <Clock className="w-4 h-4 inline mr-2" />
-                    {slot}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-slate-700 mb-3">
-                Tratamiento de interés (opcional)
+                Tratamiento de interés *
               </label>
               <select
                 value={formData.treatment}
-                onChange={(e) => updateFormData("treatment", e.target.value)}
+                onChange={(e) => {
+                  updateFormData("treatment", e.target.value);
+                  // Reset fecha y hora cuando cambia el tratamiento
+                  updateFormData("preferredDate", "");
+                  updateFormData("preferredTime", "");
+                }}
                 className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-black transition-all"
               >
                 <option value="">Selecciona un tratamiento</option>
@@ -330,11 +422,123 @@ export function MultiStepContactForm() {
                 ))}
               </select>
             </div>
+
+            {formData.treatment && formData.treatment !== "Otro / No lo sé" && (
+              <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
+                <p className="text-sm text-blue-800">
+                  <strong>ℹ️ Horarios disponibles:</strong>{" "}
+                  {(() => {
+                    const availability = TREATMENT_AVAILABILITY[formData.treatment];
+                    if (!availability) return "Consultar disponibilidad";
+                    const dayNames = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"];
+                    const availableDayNames = availability.days.map((d) => dayNames[d]);
+                    let text = availableDayNames.join(", ");
+                    if (availability.morningOnly) {
+                      text += " (solo mañana)";
+                    } else if (availability.afternoonOnly) {
+                      text += " (solo tarde)";
+                    }
+                    return text;
+                  })()}
+                </p>
+              </div>
+            )}
           </div>
         )}
 
-        {/* Step 3: Mensaje */}
+        {/* Step 3: Fecha y Hora */}
         {currentStep === 3 && (
+          <div className="space-y-6 animate-in fade-in slide-in-from-right duration-300">
+            <div className="text-center mb-8">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-black rounded-2xl mb-4">
+                <Calendar className="w-8 h-8 text-white" />
+              </div>
+              <h3 className="text-2xl font-bold text-black mb-2">
+                ¿Cuándo te viene bien?
+              </h3>
+              <p className="text-slate-600">
+                Selecciona tu fecha y hora preferida (orientativo)
+              </p>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-2">
+                Fecha preferida *
+              </label>
+              <input
+                type="date"
+                value={formData.preferredDate}
+                onChange={(e) => {
+                  updateFormData("preferredDate", e.target.value);
+                  // Reset hora cuando cambia la fecha
+                  updateFormData("preferredTime", "");
+                }}
+                min={new Date().toISOString().split("T")[0]}
+                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-black transition-all"
+              />
+              {formData.preferredDate && formData.treatment && formData.treatment !== "Otro / No lo sé" && (
+                (() => {
+                  const date = new Date(formData.preferredDate);
+                  const isAvailable = isDayAvailable(date, formData.treatment);
+                  if (!isAvailable) {
+                    return (
+                      <p className="mt-2 text-sm text-red-600">
+                        ⚠️ Este día no está disponible para {formData.treatment}. Por favor, selecciona otro día.
+                      </p>
+                    );
+                  }
+                  return null;
+                })()
+              )}
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-3">
+                Franja horaria preferida (orientativo)
+              </label>
+              {(() => {
+                const availableSlots = getAvailableTimeSlots(formData.treatment, formData.preferredDate);
+                if (availableSlots.length === 0) {
+                  return (
+                    <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4">
+                      <p className="text-sm text-yellow-800">
+                        ⚠️ No hay horarios disponibles para este día y tratamiento. Por favor, selecciona otra fecha.
+                      </p>
+                    </div>
+                  );
+                }
+                return (
+                  <div className="grid grid-cols-2 gap-3">
+                    {availableSlots.map((slot) => (
+                      <button
+                        key={slot}
+                        type="button"
+                        onClick={() => updateFormData("preferredTime", slot)}
+                        className={`p-3 rounded-xl font-medium transition-all ${
+                          formData.preferredTime === slot
+                            ? "bg-black text-white scale-105 shadow-lg"
+                            : "bg-gray-100 text-slate-700 hover:bg-gray-200"
+                        }`}
+                      >
+                        <Clock className="w-4 h-4 inline mr-2" />
+                        {slot}
+                      </button>
+                    ))}
+                  </div>
+                );
+              })()}
+            </div>
+
+            <div className="bg-gray-50 border border-gray-200 rounded-xl p-4">
+              <p className="text-sm text-gray-700">
+                <strong>📞 Nota:</strong> La fecha y hora son orientativas. Te llamaremos para confirmar la cita según la disponibilidad real del especialista.
+              </p>
+            </div>
+          </div>
+        )}
+
+        {/* Step 4: Mensaje */}
+        {currentStep === 4 && (
           <div className="space-y-6 animate-in fade-in slide-in-from-right duration-300">
             <div className="text-center mb-8">
               <div className="inline-flex items-center justify-center w-16 h-16 bg-black rounded-2xl mb-4">
@@ -363,8 +567,8 @@ export function MultiStepContactForm() {
           </div>
         )}
 
-        {/* Step 4: Resumen */}
-        {currentStep === 4 && (
+        {/* Step 5: Resumen */}
+        {currentStep === 5 && (
           <div className="space-y-6 animate-in fade-in slide-in-from-right duration-300">
             <div className="text-center mb-8">
               <div className="inline-flex items-center justify-center w-16 h-16 bg-green-500 rounded-2xl mb-4">
