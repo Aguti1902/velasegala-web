@@ -12,55 +12,136 @@ interface Message {
 const TREATMENT_INFO: { [key: string]: string } = {
   "implantes dentales": `🦷 Implantes dentales en Vela Segalà:
 
-💰 Precio: desde 800€ (implante + corona)
-⏱️ Duración: 3-6 meses (proceso completo)
-⭐ Marcas premium: Straumann y Nobel Biocare
+💰 Precio: 1.600€ (implante + corona)
+⏱️ Duración: 3-4 meses
+⭐ Implantes inmediatos: NUNCA SALES SIN DIENTES
+🦷 Sacamos el diente, colocamos el implante y ponemos un provisional
+🔍 Escáner intraoral, cirugía guiada
 🛡️ Garantía de por vida
-🔍 Diagnóstico 3D completo
-💳 Financiación sin intereses hasta 12 meses
+💳 Financiación a 2 años sin intereses
 
 Los implantes son la mejor solución para reemplazar dientes perdidos. ¿Te gustaría pedir cita?`,
 
-  "ortodoncia invisible": `😊 Ortodoncia invisible (Invisalign) en Vela Segalà:
+  "ortodoncia invisible": `😊 Ortodoncia invisible en Vela Segalà:
 
-✨ Sistema de alineadores transparentes y removibles
+✨ Sistema de alineadores transparentes (Invisalign y Spark)
 👀 Nadie notará que los llevas
-👨‍⚕️ Ortodoncistas certificados Invisalign
+👨‍⚕️ Ortodoncistas certificados
 📈 Resultados desde el primer mes
-⏱️ Duración: 12-18 meses (promedio)
+⏱️ Para niños y adultos
 🔍 Estudio digital completo
+💳 Financiación a 2 años sin intereses
 
-Perfecta para adultos y adolescentes. ¿Quieres más información?`,
+Perfecta para todas las edades. ¿Quieres más información?`,
 
   "estética dental": `✨ Estética dental en Vela Segalà:
 
-🦷 Carillas de porcelana
-💎 Blanqueamiento dental profesional
+🦷 Carilla dental: 650€ (1-2 meses)
+👑 Corona BOPT: 750€ (1-2 meses)
 🎨 Diseño de sonrisa digital (DSD)
 🔧 Reconstrucciones estéticas
 ⭐ Resultados naturales y duraderos
-⭐ Calidad y servicio de excelencia
+💳 Financiación a 2 años sin intereses
 
 Transforma tu sonrisa con nuestros especialistas. ¿Te interesa algún tratamiento específico?`,
 
-  "blanqueamiento dental": `💎 Blanqueamiento dental profesional en Vela Segalà:
+  "blanqueamiento dental": `💎 Blanqueamiento dental Zoom en Vela Segalà:
 
-💡 Blanqueamiento en clínica con LED
-⚡ Resultados inmediatos (1 sesión)
+💰 Precio: 420€
+✨ Tratamiento en clínica + domicilio
+🦷 Férulas de blanqueamiento personalizadas
+💊 Geles de blanqueamiento incluidos
+⏱️ Dos sesiones
 ✅ Seguro y efectivo
-🎨 Elimina manchas y aclara varios tonos
-🏠 También blanqueamiento ambulatorio
-💰 Desde 199€
+💳 Financiación a 2 años sin intereses
 
 ¿Quieres conseguir una sonrisa más blanca?`,
 
+  "higiene dental": `🦷 Higiene dental en Vela Segalà:
+
+💰 Precio: 60€
+⏱️ Duración: 45 minutos
+✨ Limpieza profesional completa
+🦷 Eliminación de placa y sarro
+⭐ Prevención de caries y enfermedades
+
+Mantén tu boca sana. ¿Quieres pedir cita?`,
+
+  "primera visita": `📋 Primera visita en Vela Segalà:
+
+💰 Precio: 45€
+⏱️ Duración: 30-45 minutos
+📸 Incluye:
+  • Ortopantomografía
+  • Radiografías dentales
+  • Escáner si es necesario
+  • Fotos clínicas
+🔍 Diagnóstico completo
+
+Te haremos un estudio completo de tu salud bucodental. ¿Quieres pedir cita?`,
+
+  "periodoncia": `🦷 Periodoncia en Vela Segalà:
+
+💰 Raspado arcada: 170€
+⏱️ Duración: 1 hora
+✨ Tratamiento de encías especializado
+🦷 Eliminación de placa y sarro subgingival
+⭐ Prevención de pérdida dental
+
+Salva tus dientes con tratamiento periodontal. ¿Quieres más información?`,
+
+  "empaste": `🦷 Empastes en Vela Segalà:
+
+💰 Precio: 65-90€
+⏱️ Duración: 45 minutos - 1 hora
+✨ Empastes estéticos de composite
+🦷 Restauración de dientes con caries
+⭐ Materiales de primera calidad
+
+Tratamiento rápido y efectivo. ¿Quieres pedir cita?`,
+
+  "odontopediatria": `👶 Odontopediatría en Vela Segalà:
+
+👨‍⚕️ Especialista en niños
+🏥 Quirófano de niños en Hospital 3 Torres
+🦷 Tratamientos adaptados a niños
+⭐ Ambiente amigable y seguro
+💉 Sedación cuando es necesario
+
+Cuidado dental especializado para los más pequeños. ¿Quieres más información?`,
+
+  "sedacion": `😌 Sedación semiconsciente en Vela Segalà:
+
+💉 Técnica contra el miedo dental
+✨ Para adultos con ansiedad dental
+😴 Sedación suave y segura
+🦷 Tratamientos sin estrés ni dolor
+⭐ Supervisión médica constante
+
+Supera tu miedo al dentista. ¿Quieres más información?`,
+
+  "tecnologia": `🔬 Tecnología avanzada en Vela Segalà:
+
+📐 Escáner intraoral 3D
+🖨️ Impresora digital
+🎯 Cirugía guiada por ordenador
+🔬 Microscopio dental
+📸 Fotografía clínica digital
+
+Tecnología de última generación para tratamientos precisos.`,
+
   "precio": `💰 Precios en Vela Segalà:
 
-🦷 Implantes dentales: desde 800€
-😊 Ortodoncia invisible: consultar presupuesto
-💎 Blanqueamiento: desde 199€
-⭐ Calidad y servicio de excelencia
-💳 Financiación sin intereses disponible
+🦷 Implante + corona: 1.600€ (3-4 meses)
+🦷 Carilla dental: 650€ (1-2 meses)
+👑 Corona BOPT: 750€ (1-2 meses)
+🦷 Higiene dental: 60€ (45 min)
+📋 Primera visita: 45€ (30-45 min)
+🦷 Raspado arcada: 170€ (1 hora)
+🦷 Empastes: 65-90€ (45 min - 1 hora)
+💎 Blanqueamiento Zoom: 420€ (2 sesiones)
+
+💳 Financiación a 2 años sin intereses
 
 Todos los precios incluyen materiales de primera calidad. ¿Quieres pedir cita?`,
 
@@ -85,7 +166,7 @@ Para urgencias dentales, llámanos al 93 658 84 06.`,
 const QUICK_QUESTIONS = [
   "¿Cuánto cuestan los implantes?",
   "Quiero ortodoncia invisible",
-  "¿Tenéis blanqueamiento dental?",
+  "¿Cuánto cuesta la primera visita?",
   "Pedir cita",
 ];
 
@@ -115,20 +196,36 @@ export function Chatbot() {
     // Detectar keywords
     if (lowerMessage.includes("implante")) {
       return TREATMENT_INFO["implantes dentales"];
-    } else if (lowerMessage.includes("ortodoncia") || lowerMessage.includes("invisalign")) {
+    } else if (lowerMessage.includes("ortodoncia") || lowerMessage.includes("invisalign") || lowerMessage.includes("spark")) {
       return TREATMENT_INFO["ortodoncia invisible"];
-    } else if (lowerMessage.includes("estética") || lowerMessage.includes("estetica") || lowerMessage.includes("carilla")) {
+    } else if (lowerMessage.includes("estética") || lowerMessage.includes("estetica") || lowerMessage.includes("carilla") || lowerMessage.includes("corona bopt")) {
       return TREATMENT_INFO["estética dental"];
-    } else if (lowerMessage.includes("blanqueamiento")) {
+    } else if (lowerMessage.includes("blanqueamiento") || lowerMessage.includes("blanqueamiento zoom")) {
       return TREATMENT_INFO["blanqueamiento dental"];
-    } else if (lowerMessage.includes("precio") || lowerMessage.includes("cuánto") || lowerMessage.includes("cuanto") || lowerMessage.includes("cuesta")) {
+    } else if (lowerMessage.includes("higiene") || lowerMessage.includes("limpieza dental")) {
+      return TREATMENT_INFO["higiene dental"];
+    } else if (lowerMessage.includes("primera visita") || lowerMessage.includes("primera consulta")) {
+      return TREATMENT_INFO["primera visita"];
+    } else if (lowerMessage.includes("periodoncia") || lowerMessage.includes("raspado") || lowerMessage.includes("encía") || lowerMessage.includes("encia")) {
+      return TREATMENT_INFO["periodoncia"];
+    } else if (lowerMessage.includes("empaste") || lowerMessage.includes("obturación") || lowerMessage.includes("obturacion")) {
+      return TREATMENT_INFO["empaste"];
+    } else if (lowerMessage.includes("odontopediatría") || lowerMessage.includes("odontopediatria") || lowerMessage.includes("niños") || lowerMessage.includes("niños") || lowerMessage.includes("infantil")) {
+      return TREATMENT_INFO["odontopediatria"];
+    } else if (lowerMessage.includes("sedación") || lowerMessage.includes("sedacion") || lowerMessage.includes("miedo") || lowerMessage.includes("ansiedad")) {
+      return TREATMENT_INFO["sedacion"];
+    } else if (lowerMessage.includes("tecnología") || lowerMessage.includes("tecnologia") || lowerMessage.includes("escáner") || lowerMessage.includes("escaner") || lowerMessage.includes("microscopio")) {
+      return TREATMENT_INFO["tecnologia"];
+    } else if (lowerMessage.includes("precio") || lowerMessage.includes("cuánto") || lowerMessage.includes("cuanto") || lowerMessage.includes("cuesta") || lowerMessage.includes("coste")) {
       return TREATMENT_INFO["precio"];
     } else if (lowerMessage.includes("cita") || lowerMessage.includes("contacto") || lowerMessage.includes("teléfono") || lowerMessage.includes("telefono")) {
       return TREATMENT_INFO["cita"];
     } else if (lowerMessage.includes("horario") || lowerMessage.includes("hora")) {
       return TREATMENT_INFO["horario"];
+    } else if (lowerMessage.includes("financiación") || lowerMessage.includes("financiacion") || lowerMessage.includes("pago")) {
+      return "💳 Financiación en Vela Segalà:\n\n✅ Financiación a 2 años sin intereses\n💰 Para todos los tratamientos\n📋 Consulta las condiciones en tu primera visita\n\n¿Quieres más información sobre algún tratamiento específico?";
     } else if (lowerMessage.includes("hola") || lowerMessage.includes("buenos") || lowerMessage.includes("buenas")) {
-      return "¡Hola! 👋 ¿En qué tratamiento dental estás interesado? Puedo ayudarte con información sobre:\n\n🦷 Implantes dentales\n😊 Ortodoncia invisible\n✨ Estética dental\n💎 Blanqueamiento\n💰 Precios y citas";
+      return "¡Hola! 👋 ¿En qué tratamiento dental estás interesado? Puedo ayudarte con información sobre:\n\n🦷 Implantes dentales\n😊 Ortodoncia invisible\n✨ Estética dental\n💎 Blanqueamiento\n🦷 Higiene dental\n📋 Primera visita\n💰 Precios y financiación";
     }
 
     return `Gracias por tu consulta. Para información más específica, te recomiendo:
