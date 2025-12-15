@@ -9,7 +9,7 @@ import { MapPin, Phone, Mail, Clock, Award, Users, Microscope, Shield, Calendar,
 export const metadata: Metadata = {
   title: "Clínica Dental en Viladecans - Dentista de Confianza | Vela-Segalà",
   description:
-    `Clínica dental en Viladecans con más de 15 años de experiencia. Especialistas en implantes dentales, ortodoncia invisible y estética dental. ${CLINIC_INFO.address.street}, 08840 Viladecans. Tel: ${CLINIC_INFO.phoneDisplay}. Primera visita gratuita.`,
+    `Clínica dental en Viladecans con más de 15 años de experiencia. Especialistas en implantes dentales, ortodoncia invisible y estética dental. ${CLINIC_INFO.address.street}, 08840 Viladecans. Tel: ${CLINIC_INFO.phoneDisplay}.`,
   keywords: [
     "clínica dental viladecans",
     "dentista viladecans",
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Clínica Dental en Viladecans - Tu Dentista de Confianza",
     description:
-      `Clínica dental especializada en Viladecans. Implantes, ortodoncia invisible, estética dental. Primera visita gratuita.`,
+      `Clínica dental especializada en Viladecans. Implantes, ortodoncia invisible, estética dental.`,
     images: ["/images/clinica-exterior.jpg"],
   },
 };
@@ -63,7 +63,7 @@ export default function ClinicaPage() {
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link href="/pedir-cita" className="btn-primary text-center">
-                  Pedir Primera Visita Gratuita
+                  Pedir Cita
                 </Link>
                 <a
                   href={`tel:${CLINIC_INFO.phone}`}
@@ -471,7 +471,7 @@ export default function ClinicaPage() {
               <h3 className="text-3xl font-bold mb-3 text-white">Dra. Maribel Segalà</h3>
               <div className="w-16 h-0.5 bg-white mx-auto mb-4"></div>
               <p className="text-gray-300 text-sm mb-2">Número de colegiado: 1379 Odontólogo | 19608 Médico</p>
-              <p className="text-gray-400 text-sm">Implantología y prótesis. Directora Clínicas Vela-Segalà</p>
+              <p className="text-gray-400 text-sm">Prostodoncia, estética dental, Medicina Estética Facial. Directora Clínicas Vela-Segalà</p>
             </div>
           </div>
         </div>
@@ -928,7 +928,7 @@ export default function ClinicaPage() {
             Visita Nuestra Clínica Dental en Viladecans
           </h2>
           <p className="text-xl mb-4 text-gray-200 max-w-2xl mx-auto">
-            Ven a conocernos sin compromiso. <strong>Primera visita totalmente gratuita</strong> con exploración completa, 
+            Ven a conocernos sin compromiso. <strong>Exploración completa</strong> con diagnóstico detallado, 
             diagnóstico profesional y presupuesto detallado.
           </p>
           <p className="text-base mb-8 text-gray-300 max-w-2xl mx-auto">
@@ -940,7 +940,7 @@ export default function ClinicaPage() {
               href="/pedir-cita"
               className="inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-black bg-white rounded-2xl hover:shadow-2xl hover:scale-105 transition-all"
             >
-              Pedir Cita Gratuita Ahora
+              Pedir Cita Ahora
             </Link>
             <a
               href={`tel:${CLINIC_INFO.phone}`}

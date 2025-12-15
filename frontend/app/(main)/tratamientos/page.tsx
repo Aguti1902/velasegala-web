@@ -22,7 +22,7 @@ import {
 export const metadata: Metadata = {
   title: "Tratamientos Dentales en Viladecans | Clínica Vela-Segalà",
   description:
-    "Todos los tratamientos dentales en Viladecans. Implantes dentales, ortodoncia invisible, estética dental, blanqueamiento, periodoncia, endodoncia y más. Primera visita gratuita.",
+    "Todos los tratamientos dentales en Viladecans. Implantes dentales, ortodoncia invisible, estética dental, blanqueamiento, periodoncia, endodoncia y más.",
   keywords: [
     "tratamientos dentales viladecans",
     "dentista viladecans",
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Tratamientos Dentales en Viladecans | Clínica Vela-Segalà",
     description:
-      "Todos los tratamientos dentales que necesitas. Especialistas con +15 años de experiencia. Primera visita gratuita.",
+      "Todos los tratamientos dentales que necesitas. Especialistas con +15 años de experiencia.",
     images: ["/images/cabina-dentista-viladecans.jpg"],
   },
 };
@@ -77,7 +77,7 @@ export default function TratamientosPage() {
             </p>
             <p className="text-lg text-slate-600 leading-relaxed">
               Desde implantes dentales y ortodoncia invisible hasta estética dental y tratamientos preventivos. 
-              <strong> Primera visita gratuita</strong> con diagnóstico completo y plan de tratamiento personalizado.
+              <strong> Diagnóstico completo</strong> y plan de tratamiento personalizado.
             </p>
           </div>
         </div>
@@ -154,7 +154,7 @@ export default function TratamientosPage() {
                 description: "Escáner 3D, TAC dental, microscopio, cirugía piezoeléctrica y diseño digital de sonrisa",
               },
               {
-                title: "Primera Visita Gratuita",
+                title: "Diagnóstico Completo",
                 description: "Diagnóstico completo y plan de tratamiento personalizado sin compromiso",
               },
               {
@@ -186,7 +186,7 @@ export default function TratamientosPage() {
             ¿Necesitas un Tratamiento Dental?
           </h2>
           <p className="text-xl mb-4 text-gray-200 max-w-2xl mx-auto">
-            Pide tu <strong>primera visita gratuita</strong> en nuestra clínica dental de Viladecans. 
+            Pide tu <strong>cita</strong> en nuestra clínica dental de Viladecans. 
             Te haremos un diagnóstico completo y te explicaremos el mejor tratamiento para tu caso.
           </p>
           <p className="text-base mb-8 text-gray-300 max-w-2xl mx-auto">
@@ -198,7 +198,7 @@ export default function TratamientosPage() {
               href="/pedir-cita"
               className="inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-black bg-white rounded-2xl hover:shadow-2xl hover:scale-105 transition-all"
             >
-              Pedir Cita Gratuita Ahora
+              Pedir Cita Ahora
             </Link>
             <Link
               href="/contacto"

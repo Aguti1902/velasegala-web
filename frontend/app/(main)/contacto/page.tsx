@@ -8,7 +8,7 @@ import { MapPin, Phone, Mail, Clock, Calendar } from "lucide-react";
 export const metadata: Metadata = {
   title: "Contacto - Clínica Dental Vela-Segalà Viladecans",
   description:
-    `Contacta con nuestra clínica dental en Viladecans. ${CLINIC_INFO.address.street}, ${CLINIC_INFO.address.city}. Teléfono: ${CLINIC_INFO.phoneDisplay}. Email: ${CLINIC_INFO.email}. Primera visita gratuita.`,
+    `Contacta con nuestra clínica dental en Viladecans. ${CLINIC_INFO.address.street}, ${CLINIC_INFO.address.city}. Teléfono: ${CLINIC_INFO.phoneDisplay}. Email: ${CLINIC_INFO.email}.`,
   keywords: [
     "contacto clínica dental viladecans",
     "dentista viladecans contacto",
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Contacto - Clínica Dental Vela-Segalà Viladecans",
     description:
-      `Contacta con nuestra clínica dental en Viladecans. ${CLINIC_INFO.address.street}. Teléfono: ${CLINIC_INFO.phoneDisplay}. Primera visita gratuita.`,
+      `Contacta con nuestra clínica dental en Viladecans. ${CLINIC_INFO.address.street}. Teléfono: ${CLINIC_INFO.phoneDisplay}.`,
     images: ["/images/instalaciones-vela-segala.webp"],
   },
 };
@@ -158,7 +158,7 @@ export default function ContactoPage() {
               {/* CTA Pedir Cita */}
               <div className="bg-gradient-to-br from-black to-gray-900 rounded-2xl p-8 shadow-xl text-white">
                 <Calendar className="w-12 h-12 mb-4" />
-                <h3 className="text-2xl font-bold mb-2">Primera Visita Gratuita</h3>
+                <h3 className="text-2xl font-bold mb-2">Reserva tu Cita</h3>
                 <p className="text-gray-200 mb-6">
                   Reserva tu cita sin compromiso. Diagnóstico completo y plan de tratamiento personalizado.
                 </p>

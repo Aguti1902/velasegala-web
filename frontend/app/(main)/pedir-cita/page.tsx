@@ -6,20 +6,20 @@ import { CLINIC_INFO } from "@/lib/constants";
 import { Calendar, Clock, CheckCircle, Phone, Award } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Pedir Cita - Primera Visita Gratuita | Clínica Dental Vela-Segalà Viladecans",
+  title: "Pedir Cita | Clínica Dental Vela-Segalà Viladecans",
   description:
-    `Pide tu cita en nuestra clínica dental de Viladecans. Primera visita gratuita con diagnóstico completo. Llámanos al ${CLINIC_INFO.phoneDisplay} o rellena el formulario online.`,
+    `Pide tu cita en nuestra clínica dental de Viladecans. Diagnóstico completo y plan de tratamiento personalizado. Llámanos al ${CLINIC_INFO.phoneDisplay} o rellena el formulario online.`,
   keywords: [
     "pedir cita dentista viladecans",
-    "primera visita gratuita viladecans",
+    "cita dentista viladecans",
     "cita online dentista viladecans",
     "reservar cita dental viladecans",
     "dentista viladecans cita previa",
   ],
   openGraph: {
-    title: "Pedir Cita - Primera Visita Gratuita | Clínica Dental Vela-Segalà",
+    title: "Pedir Cita | Clínica Dental Vela-Segalà",
     description:
-      `Pide tu cita en nuestra clínica dental de Viladecans. Primera visita gratuita. Llámanos al ${CLINIC_INFO.phoneDisplay}.`,
+      `Pide tu cita en nuestra clínica dental de Viladecans. Diagnóstico completo y plan de tratamiento personalizado. Llámanos al ${CLINIC_INFO.phoneDisplay}.`,
     images: ["/images/instalaciones-vela-segala.webp"],
   },
 };
@@ -38,10 +38,6 @@ export default function PedirCitaPage() {
           />
 
           <div className="mt-8 text-center max-w-4xl mx-auto">
-            <div className="inline-flex items-center gap-2 bg-green-100 text-green-800 px-4 py-2 rounded-full font-medium mb-6">
-              <Award className="w-5 h-5" />
-              Primera Visita Gratuita
-            </div>
             <h1 className="text-4xl md:text-6xl font-bold text-black mb-6">
               Pide tu Cita
             </h1>
@@ -58,7 +54,7 @@ export default function PedirCitaPage() {
         <div className="container-custom">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-bold text-black mb-12 text-center">
-              ¿Qué Incluye la Primera Visita?
+              ¿Qué Incluye tu Visita?
             </h2>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
@@ -228,11 +224,6 @@ export default function PedirCitaPage() {
                       <CheckCircle className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
                       <p className="text-xs text-slate-700">Presupuesto sin compromiso</p>
                     </div>
-                  </div>
-                  <div className="mt-3 pt-3 border-t border-green-200">
-                    <p className="text-base font-bold text-green-700 text-center">
-                      100% Gratuita
-                    </p>
                   </div>
                 </div>
 

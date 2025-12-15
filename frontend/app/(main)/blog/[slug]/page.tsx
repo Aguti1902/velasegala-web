@@ -295,14 +295,14 @@ export default async function BlogPostPage({
                   ¿Necesitas una Consulta?
                 </h3>
                 <p className="text-gray-300 mb-6">
-                  Pide tu primera visita gratuita en nuestra clínica dental de
+                  Pide tu cita en nuestra clínica dental de
                   Viladecans
                 </p>
                 <Link
                   href="/pedir-cita"
                   className="inline-flex items-center justify-center px-8 py-4 bg-white text-black rounded-xl font-bold hover:shadow-xl hover:scale-105 transition-all"
                 >
-                  Pedir Cita Gratuita
+                  Pedir Cita
                 </Link>
               </div>
             </article>
@@ -436,7 +436,7 @@ export default async function BlogPostPage({
                 {/* CTA Sidebar */}
                 <div className="bg-gradient-to-br from-black to-gray-800 rounded-2xl p-6 text-white text-center">
                   <h3 className="text-lg font-bold mb-3">
-                    Primera Visita Gratuita
+                    Reserva tu Cita
                   </h3>
                   <p className="text-sm text-gray-300 mb-4">
                     Agenda tu cita sin compromiso

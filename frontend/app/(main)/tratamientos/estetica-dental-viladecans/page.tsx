@@ -30,12 +30,12 @@ const TREATMENT_FAQS = [
   {
     question: "¿Puedo elegir el color de mis carillas?",
     answer:
-      "Sí, por supuesto. En la primera visita gratuita en nuestra clínica de Viladecans elegimos juntos el color, forma y tamaño de tus carillas dentales. Utilizamos guías de color y diseño de sonrisa digital (DSD) para que veas el resultado antes de empezar. Puedes optar por un blanco natural o un blanco más brillante según tus preferencias.",
+      "Sí, por supuesto. En la primera visita en nuestra clínica de Viladecans elegimos juntos el color, forma y tamaño de tus carillas dentales. Utilizamos guías de color y diseño de sonrisa digital (DSD) para que veas el resultado antes de empezar. Puedes optar por un blanco natural o un blanco más brillante según tus preferencias.",
   },
   {
     question: "¿Ofrecen financiación para tratamientos de estética dental?",
     answer:
-      "Sí, ofrecemos financiación sin intereses hasta en 12 meses para tratamientos de estética dental. También disponemos de opciones de financiación a más largo plazo con cuotas muy cómodas. Te explicamos todas las opciones de pago en tu primera visita gratuita en Viladecans.",
+      "Sí, ofrecemos financiación sin intereses hasta en 12 meses para tratamientos de estética dental. También disponemos de opciones de financiación a más largo plazo con cuotas muy cómodas. Te explicamos todas las opciones de pago en tu primera visita en Viladecans.",
   },
 ];
 
@@ -129,7 +129,7 @@ export default function EsteticaDentalPage() {
 
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link href="/pedir-cita" className="btn-primary text-center">
-                  Pedir Cita Gratuita
+                  Pedir Cita
                 </Link>
                 <a
                   href={`tel:${CLINIC_INFO.phone}`}
@@ -349,7 +349,7 @@ export default function EsteticaDentalPage() {
             ¿Listo para Transformar tu Sonrisa?
           </h2>
           <p className="text-xl mb-4 text-gray-200 max-w-2xl mx-auto">
-            Pide tu <strong>primera visita gratuita</strong> en nuestra clínica dental de Viladecans y te 
+            Pide tu <strong>primera visita</strong> en nuestra clínica dental de Viladecans y te 
             haremos un diseño de sonrisa digital para que veas el resultado antes de empezar.
           </p>
           <p className="text-base mb-8 text-gray-300 max-w-2xl mx-auto">
@@ -361,7 +361,7 @@ export default function EsteticaDentalPage() {
               href="/pedir-cita"
               className="inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-black bg-white rounded-2xl hover:shadow-2xl hover:scale-105 transition-all"
             >
-              Pedir Cita Gratuita Ahora
+              Pedir Cita Ahora
             </Link>
             <a
               href={`tel:${CLINIC_INFO.phone}`}

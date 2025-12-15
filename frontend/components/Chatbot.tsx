@@ -16,7 +16,7 @@ const TREATMENT_INFO: { [key: string]: string } = {
 ⏱️ Duración: 3-6 meses (proceso completo)
 ⭐ Marcas premium: Straumann y Nobel Biocare
 🛡️ Garantía de por vida
-🎁 Primera visita gratuita con diagnóstico 3D
+🔍 Diagnóstico 3D completo
 💳 Financiación sin intereses hasta 12 meses
 
 Los implantes son la mejor solución para reemplazar dientes perdidos. ¿Te gustaría pedir cita?`,
@@ -28,7 +28,7 @@ Los implantes son la mejor solución para reemplazar dientes perdidos. ¿Te gust
 👨‍⚕️ Ortodoncistas certificados Invisalign
 📈 Resultados desde el primer mes
 ⏱️ Duración: 12-18 meses (promedio)
-🎁 Primera visita gratuita con estudio digital
+🔍 Estudio digital completo
 
 Perfecta para adultos y adolescentes. ¿Quieres más información?`,
 
@@ -39,7 +39,7 @@ Perfecta para adultos y adolescentes. ¿Quieres más información?`,
 🎨 Diseño de sonrisa digital (DSD)
 🔧 Reconstrucciones estéticas
 ⭐ Resultados naturales y duraderos
-🎁 Primera visita gratuita
+⭐ Calidad y servicio de excelencia
 
 Transforma tu sonrisa con nuestros especialistas. ¿Te interesa algún tratamiento específico?`,
 
@@ -59,10 +59,10 @@ Transforma tu sonrisa con nuestros especialistas. ¿Te interesa algún tratamien
 🦷 Implantes dentales: desde 800€
 😊 Ortodoncia invisible: consultar presupuesto
 💎 Blanqueamiento: desde 199€
-🎁 Primera visita: GRATUITA
+⭐ Calidad y servicio de excelencia
 💳 Financiación sin intereses disponible
 
-Todos los precios incluyen materiales de primera calidad. ¿Quieres pedir cita gratuita?`,
+Todos los precios incluyen materiales de primera calidad. ¿Quieres pedir cita?`,
 
   "cita": `📅 Para pedir cita en Vela Segalà:
 
@@ -72,7 +72,7 @@ Todos los precios incluyen materiales de primera calidad. ¿Quieres pedir cita g
 
 También puedes pedir cita online haciendo clic en el botón "Pedir Cita" de la web.
 
-🎁 Primera visita totalmente GRATUITA con diagnóstico completo.`,
+⭐ Calidad y servicio de excelencia con diagnóstico completo.`,
 
   "horario": `🕐 Horario de Vela Segalà:
 
@@ -86,7 +86,7 @@ const QUICK_QUESTIONS = [
   "¿Cuánto cuestan los implantes?",
   "Quiero ortodoncia invisible",
   "¿Tenéis blanqueamiento dental?",
-  "Pedir cita gratuita",
+  "Pedir cita",
 ];
 
 export function Chatbot() {
@@ -135,7 +135,7 @@ export function Chatbot() {
 
 📞 Llamarnos: 93 658 84 06
 📧 Email: info@clinicadentalviladecans.com
-💬 O pedir tu primera visita GRATUITA
+💬 O pedir tu cita
 
 ¿Hay algo más sobre nuestros tratamientos en Vela Segalà que quieras saber?`;
   };

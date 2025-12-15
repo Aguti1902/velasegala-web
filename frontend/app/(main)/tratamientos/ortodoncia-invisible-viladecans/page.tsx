@@ -8,14 +8,14 @@ import { Smile, CheckCircle, Clock, Shield, Award, Calendar, Users, Eye, Chevron
 
 const TREATMENT_FAQS = [
   {
-    question: "¿Qué es la ortodoncia invisible Invisalign?",
+    question: "¿Qué es la ortodoncia invisible?",
     answer:
-      "Invisalign es un sistema de ortodoncia invisible que utiliza alineadores transparentes hechos a medida para mover tus dientes gradualmente hasta la posición deseada. Son prácticamente invisibles, removibles y mucho más cómodos que los brackets tradicionales. En nuestra clínica de Viladecans somos especialistas certificados Invisalign.",
+      "La ortodoncia invisible es un sistema que utiliza alineadores transparentes hechos a medida para mover tus dientes gradualmente hasta la posición deseada. Son prácticamente invisibles, removibles y mucho más cómodos que los brackets tradicionales. En nuestra clínica de Viladecans trabajamos con sistemas como Invisalign y Spark, siendo especialistas certificados.",
   },
   {
     question: "¿Cuánto dura el tratamiento de ortodoncia invisible?",
     answer:
-      "La duración del tratamiento con ortodoncia invisible varía según cada caso, pero generalmente oscila entre 12 y 18 meses. Casos más simples pueden resolverse en 6-8 meses, mientras que casos complejos pueden requerir hasta 24 meses. En la primera visita gratuita te daremos un plan de tratamiento detallado con la duración estimada.",
+      "La duración del tratamiento con ortodoncia invisible varía según cada caso, pero generalmente oscila entre 12 y 18 meses. Casos más simples pueden resolverse en 6-8 meses, mientras que casos complejos pueden requerir hasta 24 meses. En la primera visita te daremos un plan de tratamiento detallado con la duración estimada.",
   },
   {
     question: "¿Es dolorosa la ortodoncia invisible?",
@@ -30,7 +30,7 @@ const TREATMENT_FAQS = [
   {
     question: "¿Ofrece financiación para ortodoncia invisible?",
     answer:
-      "Sí, ofrecemos financiación sin intereses hasta en 12 meses para tratamientos de ortodoncia invisible. También disponemos de opciones de financiación a más largo plazo con cuotas muy cómodas. Te explicamos todas las opciones de pago en tu primera visita gratuita en Viladecans.",
+      "Sí, ofrecemos financiación sin intereses hasta en 12 meses para tratamientos de ortodoncia invisible. También disponemos de opciones de financiación a más largo plazo con cuotas muy cómodas. Te explicamos todas las opciones de pago en tu primera visita en Viladecans.",
   },
   {
     question: "¿Invisalign funciona para todos los casos?",
@@ -40,9 +40,9 @@ const TREATMENT_FAQS = [
 ];
 
 export const metadata: Metadata = {
-  title: "Ortodoncia Invisible Invisalign en Viladecans | Clínica Vela-Segalà",
+  title: "Ortodoncia Invisible en Viladecans | Clínica Vela-Segalà",
   description:
-    `Ortodoncia invisible Invisalign en Viladecans. Ortodoncistas certificados con +15 años de experiencia. Alineadores transparentes removibles. Sin brackets metálicos. Primera visita gratuita. Financiación sin intereses. Llama al ${CLINIC_INFO.phoneDisplay}`,
+    `Ortodoncia invisible en Viladecans con sistemas Invisalign y Spark. Ortodoncistas certificados con +15 años de experiencia. Alineadores transparentes removibles. Sin brackets metálicos. Financiación sin intereses. Llama al ${CLINIC_INFO.phoneDisplay}`,
   keywords: [
     "ortodoncia invisible viladecans",
     "invisalign viladecans",
@@ -55,9 +55,9 @@ export const metadata: Metadata = {
     "ortodoncia removible viladecans",
   ],
   openGraph: {
-    title: "Ortodoncia Invisible Invisalign en Viladecans | Clínica Vela-Segalà",
+    title: "Ortodoncia Invisible en Viladecans | Clínica Vela-Segalà",
     description:
-      "Transforma tu sonrisa sin brackets metálicos. Alineadores transparentes removibles. Ortodoncistas certificados con +15 años. Primera visita gratuita.",
+      "Transforma tu sonrisa sin brackets metálicos. Alineadores transparentes removibles. Ortodoncistas certificados con +15 años. Sistemas Invisalign y Spark.",
     images: ["/images/ortodoncia-invisalign-viladecans.jpg"],
   },
 };
@@ -83,7 +83,7 @@ export default function OrtodonciaInvisiblePage() {
           <div className="mt-8 grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <div className="inline-block bg-black text-white px-4 py-2 rounded-lg text-sm font-bold mb-4">
-                ORTODONCIA INVISIBLE INVISALIGN
+                ORTODONCIA INVISIBLE
               </div>
               <h1 className="text-4xl md:text-5xl font-bold text-black mb-6">
                 Ortodoncia Invisible en Viladecans
@@ -98,7 +98,8 @@ export default function OrtodonciaInvisiblePage() {
                 alternativa idónea.
               </p>
               <p className="text-lg text-slate-600 mb-6 leading-relaxed">
-                Sistema de <strong>férulas transparentes fabricadas a medida</strong> con tecnología 3D. Los{" "}
+                Sistema de <strong>férulas transparentes fabricadas a medida</strong> con tecnología 3D. Trabajamos con 
+                sistemas de ortodoncia invisible como <strong>Invisalign y Spark</strong>. Los{" "}
                 <strong>alineadores son removibles</strong>, permitiéndote extraer y colocar la ortodoncia con 
                 completa autonomía. Ortodoncistas certificados con más de 15 años de experiencia.
               </p>
@@ -120,11 +121,11 @@ export default function OrtodonciaInvisiblePage() {
                 <div className="space-y-2 text-[13px]">
                   <div className="flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
-                    <span className="leading-tight"><strong>Primera visita y estudio 3D gratuito</strong></span>
+                    <span className="leading-tight">Estudio 3D completo</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
-                    <span className="leading-tight">Ortodoncistas certificados Invisalign</span>
+                    <span className="leading-tight">Ortodoncistas certificados en Invisalign y Spark</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
@@ -143,7 +144,7 @@ export default function OrtodonciaInvisiblePage() {
 
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link href="/pedir-cita" className="btn-primary text-center">
-                  Pedir Cita Gratuita
+                  Pedir Cita
                 </Link>
                 <a
                   href={`tel:${CLINIC_INFO.phone}`}
@@ -498,7 +499,7 @@ export default function OrtodonciaInvisiblePage() {
             Preguntas Frecuentes sobre Ortodoncia Invisible
           </h2>
           <p className="text-center text-slate-600 mb-8">
-            Resolvemos las dudas más habituales sobre ortodoncia invisible Invisalign en Viladecans.
+            Resolvemos las dudas más habituales sobre ortodoncia invisible en Viladecans.
           </p>
           <div className="space-y-4">
             {TREATMENT_FAQS.map((faq, index) => (
@@ -530,8 +531,8 @@ export default function OrtodonciaInvisiblePage() {
             podemos asegurarte que <strong>te va a cambiar la vida</strong>.
           </p>
           <p className="text-base mb-8 text-gray-300 max-w-2xl mx-auto">
-            <strong>Ortodoncistas certificados en Viladecans</strong> con más de 15 años de experiencia. Primera visita 
-            y estudio 3D gratuito. Financiación sin intereses. Alineadores transparentes removibles. Aún no puedes 
+            <strong>Ortodoncistas certificados en Viladecans</strong> con más de 15 años de experiencia. Trabajamos con 
+            sistemas Invisalign y Spark. Estudio 3D completo. Financiación sin intereses. Alineadores transparentes removibles. Aún no puedes 
             imaginarte cuánto va a mejorar tu vida.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">

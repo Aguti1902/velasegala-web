@@ -129,7 +129,7 @@ export default function OdontopediatriaPage() {
 
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link href="/pedir-cita" className="btn-primary text-center">
-                  Pedir Cita Gratuita
+                  Pedir Cita
                 </Link>
                 <a
                   href={`tel:${CLINIC_INFO.phone}`}
@@ -321,7 +321,7 @@ export default function OdontopediatriaPage() {
             Cuida la Salud Dental de tus Hijos desde Pequeños
           </h2>
           <p className="text-xl mb-4 text-gray-200 max-w-2xl mx-auto">
-            Pide tu <strong>primera visita gratuita</strong> en nuestra clínica dental de Viladecans. 
+            Pide tu <strong>primera visita</strong> en nuestra clínica dental de Viladecans. 
             Revisión completa y consejos personalizados para la salud bucodental de tu hijo.
           </p>
           <p className="text-base mb-8 text-gray-300 max-w-2xl mx-auto">
@@ -333,7 +333,7 @@ export default function OdontopediatriaPage() {
               href="/pedir-cita"
               className="inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-black bg-white rounded-2xl hover:shadow-2xl hover:scale-105 transition-all"
             >
-              Pedir Cita Gratuita Ahora
+              Pedir Cita Ahora
             </Link>
             <a
               href={`tel:${CLINIC_INFO.phone}`}

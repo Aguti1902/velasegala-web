@@ -138,7 +138,7 @@ export function Header() {
           {/* CTA Button */}
           <div className="hidden lg:block">
             <Link href="/pedir-cita" className="btn-primary">
-              Pedir Cita Gratuita
+              Pedir Cita
             </Link>
           </div>
 

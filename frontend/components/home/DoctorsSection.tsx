@@ -82,17 +82,21 @@ export function DoctorsSection() {
               </div>
             </div>
             <p className="text-slate-700 leading-relaxed mb-4">
-              <strong>Especialista en cirugía de implantes y regeneración ósea</strong>. Autora de artículos científicos 
+              <strong>Especialista en prostodoncia, estética dental y medicina estética facial</strong>. Autora de artículos científicos 
               en colaboración con universidades internacionales.
             </p>
             <div className="flex flex-wrap gap-3">
               <div className="flex items-center gap-2 text-sm text-slate-600 bg-white px-3 py-2 rounded-lg shadow-sm">
                 <Award className="w-4 h-4" />
-                Cirugía Implantológica
+                Prostodoncia
               </div>
               <div className="flex items-center gap-2 text-sm text-slate-600 bg-white px-3 py-2 rounded-lg shadow-sm">
                 <GraduationCap className="w-4 h-4" />
-                Rehabilitación Oral
+                Estética Dental
+              </div>
+              <div className="flex items-center gap-2 text-sm text-slate-600 bg-white px-3 py-2 rounded-lg shadow-sm">
+                <Users className="w-4 h-4" />
+                Medicina Estética Facial
               </div>
             </div>
           </div>

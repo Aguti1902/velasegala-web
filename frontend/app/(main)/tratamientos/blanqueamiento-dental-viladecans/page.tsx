@@ -30,7 +30,7 @@ const TREATMENT_FAQS = [
   {
     question: "¿Qué manchas se pueden blanquear?",
     answer:
-      "El blanqueamiento dental funciona muy bien para manchas causadas por edad, café, té, vino, tabaco y alimentos. Manchas intrínsecas por tetraciclinas o fluorosis también mejoran, aunque pueden necesitar más sesiones. Manchas por amalgamas o restauraciones dentales no se blanquean (las restauraciones se pueden reemplazar después). En Viladecans evaluamos tu caso en la primera visita gratuita.",
+      "El blanqueamiento dental funciona muy bien para manchas causadas por edad, café, té, vino, tabaco y alimentos. Manchas intrínsecas por tetraciclinas o fluorosis también mejoran, aunque pueden necesitar más sesiones. Manchas por amalgamas o restauraciones dentales no se blanquean (las restauraciones se pueden reemplazar después). En Viladecans evaluamos tu caso en la primera visita.",
   },
   {
     question: "¿A qué edad se puede hacer blanqueamiento dental?",
@@ -142,7 +142,7 @@ export default function BlanqueamientoDentalPage() {
 
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link href="/pedir-cita" className="btn-primary text-center">
-                  Pedir Cita Gratuita
+                  Pedir Cita
                 </Link>
                 <a
                   href={`tel:${CLINIC_INFO.phone}`}
@@ -639,7 +639,7 @@ export default function BlanqueamientoDentalPage() {
           </h2>
           <p className="text-xl mb-4 text-gray-200 max-w-2xl mx-auto leading-relaxed">
             En <strong>Clínicas Vela-Segalà de Viladecans</strong> queremos que vuelvas a <strong>disfrutar de tu 
-            sonrisa sin complejos</strong>. Pide tu primera visita gratuita y te explicaremos cómo podemos ayudarte.
+            sonrisa sin complejos</strong>. Pide tu primera visita y te explicaremos cómo podemos ayudarte.
           </p>
           <p className="text-base mb-8 text-gray-300 max-w-2xl mx-auto">
             <strong>Blanqueamiento dental profesional en Viladecans</strong>. Tecnología LED avanzada. Resultados 
@@ -650,7 +650,7 @@ export default function BlanqueamientoDentalPage() {
               href="/pedir-cita"
               className="inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-black bg-white rounded-2xl hover:shadow-2xl hover:scale-105 transition-all"
             >
-              Pedir Cita Gratuita Ahora
+              Pedir Cita Ahora
             </Link>
             <a
               href={`tel:${CLINIC_INFO.phone}`}

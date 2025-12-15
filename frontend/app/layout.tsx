@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     ],
   },
   description:
-    "Clínica dental en Viladecans con más de X años de experiencia. Implantes dentales, ortodoncia invisible, estética dental y más. Primera visita gratuita. ¡Pide tu cita!",
+    "Clínica dental en Viladecans con más de X años de experiencia. Implantes dentales, ortodoncia invisible, estética dental y más. Calidad y servicio de excelencia. ¡Pide tu cita!",
   keywords: [
     "clínica dental viladecans",
     "dentista viladecans",
@@ -59,7 +59,7 @@ export const metadata: Metadata = {
     siteName: CLINIC_INFO.name,
     title: `${CLINIC_INFO.name} - Tu Dentista de Confianza en Viladecans`,
     description:
-      "Clínica dental en Viladecans con más de X años de experiencia. Implantes dentales, ortodoncia invisible, estética dental y más. Primera visita gratuita.",
+      "Clínica dental en Viladecans con más de X años de experiencia. Implantes dentales, ortodoncia invisible, estética dental y más. Calidad y servicio de excelencia.",
     images: [
       {
         url: `${SITE_CONFIG.url}/og-image.jpg`,
@@ -73,7 +73,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: `${CLINIC_INFO.name} - Tu Dentista de Confianza en Viladecans`,
     description:
-      "Clínica dental en Viladecans. Implantes, ortodoncia invisible, estética dental. Primera visita gratuita.",
+      "Clínica dental en Viladecans. Implantes, ortodoncia invisible, estética dental. Calidad y servicio de excelencia.",
     images: [`${SITE_CONFIG.url}/og-image.jpg`],
   },
   robots: {

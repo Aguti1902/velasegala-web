@@ -24,11 +24,11 @@ export function Hero() {
             <p className="text-base text-slate-600 mb-8 leading-relaxed">
               Pioneros en la <strong>técnica BOPT en España</strong> y co-fundadores del <strong>BORG Center Barcelona</strong>. 
               Especialistas en <strong>implantes dentales en Viladecans, ortodoncia invisible, estética dental, prótesis sobre implantes, 
-              periodoncia, odontopediatría y cirugía oral</strong>. Tratamientos personalizados y <strong>primera visita gratuita</strong>.
+              periodoncia, odontopediatría y cirugía oral</strong>. Tratamientos personalizados con calidad y servicio de excelencia.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link href="/pedir-cita" className="btn-primary text-center">
-                Pedir Cita Gratuita
+                Pedir Cita
               </Link>
               <Link
                 href="/clinica-dental-viladecans"
@@ -79,20 +79,6 @@ export function Hero() {
                 muted={true}
                 className="w-full h-full"
               />
-            </div>
-            {/* Badge flotante - Oculto en móvil */}
-            <div className="hidden md:block absolute -bottom-4 -left-4 bg-black text-white shadow-2xl p-5 rounded-2xl">
-              <div className="flex items-center gap-3">
-                <Award className="w-10 h-10" />
-                <div>
-                  <div className="font-bold text-lg">
-                    Primera Visita
-                  </div>
-                  <div className="text-sm font-medium">
-                    100% Gratuita
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
 

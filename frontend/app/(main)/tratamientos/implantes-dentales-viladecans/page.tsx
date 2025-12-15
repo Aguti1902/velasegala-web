@@ -11,7 +11,7 @@ const TREATMENT_FAQS = [
   {
     question: "¿Cuánto cuesta un implante dental en Viladecans?",
     answer:
-      "El precio de un implante dental en nuestra clínica de Viladecans depende del tipo de implante, la marca (Straumann, Nobel Biocare), si es necesario realizar injerto de hueso y el tipo de corona. Utilizamos únicamente implantes de marcas premium con certificación internacional. En la primera visita gratuita te daremos un presupuesto detallado y personalizado sin compromiso, adaptado a tu caso específico.",
+      "El precio de un implante dental en nuestra clínica de Viladecans depende del tipo de implante, la marca (Straumann, Nobel Biocare), si es necesario realizar injerto de hueso y el tipo de corona. Utilizamos únicamente implantes de marcas premium con certificación internacional. En la primera visita te daremos un presupuesto detallado y personalizado sin compromiso, adaptado a tu caso específico.",
   },
   {
     question: "¿Cuánto dura el tratamiento de implantes dentales?",
@@ -31,7 +31,7 @@ const TREATMENT_FAQS = [
   {
     question: "¿Ofrecen financiación para implantes dentales?",
     answer:
-      "Sí, ofrecemos financiación sin intereses hasta en 12 meses para tratamientos de implantes dentales. También disponemos de opciones de financiación a más largo plazo con cuotas muy cómodas. Te explicamos todas las opciones de pago y financiación en tu primera visita gratuita en Viladecans.",
+      "Sí, ofrecemos financiación sin intereses hasta en 12 meses para tratamientos de implantes dentales. También disponemos de opciones de financiación a más largo plazo con cuotas muy cómodas. Te explicamos todas las opciones de pago y financiación en tu primera visita en Viladecans.",
   },
   {
     question: "¿Qué marcas de implantes dentales utilizan?",
@@ -145,7 +145,7 @@ export default function ImplantesDentalesPage() {
 
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link href="/pedir-cita" className="inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white bg-black rounded-2xl hover:shadow-xl hover:scale-105 transition-all">
-                  Pedir Cita Gratuita
+                  Pedir Cita
                 </Link>
                 <a
                   href={`tel:${CLINIC_INFO.phone}`}
@@ -345,7 +345,7 @@ export default function ImplantesDentalesPage() {
               href="/pedir-cita"
               className="inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white bg-black rounded-2xl hover:shadow-xl hover:scale-105 transition-all"
             >
-              Pedir Cita Gratuita
+              Pedir Cita
             </Link>
           </div>
         </div>
@@ -370,7 +370,7 @@ export default function ImplantesDentalesPage() {
                 en numerosos estudios y aplicando las técnicas más innovadoras.
               </p>
               <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200">
-                <h3 className="font-bold text-lg mb-4">Incluye en tu primera visita gratuita:</h3>
+                <h3 className="font-bold text-lg mb-4">Incluye en tu primera visita:</h3>
                 <div className="space-y-3">
                   <div className="flex items-start gap-3">
                     <CheckCircle className="w-5 h-5 flex-shrink-0 text-black mt-0.5" />
@@ -593,14 +593,14 @@ export default function ImplantesDentalesPage() {
               ¿Quieres resultados como estos?
             </h3>
             <p className="text-lg text-gray-200 mb-6 max-w-2xl mx-auto">
-              Pide tu primera visita gratuita y te haremos un estudio personalizado con escáner 3D 
+              Pide tu primera visita y te haremos un estudio personalizado con escáner 3D 
               para planificar tu tratamiento de implantes dentales.
             </p>
             <Link
               href="/pedir-cita"
               className="inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-black bg-white rounded-xl hover:shadow-2xl hover:scale-105 transition-all"
             >
-              Pedir Cita Gratuita
+              Pedir Cita
             </Link>
           </div>
         </div>
@@ -640,7 +640,7 @@ export default function ImplantesDentalesPage() {
             ¿Por Qué Retrasar Más Tu Nueva Sonrisa?
           </h2>
           <p className="text-xl mb-4 text-gray-200 max-w-2xl mx-auto">
-            Queremos ponerte fácil la decisión. Pide tu <strong>primera visita gratuita</strong> en nuestra clínica dental 
+            Queremos ponerte fácil la decisión. Pide tu <strong>primera visita</strong> en nuestra clínica dental 
             de Viladecans y te haremos un estudio completo con escáner 3D, planificación digital y presupuesto detallado.
           </p>
           <p className="text-base mb-8 text-gray-300 max-w-2xl mx-auto">
@@ -652,7 +652,7 @@ export default function ImplantesDentalesPage() {
               href="/pedir-cita"
               className="inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-black bg-white rounded-2xl hover:shadow-2xl hover:scale-105 transition-all"
             >
-              Pedir Cita Gratuita Ahora
+              Pedir Cita Ahora
             </Link>
             <a
               href={`tel:${CLINIC_INFO.phone}`}
