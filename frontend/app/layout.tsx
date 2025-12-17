@@ -25,12 +25,15 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/images/Logos/Isotipo.png", sizes: "32x32", type: "image/png" },
-      { url: "/images/Logos/Isotipo.png", sizes: "16x16", type: "image/png" },
+      { url: "/images/Logos/FAVICON.png", sizes: "32x32", type: "image/png" },
+      { url: "/images/Logos/FAVICON.png", sizes: "16x16", type: "image/png" },
+      { url: "/images/Logos/FAVICON.png", sizes: "192x192", type: "image/png" },
+      { url: "/images/Logos/FAVICON.png", sizes: "512x512", type: "image/png" },
     ],
     apple: [
-      { url: "/images/Logos/Isotipo.png", sizes: "180x180", type: "image/png" },
+      { url: "/images/Logos/FAVICON.png", sizes: "180x180", type: "image/png" },
     ],
+    shortcut: "/images/Logos/FAVICON.png",
   },
   description:
     "Clínica dental en Viladecans con más de X años de experiencia. Implantes dentales, ortodoncia invisible, estética dental y más. Calidad y servicio de excelencia. ¡Pide tu cita!",

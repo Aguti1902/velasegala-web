@@ -73,7 +73,7 @@ JWT_SECRET=(tu clave JWT)
 
 N8N_API_KEY=(tu clave para n8n)
 
-CORS_ORIGIN=https://velasegala-web-emc8.vercel.app
+CORS_ORIGIN=https://velasegala-web-emc8.vercel.app,https://www.velasegalaviladecans.com,https://velasegalaviladecans.com
 
 NODE_ENV=production
 ```
@@ -124,7 +124,7 @@ NODE_ENV=production
 ### Problema: "CORS policy error" en el navegador
 
 **Solución:**
-1. Verifica que Railway tenga `CORS_ORIGIN=https://velasegala-web-emc8.vercel.app`
+1. Verifica que Railway tenga `CORS_ORIGIN=https://velasegala-web-emc8.vercel.app,https://www.velasegalaviladecans.com,https://velasegalaviladecans.com`
 2. Espera 2-3 minutos después de cambiar variables
 3. Limpia caché del navegador (Ctrl+Shift+R o Cmd+Shift+R)
 
@@ -185,7 +185,7 @@ NODE_ENV=production
   - `DATABASE_URL` → (de PostgreSQL)
   - `JWT_SECRET` → (tu clave)
   - `N8N_API_KEY` → (tu clave)
-  - `CORS_ORIGIN=https://velasegala-web-emc8.vercel.app`
+  - `CORS_ORIGIN=https://velasegala-web-emc8.vercel.app,https://www.velasegalaviladecans.com,https://velasegalaviladecans.com`
   - `NODE_ENV=production`
 
 ---
