@@ -78,10 +78,11 @@ CORS_ORIGIN=https://velasegala-web-emc8.vercel.app
 NODE_ENV=production
 ```
 
-5. Si falta `CORS_ORIGIN`, añádela:
+5. Si falta `CORS_ORIGIN`, añádela (opcional, ya está en el código):
    - **Name**: `CORS_ORIGIN`
-   - **Value**: `https://velasegala-web-emc8.vercel.app`
+   - **Value**: `https://velasegala-web-emc8.vercel.app,https://www.velasegalaviladecans.com,https://velasegalaviladecans.com`
    - Click "Add"
+   - **Nota**: El dominio principal ya está configurado en el código, esta variable es para dominios adicionales
 
 6. Railway se redeployará automáticamente (espera 2-3 minutos)
 

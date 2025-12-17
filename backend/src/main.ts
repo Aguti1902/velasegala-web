@@ -9,9 +9,11 @@ async function bootstrap() {
   // Security
   app.use(helmet());
 
-  // CORS - Permitir frontend de Vercel y desarrollo local
+  // CORS - Permitir frontend de Vercel, dominio propio y desarrollo local
   const allowedOrigins = [
     'https://velasegala-web-emc8.vercel.app',
+    'https://www.velasegalaviladecans.com',
+    'https://velasegalaviladecans.com',
     'http://localhost:3000',
   ];
   
