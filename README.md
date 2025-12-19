@@ -254,7 +254,22 @@ N8N_API_KEY="..."
 PORT=3001
 NODE_ENV="development"
 FRONTEND_URL="http://localhost:3000"
+
+# Configuración de correo electrónico para solicitudes de cita
+APPOINTMENT_EMAIL="segala@velasegala.com"  # Email donde se recibirán las solicitudes de cita (por defecto: segala@velasegala.com)
+RESEND_API_KEY="re_xxxxxxxxxxxx"  # API Key de Resend (obtener en https://resend.com/api-keys)
+EMAIL_FROM="noreply@tudominio.com"  # Email del remitente (debe ser dominio verificado en Resend, o usar onboarding@resend.dev para pruebas)
 ```
+
+**Configuración de Resend:**
+1. Crea una cuenta en https://resend.com (gratis hasta 100 emails/día)
+2. Ve a "API Keys" y genera una nueva API key
+3. Copia la API key y úsala como `RESEND_API_KEY`
+4. Para usar tu propio dominio:
+   - Ve a "Domains" en Resend
+   - Añade y verifica tu dominio (ej: velasegala.com)
+   - Usa `EMAIL_FROM="noreply@velasegala.com"` (o el email que prefieras)
+5. Para pruebas, puedes usar el dominio de prueba: `EMAIL_FROM="onboarding@resend.dev"` (solo para pruebas)
 
 ## 🐛 Troubleshooting
 

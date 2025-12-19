@@ -2,15 +2,19 @@ import { Controller, Get, Post, Patch, Delete, Param, Query, Body, UseGuards } f
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateAppointmentDto } from './dto/create-appointment.dto';
+import { EmailService } from '../email/email.service';
 
 @Controller('appointments')
 export class AppointmentsController {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private emailService: EmailService,
+  ) {}
 
   // Public endpoint - No auth required
   @Post()
   async create(@Body() createAppointmentDto: CreateAppointmentDto) {
-    return this.prisma.appointmentRequest.create({
+    const appointment = await this.prisma.appointmentRequest.create({
       data: {
         name: createAppointmentDto.name,
         email: createAppointmentDto.email,
@@ -22,6 +26,27 @@ export class AppointmentsController {
         status: 'pending',
       },
     });
+
+    // Enviar email de notificación (no esperamos a que termine para responder al cliente)
+    console.log('📧 Iniciando envío de email para cita:', {
+      name: createAppointmentDto.name,
+      email: createAppointmentDto.email,
+    });
+    
+    this.emailService.sendAppointmentEmail({
+      name: createAppointmentDto.name,
+      email: createAppointmentDto.email,
+      phone: createAppointmentDto.phone,
+      preferredDate: createAppointmentDto.preferredDate,
+      preferredTime: createAppointmentDto.preferredTime,
+      treatment: createAppointmentDto.treatment,
+      message: createAppointmentDto.message,
+    }).catch((error) => {
+      console.error('❌ Error en controller al enviar email de cita:', error);
+      console.error('   Stack:', error?.stack);
+    });
+
+    return appointment;
   }
 
   // Protected endpoints - Auth required
