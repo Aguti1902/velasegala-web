@@ -211,8 +211,13 @@ Por favor, contacta con el cliente lo antes posible para confirmar la cita.
         html: emailHtml,
       });
       
+      if (result.error) {
+        console.error('❌ Resend devolvió un error:', result.error);
+        throw new Error(JSON.stringify(result.error));
+      }
+      
       console.log(`✅ Email de cita enviado exitosamente a ${recipientEmail}`);
-      console.log(`📧 ID del email: ${result.id || 'N/A'}`);
+      console.log(`📧 ID del email: ${result.data?.id || 'N/A'}`);
     } catch (error: any) {
       console.error('❌ Error al enviar email de cita:');
       console.error('   Tipo de error:', error?.constructor?.name || typeof error);
