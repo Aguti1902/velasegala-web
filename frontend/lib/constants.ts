@@ -39,8 +39,19 @@ export const CLINIC_INFO = {
 };
 
 // Configuración del sitio
+// En producción, usar el dominio real por defecto en lugar de localhost
+const getDefaultSiteUrl = () => {
+  // Si estamos en el servidor de Next.js y no hay variable de entorno, usar producción
+  if (typeof window === 'undefined') {
+    // En servidor (build time), usar URL de producción
+    return process.env.NEXT_PUBLIC_SITE_URL || 'https://www.velasegalaviladecans.com';
+  }
+  // En cliente, usar localhost para desarrollo
+  return process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+};
+
 export const SITE_CONFIG = {
-  url: process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
+  url: getDefaultSiteUrl(),
   name: CLINIC_INFO.name,
   description:
     "Clínica dental en Viladecans especializada en implantes dentales, ortodoncia invisible, estética dental y más. Primera visita gratuita. Tu dentista de confianza.",

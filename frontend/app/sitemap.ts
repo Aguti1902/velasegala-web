@@ -24,7 +24,13 @@ const staticPages = [
 ];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = SITE_CONFIG.url;
+  // Usar la URL del sitio, pero si es localhost, usar la URL de producción
+  let baseUrl = SITE_CONFIG.url;
+  if (baseUrl.includes('localhost') || baseUrl.includes('127.0.0.1')) {
+    // En producción, usar el dominio real
+    baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.velasegalaviladecans.com';
+  }
+  
   const currentDate = new Date();
 
   // Generar entradas para páginas estáticas
