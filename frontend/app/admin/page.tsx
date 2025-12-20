@@ -83,9 +83,15 @@ export default function AdminDashboard() {
     const fetchStats = async () => {
       try {
         const apiUrl = getApiUrl();
+        const token = document.cookie
+          .split("; ")
+          .find((row) => row.startsWith("admin_token="))
+          ?.split("=")[1];
         
         // Obtener posts
-        const postsResponse = await fetch(`${apiUrl}/posts`);
+        const postsResponse = await fetch(`${apiUrl}/posts`, {
+          headers: token ? { Authorization: `Bearer ${token}` } : {},
+        });
         const postsData = await postsResponse.json();
 
         // Obtener categorías
@@ -95,6 +101,46 @@ export default function AdminDashboard() {
         // Obtener tags
         const tagsResponse = await fetch(`${apiUrl}/tags`);
         const tagsData = await tagsResponse.json();
+
+        // Obtener datos de Google Analytics (últimos 30 días para "Este mes")
+        let analyticsData = null;
+        let viewsGrowth = 0;
+        try {
+          const analyticsResponse = await fetch(`${apiUrl}/analytics?days=30`, {
+            credentials: 'include',
+            headers: token ? { Authorization: `Bearer ${token}` } : {},
+          });
+          if (analyticsResponse.ok) {
+            analyticsData = await analyticsResponse.json();
+            
+            // Intentar obtener datos del período anterior para calcular crecimiento
+            try {
+              const previousResponse = await fetch(`${apiUrl}/analytics?days=60`, {
+                credentials: 'include',
+                headers: token ? { Authorization: `Bearer ${token}` } : {},
+              });
+              if (previousResponse.ok) {
+                const previousData = await previousResponse.json();
+                // Calcular crecimiento: comparar últimos 30 días con los 30 anteriores (días 31-60)
+                // Esto es una aproximación, asumiendo distribución uniforme
+                const currentViews = analyticsData.pageViews || 0;
+                const previousTotalViews = previousData.pageViews || 0;
+                const previousMonthViews = Math.max(0, previousTotalViews - currentViews);
+                
+                if (previousMonthViews > 0) {
+                  viewsGrowth = ((currentViews - previousMonthViews) / previousMonthViews) * 100;
+                } else if (currentViews > 0) {
+                  viewsGrowth = 100; // Si no hay datos anteriores pero sí actuales, mostrar crecimiento positivo
+                }
+              }
+            } catch (growthError) {
+              // Si falla el cálculo de crecimiento, dejarlo en 0
+              console.warn('No se pudo calcular el crecimiento:', growthError);
+            }
+          }
+        } catch (analyticsError) {
+          console.warn('No se pudieron obtener datos de Analytics:', analyticsError);
+        }
 
         const posts = postsData.data || [];
         const publishedPosts = posts.filter(
@@ -108,8 +154,8 @@ export default function AdminDashboard() {
           draftPosts: draftPosts.length,
           totalCategories: categoriesData.length || 0,
           totalTags: tagsData.length || 0,
-          totalViews: 1247, // Mock data - implementar analytics real
-          viewsGrowth: 12.5, // Mock data
+          totalViews: analyticsData?.pageViews || 0, // Datos reales de Google Analytics
+          viewsGrowth: Math.round(viewsGrowth * 10) / 10, // Redondear a 1 decimal
         });
 
         // Obtener posts recientes
@@ -118,7 +164,7 @@ export default function AdminDashboard() {
             id: post.id,
             title: post.title,
             publishAt: post.publishAt || post.createdAt,
-            views: Math.floor(Math.random() * 200), // Mock data
+            views: 0, // Las vistas individuales de posts no están disponibles en GA4 sin configuración adicional
             status: post.publishStatus,
           }))
         );
