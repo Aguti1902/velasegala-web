@@ -10,7 +10,7 @@ export class AnalyticsService {
   constructor(private configService: ConfigService) {
     const credentialsJson = this.configService.get<string>('GOOGLE_ANALYTICS_CREDENTIALS');
     // El property ID debe ser el número completo de la propiedad (ej: 123456789, no G-123456789)
-    const propertyIdRaw = this.configService.get<string>('GOOGLE_ANALYTICS_PROPERTY_ID') || 'LF82NH1E0E';
+    const propertyIdRaw = this.configService.get<string>('GOOGLE_ANALYTICS_PROPERTY_ID') || '517091107';
     // Si viene con prefijo G-, lo removemos
     const propertyId = propertyIdRaw.replace(/^G-/, '');
     
