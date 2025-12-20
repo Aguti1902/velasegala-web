@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { TrendingUp, Users, Eye, MousePointerClick, Activity } from "lucide-react";
+import { getApiUrl } from "@/lib/config";
 import {
   LineChart,
   Line,
@@ -23,45 +24,59 @@ interface AnalyticsData {
   topPages: Array<{ page: string; views: number }>;
 }
 
+// Función helper para datos mock (fallback)
+function getMockData(): AnalyticsData {
+  return {
+    visitors: 1247,
+    pageViews: 3421,
+    bounceRate: 45.2,
+    avgSessionDuration: 2.5,
+    dailyVisitors: [
+      { date: "Lun", visitors: 120 },
+      { date: "Mar", visitors: 145 },
+      { date: "Mié", visitors: 168 },
+      { date: "Jue", visitors: 190 },
+      { date: "Vie", visitors: 210 },
+      { date: "Sáb", visitors: 165 },
+      { date: "Dom", visitors: 140 },
+    ],
+    topPages: [
+      { page: "/", views: 850 },
+      { page: "/tratamientos/implantes-dentales-viladecans", views: 320 },
+      { page: "/blog", views: 280 },
+      { page: "/clinica-dental-viladecans", views: 195 },
+    ],
+  };
+}
+
 export function GoogleAnalyticsWidget() {
   const [analytics, setAnalytics] = useState<AnalyticsData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // TODO: Conectar con Google Analytics API
-    // Por ahora usamos datos mock, pero la estructura está lista para GA4
     const fetchAnalytics = async () => {
       try {
-        // Aquí iría la llamada a tu API que obtiene datos de GA4
-        // const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/analytics`);
-        // const data = await response.json();
-        
-        // Datos mock por ahora
-        const mockData: AnalyticsData = {
-          visitors: 1247,
-          pageViews: 3421,
-          bounceRate: 45.2,
-          avgSessionDuration: 2.5,
-          dailyVisitors: [
-            { date: "Lun", visitors: 120 },
-            { date: "Mar", visitors: 145 },
-            { date: "Mié", visitors: 168 },
-            { date: "Jue", visitors: 190 },
-            { date: "Vie", visitors: 210 },
-            { date: "Sáb", visitors: 165 },
-            { date: "Dom", visitors: 140 },
-          ],
-          topPages: [
-            { page: "/", views: 850 },
-            { page: "/tratamientos/implantes-dentales-viladecans", views: 320 },
-            { page: "/blog", views: 280 },
-            { page: "/clinica-dental-viladecans", views: 195 },
-          ],
-        };
+        const apiUrl = getApiUrl();
+        const response = await fetch(`${apiUrl}/analytics?days=7`, {
+          credentials: 'include', // Incluir cookies para autenticación
+        });
 
-        setAnalytics(mockData);
+        if (!response.ok) {
+          if (response.status === 401) {
+            console.warn('No autenticado. Usando datos mock.');
+            // Si no está autenticado, usar datos mock como fallback
+            setAnalytics(getMockData());
+            return;
+          }
+          throw new Error(`Error al obtener analytics: ${response.status}`);
+        }
+
+        const data = await response.json();
+        setAnalytics(data);
       } catch (error) {
         console.error("Error al cargar analytics:", error);
+        // En caso de error, mostrar datos mock como fallback
+        setAnalytics(getMockData());
       } finally {
         setIsLoading(false);
       }
