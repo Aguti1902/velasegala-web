@@ -57,21 +57,32 @@ export function GoogleAnalyticsWidget() {
     const fetchAnalytics = async () => {
       try {
         const apiUrl = getApiUrl();
+        // Obtener token de autenticación de las cookies
+        const token = document.cookie
+          .split("; ")
+          .find((row) => row.startsWith("admin_token="))
+          ?.split("=")[1];
+
         const response = await fetch(`${apiUrl}/analytics?days=7`, {
-          credentials: 'include', // Incluir cookies para autenticación
+          credentials: 'include',
+          headers: token ? { Authorization: `Bearer ${token}` } : {},
         });
 
         if (!response.ok) {
           if (response.status === 401) {
-            console.warn('No autenticado. Usando datos mock.');
+            console.warn('No autenticado para analytics. Usando datos mock.');
             // Si no está autenticado, usar datos mock como fallback
             setAnalytics(getMockData());
             return;
           }
-          throw new Error(`Error al obtener analytics: ${response.status}`);
+          console.error(`Error al obtener analytics: ${response.status}`);
+          // Si hay otro error, intentar usar datos mock
+          setAnalytics(getMockData());
+          return;
         }
 
         const data = await response.json();
+        console.log('✅ Datos de Analytics recibidos:', data);
         setAnalytics(data);
       } catch (error) {
         console.error("Error al cargar analytics:", error);
