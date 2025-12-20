@@ -33,7 +33,16 @@ export class AnalyticsService {
 
   async getAnalyticsData(days: number = 7) {
     if (!this.analyticsDataClient) {
-      throw new Error('Google Analytics no está configurado');
+      console.warn('⚠️ Google Analytics no está configurado. Devolviendo datos vacíos.');
+      // Devolver datos vacíos en lugar de lanzar error
+      return {
+        visitors: 0,
+        pageViews: 0,
+        bounceRate: 0,
+        avgSessionDuration: 0,
+        dailyVisitors: [],
+        topPages: [],
+      };
     }
 
     const startDate = new Date();
