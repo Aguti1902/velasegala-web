@@ -3,6 +3,7 @@ import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
 import { CLINIC_INFO, SITE_CONFIG } from "@/lib/constants";
 import { LocalBusinessSchema } from "@/components/seo/LocalBusinessSchema";
+import { GoogleAnalytics } from "@/components/seo/GoogleAnalytics";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -91,7 +92,7 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    google: "your-google-verification-code",
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || undefined,
   },
 };
 
@@ -103,6 +104,7 @@ export default function RootLayout({
   return (
     <html lang="es" className={`${inter.variable} ${poppins.variable}`}>
       <body className="font-sans antialiased">
+        <GoogleAnalytics measurementId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "G-LF82NH1E0E"} />
         <LocalBusinessSchema />
         {children}
       </body>

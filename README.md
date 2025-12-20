@@ -244,6 +244,12 @@ Ver documentación completa en: [`backend/INSTRUCCIONES_BACKEND.md`](./backend/I
 ### Frontend (.env.local)
 ```bash
 NEXT_PUBLIC_API_URL=http://localhost:3001
+
+# Google Analytics 4 (opcional)
+NEXT_PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX
+
+# Google Search Console (opcional - para verificación)
+NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION=tu-codigo-de-verificacion
 ```
 
 ### Backend (.env)
