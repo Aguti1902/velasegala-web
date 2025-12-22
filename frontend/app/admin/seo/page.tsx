@@ -22,6 +22,7 @@ export default function SeoPage() {
   const [selectedSiteId, setSelectedSiteId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isSyncing, setIsSyncing] = useState(false);
+  const [isDiscovering, setIsDiscovering] = useState(false);
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [newSite, setNewSite] = useState({
     domain: "",
