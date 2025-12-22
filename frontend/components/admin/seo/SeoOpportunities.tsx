@@ -102,8 +102,16 @@ export function SeoOpportunities({ siteId }: { siteId: string }) {
             <tbody className="divide-y divide-gray-200">
               {data.quickWins.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="px-6 py-4 text-center text-gray-500">
-                    No hay quick wins disponibles
+                  <td colSpan={5} className="px-6 py-8 text-center text-gray-500">
+                    <div className="space-y-2">
+                      <p>No hay quick wins disponibles</p>
+                      <p className="text-sm text-gray-400">
+                        Las quick wins aparecen cuando hay keywords en posición 4-15 con volumen &gt;= 100
+                      </p>
+                      <p className="text-xs text-gray-400 mt-2">
+                        Necesitas sincronizar con Google Search Console para obtener posiciones
+                      </p>
+                    </div>
                   </td>
                 </tr>
               ) : (
