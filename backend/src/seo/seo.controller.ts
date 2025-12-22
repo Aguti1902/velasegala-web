@@ -195,6 +195,11 @@ export class SeoController {
     return this.seoService.getCompetitorKeywords(id, limit);
   }
 
+  @Get('competitors/:id/insights')
+  async getCompetitorInsights(@Param('id') id: string) {
+    return this.seoService.getCompetitorInsights(id);
+  }
+
   @Post('sites/:siteId/competitors/seed')
   async seedCompetitors(@Param('siteId') siteId: string) {
     return this.seoService.seedCompetitors(siteId);

@@ -6,6 +6,7 @@ import { PrismaService } from '../../prisma/prisma.service';
 import { KeywordVolumeService } from './keyword-volume.service';
 import { SerpApiService } from './serpapi.service';
 import { GoogleSearchConsoleService } from './google-search-console.service';
+import { SeoCompetitorInsightsService } from './seo-competitor-insights.service';
 
 @Injectable()
 export class SeoCompetitorAnalysisService {
@@ -16,6 +17,7 @@ export class SeoCompetitorAnalysisService {
     private volumeService: KeywordVolumeService,
     private serpApi: SerpApiService,
     private gscService: GoogleSearchConsoleService,
+    private insightsService: SeoCompetitorInsightsService,
   ) {}
 
   /**
@@ -137,7 +139,7 @@ export class SeoCompetitorAnalysisService {
         }
       }
 
-      // 3. Analizar buenas prácticas del competidor
+      // 3. Analizar buenas prácticas SEO del competidor (análisis detallado)
       await this.analyzeCompetitorBestPractices(competitor.id, competitor.url);
 
       // 4. Actualizar fecha de último análisis
@@ -576,35 +578,22 @@ export class SeoCompetitorAnalysisService {
   }
 
   /**
-   * Analiza buenas prácticas SEO del competidor
+   * Analiza buenas prácticas SEO del competidor usando servicio especializado
    */
   private async analyzeCompetitorBestPractices(competitorId: string, url: string) {
     try {
-      const pageData = await this.analyzePage(url);
-      
-      const insights: string[] = [];
+      const insights = await this.insightsService.analyzePageSeo(url);
+      const summary = this.insightsService.generateSummary(insights);
 
-      // Buenas prácticas detectadas
-      if (pageData.title && pageData.title.length > 30 && pageData.title.length < 60) {
-        insights.push('Title optimizado (30-60 caracteres)');
+      this.logger.log(
+        `📊 Análisis SEO competidor ${competitorId}: Score ${summary.score}/100 ` +
+        `(${summary.good} buenas, ${summary.warnings} advertencias, ${summary.bad} malas)`,
+      );
+
+      // Log de recomendaciones principales
+      if (summary.topRecommendations.length > 0) {
+        this.logger.log(`💡 Recomendaciones: ${summary.topRecommendations.slice(0, 3).join('; ')}`);
       }
-
-      if (pageData.description && pageData.description.length > 120 && pageData.description.length < 160) {
-        insights.push('Meta description optimizada (120-160 caracteres)');
-      }
-
-      if (pageData.h1s.length === 1) {
-        insights.push('Un solo H1 (buena práctica)');
-      } else if (pageData.h1s.length === 0) {
-        insights.push('⚠️ Falta H1');
-      }
-
-      if (pageData.h2s.length >= 3) {
-        insights.push('Estructura de headings clara (H2s presentes)');
-      }
-
-      // Guardar insights (podrías crear una tabla SeoCompetitorInsight)
-      this.logger.log(`Buenas prácticas detectadas para competidor ${competitorId}: ${insights.join(', ')}`);
     } catch (error: any) {
       this.logger.warn(`Error analizando buenas prácticas: ${error.message}`);
     }

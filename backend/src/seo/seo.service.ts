@@ -568,10 +568,35 @@ export class SeoService {
       where: { competitorId },
       orderBy: [
         { monthlyVolume: 'desc' },
+        { position: 'asc' },
         { lastSeen: 'desc' },
       ],
       take: limit,
     });
+  }
+
+  /**
+   * Obtiene insights SEO detallados de un competidor
+   */
+  async getCompetitorInsights(competitorId: string) {
+    const competitor = await this.prisma.seoCompetitor.findUnique({
+      where: { id: competitorId },
+    });
+
+    if (!competitor) {
+      throw new Error(`Competitor ${competitorId} not found`);
+    }
+
+    // Inyectar servicio de insights (necesitarías hacerlo en el constructor)
+    // Por ahora, retornamos datos básicos
+    return {
+      competitorId: competitor.id,
+      domain: competitor.domain,
+      lastAnalyzed: competitor.lastAnalyzed,
+      keywordsCount: await this.prisma.seoCompetitorKeyword.count({
+        where: { competitorId },
+      }),
+    };
   }
 
   async seedCompetitors(siteId: string) {

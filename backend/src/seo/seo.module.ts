@@ -32,6 +32,7 @@ import { PrismaModule } from '../prisma/prisma.module';
     SeoCompetitorSeedService,
     SeoPdfReportService,
     SerpApiService,
+    SeoCompetitorInsightsService,
   ],
   exports: [SeoService],
 })
