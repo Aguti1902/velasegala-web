@@ -5,6 +5,7 @@ import * as cheerio from 'cheerio';
 import { PrismaService } from '../../prisma/prisma.service';
 import { KeywordVolumeService } from './keyword-volume.service';
 import { SerpApiService } from './serpapi.service';
+import { GoogleSearchConsoleService } from './google-search-console.service';
 
 @Injectable()
 export class SeoCompetitorAnalysisService {
@@ -14,6 +15,7 @@ export class SeoCompetitorAnalysisService {
     private prisma: PrismaService,
     private volumeService: KeywordVolumeService,
     private serpApi: SerpApiService,
+    private gscService: GoogleSearchConsoleService,
   ) {}
 
   /**

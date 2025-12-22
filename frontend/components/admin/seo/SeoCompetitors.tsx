@@ -362,14 +362,32 @@ export function SeoCompetitors({ siteId }: { siteId: string }) {
                         {competitor.name || competitor.domain}
                       </div>
                       <div className="text-sm text-gray-500">{competitor.domain}</div>
+                      {competitor._count.keywords === 0 && competitor.lastAnalyzed && (
+                        <div className="text-xs text-yellow-600 mt-1">
+                          ⚠️ Sin keywords encontradas. Revisa configuración de API.
+                        </div>
+                      )}
                     </div>
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-900">
-                    {competitor._count.keywords} keywords
+                    <span className={competitor._count.keywords === 0 ? "text-red-600 font-medium" : ""}>
+                      {competitor._count.keywords} keywords
+                    </span>
+                    {competitor._count.keywords === 0 && (
+                      <div className="text-xs text-gray-500 mt-1">
+                        Haz clic en "Analizar" para obtener keywords reales
+                      </div>
+                    )}
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-500">
                     {competitor.lastAnalyzed
-                      ? new Date(competitor.lastAnalyzed).toLocaleDateString("es-ES")
+                      ? new Date(competitor.lastAnalyzed).toLocaleDateString("es-ES", {
+                          year: 'numeric',
+                          month: 'short',
+                          day: 'numeric',
+                          hour: '2-digit',
+                          minute: '2-digit',
+                        })
                       : "Nunca"}
                   </td>
                   <td className="px-6 py-4">
