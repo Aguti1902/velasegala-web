@@ -127,7 +127,7 @@ export class SeoCronService {
         ? [await this.prisma.seoSite.findUnique({ where: { id: siteId } })]
         : await this.prisma.seoSite.findMany();
 
-      const results = [];
+      const results: any[] = [];
 
       for (const site of sites.filter(Boolean)) {
         if (!site) continue;

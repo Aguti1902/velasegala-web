@@ -87,33 +87,39 @@ export class SeoService {
       },
     });
 
-    // Keywords por posición
-    const keywordsInTop3 = await this.prisma.seoKeywordRankDaily.count({
+    // Keywords por posición (usar findMany con distinct y contar)
+    const top3Keywords = await this.prisma.seoKeywordRankDaily.findMany({
       where: {
         siteId,
         date: { gte: startDate },
         position: { lte: 3 },
       },
+      select: { keywordId: true },
       distinct: ['keywordId'],
     });
+    const keywordsInTop3 = top3Keywords.length;
 
-    const keywordsInTop10 = await this.prisma.seoKeywordRankDaily.count({
+    const top10Keywords = await this.prisma.seoKeywordRankDaily.findMany({
       where: {
         siteId,
         date: { gte: startDate },
         position: { lte: 10 },
       },
+      select: { keywordId: true },
       distinct: ['keywordId'],
     });
+    const keywordsInTop10 = top10Keywords.length;
 
-    const keywordsInTop100 = await this.prisma.seoKeywordRankDaily.count({
+    const top100Keywords = await this.prisma.seoKeywordRankDaily.findMany({
       where: {
         siteId,
         date: { gte: startDate },
         position: { lte: 100 },
       },
+      select: { keywordId: true },
       distinct: ['keywordId'],
     });
+    const keywordsInTop100 = top100Keywords.length;
 
     // Issues
     const criticalIssues = await this.prisma.seoIssue.count({
@@ -176,9 +182,8 @@ export class SeoService {
           : null,
     }));
 
-    // Distribución de posiciones
-    const positionDistribution = await this.prisma.seoKeywordRankDaily.groupBy({
-      by: [],
+    // Distribución de posiciones (usar aggregate en lugar de groupBy con by: [])
+    const positionStats = await this.prisma.seoKeywordRankDaily.aggregate({
       where: {
         siteId,
         date: { gte: startDate },
@@ -198,16 +203,16 @@ export class SeoService {
         totalImpressions: stats._sum.impressions || 0,
         avgPosition: stats._avg.position || null,
         avgCTR: stats._avg.ctr ? stats._avg.ctr * 100 : null, // Convertir a porcentaje
-        keywordsTop3,
-        keywordsTop10,
-        keywordsInTop100,
+        keywordsTop3: keywordsInTop3,
+        keywordsTop10: keywordsInTop10,
+        keywordsInTop100: keywordsInTop100,
         criticalIssues,
         totalIssues,
       },
       trends,
       positionDistribution: {
-        avg: positionDistribution[0]?._avg.position || null,
-        total: positionDistribution[0]?._count.id || 0,
+        avg: positionStats._avg.position || null,
+        total: positionStats._count.id || 0,
       },
     };
   }
@@ -328,16 +333,17 @@ export class SeoService {
 
     const quickWinsFiltered = quickWins
       .filter((kw) => {
-        const rank = kw.ranks[0];
-        const volume = kw.volumes[0];
-        return (
-          rank &&
-          rank.position >= 4 &&
-          rank.position <= 15 &&
-          volume &&
-          volume.volume &&
-          volume.volume > 100
-        );
+      const rank = kw.ranks[0];
+      const volume = kw.volumes[0];
+      return (
+        rank &&
+        rank.position !== null &&
+        rank.position >= 4 &&
+        rank.position <= 15 &&
+        volume &&
+        volume.volume &&
+        volume.volume > 100
+      );
       })
       .map((kw) => ({
         keyword: kw.keyword,

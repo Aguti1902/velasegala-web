@@ -58,6 +58,7 @@ export class SeoAuditService {
           where: { id: existing.id },
           data: {
             severity: issue.severity,
+            title: issue.title,
             description: issue.description,
             evidenceJson: issue.evidence || {},
             lastSeen: new Date(),
@@ -77,24 +78,6 @@ export class SeoAuditService {
           },
         });
       }
-        update: {
-          severity: issue.severity,
-          title: issue.title,
-          description: issue.description,
-          evidenceJson: issue.evidence || {},
-          lastSeen: new Date(),
-        },
-        create: {
-          siteId,
-          type: issue.type,
-          severity: issue.severity,
-          url: issue.url,
-          title: issue.title,
-          description: issue.description,
-          evidenceJson: issue.evidence || {},
-          status: 'open',
-        },
-      });
     }
 
     this.logger.log(`✅ Auditoría completada: ${issues.length} issues encontrados`);
@@ -118,14 +101,14 @@ export class SeoAuditService {
           evidence: { status: response.status },
         });
       }
-    } catch (error) {
+    } catch (error: any) {
       issues.push({
         type: 'technical',
         severity: 'high',
         url: sitemapUrl,
         title: 'Sitemap no encontrado',
         description: `No se pudo acceder al sitemap en ${sitemapUrl}`,
-        evidence: { error: error.message },
+        evidence: { error: error?.message || String(error) },
       });
     }
 
@@ -148,14 +131,14 @@ export class SeoAuditService {
           evidence: { status: response.status },
         });
       }
-    } catch (error) {
+    } catch (error: any) {
       issues.push({
         type: 'technical',
         severity: 'medium',
         url: robotsUrl,
         title: 'Robots.txt no encontrado',
         description: `No se pudo acceder al robots.txt en ${robotsUrl}`,
-        evidence: { error: error.message },
+        evidence: { error: error?.message || String(error) },
       });
     }
 
