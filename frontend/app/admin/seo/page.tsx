@@ -10,7 +10,7 @@ import { SeoRecommendations } from "@/components/admin/seo/SeoRecommendations";
 import { SeoCompetitors } from "@/components/admin/seo/SeoCompetitors";
 import { SeoCompetitorComparison } from "@/components/admin/seo/SeoCompetitorComparison";
 import { getApiUrl } from "@/lib/config";
-import { Lightbulb, FileText } from "lucide-react";
+import { Lightbulb, FileText, Plus } from "lucide-react";
 
 interface SeoSite {
   id: string;
