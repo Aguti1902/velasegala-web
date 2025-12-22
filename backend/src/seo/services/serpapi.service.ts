@@ -87,7 +87,7 @@ export class SerpApiService {
                 searchDomain.includes(resultDomain);
               
               if (domainMatches) {
-                this.logger.debug(`✅ Match encontrado: ${resultDomain} para dominio ${searchDomain} en keyword "${keyword}"`);
+                this.logger.log(`✅ Match encontrado: ${resultDomain} para dominio ${searchDomain} en keyword "${keyword}" posición ${result.position}`);
                 results.push({
                   keyword,
                   position: result.position,
@@ -98,7 +98,7 @@ export class SerpApiService {
               }
             } catch (e) {
               // Si la URL no es válida, continuar
-              this.logger.debug(`Error parseando URL ${result.link}:`, e);
+              this.logger.warn(`Error parseando URL ${result.link}:`, e);
               continue;
             }
           } else {
