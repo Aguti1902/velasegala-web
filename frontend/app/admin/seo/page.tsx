@@ -114,6 +114,48 @@ export default function SeoPage() {
     }
   };
 
+  const handleDiscoverKeywords = async () => {
+    if (!selectedSiteId || isDiscovering) return;
+
+    setIsDiscovering(true);
+    try {
+      const apiUrl = getApiUrl();
+      const token = document.cookie
+        .split("; ")
+        .find((row) => row.startsWith("admin_token="))
+        ?.split("=")[1];
+
+      const headers = {
+        "Content-Type": "application/json",
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      };
+
+      const response = await fetch(
+        `${apiUrl}/seo/sites/${selectedSiteId}/discover-keywords?minVolume=100`,
+        {
+          method: "POST",
+          credentials: "include",
+          headers,
+        },
+      );
+
+      if (response.ok) {
+        const result = await response.json();
+        alert(
+          `Descubrimiento completado.\n${result.discovered} keywords encontradas.\n${result.saved} nuevas keywords guardadas.\n${result.skipped} ya existían.`
+        );
+        window.location.reload();
+      } else {
+        alert("Error al descubrir keywords");
+      }
+    } catch (error) {
+      console.error("Error al descubrir keywords:", error);
+      alert("Error al descubrir keywords");
+    } finally {
+      setIsDiscovering(false);
+    }
+  };
+
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -321,6 +363,15 @@ export default function SeoPage() {
           >
             <RefreshCw className={`w-4 h-4 ${isSyncing ? "animate-spin" : ""}`} />
             {isSyncing ? "Sincronizando..." : "Sincronizar"}
+          </button>
+          <button
+            onClick={handleDiscoverKeywords}
+            disabled={isDiscovering}
+            className="flex items-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors disabled:opacity-50"
+            title="Descubrir nuevas keywords con alto volumen de búsqueda"
+          >
+            <RefreshCw className={`w-4 h-4 ${isDiscovering ? "animate-spin" : ""}`} />
+            {isDiscovering ? "Descubriendo..." : "Descubrir Keywords"}
           </button>
         </div>
       </div>

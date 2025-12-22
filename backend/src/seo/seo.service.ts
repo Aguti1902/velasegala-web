@@ -5,6 +5,7 @@ import { KeywordVolumeService } from './services/keyword-volume.service';
 import { SeoAuditService } from './services/seo-audit.service';
 import { SeoRecommendationService } from './services/seo-recommendation.service';
 import { SeoKeywordImporterService } from './services/seo-keyword-importer.service';
+import { SeoKeywordDiscoveryService } from './services/seo-keyword-discovery.service';
 
 @Injectable()
 export class SeoService {
@@ -17,6 +18,7 @@ export class SeoService {
     private auditService: SeoAuditService,
     private recommendationService: SeoRecommendationService,
     private keywordImporter: SeoKeywordImporterService,
+    private keywordDiscovery: SeoKeywordDiscoveryService,
   ) {}
 
   // ===== SITES =====
@@ -454,6 +456,25 @@ export class SeoService {
 
   async importKeywordsFromWebsite(siteId: string) {
     return this.keywordImporter.importAllKeywords(siteId);
+  }
+
+  // ===== KEYWORD DISCOVERY =====
+
+  async discoverKeywords(siteId: string, minVolume: number = 100) {
+    const discovered = await this.keywordDiscovery.discoverKeywords(
+      siteId,
+      minVolume,
+    );
+    const result = await this.keywordDiscovery.saveDiscoveredKeywords(
+      siteId,
+      discovered,
+    );
+    return {
+      discovered: discovered.length,
+      saved: result.saved,
+      skipped: result.skipped,
+      keywords: discovered,
+    };
   }
 }
 

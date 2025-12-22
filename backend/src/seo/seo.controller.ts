@@ -136,5 +136,14 @@ export class SeoController {
   async importKeywords(@Param('siteId') siteId: string) {
     return this.seoService.importKeywordsFromWebsite(siteId);
   }
+
+  @Post('sites/:siteId/discover-keywords')
+  async discoverKeywords(
+    @Param('siteId') siteId: string,
+    @Query('minVolume') minVolume?: string,
+  ) {
+    const minVol = minVolume ? parseInt(minVolume) : 100;
+    return this.seoService.discoverKeywords(siteId, minVol);
+  }
 }
 

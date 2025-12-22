@@ -9,6 +9,7 @@ import { SeoAuditService } from './services/seo-audit.service';
 import { SeoRecommendationService } from './services/seo-recommendation.service';
 import { SeoCronService } from './seo-cron.service';
 import { SeoKeywordImporterService } from './services/seo-keyword-importer.service';
+import { SeoKeywordDiscoveryService } from './services/seo-keyword-discovery.service';
 import { PrismaModule } from '../prisma/prisma.module';
 
 @Module({
@@ -22,6 +23,7 @@ import { PrismaModule } from '../prisma/prisma.module';
     SeoRecommendationService,
     SeoCronService,
     SeoKeywordImporterService,
+    SeoKeywordDiscoveryService,
   ],
   exports: [SeoService],
 })
