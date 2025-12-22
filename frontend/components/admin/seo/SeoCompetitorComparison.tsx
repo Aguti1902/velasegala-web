@@ -69,6 +69,10 @@ export function SeoCompetitorComparison({ siteId }: { siteId: string }) {
       if (response.ok) {
         const result = await response.json();
         setData(result);
+      } else {
+        const errorData = await response.json().catch(() => ({ message: "Error desconocido" }));
+        console.error("Error al cargar comparativa:", errorData);
+        alert(`Error al cargar comparativa: ${errorData.message || "Error desconocido"}`);
       }
     } catch (error) {
       console.error("Error al cargar comparativa:", error);
