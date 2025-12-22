@@ -3,13 +3,16 @@ import {
   Get,
   Post,
   Put,
+  Delete,
   Param,
   Query,
   Body,
   UseGuards,
   ParseIntPipe,
   DefaultValuePipe,
+  Res,
 } from '@nestjs/common';
+import { Response } from 'express';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { SeoService } from './seo.service';
 import { SeoCronService } from './seo-cron.service';
