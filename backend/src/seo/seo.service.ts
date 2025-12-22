@@ -455,7 +455,35 @@ export class SeoService {
   // ===== KEYWORD IMPORT =====
 
   async importKeywordsFromWebsite(siteId: string) {
-    return this.keywordImporter.importAllKeywords(siteId);
+    const result = await this.keywordImporter.importAllKeywords(siteId);
+    
+    // Intentar obtener volúmenes para las keywords importadas
+    const site = await this.prisma.seoSite.findUnique({
+      where: { id: siteId },
+    });
+    
+    if (site) {
+      const keywordsWithoutVolume = await this.prisma.seoKeyword.findMany({
+        where: {
+          siteId,
+          volumes: { none: {} },
+        },
+        take: 50,
+      });
+
+      if (keywordsWithoutVolume.length > 0) {
+        try {
+          await this.volumeService.syncKeywordVolumes(
+            keywordsWithoutVolume.map((k) => k.id),
+            site.countryDefault,
+          );
+        } catch (error: any) {
+          this.logger.warn('Error al sincronizar volúmenes después de importar:', error.message);
+        }
+      }
+    }
+    
+    return result;
   }
 
   // ===== KEYWORD DISCOVERY =====
