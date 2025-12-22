@@ -8,6 +8,7 @@ import { SeoKeywordImporterService } from './services/seo-keyword-importer.servi
 import { SeoKeywordDiscoveryService } from './services/seo-keyword-discovery.service';
 import { SeoCompetitorAnalysisService } from './services/seo-competitor-analysis.service';
 import { SeoCompetitorSeedService } from './services/seo-competitor-seed.service';
+import { SeoPdfReportService } from './services/seo-pdf-report.service';
 
 @Injectable()
 export class SeoService {
@@ -23,6 +24,7 @@ export class SeoService {
     private keywordDiscovery: SeoKeywordDiscoveryService,
     private competitorAnalysis: SeoCompetitorAnalysisService,
     private competitorSeed: SeoCompetitorSeedService,
+    private pdfReport: SeoPdfReportService,
   ) {}
 
   // ===== SITES =====
@@ -574,6 +576,12 @@ export class SeoService {
 
   async seedCompetitors(siteId: string) {
     return this.competitorSeed.seedCompetitors(siteId);
+  }
+
+  // ===== PDF REPORTS =====
+
+  async generateMonthlyReport(siteId: string, month?: Date): Promise<Buffer> {
+    return this.pdfReport.generateMonthlyReport(siteId, month);
   }
 }
 

@@ -27,6 +27,7 @@ import { PrismaModule } from '../prisma/prisma.module';
     SeoKeywordDiscoveryService,
     SeoCompetitorAnalysisService,
     SeoCompetitorSeedService,
+    SeoPdfReportService,
   ],
   exports: [SeoService],
 })

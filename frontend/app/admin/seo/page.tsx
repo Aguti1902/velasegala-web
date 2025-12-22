@@ -10,7 +10,7 @@ import { SeoRecommendations } from "@/components/admin/seo/SeoRecommendations";
 import { SeoCompetitors } from "@/components/admin/seo/SeoCompetitors";
 import { SeoCompetitorComparison } from "@/components/admin/seo/SeoCompetitorComparison";
 import { getApiUrl } from "@/lib/config";
-import { Settings, RefreshCw, Plus, Lightbulb } from "lucide-react";
+import { Settings, RefreshCw, Plus, Lightbulb, FileText } from "lucide-react";
 
 interface SeoSite {
   id: string;
@@ -375,6 +375,15 @@ export default function SeoPage() {
           >
             <RefreshCw className={`w-4 h-4 ${isDiscovering ? "animate-spin" : ""}`} />
             {isDiscovering ? "Descubriendo..." : "Descubrir Keywords"}
+          </button>
+          <button
+            onClick={handleGenerateReport}
+            disabled={isGeneratingReport}
+            className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors disabled:opacity-50"
+            title="Generar informe PDF mensual"
+          >
+            <FileText className={`w-4 h-4 ${isGeneratingReport ? "animate-pulse" : ""}`} />
+            {isGeneratingReport ? "Generando..." : "Generar PDF"}
           </button>
         </div>
       </div>

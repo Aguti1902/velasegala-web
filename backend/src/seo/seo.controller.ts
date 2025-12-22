@@ -196,5 +196,25 @@ export class SeoController {
   async seedCompetitors(@Param('siteId') siteId: string) {
     return this.seoService.seedCompetitors(siteId);
   }
+
+  // ===== PDF REPORTS =====
+
+  @Get('sites/:siteId/report/pdf')
+  async generatePdfReport(
+    @Param('siteId') siteId: string,
+    @Query('month') month?: string,
+    @Res() res?: Response,
+  ) {
+    const monthDate = month ? new Date(month) : undefined;
+    const pdfBuffer = await this.seoService.generateMonthlyReport(siteId, monthDate);
+
+    const filename = `informe-seo-${siteId}-${new Date().toISOString().split('T')[0]}.pdf`;
+
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+    res.setHeader('Content-Length', pdfBuffer.length);
+
+    return res.send(pdfBuffer);
+  }
 }
 
