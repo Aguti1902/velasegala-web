@@ -5,6 +5,7 @@ import { GoogleSearchConsoleService } from './services/google-search-console.ser
 import { KeywordVolumeService } from './services/keyword-volume.service';
 import { SeoAuditService } from './services/seo-audit.service';
 import { SeoRecommendationService } from './services/seo-recommendation.service';
+import { SeoService } from './seo.service';
 
 @Injectable()
 export class SeoCronService {
@@ -17,6 +18,7 @@ export class SeoCronService {
     private volumeService: KeywordVolumeService,
     private auditService: SeoAuditService,
     private recommendationService: SeoRecommendationService,
+    private seoService: SeoService,
   ) {}
 
   // Ejecutar diariamente a las 2 AM UTC
@@ -192,6 +194,34 @@ export class SeoCronService {
     } finally {
       this.isRunning = false;
     }
+  }
+
+  /**
+   * Cron job mensual para descubrir nuevas keywords
+   * Se ejecuta el día 1 de cada mes a las 3:00 AM UTC
+   */
+  @Cron('0 3 1 * *')
+  async handleMonthlyKeywordDiscovery() {
+    this.logger.log('🔍 Iniciando descubrimiento mensual de keywords...');
+
+    const sites = await this.prisma.seoSite.findMany();
+
+    for (const site of sites) {
+      try {
+        this.logger.log(`Descubriendo keywords para ${site.domain}...`);
+        const result = await this.seoService.discoverKeywords(site.id, 100);
+        this.logger.log(
+          `✅ Descubiertas ${result.discovered} keywords, guardadas ${result.saved} para ${site.domain}`,
+        );
+      } catch (error: any) {
+        this.logger.error(
+          `Error al descubrir keywords para sitio ${site.id}:`,
+          error.message,
+        );
+      }
+    }
+
+    this.logger.log('✅ Descubrimiento mensual de keywords completado');
   }
 }
 

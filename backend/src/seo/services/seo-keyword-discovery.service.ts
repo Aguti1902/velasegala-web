@@ -419,11 +419,31 @@ export class SeoKeywordDiscoveryService {
 
         if (existing) {
           skipped++;
+          // Actualizar volumen si no existe o es más antiguo
+          await this.prisma.seoKeywordVolumeMonthly.upsert({
+            where: {
+              keywordId_provider_country: {
+                keywordId: existing.id,
+                provider: 'dataforseo',
+                country: 'ES',
+              },
+            },
+            update: {
+              volume: kw.volume,
+              updatedAt: new Date(),
+            },
+            create: {
+              keywordId: existing.id,
+              provider: 'dataforseo',
+              country: 'ES',
+              volume: kw.volume,
+            },
+          });
           continue;
         }
 
         // Crear keyword con flag de descubierta
-        await this.prisma.seoKeyword.create({
+        const newKeyword = await this.prisma.seoKeyword.create({
           data: {
             siteId,
             keyword: kw.keyword,
@@ -435,24 +455,9 @@ export class SeoKeywordDiscoveryService {
         });
 
         // Guardar volumen de búsqueda
-        await this.prisma.seoKeywordVolumeMonthly.upsert({
-          where: {
-            keywordId_provider_country: {
-              keywordId: (await this.prisma.seoKeyword.findFirst({
-                where: { siteId, keyword: kw.keyword },
-              }))!.id,
-              provider: 'dataforseo',
-              country: 'ES',
-            },
-          },
-          update: {
-            volume: kw.volume,
-            updatedAt: new Date(),
-          },
-          create: {
-            keywordId: (await this.prisma.seoKeyword.findFirst({
-              where: { siteId, keyword: kw.keyword },
-            }))!.id,
+        await this.prisma.seoKeywordVolumeMonthly.create({
+          data: {
+            keywordId: newKeyword.id,
             provider: 'dataforseo',
             country: 'ES',
             volume: kw.volume,
