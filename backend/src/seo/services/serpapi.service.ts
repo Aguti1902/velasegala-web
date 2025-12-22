@@ -56,18 +56,29 @@ export class SerpApiService {
       
       this.logger.log(`🔍 Buscando en SerpAPI: "${keyword}"`);
       
+      // Construir parámetros - location puede causar 400 si el formato no es correcto
+      const requestParams: Record<string, any> = {
+        engine: 'google',
+        q: keyword,
+        api_key: this.apiKey,
+        hl: language || 'es',
+        gl: 'es',
+        num: 100,
+      };
+      
+      // Location es opcional - solo añadir si es necesario y en formato correcto
+      // SerpAPI puede rechazar location si no está en formato válido
+      // Por ahora, omitimos location para evitar errores 400
+      // if (location) {
+      //   requestParams.location = location;
+      // }
+      
+      this.logger.log(`📤 Request a SerpAPI para "${keyword}" (sin location para evitar 400)`);
+      
       const response = await axios.get<SerpApiResult>(
         'https://serpapi.com/search',
         {
-          params: {
-            engine: 'google',
-            q: keyword,
-            api_key: this.apiKey,
-            location: location || 'Viladecans, Barcelona, Spain',
-            hl: language || 'es',
-            gl: 'es',
-            num: 100,
-          },
+          params: requestParams,
           timeout: 30000,
           validateStatus: (status) => status < 500, // No lanzar error para 4xx, manejarlo manualmente
         },
