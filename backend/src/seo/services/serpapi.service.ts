@@ -68,17 +68,6 @@ export class SerpApiService {
             gl: 'es',
             num: 100,
           },
-          paramsSerializer: (params) => {
-            // Serializar parámetros manualmente para asegurar codificación correcta
-            return Object.keys(params)
-              .map((key) => {
-                const value = params[key];
-                if (value === null || value === undefined) return '';
-                return `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
-              })
-              .filter(Boolean)
-              .join('&');
-          },
           timeout: 30000,
           validateStatus: (status) => status < 500, // No lanzar error para 4xx, manejarlo manualmente
         },
@@ -86,9 +75,24 @@ export class SerpApiService {
       
       // Verificar si hay error en la respuesta
       if (response.status === 400) {
-        const errorMessage = response.data?.error || 'Bad Request';
-        this.logger.error(`❌ SerpAPI 400 para "${keyword}": ${errorMessage}`);
+        const errorMessage = response.data?.error || response.data?.message || JSON.stringify(response.data) || 'Bad Request';
+        this.logger.error(`❌ SerpAPI 400 para "${keyword}":`, errorMessage);
+        this.logger.error(`📋 Parámetros enviados:`, {
+          engine: 'google',
+          q: keyword,
+          location: location,
+          hl: language,
+          gl: 'es',
+          num: 100,
+          api_key: this.apiKey ? `${this.apiKey.substring(0, 8)}...` : 'NO CONFIGURADA',
+        });
         throw new Error(`SerpAPI Bad Request: ${errorMessage}`);
+      }
+      
+      // Verificar si la respuesta tiene estructura válida
+      if (!response.data) {
+        this.logger.error(`❌ SerpAPI retornó respuesta vacía para "${keyword}"`);
+        throw new Error('SerpAPI retornó respuesta vacía');
       }
 
       const results: SerpApiKeywordData[] = [];
