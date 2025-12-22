@@ -501,8 +501,14 @@ export class SeoCompetitorAnalysisService {
             ranks: {
               orderBy: { date: 'desc' },
               take: 1,
+              where: {
+                country: 'ES', // Filtrar por país por defecto
+                device: 'all',
+              },
             },
             volumes: {
+              where: { country: 'ES' },
+              orderBy: { updatedAt: 'desc' },
               take: 1,
             },
           },
@@ -517,95 +523,251 @@ export class SeoCompetitorAnalysisService {
     const competitors = await this.prisma.seoCompetitor.findMany({
       where: { siteId, enabled: true },
       include: {
-        keywords: {
-          include: {
-            competitor: true,
-          },
+        keywords: true,
+        rankings: {
+          orderBy: { date: 'desc' },
+          take: 1000, // Últimas rankings
         },
       },
     });
 
-    // Comparar keywords
-    const ourKeywords = new Set(
-      site.keywords.map((k) => k.keyword.toLowerCase()),
-    );
-    const competitorKeywords = new Map<string, Set<string>>();
+    // Mapa de nuestras keywords con sus datos
+    const ourKeywordsMap = new Map<
+      string,
+      {
+        keyword: string;
+        position: number | null;
+        volume: number | null;
+        clicks: number;
+        impressions: number;
+      }
+    >();
+
+    for (const kw of site.keywords) {
+      const latestRank = kw.ranks[0];
+      const latestVolume = kw.volumes[0];
+      ourKeywordsMap.set(kw.keyword.toLowerCase(), {
+        keyword: kw.keyword,
+        position: latestRank?.position || null,
+        volume: latestVolume?.volume || null,
+        clicks: latestRank?.clicks || 0,
+        impressions: latestRank?.impressions || 0,
+      });
+    }
+
+    // Mapa de keywords de competidores con sus datos
+    const competitorKeywordsMap = new Map<
+      string,
+      Array<{
+        keyword: string;
+        competitor: string;
+        competitorName: string;
+        position: number | null;
+        volume: number | null;
+        url: string | null;
+      }>
+    >();
 
     for (const competitor of competitors) {
-      const keywords = new Set(
-        competitor.keywords.map((k) => k.keyword.toLowerCase()),
-      );
-      competitorKeywords.set(competitor.domain, keywords);
-    }
-
-    // Keywords que tenemos pero competidores no
-    const ourUniqueKeywords: string[] = [];
-    for (const ourKw of ourKeywords) {
-      let unique = true;
-      for (const compKeywords of competitorKeywords.values()) {
-        if (compKeywords.has(ourKw)) {
-          unique = false;
-          break;
+      for (const compKw of competitor.keywords) {
+        const key = compKw.keyword.toLowerCase();
+        if (!competitorKeywordsMap.has(key)) {
+          competitorKeywordsMap.set(key, []);
         }
-      }
-      if (unique) {
-        ourUniqueKeywords.push(ourKw);
+
+        // Buscar última posición en rankings
+        const latestRanking = competitor.rankings
+          .filter((r) => r.keyword.toLowerCase() === compKw.keyword.toLowerCase())
+          .sort((a, b) => b.date.getTime() - a.date.getTime())[0];
+
+        competitorKeywordsMap.get(key)!.push({
+          keyword: compKw.keyword, // Guardar keyword original
+          competitor: competitor.domain,
+          competitorName: competitor.name || competitor.domain,
+          position: latestRanking?.position || compKw.position || null,
+          volume: compKw.monthlyVolume || null,
+          url: latestRanking?.url || compKw.targetUrl || null,
+        });
       }
     }
 
-    // Keywords que competidores tienen pero nosotros no (oportunidades)
-    const opportunities: Array<{
+    // Keywords únicas nuestras (que competidores no tienen)
+    const ourUniqueKeywords: Array<{
       keyword: string;
-      competitors: string[];
+      position: number | null;
       volume: number | null;
+      clicks: number;
+      impressions: number;
     }> = [];
 
-    const allCompetitorKeywords = new Set<string>();
-    for (const compKeywords of competitorKeywords.values()) {
-      compKeywords.forEach((kw) => allCompetitorKeywords.add(kw));
+    for (const [kwLower, ourData] of ourKeywordsMap.entries()) {
+      if (!competitorKeywordsMap.has(kwLower)) {
+        ourUniqueKeywords.push(ourData);
+      }
     }
 
-    for (const compKw of allCompetitorKeywords) {
-      if (!ourKeywords.has(compKw)) {
-        const competitorsUsing = Array.from(competitorKeywords.entries())
-          .filter(([_, keywords]) => keywords.has(compKw))
-          .map(([domain]) => domain);
+    // Keywords donde estamos mejor posicionados
+    const ourAdvantages: Array<{
+      keyword: string;
+      ourPosition: number;
+      competitorPositions: Array<{
+        competitor: string;
+        position: number | null;
+      }>;
+    }> = [];
 
-        if (competitorsUsing.length > 0) {
-          // Buscar volumen si está guardado
-          let volume: number | null = null;
-          for (const competitor of competitors) {
-            const compKeyword = competitor.keywords.find(
-              (k) => k.keyword.toLowerCase() === compKw,
-            );
-            if (compKeyword?.monthlyVolume) {
-              volume = compKeyword.monthlyVolume;
-              break;
-            }
+    for (const [kwLower, ourData] of ourKeywordsMap.entries()) {
+      if (ourData.position && ourData.position <= 20) {
+        // Solo consideramos si estamos en top 20
+        const compData = competitorKeywordsMap.get(kwLower);
+        if (compData && compData.length > 0) {
+          // Verificar si estamos mejor que al menos un competidor
+          const betterThanCompetitors = compData.some(
+            (c) => !c.position || c.position > ourData.position!,
+          );
+
+          if (betterThanCompetitors) {
+            ourAdvantages.push({
+              keyword: ourData.keyword,
+              ourPosition: ourData.position!,
+              competitorPositions: compData.map((c) => ({
+                competitor: c.competitor,
+                position: c.position,
+              })),
+            });
+          }
+        }
+      }
+    }
+
+    // Oportunidades: keywords que competidores tienen pero nosotros no
+    const opportunities: Array<{
+      keyword: string;
+      ourPosition: number | null;
+      competitorPositions: Array<{
+        keyword: string;
+        competitor: string;
+        competitorName: string;
+        position: number | null;
+        volume: number | null;
+        url: string | null;
+      }>;
+      bestCompetitorPosition: number | null;
+      volume: number | null;
+      priority: 'alta' | 'media' | 'baja';
+      recommendation: string;
+    }> = [];
+
+    for (const [kwLower, compData] of competitorKeywordsMap.entries()) {
+      if (!ourKeywordsMap.has(kwLower)) {
+        // Esta keyword la tienen competidores pero nosotros no
+        const bestPosition = compData
+          .map((c) => c.position)
+          .filter((p): p is number => p !== null)
+          .sort((a, b) => a - b)[0] || null;
+
+        // Buscar volumen máximo
+        const maxVolume =
+          compData
+            .map((c) => c.volume)
+            .filter((v): v is number => v !== null)
+            .sort((a, b) => b - a)[0] || null;
+
+        // Determinar prioridad
+        const keywordOriginal = compData[0]?.keyword || kwLower;
+        let priority: 'alta' | 'media' | 'baja' = 'baja';
+        let recommendation = `Considera crear contenido para la keyword "${keywordOriginal}".`;
+
+        if (maxVolume && maxVolume > 500 && bestPosition && bestPosition <= 10) {
+          priority = 'alta';
+          recommendation = `¡Alta oportunidad! Crea una landing page optimizada para "${keywordOriginal}" (${maxVolume} búsquedas/mes, competidores en posición ${bestPosition}).`;
+        } else if (maxVolume && maxVolume > 100 && bestPosition && bestPosition <= 20) {
+          priority = 'media';
+          recommendation = `Buena oportunidad. Integra "${keywordOriginal}" en tu contenido existente o crea un artículo de blog.`;
+        }
+
+        opportunities.push({
+          keyword: keywordOriginal,
+          ourPosition: null,
+          competitorPositions: compData,
+          bestCompetitorPosition: bestPosition,
+          volume: maxVolume,
+          priority,
+          recommendation,
+        });
+      } else {
+        // Esta keyword la tenemos, pero comparamos posiciones
+        const ourData = ourKeywordsMap.get(kwLower)!;
+        const bestCompPosition = compData
+          .map((c) => c.position)
+          .filter((p): p is number => p !== null)
+          .sort((a, b) => a - b)[0] || null;
+
+        // Si competidores están mejor posicionados, es una oportunidad
+        if (
+          bestCompPosition &&
+          (!ourData.position || bestCompPosition < ourData.position)
+        ) {
+          const maxVolume =
+            compData
+              .map((c) => c.volume)
+              .filter((v): v is number => v !== null)
+              .sort((a, b) => b - a)[0] || null;
+
+          let priority: 'alta' | 'media' | 'baja' = 'baja';
+          let recommendation = `Mejora tu contenido para "${ourData.keyword}" para superar a competidores.`;
+
+          if (
+            maxVolume &&
+            maxVolume > 500 &&
+            bestCompPosition <= 10 &&
+            (!ourData.position || ourData.position > 20)
+          ) {
+            priority = 'alta';
+            recommendation = `¡Prioridad alta! Mejora tu posicionamiento para "${ourData.keyword}" (${maxVolume} búsquedas/mes, competidores en ${bestCompPosition}, tú en ${ourData.position || 'N/A'}).`;
+          } else if (maxVolume && maxVolume > 100 && bestCompPosition <= 20) {
+            priority = 'media';
+            recommendation = `Optimiza tu página para "${ourData.keyword}" para mejorar tu posición actual (${ourData.position || 'N/A'}) y superar a competidores (${bestCompPosition}).`;
           }
 
           opportunities.push({
-            keyword: compKw,
-            competitors: competitorsUsing,
-            volume,
+            keyword: ourData.keyword,
+            ourPosition: ourData.position,
+            competitorPositions: compData,
+            bestCompetitorPosition: bestCompPosition,
+            volume: maxVolume || ourData.volume,
+            priority,
+            recommendation,
           });
         }
       }
     }
 
-    // Ordenar oportunidades por número de competidores y volumen
+    // Ordenar oportunidades por prioridad y volumen
     opportunities.sort((a, b) => {
-      if (b.competitors.length !== a.competitors.length) {
-        return b.competitors.length - a.competitors.length;
+      const priorityOrder = { alta: 3, media: 2, baja: 1 };
+      if (priorityOrder[b.priority] !== priorityOrder[a.priority]) {
+        return priorityOrder[b.priority] - priorityOrder[a.priority];
       }
       return (b.volume || 0) - (a.volume || 0);
     });
 
+    // Calcular resumen
+    const highPriorityOpportunities = opportunities.filter((o) => o.priority === 'alta').length;
+    const summary = {
+      keywordsWeHave: ourKeywordsMap.size,
+      keywordsCompetitorsHave: competitorKeywordsMap.size,
+      opportunitiesCount: opportunities.length,
+      highPriorityOpportunities,
+    };
+
     return {
-      ourUniqueKeywords,
-      opportunities: opportunities.slice(0, 100), // Top 100
+      ourUniqueKeywords: ourUniqueKeywords.slice(0, 100),
+      opportunities: opportunities.slice(0, 100),
+      ourAdvantages: ourAdvantages.slice(0, 50),
       competitorsAnalyzed: competitors.length,
-      totalCompetitorKeywords: allCompetitorKeywords.size,
+      totalCompetitorKeywords: competitorKeywordsMap.size,
+      summary,
     };
   }
 
