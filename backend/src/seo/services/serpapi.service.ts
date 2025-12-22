@@ -51,6 +51,11 @@ export class SerpApiService {
     }
 
     try {
+      // Codificar la keyword correctamente para URL
+      const encodedKeyword = encodeURIComponent(keyword);
+      
+      this.logger.log(`🔍 Buscando en SerpAPI: "${keyword}"`);
+      
       const response = await axios.get<SerpApiResult>(
         'https://serpapi.com/search',
         {
@@ -58,14 +63,33 @@ export class SerpApiService {
             engine: 'google',
             q: keyword,
             api_key: this.apiKey,
-            location,
-            hl: language,
+            location: location || 'Viladecans, Barcelona, Spain',
+            hl: language || 'es',
             gl: 'es',
-            num: 100, // Top 100 resultados
+            num: 100,
+          },
+          paramsSerializer: (params) => {
+            // Serializar parámetros manualmente para asegurar codificación correcta
+            return Object.keys(params)
+              .map((key) => {
+                const value = params[key];
+                if (value === null || value === undefined) return '';
+                return `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
+              })
+              .filter(Boolean)
+              .join('&');
           },
           timeout: 30000,
+          validateStatus: (status) => status < 500, // No lanzar error para 4xx, manejarlo manualmente
         },
       );
+      
+      // Verificar si hay error en la respuesta
+      if (response.status === 400) {
+        const errorMessage = response.data?.error || 'Bad Request';
+        this.logger.error(`❌ SerpAPI 400 para "${keyword}": ${errorMessage}`);
+        throw new Error(`SerpAPI Bad Request: ${errorMessage}`);
+      }
 
       const results: SerpApiKeywordData[] = [];
 
@@ -116,12 +140,25 @@ export class SerpApiService {
 
       return results;
     } catch (error: any) {
-      this.logger.error(`Error en SerpAPI para keyword "${keyword}":`, error.message);
-      if (error.response?.status === 401) {
-        throw new Error('API Key de SerpAPI inválida. Verifica SERPAPI_API_KEY en Railway.');
-      }
-      if (error.response?.status === 429) {
-        throw new Error('Límite de requests de SerpAPI excedido. Intenta más tarde.');
+      // Log detallado del error
+      if (error.response) {
+        const status = error.response.status;
+        const errorData = error.response.data;
+        this.logger.error(`❌ SerpAPI Error ${status} para keyword "${keyword}":`, JSON.stringify(errorData));
+        
+        if (status === 400) {
+          const errorMsg = errorData?.error || errorData?.message || 'Bad Request - Verifica los parámetros';
+          this.logger.error(`Detalles del error 400:`, errorMsg);
+          throw new Error(`SerpAPI Bad Request: ${errorMsg}. Verifica que la API key sea válida y que los parámetros sean correctos.`);
+        }
+        if (status === 401) {
+          throw new Error('API Key de SerpAPI inválida. Verifica SERPAPI_API_KEY en Railway.');
+        }
+        if (status === 429) {
+          throw new Error('Límite de requests de SerpAPI excedido. Intenta más tarde.');
+        }
+      } else {
+        this.logger.error(`Error en SerpAPI para keyword "${keyword}":`, error.message);
       }
       throw error;
     }
