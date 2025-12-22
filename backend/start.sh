@@ -24,21 +24,29 @@ echo "🔄 Resolviendo migraciones fallidas (si existen)..."
 npx prisma migrate resolve --rolled-back 20241206_add_status_to_contacts 2>/dev/null || echo "   ✓ No hay migraciones fallidas que resolver"
 
 echo ""
-echo "🔄 Ejecutando migraciones de base de datos..."
-echo "   Esto creará las tablas SEO (SeoSite, SeoKeyword, etc.)..."
-MIGRATION_OUTPUT=$(npx prisma migrate deploy 2>&1)
-MIGRATION_EXIT=$?
+echo "🔄 EJECUTANDO MIGRACIONES DE BASE DE DATOS..."
+echo "   Esto creará las tablas SEO si no existen..."
+echo "   Tablas que se crearán: SeoSite, SeoKeyword, SeoKeywordRankDaily, SeoKeywordVolumeMonthly, SeoIssue, SeoRecommendation"
+echo ""
 
-echo "$MIGRATION_OUTPUT"
-
-if [ $MIGRATION_EXIT -eq 0 ]; then
-    echo "   ✅ Migraciones ejecutadas correctamente"
-    echo "   📊 Verificando tablas SEO creadas..."
-    npx prisma db execute --stdin <<EOF
-SELECT tablename FROM pg_tables WHERE schemaname = 'public' AND tablename LIKE 'Seo%';
+# Ejecutar migraciones y capturar output
+if npx prisma migrate deploy; then
+    echo ""
+    echo "   ✅ MIGRACIONES EJECUTADAS CORRECTAMENTE"
+    echo ""
+    echo "   📊 Verificando tablas SEO en la base de datos..."
+    echo "   (Esto puede fallar si no tienes psql, pero no es crítico)"
+    npx prisma db execute --stdin <<'EOF' 2>/dev/null || echo "   (No se pudo verificar, pero las migraciones se ejecutaron)"
+SELECT tablename 
+FROM pg_tables 
+WHERE schemaname = 'public' 
+  AND tablename LIKE 'Seo%'
+ORDER BY tablename;
 EOF
 else
-    echo "   ⚠️ Error al ejecutar migraciones (exit code: $MIGRATION_EXIT)"
+    echo ""
+    echo "   ⚠️ ERROR AL EJECUTAR MIGRACIONES"
+    echo "   Revisa los logs anteriores para más detalles"
     echo "   Continuando de todas formas..."
 fi
 
