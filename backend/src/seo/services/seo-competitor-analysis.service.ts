@@ -4,6 +4,7 @@ import axios from 'axios';
 import * as cheerio from 'cheerio';
 import { PrismaService } from '../../prisma/prisma.service';
 import { KeywordVolumeService } from './keyword-volume.service';
+import { SerpApiService } from './serpapi.service';
 
 @Injectable()
 export class SeoCompetitorAnalysisService {
@@ -12,10 +13,11 @@ export class SeoCompetitorAnalysisService {
   constructor(
     private prisma: PrismaService,
     private volumeService: KeywordVolumeService,
+    private serpApi: SerpApiService,
   ) {}
 
   /**
-   * Analiza un competidor: extrae keywords, meta tags, y estructura SEO
+   * Analiza un competidor: extrae keywords REALES de Google usando SerpAPI
    */
   async analyzeCompetitor(competitorId: string) {
     const competitor = await this.prisma.seoCompetitor.findUnique({
@@ -26,35 +28,51 @@ export class SeoCompetitorAnalysisService {
       throw new Error(`Competitor ${competitorId} not found`);
     }
 
-    this.logger.log(`Analizando competidor: ${competitor.domain}`);
+    this.logger.log(`🔍 Iniciando análisis REAL de competidor: ${competitor.domain}`);
 
     try {
-      // 1. Analizar homepage
-      const homepageData = await this.analyzePage(competitor.url);
+      const cleanDomain = competitor.domain.replace('www.', '').replace(/^https?:\/\//, '').replace(/\/$/, '');
+      
+      // Keywords base para buscar en Google
+      const baseKeywords = this.generateSearchKeywords(cleanDomain);
 
-      // 2. Analizar páginas principales
-      const mainPages = await this.discoverMainPages(competitor.url);
-      const allKeywords: Set<string> = new Set(homepageData.keywords);
+      // 1. Descubrir keywords REALES donde el competidor está posicionado usando SerpAPI
+      let discoveredKeywords: Array<{
+        keyword: string;
+        position: number;
+        url: string;
+        title: string;
+      }> = [];
 
-      for (const page of mainPages) {
-        try {
-          const pageData = await this.analyzePage(page);
-          pageData.keywords.forEach((kw) => allKeywords.add(kw));
-          await this.sleep(500); // Pausa entre requests
-        } catch (error: any) {
-          this.logger.warn(`Error analizando página ${page}:`, error.message);
+      try {
+        this.logger.log(`Buscando keywords reales de ${competitor.domain} en Google...`);
+        discoveredKeywords = await this.serpApi.discoverDomainKeywords(
+          cleanDomain,
+          baseKeywords,
+          'Viladecans, Barcelona, Spain',
+        );
+        this.logger.log(`✅ Encontradas ${discoveredKeywords.length} keywords reales`);
+      } catch (error: any) {
+        if (error.message.includes('SERPAPI_API_KEY')) {
+          this.logger.error(`⚠️ ${error.message}. Usando método de análisis alternativo (scraping).`);
+          // Fallback a scraping si no hay API key
+          discoveredKeywords = await this.discoverKeywordsViaScraping(competitor.url);
+        } else {
+          throw error;
         }
       }
 
-      // 3. Guardar keywords encontradas
+      // 2. Guardar keywords encontradas con datos reales
       let saved = 0;
-      for (const keyword of Array.from(allKeywords)) {
+      let skipped = 0;
+
+      for (const kwData of discoveredKeywords) {
         try {
           // Obtener volumen si está disponible
           let volume: number | null = null;
           try {
             const volumeData = await this.volumeService.getKeywordVolume(
-              keyword,
+              kwData.keyword,
               'ES',
             );
             volume = volumeData.volume;
@@ -63,29 +81,62 @@ export class SeoCompetitorAnalysisService {
             // Continuar sin volumen si falla
           }
 
+          // Guardar o actualizar keyword
           await this.prisma.seoCompetitorKeyword.upsert({
             where: {
               competitorId_keyword: {
                 competitorId: competitor.id,
-                keyword,
+                keyword: kwData.keyword,
               },
             },
             update: {
+              position: kwData.position,
+              targetUrl: kwData.url,
               lastSeen: new Date(),
               monthlyVolume: volume || undefined,
+              intent: this.detectIntent(kwData.keyword),
             },
             create: {
               competitorId: competitor.id,
-              keyword,
+              keyword: kwData.keyword,
+              position: kwData.position,
+              targetUrl: kwData.url,
               monthlyVolume: volume,
-              intent: this.detectIntent(keyword),
+              intent: this.detectIntent(kwData.keyword),
             },
           });
+
+          // Guardar ranking histórico
+          await this.prisma.seoCompetitorRanking.upsert({
+            where: {
+              competitorId_keyword_date: {
+                competitorId: competitor.id,
+                keyword: kwData.keyword,
+                date: new Date(),
+              },
+            },
+            update: {
+              position: kwData.position,
+              url: kwData.url,
+            },
+            create: {
+              competitorId: competitor.id,
+              keyword: kwData.keyword,
+              date: new Date(),
+              position: kwData.position,
+              url: kwData.url,
+            },
+          });
+
           saved++;
         } catch (error: any) {
-          this.logger.warn(`Error guardando keyword "${keyword}":`, error.message);
+          this.logger.warn(`Error guardando keyword "${kwData.keyword}":`, error.message);
+          skipped++;
         }
       }
+
+      // 3. Analizar buenas prácticas del competidor
+      await this.analyzeCompetitorBestPractices(competitor.id, competitor.url);
 
       // 4. Actualizar fecha de último análisis
       await this.prisma.seoCompetitor.update({
@@ -94,14 +145,16 @@ export class SeoCompetitorAnalysisService {
       });
 
       this.logger.log(
-        `✅ Análisis completado para ${competitor.domain}: ${saved} keywords encontradas`,
+        `✅ Análisis completado para ${competitor.domain}: ${saved} keywords guardadas, ${skipped} omitidas`,
       );
 
       return {
         competitorId: competitor.id,
         domain: competitor.domain,
-        keywordsFound: saved,
-        pagesAnalyzed: mainPages.length + 1,
+        keywordsFound: discoveredKeywords.length,
+        keywordsSaved: saved,
+        keywordsSkipped: skipped,
+        method: discoveredKeywords.length > 0 ? 'serpapi' : 'scraping',
       };
     } catch (error: any) {
       this.logger.error(
@@ -110,6 +163,67 @@ export class SeoCompetitorAnalysisService {
       );
       throw error;
     }
+  }
+
+  /**
+   * Genera keywords de búsqueda relevantes para el nicho dental
+   */
+  private generateSearchKeywords(domain: string): string[] {
+    const locationKeywords = ['viladecans', 'barcelona'];
+    const serviceKeywords = [
+      'dentista viladecans',
+      'clínica dental viladecans',
+      'implantes dentales viladecans',
+      'ortodoncia viladecans',
+      'estética dental viladecans',
+      'blanqueamiento dental viladecans',
+      'endodoncia viladecans',
+      'periodoncia viladecans',
+      'cirugía oral viladecans',
+      'odontopediatría viladecans',
+      'bruxismo viladecans',
+      'prótesis dental viladecans',
+      'dentista barcelona',
+      'clínica dental barcelona',
+      'implantes dentales barcelona',
+      'ortodoncia invisible viladecans',
+      'invisalign viladecans',
+      'carillas dentales viladecans',
+      'dentista cerca de viladecans',
+      'mejor dentista viladecans',
+    ];
+
+    // Añadir variaciones con el nombre del dominio si es reconocible
+    const domainName = domain.split('.')[0].toLowerCase();
+    if (domainName && domainName.length > 3) {
+      serviceKeywords.push(`${domainName} viladecans`);
+      serviceKeywords.push(`clínica ${domainName} viladecans`);
+    }
+
+    return serviceKeywords;
+  }
+
+  /**
+   * Método alternativo: descubrir keywords via scraping (sin API)
+   */
+  private async discoverKeywordsViaScraping(url: string): Promise<Array<{
+    keyword: string;
+    position: number;
+    url: string;
+    title: string;
+  }>> {
+    this.logger.warn('Usando método de scraping (menos preciso que SerpAPI)');
+    
+    // Analizar la página y extraer keywords potenciales
+    const pageData = await this.analyzePage(url);
+    
+    // Convertir a formato esperado (sin posiciones reales)
+    return pageData.keywords.map((kw, index) => ({
+      keyword: kw,
+      position: index + 1, // Posición estimada
+      url: url,
+      title: pageData.title || '',
+    }));
   }
 
   /**
@@ -457,6 +571,41 @@ export class SeoCompetitorAnalysisService {
       competitorsAnalyzed: competitors.length,
       totalCompetitorKeywords: allCompetitorKeywords.size,
     };
+  }
+
+  /**
+   * Analiza buenas prácticas SEO del competidor
+   */
+  private async analyzeCompetitorBestPractices(competitorId: string, url: string) {
+    try {
+      const pageData = await this.analyzePage(url);
+      
+      const insights: string[] = [];
+
+      // Buenas prácticas detectadas
+      if (pageData.title && pageData.title.length > 30 && pageData.title.length < 60) {
+        insights.push('Title optimizado (30-60 caracteres)');
+      }
+
+      if (pageData.description && pageData.description.length > 120 && pageData.description.length < 160) {
+        insights.push('Meta description optimizada (120-160 caracteres)');
+      }
+
+      if (pageData.h1s.length === 1) {
+        insights.push('Un solo H1 (buena práctica)');
+      } else if (pageData.h1s.length === 0) {
+        insights.push('⚠️ Falta H1');
+      }
+
+      if (pageData.h2s.length >= 3) {
+        insights.push('Estructura de headings clara (H2s presentes)');
+      }
+
+      // Guardar insights (podrías crear una tabla SeoCompetitorInsight)
+      this.logger.log(`Buenas prácticas detectadas para competidor ${competitorId}: ${insights.join(', ')}`);
+    } catch (error: any) {
+      this.logger.warn(`Error analizando buenas prácticas: ${error.message}`);
+    }
   }
 
   private sleep(ms: number): Promise<void> {

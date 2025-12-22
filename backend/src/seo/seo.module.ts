@@ -13,6 +13,7 @@ import { SeoKeywordDiscoveryService } from './services/seo-keyword-discovery.ser
 import { SeoCompetitorAnalysisService } from './services/seo-competitor-analysis.service';
 import { SeoCompetitorSeedService } from './services/seo-competitor-seed.service';
 import { SeoPdfReportService } from './services/seo-pdf-report.service';
+import { SerpApiService } from './services/serpapi.service';
 import { PrismaModule } from '../prisma/prisma.module';
 
 @Module({
@@ -30,6 +31,7 @@ import { PrismaModule } from '../prisma/prisma.module';
     SeoCompetitorAnalysisService,
     SeoCompetitorSeedService,
     SeoPdfReportService,
+    SerpApiService,
   ],
   exports: [SeoService],
 })
