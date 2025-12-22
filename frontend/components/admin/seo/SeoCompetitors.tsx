@@ -411,6 +411,14 @@ export function SeoCompetitors({ siteId }: { siteId: string }) {
                   <td className="px-6 py-4 text-right">
                     <div className="flex items-center justify-end gap-2">
                       <button
+                        onClick={() => handleViewComparison(competitor.id)}
+                        className="flex items-center gap-2 px-3 py-1.5 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                        title="Ver comparativa detallada"
+                      >
+                        <ExternalLink className="w-4 h-4" />
+                        Ver
+                      </button>
+                      <button
                         onClick={() => handleAnalyze(competitor.id)}
                         disabled={analyzingId === competitor.id}
                         className="flex items-center gap-2 px-3 py-1.5 text-sm bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed"

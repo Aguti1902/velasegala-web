@@ -110,29 +110,50 @@ export function SeoCompetitorComparison({ siteId }: { siteId: string }) {
     );
   }
 
-  // Datos para gráficas
-  const priorityDistribution = {
-    alta: data.opportunities.filter((o) => o.priority === "alta").length,
-    media: data.opportunities.filter((o) => o.priority === "media").length,
-    baja: data.opportunities.filter((o) => o.priority === "baja").length,
-  };
+  // Datos para gráficas basadas en estadísticas reales
+  // 1. Distribución de posiciones nuestras (top keywords)
+  const ourPositionDistribution = data.ourUniqueKeywords
+    .filter((kw) => kw.position && kw.position <= 20)
+    .reduce(
+      (acc, kw) => {
+        const pos = Math.floor(kw.position || 21);
+        if (pos <= 3) acc["Top 3"]++;
+        else if (pos <= 10) acc["Top 10"]++;
+        else if (pos <= 20) acc["Top 20"]++;
+        return acc;
+      },
+      { "Top 3": 0, "Top 10": 0, "Top 20": 0 }
+    );
 
-  const priorityData = [
-    { name: "Alta", value: priorityDistribution.alta, color: "#ef4444" },
-    { name: "Media", value: priorityDistribution.media, color: "#f59e0b" },
-    { name: "Baja", value: priorityDistribution.baja, color: "#6b7280" },
-  ];
+  const positionDistributionData = Object.entries(ourPositionDistribution).map(([name, value]) => ({
+    name,
+    value,
+    color: name === "Top 3" ? "#10b981" : name === "Top 10" ? "#3b82f6" : "#f59e0b",
+  }));
 
-  const topOpportunitiesByVolume = data.opportunities
-    .filter((o) => o.volume && o.volume > 0)
-    .sort((a, b) => (b.volume || 0) - (a.volume || 0))
+  // 2. Top keywords por clicks
+  const topKeywordsByClicks = data.ourUniqueKeywords
+    .filter((kw) => kw.clicks > 0)
+    .sort((a, b) => b.clicks - a.clicks)
     .slice(0, 15)
-    .map((o) => ({
-      keyword: o.keyword.length > 25 ? o.keyword.substring(0, 25) + "..." : o.keyword,
-      volume: o.volume || 0,
-      priority: o.priority,
+    .map((kw) => ({
+      keyword: kw.keyword.length > 25 ? kw.keyword.substring(0, 25) + "..." : kw.keyword,
+      clicks: kw.clicks,
+      position: kw.position || 0,
     }));
 
+  // 3. Top keywords por impresiones
+  const topKeywordsByImpressions = data.ourUniqueKeywords
+    .filter((kw) => kw.impressions > 0)
+    .sort((a, b) => b.impressions - a.impressions)
+    .slice(0, 15)
+    .map((kw) => ({
+      keyword: kw.keyword.length > 25 ? kw.keyword.substring(0, 25) + "..." : kw.keyword,
+      impressions: kw.impressions,
+      clicks: kw.clicks,
+    }));
+
+  // 4. Comparación de posiciones (oportunidades donde competidores están mejor)
   const positionComparisonData = data.opportunities
     .filter((o) => o.ourPosition && o.bestCompetitorPosition)
     .slice(0, 20)
@@ -140,6 +161,16 @@ export function SeoCompetitorComparison({ siteId }: { siteId: string }) {
       keyword: o.keyword.length > 25 ? o.keyword.substring(0, 25) + "..." : o.keyword,
       "Nuestra Posición": o.ourPosition || 999,
       "Mejor Competidor": o.bestCompetitorPosition || 999,
+    }));
+
+  // 5. Top oportunidades por volumen mensual
+  const topOpportunitiesByVolume = data.opportunities
+    .filter((o) => o.volume && o.volume > 0)
+    .sort((a, b) => (b.volume || 0) - (a.volume || 0))
+    .slice(0, 15)
+    .map((o) => ({
+      keyword: o.keyword.length > 25 ? o.keyword.substring(0, 25) + "..." : o.keyword,
+      volume: o.volume || 0,
     }));
 
   return (
@@ -200,56 +231,82 @@ export function SeoCompetitorComparison({ siteId }: { siteId: string }) {
         )}
       </div>
 
-      {/* Gráficas */}
+      {/* Gráficas con estadísticas reales */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Distribución de Prioridades */}
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-          <h3 className="text-lg font-bold text-black mb-4">Distribución de Prioridades</h3>
-          <ResponsiveContainer width="100%" height={300}>
-            <PieChart>
-              <Pie
-                data={priorityData}
-                cx="50%"
-                cy="50%"
-                labelLine={false}
-                label={({ name, value, percent }) => `${name}: ${value} (${percent ? (percent * 100).toFixed(0) : 0}%)`}
-                outerRadius={100}
-                fill="#8884d8"
-                dataKey="value"
-              >
-                {priorityData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={entry.color} />
-                ))}
-              </Pie>
-              <Tooltip />
-            </PieChart>
-          </ResponsiveContainer>
-        </div>
+        {/* Distribución de Posiciones (Top 3, Top 10, Top 20) */}
+        {positionDistributionData.some((d) => d.value > 0) && (
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+            <h3 className="text-lg font-bold text-black mb-4">Distribución de Nuestras Posiciones</h3>
+            <ResponsiveContainer width="100%" height={300}>
+              <PieChart>
+                <Pie
+                  data={positionDistributionData}
+                  cx="50%"
+                  cy="50%"
+                  labelLine={false}
+                  label={({ name, value, percent }) => `${name}: ${value} (${percent ? (percent * 100).toFixed(0) : 0}%)`}
+                  outerRadius={100}
+                  fill="#8884d8"
+                  dataKey="value"
+                >
+                  {positionDistributionData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.color} />
+                  ))}
+                </Pie>
+                <Tooltip />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+        )}
 
-        {/* Top Oportunidades por Volumen */}
+        {/* Top Keywords por Clicks */}
+        {topKeywordsByClicks.length > 0 && (
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+            <h3 className="text-lg font-bold text-black mb-4">Top Keywords por Clicks</h3>
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={topKeywordsByClicks}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="keyword" angle={-45} textAnchor="end" height={100} />
+                <YAxis />
+                <Tooltip />
+                <Bar dataKey="clicks" fill="#10b981" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        )}
+      </div>
+
+      {/* Segunda fila de gráficas */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Top Keywords por Impresiones */}
+        {topKeywordsByImpressions.length > 0 && (
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+            <h3 className="text-lg font-bold text-black mb-4">Top Keywords por Impresiones</h3>
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={topKeywordsByImpressions}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="keyword" angle={-45} textAnchor="end" height={100} />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="impressions" fill="#3b82f6" />
+                <Bar dataKey="clicks" fill="#10b981" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        )}
+
+        {/* Top Oportunidades por Volumen Mensual */}
         {topOpportunitiesByVolume.length > 0 && (
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-            <h3 className="text-lg font-bold text-black mb-4">Top Oportunidades por Volumen</h3>
+            <h3 className="text-lg font-bold text-black mb-4">Top Oportunidades por Volumen Mensual</h3>
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={topOpportunitiesByVolume}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="keyword" angle={-45} textAnchor="end" height={100} />
                 <YAxis />
                 <Tooltip />
-                <Bar dataKey="volume" fill="#8b5cf6">
-                  {topOpportunitiesByVolume.map((entry, index) => (
-                    <Cell
-                      key={`cell-${index}`}
-                      fill={
-                        entry.priority === "alta"
-                          ? "#ef4444"
-                          : entry.priority === "media"
-                            ? "#f59e0b"
-                            : "#6b7280"
-                      }
-                    />
-                  ))}
-                </Bar>
+                <Bar dataKey="volume" fill="#8b5cf6" />
               </BarChart>
             </ResponsiveContainer>
           </div>
