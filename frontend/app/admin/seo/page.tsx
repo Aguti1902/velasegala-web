@@ -10,7 +10,7 @@ import { SeoRecommendations } from "@/components/admin/seo/SeoRecommendations";
 import { SeoCompetitors } from "@/components/admin/seo/SeoCompetitors";
 import { SeoCompetitorComparison } from "@/components/admin/seo/SeoCompetitorComparison";
 import { getApiUrl } from "@/lib/config";
-import { Settings, RefreshCw, Plus, Lightbulb, FileText } from "lucide-react";
+import { Lightbulb, FileText } from "lucide-react";
 
 interface SeoSite {
   id: string;
@@ -392,22 +392,6 @@ export default function SeoPage() {
               </option>
             ))}
           </select>
-          <button
-            onClick={() => setShowCreateForm(true)}
-            className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
-            title="Añadir nuevo sitio"
-          >
-            <Plus className="w-4 h-4" />
-            Añadir Sitio
-          </button>
-          <button
-            onClick={handleSync}
-            disabled={isSyncing}
-            className="flex items-center gap-2 px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors disabled:opacity-50"
-          >
-            <RefreshCw className={`w-4 h-4 ${isSyncing ? "animate-spin" : ""}`} />
-            {isSyncing ? "Sincronizando..." : "Sincronizar"}
-          </button>
           <button
             onClick={handleDiscoverKeywords}
             disabled={isDiscovering}
