@@ -64,26 +64,6 @@ export class SeoRecommendationService {
           },
         });
       }
-        update: {
-          rationale: rec.rationale,
-          steps: rec.steps,
-          impactScore: rec.impactScore,
-          effortScore: rec.effortScore,
-          priority: rec.priority,
-          updatedAt: new Date(),
-        },
-        create: {
-          siteId,
-          issueId: rec.issueId,
-          title: rec.title,
-          rationale: rec.rationale,
-          steps: rec.steps,
-          impactScore: rec.impactScore,
-          effortScore: rec.effortScore,
-          priority: rec.priority,
-          status: 'pending',
-        },
-      });
     }
 
     this.logger.log(
