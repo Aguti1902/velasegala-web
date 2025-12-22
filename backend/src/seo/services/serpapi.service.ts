@@ -154,9 +154,17 @@ export class SerpApiService {
 
     const cleanDomain = domain.replace('www.', '').replace(/^https?:\/\//, '').replace(/\/$/, '');
 
-    for (const baseKeyword of baseKeywords) {
+    this.logger.log(`🔍 Buscando keywords para dominio "${cleanDomain}" con ${baseKeywords.length} keywords base`);
+    
+    for (let i = 0; i < baseKeywords.length; i++) {
+      const baseKeyword = baseKeywords[i];
       try {
+        this.logger.log(`Buscando "${baseKeyword}" (${i + 1}/${baseKeywords.length})...`);
         const results = await this.searchKeywordsForDomain(baseKeyword, cleanDomain, location);
+        
+        if (results.length > 0) {
+          this.logger.log(`✅ Encontradas ${results.length} posiciones para "${baseKeyword}"`);
+        }
         
         for (const result of results) {
           allResults.push({
@@ -175,6 +183,8 @@ export class SerpApiService {
         continue;
       }
     }
+    
+    this.logger.log(`📊 Total keywords encontradas para ${cleanDomain}: ${allResults.length}`);
 
     // Eliminar duplicados (misma keyword + URL)
     const uniqueResults = Array.from(
