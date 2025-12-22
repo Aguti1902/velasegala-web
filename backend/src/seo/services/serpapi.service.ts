@@ -148,21 +148,55 @@ export class SerpApiService {
       if (error.response) {
         const status = error.response.status;
         const errorData = error.response.data;
-        this.logger.error(`❌ SerpAPI Error ${status} para keyword "${keyword}":`, JSON.stringify(errorData));
+        
+        // Intentar extraer mensaje de error de diferentes formatos posibles
+        let errorMessage = 'Unknown error';
+        if (typeof errorData === 'string') {
+          errorMessage = errorData;
+        } else if (errorData?.error) {
+          errorMessage = errorData.error;
+        } else if (errorData?.message) {
+          errorMessage = errorData.message;
+        } else if (errorData?.detail) {
+          errorMessage = errorData.detail;
+        } else if (errorData) {
+          errorMessage = JSON.stringify(errorData);
+        }
+        
+        this.logger.error(`❌ SerpAPI Error ${status} para keyword "${keyword}":`, errorMessage);
         
         if (status === 400) {
-          const errorMsg = errorData?.error || errorData?.message || 'Bad Request - Verifica los parámetros';
-          this.logger.error(`Detalles del error 400:`, errorMsg);
-          throw new Error(`SerpAPI Bad Request: ${errorMsg}. Verifica que la API key sea válida y que los parámetros sean correctos.`);
+          this.logger.error(`📋 Parámetros que causaron el error:`, {
+            keyword,
+            location,
+            language,
+            api_key_length: this.apiKey?.length || 0,
+          });
+          
+          // Mensajes de error más específicos
+          if (errorMessage.includes('Invalid API key') || errorMessage.includes('api_key')) {
+            throw new Error('API Key de SerpAPI inválida. Verifica SERPAPI_API_KEY en Railway.');
+          }
+          if (errorMessage.includes('credits') || errorMessage.includes('balance')) {
+            throw new Error('Sin créditos disponibles en tu cuenta de SerpAPI. Recarga tu cuenta.');
+          }
+          
+          throw new Error(`SerpAPI Bad Request (400): ${errorMessage}. Verifica que la API key sea válida y tenga créditos disponibles.`);
         }
         if (status === 401) {
-          throw new Error('API Key de SerpAPI inválida. Verifica SERPAPI_API_KEY en Railway.');
+          throw new Error('API Key de SerpAPI inválida o expirada. Verifica SERPAPI_API_KEY en Railway.');
+        }
+        if (status === 402) {
+          throw new Error('Sin créditos disponibles en tu cuenta de SerpAPI. Recarga tu cuenta.');
         }
         if (status === 429) {
-          throw new Error('Límite de requests de SerpAPI excedido. Intenta más tarde.');
+          throw new Error('Límite de requests de SerpAPI excedido. Intenta más tarde o actualiza tu plan.');
         }
+      } else if (error.request) {
+        this.logger.error(`❌ No se recibió respuesta de SerpAPI para "${keyword}":`, error.message);
+        throw new Error(`No se pudo conectar con SerpAPI: ${error.message}`);
       } else {
-        this.logger.error(`Error en SerpAPI para keyword "${keyword}":`, error.message);
+        this.logger.error(`❌ Error en SerpAPI para keyword "${keyword}":`, error.message);
       }
       throw error;
     }
