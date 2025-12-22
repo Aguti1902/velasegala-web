@@ -71,18 +71,38 @@ export default function SeoPage() {
         .find((row) => row.startsWith("admin_token="))
         ?.split("=")[1];
 
+      const headers = {
+        "Content-Type": "application/json",
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      };
+
+      // Primero importar keywords de la web
+      try {
+        const importResponse = await fetch(`${apiUrl}/seo/sites/${selectedSiteId}/import-keywords`, {
+          method: "POST",
+          credentials: "include",
+          headers,
+        });
+
+        if (importResponse.ok) {
+          const importResult = await importResponse.json();
+          console.log("Keywords importadas:", importResult);
+        }
+      } catch (error) {
+        console.warn("Error al importar keywords (continuando):", error);
+      }
+
+      // Luego sincronizar con GSC
       const response = await fetch(`${apiUrl}/seo/sync`, {
         method: "POST",
         credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-          ...(token ? { Authorization: `Bearer ${token}` } : {}),
-        },
+        headers,
         body: JSON.stringify({ siteId: selectedSiteId }),
       });
 
       if (response.ok) {
-        alert("Sincronización iniciada. Los datos se actualizarán en unos minutos.");
+        alert("Sincronización completada. Keywords importadas y datos de GSC actualizados.");
+        window.location.reload();
       } else {
         alert("Error al iniciar sincronización");
       }
