@@ -14,6 +14,7 @@ import { SeoCompetitorAnalysisService } from './services/seo-competitor-analysis
 import { SeoCompetitorSeedService } from './services/seo-competitor-seed.service';
 import { SeoPdfReportService } from './services/seo-pdf-report.service';
 import { SerpApiService } from './services/serpapi.service';
+import { SeoCompetitorInsightsService } from './services/seo-competitor-insights.service';
 import { PrismaModule } from '../prisma/prisma.module';
 
 @Module({

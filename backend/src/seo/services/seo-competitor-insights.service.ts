@@ -244,7 +244,7 @@ export class SeoCompetitorInsightsService {
 
       // 8. Imágenes con alt text
       const images = $('img');
-      const imagesWithAlt = images.filter((_, el) => $(el).attr('alt')).length;
+      const imagesWithAlt = images.filter((_, el) => !!$(el).attr('alt')).length;
       const totalImages = images.length;
       if (totalImages > 0) {
         const altPercentage = (imagesWithAlt / totalImages) * 100;

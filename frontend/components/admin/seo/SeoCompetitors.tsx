@@ -373,11 +373,11 @@ export function SeoCompetitors({ siteId }: { siteId: string }) {
                     <span className={competitor._count.keywords === 0 ? "text-red-600 font-medium" : ""}>
                       {competitor._count.keywords} keywords
                     </span>
-                    {competitor._count.keywords === 0 && (
-                      <div className="text-xs text-gray-500 mt-1">
-                        Haz clic en "Analizar" para obtener keywords reales
-                      </div>
-                    )}
+                      {competitor._count.keywords === 0 && (
+                        <div className="text-xs text-gray-500 mt-1">
+                          Haz clic en &quot;Analizar&quot; para obtener keywords reales
+                        </div>
+                      )}
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-500">
                     {competitor.lastAnalyzed
