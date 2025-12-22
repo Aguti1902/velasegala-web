@@ -498,7 +498,7 @@ export class SeoCompetitorAnalysisService {
       include: {
         keywords: {
           include: {
-            rankHistory: {
+            ranks: {
               orderBy: { date: 'desc' },
               take: 1,
               where: {
@@ -506,7 +506,7 @@ export class SeoCompetitorAnalysisService {
                 device: 'all',
               },
             },
-            volumeHistory: {
+            volumes: {
               where: { country: 'ES' },
               orderBy: { updatedAt: 'desc' },
               take: 1,
@@ -544,8 +544,8 @@ export class SeoCompetitorAnalysisService {
     >();
 
     for (const kw of site.keywords) {
-      const latestRank = kw.rankHistory?.[0];
-      const latestVolume = kw.volumeHistory?.[0];
+      const latestRank = kw.ranks?.[0];
+      const latestVolume = kw.volumes?.[0];
       ourKeywordsMap.set(kw.keyword.toLowerCase(), {
         keyword: kw.keyword,
         position: latestRank?.position || null,
