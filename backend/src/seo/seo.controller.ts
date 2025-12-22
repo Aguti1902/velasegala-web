@@ -205,9 +205,9 @@ export class SeoController {
   @Get('sites/:siteId/report/pdf')
   async generatePdfReport(
     @Param('siteId') siteId: string,
-    @Query('month') month?: string,
+    @Query('month') month: string | undefined,
     @Res() res: Response,
-  ) {
+  ): Promise<void> {
     const monthDate = month ? new Date(month) : undefined;
     const pdfBuffer = await this.seoService.generateMonthlyReport(siteId, monthDate);
 
@@ -217,7 +217,7 @@ export class SeoController {
     res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
     res.setHeader('Content-Length', pdfBuffer.length.toString());
 
-    return res.send(pdfBuffer);
+    res.send(pdfBuffer);
   }
 }
 
