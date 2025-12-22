@@ -6,6 +6,8 @@ import { SeoAuditService } from './services/seo-audit.service';
 import { SeoRecommendationService } from './services/seo-recommendation.service';
 import { SeoKeywordImporterService } from './services/seo-keyword-importer.service';
 import { SeoKeywordDiscoveryService } from './services/seo-keyword-discovery.service';
+import { SeoCompetitorAnalysisService } from './services/seo-competitor-analysis.service';
+import { SeoCompetitorSeedService } from './services/seo-competitor-seed.service';
 
 @Injectable()
 export class SeoService {
@@ -19,6 +21,8 @@ export class SeoService {
     private recommendationService: SeoRecommendationService,
     private keywordImporter: SeoKeywordImporterService,
     private keywordDiscovery: SeoKeywordDiscoveryService,
+    private competitorAnalysis: SeoCompetitorAnalysisService,
+    private competitorSeed: SeoCompetitorSeedService,
   ) {}
 
   // ===== SITES =====
@@ -503,6 +507,73 @@ export class SeoService {
       skipped: result.skipped,
       keywords: discovered,
     };
+  }
+
+  // ===== COMPETITOR ANALYSIS =====
+
+  async getCompetitors(siteId: string) {
+    return this.prisma.seoCompetitor.findMany({
+      where: { siteId },
+      orderBy: { createdAt: 'desc' },
+      include: {
+        _count: {
+          select: { keywords: true },
+        },
+      },
+    });
+  }
+
+  async createCompetitor(
+    siteId: string,
+    data: { domain: string; name?: string; url: string },
+  ) {
+    return this.prisma.seoCompetitor.create({
+      data: {
+        siteId,
+        domain: data.domain,
+        name: data.name,
+        url: data.url,
+      },
+    });
+  }
+
+  async updateCompetitor(
+    id: string,
+    data: Partial<{ name: string; url: string; enabled: boolean }>,
+  ) {
+    return this.prisma.seoCompetitor.update({
+      where: { id },
+      data,
+    });
+  }
+
+  async deleteCompetitor(id: string) {
+    return this.prisma.seoCompetitor.delete({
+      where: { id },
+    });
+  }
+
+  async analyzeCompetitor(competitorId: string) {
+    return this.competitorAnalysis.analyzeCompetitor(competitorId);
+  }
+
+  async compareWithCompetitors(siteId: string) {
+    return this.competitorAnalysis.compareWithCompetitors(siteId);
+  }
+
+  async getCompetitorKeywords(competitorId: string, limit: number = 100) {
+    return this.prisma.seoCompetitorKeyword.findMany({
+      where: { competitorId },
+      orderBy: [
+        { monthlyVolume: 'desc' },
+        { lastSeen: 'desc' },
+      ],
+      take: limit,
+    });
+  }
+
+  async seedCompetitors(siteId: string) {
+    return this.competitorSeed.seedCompetitors(siteId);
   }
 }
 

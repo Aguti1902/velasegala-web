@@ -289,4 +289,57 @@ model SeoRecommendation {
   @@index([siteId, title])
 }
 
+// ===== COMPETITOR ANALYSIS =====
+
+model SeoCompetitor {
+  id            String   @id @default(cuid())
+  siteId        String
+  site          SeoSite  @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  domain        String
+  name          String?  // Nombre de la clínica
+  url           String
+  enabled       Boolean  @default(true)
+  lastAnalyzed  DateTime?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  keywords      SeoCompetitorKeyword[]
+  rankings      SeoCompetitorRanking[]
+  
+  @@unique([siteId, domain])
+  @@index([siteId])
+  @@index([domain])
+}
+
+model SeoCompetitorKeyword {
+  id            String   @id @default(cuid())
+  competitorId  String
+  competitor    SeoCompetitor @relation(fields: [competitorId], references: [id], onDelete: Cascade)
+  keyword       String
+  position      Float?   // Posición promedio en SERP
+  monthlyVolume Int?
+  intent        String?  // informational, transactional, navigational
+  targetUrl     String?  // URL que rankea para esta keyword
+  firstSeen     DateTime @default(now())
+  lastSeen      DateTime @default(now())
+  
+  @@unique([competitorId, keyword])
+  @@index([competitorId])
+  @@index([keyword])
+}
+
+model SeoCompetitorRanking {
+  id            String   @id @default(cuid())
+  competitorId  String
+  competitor    SeoCompetitor @relation(fields: [competitorId], references: [id], onDelete: Cascade)
+  keyword       String
+  date          DateTime @db.Date
+  position      Float
+  url           String?
+  createdAt     DateTime @default(now())
+  
+  @@unique([competitorId, keyword, date])
+  @@index([competitorId, date])
+  @@index([keyword])
+}
 

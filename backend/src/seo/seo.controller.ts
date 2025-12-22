@@ -145,5 +145,56 @@ export class SeoController {
     const minVol = minVolume ? parseInt(minVolume) : 100;
     return this.seoService.discoverKeywords(siteId, minVol);
   }
+
+  // ===== COMPETITORS =====
+
+  @Get('sites/:siteId/competitors')
+  async getCompetitors(@Param('siteId') siteId: string) {
+    return this.seoService.getCompetitors(siteId);
+  }
+
+  @Post('sites/:siteId/competitors')
+  async createCompetitor(
+    @Param('siteId') siteId: string,
+    @Body() data: { domain: string; name?: string; url: string },
+  ) {
+    return this.seoService.createCompetitor(siteId, data);
+  }
+
+  @Put('competitors/:id')
+  async updateCompetitor(
+    @Param('id') id: string,
+    @Body() data: Partial<{ name: string; url: string; enabled: boolean }>,
+  ) {
+    return this.seoService.updateCompetitor(id, data);
+  }
+
+  @Delete('competitors/:id')
+  async deleteCompetitor(@Param('id') id: string) {
+    return this.seoService.deleteCompetitor(id);
+  }
+
+  @Post('competitors/:id/analyze')
+  async analyzeCompetitor(@Param('id') id: string) {
+    return this.seoService.analyzeCompetitor(id);
+  }
+
+  @Get('sites/:siteId/competitors/compare')
+  async compareWithCompetitors(@Param('siteId') siteId: string) {
+    return this.seoService.compareWithCompetitors(siteId);
+  }
+
+  @Get('competitors/:id/keywords')
+  async getCompetitorKeywords(
+    @Param('id') id: string,
+    @Query('limit', new DefaultValuePipe(100), ParseIntPipe) limit: number,
+  ) {
+    return this.seoService.getCompetitorKeywords(id, limit);
+  }
+
+  @Post('sites/:siteId/competitors/seed')
+  async seedCompetitors(@Param('siteId') siteId: string) {
+    return this.seoService.seedCompetitors(siteId);
+  }
 }
 

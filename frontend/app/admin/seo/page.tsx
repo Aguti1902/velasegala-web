@@ -7,8 +7,10 @@ import { SeoKeywords } from "@/components/admin/seo/SeoKeywords";
 import { SeoOpportunities } from "@/components/admin/seo/SeoOpportunities";
 import { SeoTechnical } from "@/components/admin/seo/SeoTechnical";
 import { SeoRecommendations } from "@/components/admin/seo/SeoRecommendations";
+import { SeoCompetitors } from "@/components/admin/seo/SeoCompetitors";
+import { SeoCompetitorComparison } from "@/components/admin/seo/SeoCompetitorComparison";
 import { getApiUrl } from "@/lib/config";
-import { Settings, RefreshCw, Plus } from "lucide-react";
+import { Settings, RefreshCw, Plus, Lightbulb } from "lucide-react";
 
 interface SeoSite {
   id: string;
@@ -457,10 +459,12 @@ export default function SeoPage() {
       {/* Tabs */}
       {selectedSiteId && !showCreateForm && (
         <Tabs defaultValue="overview" className="w-full">
-          <TabsList className="grid w-full grid-cols-5 mb-6">
+          <TabsList className="grid w-full grid-cols-7 mb-6">
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="keywords">Keywords</TabsTrigger>
             <TabsTrigger value="opportunities">Oportunidades</TabsTrigger>
+            <TabsTrigger value="competitors">Competencia</TabsTrigger>
+            <TabsTrigger value="comparison">Comparativa</TabsTrigger>
             <TabsTrigger value="technical">Técnico</TabsTrigger>
             <TabsTrigger value="recommendations">Recomendaciones</TabsTrigger>
           </TabsList>
@@ -475,6 +479,14 @@ export default function SeoPage() {
 
           <TabsContent value="opportunities">
             <SeoOpportunities siteId={selectedSiteId} />
+          </TabsContent>
+
+          <TabsContent value="competitors">
+            <SeoCompetitors siteId={selectedSiteId} />
+          </TabsContent>
+
+          <TabsContent value="comparison">
+            <SeoCompetitorComparison siteId={selectedSiteId} />
           </TabsContent>
 
           <TabsContent value="technical">
