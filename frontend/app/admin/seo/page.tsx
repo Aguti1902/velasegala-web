@@ -159,6 +159,46 @@ export default function SeoPage() {
     }
   };
 
+  const handleGenerateReport = async () => {
+    if (!selectedSiteId || isGeneratingReport) return;
+
+    setIsGeneratingReport(true);
+    try {
+      const apiUrl = getApiUrl();
+      const token = document.cookie
+        .split("; ")
+        .find((row) => row.startsWith("admin_token="))
+        ?.split("=")[1];
+
+      const response = await fetch(
+        `${apiUrl}/seo/sites/${selectedSiteId}/report/pdf`,
+        {
+          credentials: "include",
+          headers: token ? { Authorization: `Bearer ${token}` } : {},
+        }
+      );
+
+      if (response.ok) {
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `informe-seo-${selectedSiteId}-${new Date().toISOString().split("T")[0]}.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+      } else {
+        alert("Error al generar informe PDF");
+      }
+    } catch (error) {
+      console.error("Error al generar informe:", error);
+      alert("Error al generar informe PDF");
+    } finally {
+      setIsGeneratingReport(false);
+    }
+  };
+
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
