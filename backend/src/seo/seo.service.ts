@@ -4,6 +4,7 @@ import { GoogleSearchConsoleService } from './services/google-search-console.ser
 import { KeywordVolumeService } from './services/keyword-volume.service';
 import { SeoAuditService } from './services/seo-audit.service';
 import { SeoRecommendationService } from './services/seo-recommendation.service';
+import { SeoKeywordImporterService } from './services/seo-keyword-importer.service';
 
 @Injectable()
 export class SeoService {
@@ -15,6 +16,7 @@ export class SeoService {
     private volumeService: KeywordVolumeService,
     private auditService: SeoAuditService,
     private recommendationService: SeoRecommendationService,
+    private keywordImporter: SeoKeywordImporterService,
   ) {}
 
   // ===== SITES =====
@@ -446,6 +448,12 @@ export class SeoService {
       where: { id },
       data: { status },
     });
+  }
+
+  // ===== KEYWORD IMPORT =====
+
+  async importKeywordsFromWebsite(siteId: string) {
+    return this.keywordImporter.importAllKeywords(siteId);
   }
 }
 

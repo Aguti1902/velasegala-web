@@ -131,5 +131,10 @@ export class SeoController {
   async manualSync(@Body() data?: { siteId?: string }) {
     return this.cronService.runManualSync(data?.siteId);
   }
+
+  @Post('sites/:siteId/import-keywords')
+  async importKeywords(@Param('siteId') siteId: string) {
+    return this.seoService.importKeywordsFromWebsite(siteId);
+  }
 }
 
