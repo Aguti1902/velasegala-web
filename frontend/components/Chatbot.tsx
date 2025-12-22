@@ -211,7 +211,7 @@ export function Chatbot() {
   }, [isMenuOpen]);
 
   const handleWhatsAppClick = () => {
-    const phoneNumber = CLINIC_INFO.phone.replace(/\s/g, ""); // Eliminar espacios
+    const phoneNumber = CLINIC_INFO.whatsappPhone.replace(/\s/g, ""); // Eliminar espacios
     const whatsappUrl = `https://wa.me/${phoneNumber}`;
     window.open(whatsappUrl, "_blank");
     setIsMenuOpen(false);

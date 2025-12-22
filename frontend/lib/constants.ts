@@ -4,6 +4,8 @@ export const CLINIC_INFO = {
   legalName: "Dental Vela Segala S.C.P.",
   phone: "+34936588406",
   phoneDisplay: "93 658 84 06",
+  whatsappPhone: "+34644104257",
+  whatsappPhoneDisplay: "644 10 42 57",
   email: "segala@velasegala.com",
   address: {
     street: "Carrer de la Mare de Déu de Sales, 67",
