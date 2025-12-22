@@ -34,7 +34,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Tratamientos Dentales en Viladecans | Clínica Vela-Segalà",
     description:
-      "Todos los tratamientos dentales que necesitas. Especialistas con +15 años de experiencia.",
+      "Todos los tratamientos dentales que necesitas. Especialistas con +25 años de experiencia.",
     images: ["/images/cabina-dentista-viladecans.jpg"],
   },
 };
@@ -73,7 +73,7 @@ export default function TratamientosPage() {
             </h1>
             <p className="text-xl text-slate-700 mb-4 leading-relaxed">
               En la <strong>Clínica Dental Vela-Segalà en Viladecans</strong> ofrecemos todos los tratamientos 
-              dentales que necesitas con tecnología de última generación y más de 15 años de experiencia.
+              dentales que necesitas con tecnología de última generación y más de 25 años de experiencia.
             </p>
             <p className="text-lg text-slate-600 leading-relaxed">
               Desde implantes dentales y ortodoncia invisible hasta estética dental y tratamientos preventivos. 
@@ -146,7 +146,7 @@ export default function TratamientosPage() {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               {
-                title: "+15 Años de Experiencia",
+                title: "+25 Años de Experiencia",
                 description: "Doctores Xavier Vela y Maribel Segalà con experiencia internacional y formación continua",
               },
               {
@@ -190,7 +190,7 @@ export default function TratamientosPage() {
             Te haremos un diagnóstico completo y te explicaremos el mejor tratamiento para tu caso.
           </p>
           <p className="text-base mb-8 text-gray-300 max-w-2xl mx-auto">
-            Más de 15 años cuidando de la salud bucodental de las familias de Viladecans. 
+            Más de 25 años cuidando de la salud bucodental de las familias de Viladecans. 
             Financiación sin intereses disponible.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">

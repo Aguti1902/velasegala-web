@@ -90,7 +90,7 @@ export default function UrgenciasDentalesPage() {
               </p>
               <p className="text-lg text-slate-600 mb-6 leading-relaxed">
                 Disponemos de servicio de urgencias dentales para aliviar el dolor y tratar infecciones. Más de 
-                15 años de experiencia atendiendo urgencias dentales en Viladecans con rapidez y eficacia.
+                25 años de experiencia atendiendo urgencias dentales en Viladecans con rapidez y eficacia.
               </p>
               
               <div className="bg-gradient-to-br from-red-50 to-white rounded-2xl p-6 shadow-lg mb-6 border-2 border-red-200">
@@ -376,7 +376,7 @@ export default function UrgenciasDentalesPage() {
             Resolveremos tu urgencia dental rápidamente y aliviaremos tu dolor.
           </p>
           <p className="text-base mb-8 text-gray-200 max-w-2xl mx-auto">
-            <strong>Servicio de urgencias dentales en Viladecans</strong>. Más de 15 años de experiencia. 
+            <strong>Servicio de urgencias dentales en Viladecans</strong>. Más de 25 años de experiencia. 
             Cita el mismo día. Sin recargo por urgencia.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">

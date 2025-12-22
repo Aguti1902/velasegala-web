@@ -151,7 +151,7 @@ export const MAIN_NAV = [
 // Por qué elegirnos (USPs)
 export const WHY_CHOOSE_US = [
   {
-    title: "Más de 15 Años de Experiencia en Viladecans",
+    title: "Más de 25 Años de Experiencia en Viladecans",
     description:
       "Equipo de dentistas especializados con amplia trayectoria profesional en Viladecans y Barcelona. Formación continua en las últimas técnicas de odontología avanzada. Miles de pacientes satisfechos que confían en nuestra clínica dental para el cuidado de su salud bucodental.",
   },

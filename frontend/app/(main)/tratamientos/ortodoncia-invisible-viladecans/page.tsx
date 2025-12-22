@@ -42,7 +42,7 @@ const TREATMENT_FAQS = [
 export const metadata: Metadata = {
   title: "Ortodoncia Invisible en Viladecans | Clínica Vela-Segalà",
   description:
-    `Ortodoncia invisible en Viladecans con sistemas Invisalign y Spark. Ortodoncistas certificados con +15 años de experiencia. Alineadores transparentes removibles. Sin brackets metálicos. Financiación sin intereses. Llama al ${CLINIC_INFO.phoneDisplay}`,
+    `Ortodoncia invisible en Viladecans con sistemas Invisalign y Spark. Ortodoncistas certificados con +25 años de experiencia. Alineadores transparentes removibles. Sin brackets metálicos. Financiación sin intereses. Llama al ${CLINIC_INFO.phoneDisplay}`,
   keywords: [
     "ortodoncia invisible viladecans",
     "invisalign viladecans",
@@ -57,7 +57,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Ortodoncia Invisible en Viladecans | Clínica Vela-Segalà",
     description:
-      "Transforma tu sonrisa sin brackets metálicos. Alineadores transparentes removibles. Ortodoncistas certificados con +15 años. Sistemas Invisalign y Spark.",
+      "Transforma tu sonrisa sin brackets metálicos. Alineadores transparentes removibles. Ortodoncistas certificados con +25 años. Sistemas Invisalign y Spark.",
     images: ["/images/ortodoncia-invisalign-viladecans.jpg"],
   },
 };
@@ -101,7 +101,7 @@ export default function OrtodonciaInvisiblePage() {
                 Sistema de <strong>férulas transparentes fabricadas a medida</strong> con tecnología 3D. Trabajamos con 
                 sistemas de ortodoncia invisible como <strong>Invisalign y Spark</strong>. Los{" "}
                 <strong>alineadores son removibles</strong>, permitiéndote extraer y colocar la ortodoncia con 
-                completa autonomía. Ortodoncistas certificados con más de 15 años de experiencia.
+                completa autonomía. Ortodoncistas certificados con más de 25 años de experiencia.
               </p>
               
               <div className="bg-gradient-to-br from-black to-gray-800 rounded-2xl p-5 shadow-xl mb-6 text-white">
@@ -531,7 +531,7 @@ export default function OrtodonciaInvisiblePage() {
             podemos asegurarte que <strong>te va a cambiar la vida</strong>.
           </p>
           <p className="text-base mb-8 text-gray-300 max-w-2xl mx-auto">
-            <strong>Ortodoncistas certificados en Viladecans</strong> con más de 15 años de experiencia. Trabajamos con 
+            <strong>Ortodoncistas certificados en Viladecans</strong> con más de 25 años de experiencia. Trabajamos con 
             sistemas Invisalign y Spark. Estudio 3D completo. Financiación sin intereses. Alineadores transparentes removibles. Aún no puedes 
             imaginarte cuánto va a mejorar tu vida.
           </p>

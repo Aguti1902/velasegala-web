@@ -351,7 +351,7 @@ El webhook recibirá esto:
   "categories": ["Implantes", "Tratamientos"],
   "tags": ["Implantes Dentales", "Cuidados", "Prevención"],
   "metaTitle": "Implantes Dentales Viladecans - Guía 2024 | Vela-Segalà",
-  "metaDescription": "Implantes dentales en Viladecans. +15 años experiencia. Primera visita gratis. Financiación sin intereses. Clínica Vela-Segalà.",
+  "metaDescription": "Implantes dentales en Viladecans. +25 años experiencia. Primera visita gratis. Financiación sin intereses. Clínica Vela-Segalà.",
   "publishStatus": "DRAFT",
   "publishAt": "2024-12-05T10:00:00.000Z"
 }
@@ -372,7 +372,7 @@ Tono: Profesional pero cercano y accesible.
 ```
 Crea una guía completa sobre [TRATAMIENTO] en la Clínica Vela-Segalà Viladecans.
 Incluye: proceso paso a paso, ventajas, cuidados post-tratamiento, FAQs.
-Menciona tecnología avanzada y experiencia de +15 años.
+Menciona tecnología avanzada y experiencia de +25 años.
 ```
 
 ### Para Consejos Prácticos:

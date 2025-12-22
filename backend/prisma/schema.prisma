@@ -167,4 +167,126 @@ model AppointmentRequest {
   @@index([createdAt])
 }
 
+// ===== SEO MODULE =====
+
+model SeoSite {
+  id            String   @id @default(cuid())
+  domain        String   @unique
+  gscProperty   String?  // Google Search Console property URL
+  countryDefault String  @default("ES")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  keywords      SeoKeyword[]
+  ranks         SeoKeywordRankDaily[]
+  issues        SeoIssue[]
+  recommendations SeoRecommendation[]
+
+  @@index([domain])
+}
+
+model SeoKeyword {
+  id            String   @id @default(cuid())
+  siteId        String
+  site          SeoSite  @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  keyword       String
+  intent        String?  // informational, navigational, transactional, commercial
+  targetUrl     String?  // URL objetivo para esta keyword
+  tags          String[] // Array de tags para agrupar
+  discovered    Boolean  @default(false) // Si fue descubierta automáticamente desde GSC
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  ranks         SeoKeywordRankDaily[]
+  volumes       SeoKeywordVolumeMonthly[]
+
+  @@unique([siteId, keyword])
+  @@index([siteId])
+  @@index([keyword])
+  @@index([intent])
+}
+
+model SeoKeywordRankDaily {
+  id            String   @id @default(cuid())
+  siteId        String
+  site          SeoSite  @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  keywordId     String
+  keyword       SeoKeyword @relation(fields: [keywordId], references: [id], onDelete: Cascade)
+  date          DateTime @db.Date
+  country       String   @default("ES")
+  device        String   @default("all") // all, desktop, mobile, tablet
+  position      Float?   // Posición promedio ponderada
+  clicks        Int      @default(0)
+  impressions  Int      @default(0)
+  ctr           Float?   // Click-through rate
+  pageUrl       String?  // URL que rankea para esta keyword
+  
+  createdAt     DateTime @default(now())
+
+  @@unique([siteId, keywordId, date, country, device])
+  @@index([siteId, date])
+  @@index([keywordId, date])
+  @@index([date])
+}
+
+model SeoKeywordVolumeMonthly {
+  id            String   @id @default(cuid())
+  keywordId     String
+  keyword       SeoKeyword @relation(fields: [keywordId], references: [id], onDelete: Cascade)
+  provider      String   // "google_ads", "dataforseo", "ahrefs", "semrush", etc.
+  country       String   @default("ES")
+  volume        Int?     // Volumen de búsqueda mensual
+  competition   String?  // low, medium, high
+  cpc           Float?   // Cost per click estimado
+  updatedAt     DateTime @default(now())
+  
+  @@unique([keywordId, provider, country])
+  @@index([keywordId])
+}
+
+model SeoIssue {
+  id            String   @id @default(cuid())
+  siteId        String
+  site          SeoSite  @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  type          String   // "technical", "content", "performance", "indexability", etc.
+  severity      String   @default("medium") // critical, high, medium, low
+  url           String?
+  title         String
+  description   String   @db.Text
+  evidenceJson  Json?    // Datos adicionales en JSON
+  firstSeen     DateTime @default(now())
+  lastSeen      DateTime @default(now())
+  status        String   @default("open") // open, in_progress, resolved, ignored
+  
+  recommendations SeoRecommendation[]
+
+  @@index([siteId])
+  @@index([type])
+  @@index([severity])
+  @@index([status])
+  @@index([siteId, type, url])
+}
+
+model SeoRecommendation {
+  id            String   @id @default(cuid())
+  siteId        String
+  site          SeoSite  @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  issueId       String?
+  issue         SeoIssue? @relation(fields: [issueId], references: [id], onDelete: SetNull)
+  title         String
+  rationale     String   @db.Text
+  steps         Json     // Array de pasos para implementar
+  impactScore   Int      @default(50) // 0-100
+  effortScore   Int      @default(50) // 0-100 (menor = más fácil)
+  priority      Int      @default(50) // Calculado: f(impact, effort, severity)
+  status        String   @default("pending") // pending, in_progress, completed, dismissed
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([siteId])
+  @@index([priority])
+  @@index([status])
+  @@index([siteId, title])
+}
+
 

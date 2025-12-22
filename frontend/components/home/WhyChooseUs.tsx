@@ -19,7 +19,7 @@ export function WhyChooseUs() {
             ¿Por Qué Elegirnos?
           </h2>
           <p className="text-lg text-slate-700 max-w-2xl mx-auto">
-            <strong>Clínica dental de referencia en Viladecans</strong> con más de 15 años 
+            <strong>Clínica dental de referencia en Viladecans</strong> con más de 25 años 
             cuidando de la salud bucodental de familias en la zona.
           </p>
         </div>

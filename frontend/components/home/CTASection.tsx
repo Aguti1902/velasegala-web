@@ -18,7 +18,7 @@ export function CTASection() {
               href="/pedir-cita"
               className="inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-black bg-white rounded-2xl hover:shadow-2xl hover:scale-105 transition-all duration-200 shadow-xl"
             >
-              Pedir Cita Gratuita Ahora
+              Pedir Cita
             </Link>
             <a
               href={`tel:${CLINIC_INFO.phone}`}

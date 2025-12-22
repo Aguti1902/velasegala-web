@@ -181,7 +181,7 @@ export function Footer() {
             Clínica Dental en Viladecans | Dentista de Confianza | Implantes Dentales | Ortodoncia Invisible | Estética Dental
           </p>
           <p className="mt-2 text-gray-400 text-xs">
-            Tu clínica dental en Viladecans, Barcelona. Más de 15 años al servicio de la salud bucodental de familias en Viladecans.
+            Tu clínica dental en Viladecans, Barcelona. Más de 25 años al servicio de la salud bucodental de familias en Viladecans.
           </p>
         </div>
       </div>

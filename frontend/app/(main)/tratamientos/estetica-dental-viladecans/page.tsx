@@ -42,7 +42,7 @@ const TREATMENT_FAQS = [
 export const metadata: Metadata = {
   title: "Estética Dental en Viladecans | Carillas y Diseño de Sonrisa",
   description:
-    "Estética dental en Viladecans. Carillas dentales de porcelana, diseño de sonrisa digital DSD y blanqueamiento. Especialistas con +15 años. Primera visita gratuita. Financiación sin intereses.",
+    "Estética dental en Viladecans. Carillas dentales de porcelana, diseño de sonrisa digital DSD y blanqueamiento. Especialistas con +25 años. Primera visita gratuita. Financiación sin intereses.",
   keywords: [
     "estética dental viladecans",
     "carillas dentales viladecans",
@@ -54,7 +54,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Estética Dental en Viladecans | Carillas y Diseño de Sonrisa",
     description:
-      "Transforma tu sonrisa con estética dental. Carillas de porcelana, diseño digital DSD. Especialistas con +15 años. Primera visita gratuita.",
+      "Transforma tu sonrisa con estética dental. Carillas de porcelana, diseño digital DSD. Especialistas con +25 años. Primera visita gratuita.",
     images: ["/images/estetica-dental-viladecans.jpg"],
   },
 };
@@ -88,7 +88,7 @@ export default function EsteticaDentalPage() {
               <p className="text-xl text-slate-700 mb-4 leading-relaxed">
                 Transforma tu sonrisa con <strong>estética dental avanzada en Viladecans</strong>. Los 
                 doctores Xavier Vela y Maribel Segalà son <strong>especialistas en rehabilitaciones 
-                estéticas complejas</strong> con más de 15 años de experiencia internacional.
+                estéticas complejas</strong> con más de 25 años de experiencia internacional.
               </p>
               <p className="text-lg text-slate-600 mb-6 leading-relaxed">
                 Utilizamos <strong>diseño de sonrisa digital (DSD)</strong>, carillas de porcelana de 
@@ -290,7 +290,7 @@ export default function EsteticaDentalPage() {
               },
               {
                 icon: <Users className="w-10 h-10" />,
-                title: "Especialistas con +15 Años",
+                title: "Especialistas con +25 Años",
                 description:
                   "Los doctores Vela y Segalà son especialistas en rehabilitaciones estéticas complejas con formación internacional. Miembros de sociedades científicas de estética dental.",
               },
@@ -353,7 +353,7 @@ export default function EsteticaDentalPage() {
             haremos un diseño de sonrisa digital para que veas el resultado antes de empezar.
           </p>
           <p className="text-base mb-8 text-gray-300 max-w-2xl mx-auto">
-            <strong>Especialistas en estética dental en Viladecans</strong> con más de 15 años de experiencia. 
+            <strong>Especialistas en estética dental en Viladecans</strong> con más de 25 años de experiencia. 
             Financiación sin intereses disponible.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">

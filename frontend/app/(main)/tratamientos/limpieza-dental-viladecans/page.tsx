@@ -89,7 +89,7 @@ export default function LimpiezaDentalPage() {
                 y pulido.
               </p>
               <p className="text-lg text-slate-600 mb-6 leading-relaxed">
-                Prevención de caries y enfermedades periodontales. Higienista dental titulado con más de 15 años 
+                Prevención de caries y enfermedades periodontales. Higienista dental titulado con más de 25 años 
                 de experiencia. Recomendable cada 6-12 meses para mantener tu salud oral óptima.
               </p>
               

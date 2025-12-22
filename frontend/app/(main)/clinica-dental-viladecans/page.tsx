@@ -9,7 +9,7 @@ import { MapPin, Phone, Mail, Clock, Award, Users, Microscope, Shield, Calendar,
 export const metadata: Metadata = {
   title: "Clínica Dental en Viladecans - Dentista de Confianza | Vela-Segalà",
   description:
-    `Clínica dental en Viladecans con más de 15 años de experiencia. Especialistas en implantes dentales, ortodoncia invisible y estética dental. ${CLINIC_INFO.address.street}, 08840 Viladecans. Tel: ${CLINIC_INFO.phoneDisplay}.`,
+    `Clínica dental en Viladecans con más de 25 años de experiencia. Especialistas en implantes dentales, ortodoncia invisible y estética dental. ${CLINIC_INFO.address.street}, 08840 Viladecans. Tel: ${CLINIC_INFO.phoneDisplay}.`,
   keywords: [
     "clínica dental viladecans",
     "dentista viladecans",
@@ -932,7 +932,7 @@ export default function ClinicaPage() {
             diagnóstico profesional y presupuesto detallado.
           </p>
           <p className="text-base mb-8 text-gray-300 max-w-2xl mx-auto">
-            Estamos en {CLINIC_INFO.address.street}, en el corazón de Viladecans. Más de 15 años siendo tu dentista 
+            Estamos en {CLINIC_INFO.address.street}, en el corazón de Viladecans. Más de 25 años siendo tu dentista 
             de confianza en Viladecans, Barcelona.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">

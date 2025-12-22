@@ -18,7 +18,7 @@ export function Hero() {
               <span className="underline decoration-4">Viladecans</span>
             </h1>
             <p className="text-lg text-slate-700 mb-6 leading-relaxed">
-              <strong>Clínica dental en Viladecans</strong> con más de 15 años de experiencia internacional en implantología 
+              <strong>Clínica dental en Viladecans</strong> con más de 25 años de experiencia internacional en implantología 
               y estética dental. Los <strong>doctores Xavier Vela y Maribel Segalà</strong> dirigen nuestro equipo de especialistas.
             </p>
             <p className="text-base text-slate-600 mb-8 leading-relaxed">

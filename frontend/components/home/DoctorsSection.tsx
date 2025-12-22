@@ -11,7 +11,7 @@ export function DoctorsSection() {
             Doctores de Referencia Internacional
           </h2>
           <p className="text-lg text-slate-700 max-w-2xl mx-auto">
-            Los <strong>doctores Xavier Vela y Maribel Segalà</strong> dirigen nuestra clínica con más de 15 años 
+            Los <strong>doctores Xavier Vela y Maribel Segalà</strong> dirigen nuestra clínica con más de 25 años 
             de experiencia. Pioneros en técnica BOPT y fundadores del <strong>BORG Center Barcelona</strong>.
           </p>
         </div>

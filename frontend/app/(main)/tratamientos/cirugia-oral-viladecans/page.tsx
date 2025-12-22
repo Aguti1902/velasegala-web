@@ -86,7 +86,7 @@ export default function CirugiaOralPage() {
               <p className="text-xl text-slate-700 mb-4 leading-relaxed">
                 <strong>Cirugía oral y maxilofacial en Viladecans</strong>. Extracción de muelas del juicio, 
                 apicectomías, frenectomías, injertos de hueso y elevación de seno maxilar. Cirujano maxilofacial 
-                especializado con más de 15 años de experiencia.
+                especializado con más de 25 años de experiencia.
               </p>
               <p className="text-lg text-slate-600 mb-6 leading-relaxed">
                 Cirugía mínimamente invasiva con tecnología piezoeléctrica. Regeneración ósea guiada para casos 
@@ -395,7 +395,7 @@ export default function CirugiaOralPage() {
           </p>
           <p className="text-base mb-8 text-gray-300 max-w-2xl mx-auto">
             <strong>Cirujano maxilofacial especializado en Viladecans</strong>. Cirugía mínimamente invasiva 
-            con tecnología piezoeléctrica. Más de 15 años de experiencia.
+            con tecnología piezoeléctrica. Más de 25 años de experiencia.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link

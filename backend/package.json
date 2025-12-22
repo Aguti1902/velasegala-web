@@ -32,6 +32,7 @@
     "@nestjs/mapped-types": "^2.1.0",
     "@nestjs/passport": "^10.0.2",
     "@nestjs/platform-express": "^10.0.0",
+    "@nestjs/schedule": "^4.0.0",
     "@prisma/client": "^5.8.0",
     "bcrypt": "^5.1.1",
     "class-transformer": "^0.5.1",
@@ -43,7 +44,11 @@
     "reflect-metadata": "^0.1.13",
     "resend": "^6.6.0",
     "rxjs": "^7.8.1",
-    "@google-analytics/data": "^4.0.0"
+    "@google-analytics/data": "^4.0.0",
+    "googleapis": "^128.0.0",
+    "axios": "^1.6.0",
+    "cheerio": "^1.0.0-rc.12",
+    "lighthouse": "^11.4.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",
@@ -56,6 +61,7 @@
     "@types/passport-jwt": "^3.0.13",
     "@types/passport-local": "^1.0.38",
     "@types/supertest": "^2.0.12",
+    "@types/cheerio": "^0.22.35",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
     "eslint": "^8.42.0",

@@ -91,7 +91,7 @@ export default function BruxismoPage() {
               </p>
               <p className="text-lg text-slate-600 mb-6 leading-relaxed">
                 Solución para <strong>dolor de mandíbula, dolores de cabeza y desgaste dental</strong> causado 
-                por bruxismo. Ajuste perfecto y cómodo para uso nocturno. Más de 15 años fabricando férulas de 
+                por bruxismo. Ajuste perfecto y cómodo para uso nocturno. Más de 25 años fabricando férulas de 
                 descarga en Viladecans.
               </p>
               

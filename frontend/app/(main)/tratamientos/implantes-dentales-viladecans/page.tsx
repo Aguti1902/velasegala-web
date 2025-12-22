@@ -41,14 +41,14 @@ const TREATMENT_FAQS = [
   {
     question: "¿Puedo ponerme dientes el mismo día?",
     answer:
-      "Sí, somos especialistas en implantes de carga inmediata en Viladecans. En casos adecuados, podemos colocar el implante y la prótesis provisional el mismo día, para que salgas de la clínica con dientes. Esto es posible gracias a la cirugía guiada por ordenador y nuestra experiencia de más de 15 años en implantología.",
+      "Sí, somos especialistas en implantes de carga inmediata en Viladecans. En casos adecuados, podemos colocar el implante y la prótesis provisional el mismo día, para que salgas de la clínica con dientes. Esto es posible gracias a la cirugía guiada por ordenador y nuestra experiencia de más de 25 años en implantología.",
   },
 ];
 
 export const metadata: Metadata = {
   title: "Implantes Dentales en Viladecans | Especialistas Vela-Segalà",
   description:
-    `Implantes dentales en Viladecans con el Dr. Xavier Vela, eminencia en implantología. Especialistas con +15 años de experiencia. Marcas premium Straumann y Nobel Biocare. Técnica BOPT. Primera visita gratuita. Financiación sin intereses. Dientes en el día. Sedación consciente disponible. Llama al ${CLINIC_INFO.phoneDisplay}`,
+    `Implantes dentales en Viladecans con el Dr. Xavier Vela, eminencia en implantología. Especialistas con +25 años de experiencia. Marcas premium Straumann y Nobel Biocare. Técnica BOPT. Primera visita gratuita. Financiación sin intereses. Dientes en el día. Sedación consciente disponible. Llama al ${CLINIC_INFO.phoneDisplay}`,
   keywords: [
     "implantes dentales viladecans",
     "implantología viladecans",
@@ -65,7 +65,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Implantes Dentales en Viladecans | Especialistas Vela-Segalà",
     description:
-      "Recupera tus dientes con implantes dentales de calidad premium. Dr. Xavier Vela, eminencia en implantología. +15 años de experiencia. Primera visita gratuita.",
+      "Recupera tus dientes con implantes dentales de calidad premium. Dr. Xavier Vela, eminencia en implantología. +25 años de experiencia. Primera visita gratuita.",
     images: ["/images/implantes-dentales-viladecans.jpg"],
   },
 };
@@ -109,7 +109,7 @@ export default function ImplantesDentalesPage() {
                 <div className="flex items-start justify-between gap-4 mb-4 pb-3 border-b border-white/20">
                   <div className="flex items-center gap-4">
                     <div className="text-center">
-                      <div className="text-3xl font-bold leading-tight">+15 años</div>
+                      <div className="text-3xl font-bold leading-tight">+25 años</div>
                       <div className="text-[10px] text-gray-300 mt-0.5">de experiencia</div>
                     </div>
                     <div className="h-10 w-px bg-white/20"></div>
@@ -644,7 +644,7 @@ export default function ImplantesDentalesPage() {
             de Viladecans y te haremos un estudio completo con escáner 3D, planificación digital y presupuesto detallado.
           </p>
           <p className="text-base mb-8 text-gray-300 max-w-2xl mx-auto">
-            <strong>Especialistas en implantes dentales en Viladecans</strong> con más de 15 años de experiencia. 
+            <strong>Especialistas en implantes dentales en Viladecans</strong> con más de 25 años de experiencia. 
             Más de 10.000 implantes colocados con éxito. Financiación sin intereses. Dientes en el día.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">

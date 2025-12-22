@@ -2,7 +2,8 @@
 
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
-import { MessageCircle, X, Send, User } from "lucide-react";
+import { MessageCircle, X, Send, User, MessageSquare, Phone } from "lucide-react";
+import { CLINIC_INFO } from "@/lib/constants";
 
 interface Message {
   role: "user" | "assistant";
@@ -172,6 +173,7 @@ const QUICK_QUESTIONS = [
 
 export function Chatbot() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
@@ -181,6 +183,7 @@ export function Chatbot() {
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -189,6 +192,35 @@ export function Chatbot() {
   useEffect(() => {
     scrollToBottom();
   }, [messages, isTyping]);
+
+  // Cerrar menú al hacer clic fuera
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    if (isMenuOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isMenuOpen]);
+
+  const handleWhatsAppClick = () => {
+    const phoneNumber = CLINIC_INFO.phone.replace(/\s/g, ""); // Eliminar espacios
+    const whatsappUrl = `https://wa.me/${phoneNumber}`;
+    window.open(whatsappUrl, "_blank");
+    setIsMenuOpen(false);
+  };
+
+  const handleChatClick = () => {
+    setIsOpen(true);
+    setIsMenuOpen(false);
+  };
 
   const getBotResponse = (userMessage: string): string => {
     const lowerMessage = userMessage.toLowerCase();
@@ -267,21 +299,63 @@ export function Chatbot() {
 
   return (
     <>
-      {/* Botón flotante */}
+      {/* Botón flotante principal - Desktop */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`fixed bottom-6 right-6 z-50 flex items-center justify-center bg-black text-white shadow-2xl hover:shadow-3xl hover:scale-105 transition-all duration-300 border border-white ${
+        className={`fixed bottom-6 right-6 z-50 hidden sm:flex items-center justify-center bg-black text-white shadow-2xl hover:shadow-3xl hover:scale-105 transition-all duration-300 border border-white ${
           isOpen ? "scale-0" : "scale-100"
-        } ${
-          // En móvil: completamente redondo, solo icono
-          // En desktop: redondeado con texto
-          "w-14 h-14 sm:w-auto sm:h-auto sm:px-6 sm:py-4 rounded-full sm:gap-3"
-        }`}
+        } px-6 py-4 rounded-full gap-3`}
         aria-label="Abrir chat"
       >
         <MessageCircle className="w-6 h-6" />
-        <span className="font-bold hidden sm:block">¿Necesitas ayuda?</span>
+        <span className="font-bold">¿Necesitas ayuda?</span>
       </button>
+
+      {/* Menú desplegable móvil */}
+      <div ref={menuRef} className="fixed bottom-6 right-6 z-50 sm:hidden">
+        {/* Menú desplegable */}
+        {isMenuOpen && (
+          <div className="absolute bottom-16 right-0 mb-2 flex flex-col gap-2 animate-slide-up">
+            <button
+              onClick={handleChatClick}
+              className="flex items-center gap-3 bg-white text-black shadow-2xl px-4 py-3 rounded-full hover:bg-gray-50 transition-all duration-200 border border-gray-200 min-w-[160px]"
+              aria-label="Abrir chat"
+            >
+              <MessageSquare className="w-5 h-5" />
+              <span className="font-medium text-sm">Chat</span>
+            </button>
+            <button
+              onClick={handleWhatsAppClick}
+              className="flex items-center gap-3 bg-[#25D366] text-white shadow-2xl px-4 py-3 rounded-full hover:bg-[#20BA5A] transition-all duration-200 min-w-[160px]"
+              aria-label="Abrir WhatsApp"
+            >
+              <Phone className="w-5 h-5" />
+              <span className="font-medium text-sm">WhatsApp</span>
+            </button>
+          </div>
+        )}
+
+        {/* Botón principal móvil */}
+        <button
+          onClick={() => {
+            if (isOpen) {
+              setIsOpen(false);
+            } else {
+              setIsMenuOpen(!isMenuOpen);
+            }
+          }}
+          className={`w-14 h-14 flex items-center justify-center bg-black text-white shadow-2xl hover:shadow-3xl hover:scale-105 transition-all duration-300 border border-white rounded-full ${
+            isOpen ? "scale-0" : "scale-100"
+          }`}
+          aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú de contacto"}
+        >
+          {isMenuOpen ? (
+            <X className="w-6 h-6" />
+          ) : (
+            <MessageCircle className="w-6 h-6" />
+          )}
+        </button>
+      </div>
 
       {/* Ventana del chat */}
       {isOpen && (

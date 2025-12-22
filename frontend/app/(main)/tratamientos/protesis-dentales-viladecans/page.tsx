@@ -87,7 +87,7 @@ export default function ProtesisDentalesPage() {
               <p className="text-xl text-slate-700 mb-4 leading-relaxed">
                 Recupera funcionalidad y estética con <strong>prótesis dentales en Viladecans</strong>. 
                 Especialistas en prótesis fijas sobre implantes, prótesis removibles y coronas de zirconio. 
-                Más de 15 años de experiencia en rehabilitaciones complejas.
+                Más de 25 años de experiencia en rehabilitaciones complejas.
               </p>
               <p className="text-lg text-slate-600 mb-6 leading-relaxed">
                 Soluciones personalizadas para reemplazar uno o varios dientes perdidos con resultados 
