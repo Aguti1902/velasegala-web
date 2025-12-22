@@ -398,7 +398,7 @@ export default function SeoPage() {
             className="flex items-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors disabled:opacity-50"
             title="Descubrir nuevas keywords con alto volumen de búsqueda"
           >
-            <RefreshCw className={`w-4 h-4 ${isDiscovering ? "animate-spin" : ""}`} />
+            <Lightbulb className={`w-4 h-4 ${isDiscovering ? "animate-pulse" : ""}`} />
             {isDiscovering ? "Descubriendo..." : "Descubrir Keywords"}
           </button>
           <button
