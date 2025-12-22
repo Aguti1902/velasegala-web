@@ -181,6 +181,7 @@ model SeoSite {
   ranks         SeoKeywordRankDaily[]
   issues        SeoIssue[]
   recommendations SeoRecommendation[]
+  competitors   SeoCompetitor[]
 
   @@index([domain])
 }
