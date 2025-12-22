@@ -121,6 +121,7 @@ export class SeoRecommendationService {
 
       if (
         latestRank &&
+        latestRank.position !== null &&
         latestRank.position >= 4 &&
         latestRank.position <= 15 &&
         volume &&
