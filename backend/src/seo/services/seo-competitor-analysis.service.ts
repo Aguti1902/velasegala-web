@@ -49,20 +49,38 @@ export class SeoCompetitorAnalysisService {
       }> = [];
 
       try {
-        this.logger.log(`Buscando keywords reales de ${competitor.domain} en Google...`);
+        this.logger.log(`🔍 Buscando keywords reales de ${competitor.domain} en Google usando SerpAPI...`);
+        this.logger.log(`📋 Keywords base a buscar: ${baseKeywords.length}`);
+        
         discoveredKeywords = await this.serpApi.discoverDomainKeywords(
           cleanDomain,
           baseKeywords,
           'Viladecans, Barcelona, Spain',
         );
-        this.logger.log(`✅ Encontradas ${discoveredKeywords.length} keywords reales`);
+        
+        if (discoveredKeywords.length > 0) {
+          this.logger.log(`✅ Encontradas ${discoveredKeywords.length} keywords reales para ${competitor.domain}`);
+        } else {
+          this.logger.warn(`⚠️ No se encontraron keywords en Google para ${competitor.domain}`);
+          this.logger.warn(`💡 Esto puede ser normal si el dominio no está bien posicionado aún`);
+          this.logger.warn(`💡 Intentando método alternativo (scraping) para obtener keywords básicas...`);
+          // Si SerpAPI no encuentra nada, intentar scraping como fallback
+          discoveredKeywords = await this.discoverKeywordsViaScraping(competitor.url);
+        }
       } catch (error: any) {
-        if (error.message.includes('SERPAPI_API_KEY')) {
+        this.logger.error(`❌ Error usando SerpAPI:`, error.message);
+        if (error.message.includes('SERPAPI_API_KEY') || error.message.includes('no configurada')) {
           this.logger.error(`⚠️ ${error.message}. Usando método de análisis alternativo (scraping).`);
           // Fallback a scraping si no hay API key
           discoveredKeywords = await this.discoverKeywordsViaScraping(competitor.url);
         } else {
-          throw error;
+          this.logger.warn(`⚠️ Error con SerpAPI, intentando scraping como fallback...`);
+          try {
+            discoveredKeywords = await this.discoverKeywordsViaScraping(competitor.url);
+          } catch (scrapeError: any) {
+            this.logger.error(`❌ Error en scraping también:`, scrapeError.message);
+            throw error; // Lanzar el error original
+          }
         }
       }
 
