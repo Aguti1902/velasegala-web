@@ -283,10 +283,79 @@ Antes de considerar que todo está configurado:
 - [ ] Propiedad GSC compartida con la cuenta de servicio
 - [ ] Variable `GOOGLE_SEARCH_CONSOLE_CREDENTIALS` configurada en Railway
 - [ ] (Opcional) DataForSEO configurado con variables de entorno
-- [ ] Base de datos migrada
+- [ ] **Base de datos migrada** (ver sección siguiente si faltan tablas)
 - [ ] Sitio creado en `/admin/seo`
 - [ ] Primera sincronización ejecutada
 - [ ] Datos visibles en el dashboard
+
+---
+
+## 🗄️ PASO 3.5: Aplicar Migraciones de Base de Datos (Si faltan tablas)
+
+Si en Railway no ves las tablas SEO (`SeoSite`, `SeoKeyword`, etc.), necesitas aplicar las migraciones.
+
+### Opción A: Ejecutar desde Railway CLI (Recomendado)
+
+1. Instala Railway CLI:
+   ```bash
+   npm install -g @railway/cli
+   ```
+
+2. Login en Railway:
+   ```bash
+   railway login
+   ```
+
+3. Conecta al proyecto:
+   ```bash
+   railway link
+   ```
+
+4. Ejecuta las migraciones:
+   ```bash
+   cd backend
+   railway run npx prisma migrate deploy
+   ```
+
+### Opción B: Desde el Terminal de Railway (Web)
+
+1. Ve a Railway Dashboard → Tu proyecto → Database
+2. Click en **"Connect"** para obtener las credenciales de conexión
+3. Usa cualquier cliente SQL (pgAdmin, DBeaver, etc.) o terminal SQL
+4. Ejecuta el contenido del archivo de migración manualmente:
+   - El archivo está en: `backend/prisma/migrations/20251222122245_add_seo_module/migration.sql`
+
+### Opción C: Forzar Redeploy
+
+1. Ve a Railway Dashboard → Tu proyecto → Deployments
+2. Click en los **3 puntos** del último deployment
+3. Click en **"Redeploy"**
+4. Esto debería ejecutar `start.sh` que incluye `npx prisma migrate deploy`
+
+### Opción D: Verificar y Ejecutar Manualmente
+
+1. Ve a Railway → Database → **"Data"** (pestaña)
+2. Verifica si ves estas tablas:
+   - `SeoSite`
+   - `SeoKeyword`
+   - `SeoKeywordRankDaily`
+   - `SeoKeywordVolumeMonthly`
+   - `SeoIssue`
+   - `SeoRecommendation`
+
+3. Si **NO** las ves, el script `start.sh` debería ejecutarlas automáticamente en el próximo deploy
+
+4. Si después de un redeploy siguen sin aparecer, verifica los logs del backend en Railway para ver si hay errores en las migraciones
+
+### Verificar que las Migraciones Funcionaron
+
+Después de aplicar las migraciones, deberías ver en Railway Database → Data:
+- ✅ `SeoSite`
+- ✅ `SeoKeyword`
+- ✅ `SeoKeywordRankDaily`
+- ✅ `SeoKeywordVolumeMonthly`
+- ✅ `SeoIssue`
+- ✅ `SeoRecommendation`
 
 ---
 
