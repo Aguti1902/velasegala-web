@@ -22,25 +22,51 @@ echo "   Esto creará las tablas SEO si no existen..."
 echo "   Tablas que se crearán: SeoSite, SeoKeyword, SeoKeywordRankDaily, SeoKeywordVolumeMonthly, SeoIssue, SeoRecommendation"
 echo ""
 
-# Ejecutar migraciones y capturar output
-if npx prisma migrate deploy; then
-    echo ""
-    echo "   ✅ MIGRACIONES EJECUTADAS CORRECTAMENTE"
+# Verificar si las tablas SEO ya existen
+TABLES_EXIST=$(npx prisma db execute --stdin <<'EOF' 2>/dev/null || echo "false"
+SELECT COUNT(*) as count 
+FROM pg_tables 
+WHERE schemaname = 'public' 
+  AND tablename IN ('SeoSite', 'SeoKeyword', 'SeoKeywordRankDaily', 'SeoKeywordVolumeMonthly', 'SeoIssue', 'SeoRecommendation');
+EOF
+)
+
+# Si las tablas no existen, ejecutar migraciones
+if echo "$TABLES_EXIST" | grep -q "6" || echo "$TABLES_EXIST" | grep -q "count.*6"; then
+    echo "   ℹ️  Las tablas SEO ya existen en la base de datos"
+else
+    echo "   📋 Tablas SEO no encontradas, ejecutando migraciones..."
+    
+    # Ejecutar migraciones con Prisma
+    if npx prisma migrate deploy; then
+        echo ""
+        echo "   ✅ MIGRACIONES EJECUTADAS CORRECTAMENTE"
+    else
+        echo ""
+        echo "   ⚠️  Prisma dice que no hay migraciones pendientes"
+        echo "   🔧 Intentando crear tablas manualmente..."
+        
+        # Si Prisma dice que no hay migraciones pendientes pero las tablas no existen,
+        # ejecutar el SQL directamente
+        if [ -f "ejecutar-migraciones-seo.sql" ]; then
+            echo "   📄 Ejecutando SQL manual..."
+            npx prisma db execute --file ejecutar-migraciones-seo.sql 2>/dev/null || {
+                echo "   ⚠️  No se pudo ejecutar SQL manual (puede requerir ejecución directa en PostgreSQL)"
+            }
+        else
+            echo "   ⚠️  Archivo ejecutar-migraciones-seo.sql no encontrado"
+        fi
+    fi
+    
     echo ""
     echo "   📊 Verificando tablas SEO en la base de datos..."
-    echo "   (Esto puede fallar si no tienes psql, pero no es crítico)"
-    npx prisma db execute --stdin <<'EOF' 2>/dev/null || echo "   (No se pudo verificar, pero las migraciones se ejecutaron)"
+    npx prisma db execute --stdin <<'EOF' 2>/dev/null || echo "   (No se pudo verificar)"
 SELECT tablename 
 FROM pg_tables 
 WHERE schemaname = 'public' 
   AND tablename LIKE 'Seo%'
 ORDER BY tablename;
 EOF
-else
-    echo ""
-    echo "   ⚠️ ERROR AL EJECUTAR MIGRACIONES"
-    echo "   Revisa los logs anteriores para más detalles"
-    echo "   Continuando de todas formas..."
 fi
 
 echo ""
