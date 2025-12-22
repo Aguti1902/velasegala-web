@@ -209,6 +209,7 @@ export class SeoCompetitorAnalysisService {
 
   /**
    * Método alternativo: descubrir keywords via scraping (sin API)
+   * Este método es menos preciso pero puede encontrar keywords básicas
    */
   private async discoverKeywordsViaScraping(url: string): Promise<Array<{
     keyword: string;
@@ -216,18 +217,31 @@ export class SeoCompetitorAnalysisService {
     url: string;
     title: string;
   }>> {
-    this.logger.warn('Usando método de scraping (menos preciso que SerpAPI)');
+    this.logger.warn('⚠️ Usando método de scraping (menos preciso que SerpAPI)');
+    this.logger.warn('💡 Configura SERPAPI_API_KEY para obtener posiciones reales de Google');
     
-    // Analizar la página y extraer keywords potenciales
-    const pageData = await this.analyzePage(url);
-    
-    // Convertir a formato esperado (sin posiciones reales)
-    return pageData.keywords.map((kw, index) => ({
-      keyword: kw,
-      position: index + 1, // Posición estimada
-      url: url,
-      title: pageData.title || '',
-    }));
+    try {
+      // Analizar la página y extraer keywords potenciales
+      const pageData = await this.analyzePage(url);
+      
+      this.logger.log(`📄 Analizada página ${url}: ${pageData.keywords.length} keywords encontradas`);
+      
+      // Filtrar keywords relevantes (mínimo 3 caracteres, máximo 100)
+      const relevantKeywords = pageData.keywords.filter(
+        kw => kw.length >= 3 && kw.length <= 100 && !kw.includes('http')
+      ).slice(0, 50); // Limitar a 50 keywords más relevantes
+      
+      // Convertir a formato esperado (sin posiciones reales, todas en posición "desconocida")
+      return relevantKeywords.map((kw) => ({
+        keyword: kw,
+        position: 999, // Posición desconocida (999 = no rankeando o desconocido)
+        url: url,
+        title: pageData.title || '',
+      }));
+    } catch (error: any) {
+      this.logger.error(`Error en scraping para ${url}:`, error.message);
+      return [];
+    }
   }
 
   /**

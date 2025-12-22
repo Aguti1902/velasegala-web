@@ -136,11 +136,9 @@ export class GoogleSearchConsoleService {
         keywordsCreated++;
       }
 
-      // Crear o actualizar rank diario
-      const date = new Date(startDate);
-      // En un caso real, necesitarías iterar por cada día en el rango
-      // Por simplicidad, usamos la fecha de inicio
-      const dateStr = this.formatDate(date);
+      // Crear o actualizar rank diario usando la fecha más reciente disponible
+      // GSC agrega datos, así que usamos endDate para representar el periodo completo
+      const dateStr = endDateStr;
 
       await this.prisma.seoKeywordRankDaily.upsert({
         where: {

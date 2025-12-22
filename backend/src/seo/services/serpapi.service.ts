@@ -74,10 +74,20 @@ export class SerpApiService {
           // Si se especifica un dominio, solo retornar resultados de ese dominio
           if (domain) {
             try {
-              const resultDomain = new URL(result.link).hostname.replace('www.', '');
-              const searchDomain = domain.replace('www.', '').replace(/^https?:\/\//, '').replace(/\/$/, '');
+              const resultUrl = new URL(result.link);
+              const resultDomain = resultUrl.hostname.toLowerCase().replace(/^www\./, '');
+              const searchDomain = domain.toLowerCase().replace(/^www\./, '').replace(/^https?:\/\//, '').replace(/\/$/, '');
               
-              if (resultDomain === searchDomain || resultDomain.includes(searchDomain) || searchDomain.includes(resultDomain)) {
+              // Comparación más flexible: dominio exacto o subdominio
+              const domainMatches = 
+                resultDomain === searchDomain ||
+                resultDomain.endsWith('.' + searchDomain) ||
+                searchDomain.endsWith('.' + resultDomain) ||
+                resultDomain.includes(searchDomain) ||
+                searchDomain.includes(resultDomain);
+              
+              if (domainMatches) {
+                this.logger.debug(`✅ Match encontrado: ${resultDomain} para dominio ${searchDomain} en keyword "${keyword}"`);
                 results.push({
                   keyword,
                   position: result.position,
@@ -88,6 +98,7 @@ export class SerpApiService {
               }
             } catch (e) {
               // Si la URL no es válida, continuar
+              this.logger.debug(`Error parseando URL ${result.link}:`, e);
               continue;
             }
           } else {
