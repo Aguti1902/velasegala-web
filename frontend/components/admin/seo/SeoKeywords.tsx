@@ -82,7 +82,7 @@ export function SeoKeywords({ siteId }: { siteId: string }) {
               </p>
               <ul className="text-sm text-yellow-700 space-y-1 list-disc list-inside mb-2">
                 <li>
-                  <strong>Posiciones, clicks e impressions:</strong> Haz clic en "Sincronizar" para obtener datos de Google Search Console
+                  <strong>Posiciones, clicks e impressions:</strong> Haz clic en &quot;Sincronizar&quot; para obtener datos de Google Search Console
                 </li>
                 <li>
                   <strong>Volúmenes de búsqueda:</strong> Configura DataForSEO en Railway (opcional)
