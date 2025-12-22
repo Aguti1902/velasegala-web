@@ -187,6 +187,14 @@ export class SeoController {
     return this.seoService.compareWithCompetitors(siteId);
   }
 
+  @Get('sites/:siteId/competitors/:competitorId/compare')
+  async compareWithSingleCompetitor(
+    @Param('siteId') siteId: string,
+    @Param('competitorId') competitorId: string,
+  ) {
+    return this.seoService.compareWithSingleCompetitor(siteId, competitorId);
+  }
+
   @Get('competitors/:id/keywords')
   async getCompetitorKeywords(
     @Param('id') id: string,

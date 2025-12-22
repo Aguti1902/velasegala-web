@@ -571,6 +571,10 @@ export class SeoService {
     return this.competitorAnalysis.compareWithCompetitors(siteId);
   }
 
+  async compareWithSingleCompetitor(siteId: string, competitorId: string) {
+    return this.competitorAnalysis.compareWithSingleCompetitor(siteId, competitorId);
+  }
+
   async getCompetitorKeywords(competitorId: string, limit: number = 100) {
     return this.prisma.seoCompetitorKeyword.findMany({
       where: { competitorId },

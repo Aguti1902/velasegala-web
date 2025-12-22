@@ -3,6 +3,19 @@
 import { useEffect, useState } from "react";
 import { getApiUrl } from "@/lib/config";
 import { TrendingUp, AlertCircle, CheckCircle, XCircle } from "lucide-react";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  Legend,
+  PieChart,
+  Pie,
+  Cell,
+} from "recharts";
 
 interface ComparisonData {
   ourUniqueKeywords: Array<{
@@ -97,6 +110,38 @@ export function SeoCompetitorComparison({ siteId }: { siteId: string }) {
     );
   }
 
+  // Datos para gráficas
+  const priorityDistribution = {
+    alta: data.opportunities.filter((o) => o.priority === "alta").length,
+    media: data.opportunities.filter((o) => o.priority === "media").length,
+    baja: data.opportunities.filter((o) => o.priority === "baja").length,
+  };
+
+  const priorityData = [
+    { name: "Alta", value: priorityDistribution.alta, color: "#ef4444" },
+    { name: "Media", value: priorityDistribution.media, color: "#f59e0b" },
+    { name: "Baja", value: priorityDistribution.baja, color: "#6b7280" },
+  ];
+
+  const topOpportunitiesByVolume = data.opportunities
+    .filter((o) => o.volume && o.volume > 0)
+    .sort((a, b) => (b.volume || 0) - (a.volume || 0))
+    .slice(0, 15)
+    .map((o) => ({
+      keyword: o.keyword.length > 25 ? o.keyword.substring(0, 25) + "..." : o.keyword,
+      volume: o.volume || 0,
+      priority: o.priority,
+    }));
+
+  const positionComparisonData = data.opportunities
+    .filter((o) => o.ourPosition && o.bestCompetitorPosition)
+    .slice(0, 20)
+    .map((o) => ({
+      keyword: o.keyword.length > 25 ? o.keyword.substring(0, 25) + "..." : o.keyword,
+      "Nuestra Posición": o.ourPosition || 999,
+      "Mejor Competidor": o.bestCompetitorPosition || 999,
+    }));
+
   return (
     <div className="space-y-6">
       {/* Resumen */}
@@ -154,6 +199,80 @@ export function SeoCompetitorComparison({ siteId }: { siteId: string }) {
           </div>
         )}
       </div>
+
+      {/* Gráficas */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Distribución de Prioridades */}
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <h3 className="text-lg font-bold text-black mb-4">Distribución de Prioridades</h3>
+          <ResponsiveContainer width="100%" height={300}>
+            <PieChart>
+              <Pie
+                data={priorityData}
+                cx="50%"
+                cy="50%"
+                labelLine={false}
+                label={({ name, value, percent }) => `${name}: ${value} (${(percent * 100).toFixed(0)}%)`}
+                outerRadius={100}
+                fill="#8884d8"
+                dataKey="value"
+              >
+                {priorityData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={entry.color} />
+                ))}
+              </Pie>
+              <Tooltip />
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
+
+        {/* Top Oportunidades por Volumen */}
+        {topOpportunitiesByVolume.length > 0 && (
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+            <h3 className="text-lg font-bold text-black mb-4">Top Oportunidades por Volumen</h3>
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={topOpportunitiesByVolume}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="keyword" angle={-45} textAnchor="end" height={100} />
+                <YAxis />
+                <Tooltip />
+                <Bar dataKey="volume" fill="#8b5cf6">
+                  {topOpportunitiesByVolume.map((entry, index) => (
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={
+                        entry.priority === "alta"
+                          ? "#ef4444"
+                          : entry.priority === "media"
+                            ? "#f59e0b"
+                            : "#6b7280"
+                      }
+                    />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        )}
+      </div>
+
+      {/* Gráfica de Comparación de Posiciones */}
+      {positionComparisonData.length > 0 && (
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <h3 className="text-lg font-bold text-black mb-4">Comparación de Posiciones (Top 20 Oportunidades)</h3>
+          <ResponsiveContainer width="100%" height={400}>
+            <BarChart data={positionComparisonData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="keyword" angle={-45} textAnchor="end" height={120} />
+              <YAxis reversed />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="Nuestra Posición" fill="#10b981" />
+              <Bar dataKey="Mejor Competidor" fill="#ef4444" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+      )}
 
       {/* Keywords únicas nuestras */}
       <div>

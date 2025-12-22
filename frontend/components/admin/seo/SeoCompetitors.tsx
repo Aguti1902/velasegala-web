@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { getApiUrl } from "@/lib/config";
-import { Search, Plus, RefreshCw, TrendingUp, Eye, EyeOff, Trash2 } from "lucide-react";
+import { Search, Plus, RefreshCw, TrendingUp, Eye, EyeOff, Trash2, ExternalLink } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 interface Competitor {
   id: string;
@@ -17,6 +18,7 @@ interface Competitor {
 }
 
 export function SeoCompetitors({ siteId }: { siteId: string }) {
+  const router = useRouter();
   const [competitors, setCompetitors] = useState<Competitor[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [showAddForm, setShowAddForm] = useState(false);
@@ -27,6 +29,10 @@ export function SeoCompetitors({ siteId }: { siteId: string }) {
   });
   const [analyzingId, setAnalyzingId] = useState<string | null>(null);
   const [isSeeding, setIsSeeding] = useState(false);
+
+  const handleViewComparison = (competitorId: string) => {
+    router.push(`/admin/seo/comparison/${siteId}/${competitorId}`);
+  };
 
   useEffect(() => {
     loadCompetitors();

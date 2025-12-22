@@ -666,15 +666,24 @@ export class SeoCompetitorAnalysisService {
           .filter((p): p is number => p !== null)
           .sort((a, b) => a - b)[0] || null;
 
-        // Buscar volumen máximo
-        const maxVolume =
+        // Buscar volumen máximo de competidores
+        let maxVolume =
           compData
             .map((c) => c.volume)
             .filter((v): v is number => v !== null)
             .sort((a, b) => b - a)[0] || null;
 
-        // Determinar prioridad
+        // Si no hay volumen en competidores, intentar buscarlo en nuestras keywords o desde el servicio de volumen
         const keywordOriginal = compData[0]?.keyword || kwLower;
+        if (!maxVolume) {
+          // Buscar en nuestras keywords si existe
+          const ourKw = Array.from(ourKeywordsMap.values()).find(
+            (k) => k.keyword.toLowerCase() === kwLower,
+          );
+          if (ourKw?.volume) {
+            maxVolume = ourKw.volume;
+          }
+        }
         let priority: 'alta' | 'media' | 'baja' = 'baja';
         let recommendation = `Considera crear contenido para la keyword "${keywordOriginal}".`;
 
@@ -708,11 +717,16 @@ export class SeoCompetitorAnalysisService {
           bestCompPosition &&
           (!ourData.position || bestCompPosition < ourData.position)
         ) {
-          const maxVolume =
+          // Buscar volumen máximo de competidores, o usar el nuestro si no hay
+          let maxVolume =
             compData
               .map((c) => c.volume)
               .filter((v): v is number => v !== null)
               .sort((a, b) => b - a)[0] || null;
+          
+          if (!maxVolume && ourData.volume) {
+            maxVolume = ourData.volume;
+          }
 
           let priority: 'alta' | 'media' | 'baja' = 'baja';
           let recommendation = `Mejora tu contenido para "${ourData.keyword}" para superar a competidores.`;
@@ -791,6 +805,210 @@ export class SeoCompetitorAnalysisService {
     } catch (error: any) {
       this.logger.warn(`Error analizando buenas prácticas: ${error.message}`);
     }
+  }
+
+  /**
+   * Compara nuestro sitio con un competidor específico
+   */
+  async compareWithSingleCompetitor(siteId: string, competitorId: string) {
+    const site = await this.prisma.seoSite.findUnique({
+      where: { id: siteId },
+      include: {
+        keywords: {
+          include: {
+            ranks: {
+              orderBy: { date: 'desc' },
+              take: 1,
+              where: {
+                country: 'ES',
+                device: 'all',
+              },
+            },
+            volumes: {
+              where: { country: 'ES' },
+              orderBy: { updatedAt: 'desc' },
+              take: 1,
+            },
+          },
+        },
+      },
+    });
+
+    if (!site) {
+      throw new Error(`Site ${siteId} not found`);
+    }
+
+    const competitor = await this.prisma.seoCompetitor.findUnique({
+      where: { id: competitorId },
+      include: {
+        keywords: true,
+        rankings: {
+          orderBy: { date: 'desc' },
+          take: 1000,
+        },
+      },
+    });
+
+    if (!competitor) {
+      throw new Error(`Competitor ${competitorId} not found`);
+    }
+
+    // Mapa de nuestras keywords
+    const ourKeywordsMap = new Map<
+      string,
+      {
+        keyword: string;
+        position: number | null;
+        volume: number | null;
+        clicks: number;
+        impressions: number;
+        url: string | null;
+      }
+    >();
+
+    for (const kw of site.keywords) {
+      const latestRank = kw.ranks?.[0];
+      const latestVolume = kw.volumes?.[0];
+      ourKeywordsMap.set(kw.keyword.toLowerCase(), {
+        keyword: kw.keyword,
+        position: latestRank?.position || null,
+        volume: latestVolume?.volume || null,
+        clicks: latestRank?.clicks || 0,
+        impressions: latestRank?.impressions || 0,
+        url: latestRank?.pageUrl || kw.targetUrl || null,
+      });
+    }
+
+    // Mapa de keywords del competidor
+    const competitorKeywordsMap = new Map<
+      string,
+      {
+        keyword: string;
+        position: number | null;
+        volume: number | null;
+        url: string | null;
+      }
+    >();
+
+    for (const compKw of competitor.keywords) {
+      const key = compKw.keyword.toLowerCase();
+      const latestRanking = competitor.rankings
+        .filter((r) => r.keyword.toLowerCase() === compKw.keyword.toLowerCase())
+        .sort((a, b) => b.date.getTime() - a.date.getTime())[0];
+
+      competitorKeywordsMap.set(key, {
+        keyword: compKw.keyword,
+        position: latestRanking?.position || compKw.position || null,
+        volume: compKw.monthlyVolume || null,
+        url: latestRanking?.url || compKw.targetUrl || null,
+      });
+    }
+
+    // Keywords compartidas (comparación directa)
+    const sharedKeywords: Array<{
+      keyword: string;
+      ourPosition: number | null;
+      competitorPosition: number | null;
+      ourVolume: number | null;
+      competitorVolume: number | null;
+      ourClicks: number;
+      competitorClicks: number;
+      ourImpressions: number;
+      competitorImpressions: number;
+      ourUrl: string | null;
+      competitorUrl: string | null;
+      weAreBetter: boolean | null;
+    }> = [];
+
+    for (const [kwLower, ourData] of ourKeywordsMap.entries()) {
+      const compData = competitorKeywordsMap.get(kwLower);
+      if (compData) {
+        const weAreBetter =
+          ourData.position && compData.position
+            ? ourData.position < compData.position
+            : null;
+
+        sharedKeywords.push({
+          keyword: ourData.keyword,
+          ourPosition: ourData.position,
+          competitorPosition: compData.position,
+          ourVolume: ourData.volume,
+          competitorVolume: compData.volume,
+          ourClicks: ourData.clicks,
+          competitorClicks: 0, // No tenemos clicks de competidores
+          ourImpressions: ourData.impressions,
+          competitorImpressions: 0, // No tenemos impresiones de competidores
+          ourUrl: ourData.url,
+          competitorUrl: compData.url,
+          weAreBetter,
+        });
+      }
+    }
+
+    // Keywords que solo tenemos nosotros
+    const ourOnlyKeywords: Array<{
+      keyword: string;
+      position: number | null;
+      volume: number | null;
+      clicks: number;
+      impressions: number;
+      url: string | null;
+    }> = [];
+
+    for (const [kwLower, ourData] of ourKeywordsMap.entries()) {
+      if (!competitorKeywordsMap.has(kwLower)) {
+        ourOnlyKeywords.push(ourData);
+      }
+    }
+
+    // Keywords que solo tiene el competidor (oportunidades)
+    const competitorOnlyKeywords: Array<{
+      keyword: string;
+      position: number | null;
+      volume: number | null;
+      url: string | null;
+    }> = [];
+
+    for (const [kwLower, compData] of competitorKeywordsMap.entries()) {
+      if (!ourKeywordsMap.has(kwLower)) {
+        competitorOnlyKeywords.push(compData);
+      }
+    }
+
+    // Estadísticas generales
+    const stats = {
+      sharedKeywords: sharedKeywords.length,
+      ourOnlyKeywords: ourOnlyKeywords.length,
+      competitorOnlyKeywords: competitorOnlyKeywords.length,
+      weWin: sharedKeywords.filter((k) => k.weAreBetter === true).length,
+      weLose: sharedKeywords.filter((k) => k.weAreBetter === false).length,
+      tied: sharedKeywords.filter((k) => k.weAreBetter === null).length,
+    };
+
+    return {
+      competitor: {
+        id: competitor.id,
+        name: competitor.name || competitor.domain,
+        domain: competitor.domain,
+        url: competitor.url,
+      },
+      stats,
+      sharedKeywords: sharedKeywords.sort((a, b) => {
+        // Ordenar por volumen (mayor primero) o por posición (mejor primero)
+        const aVolume = a.ourVolume || a.competitorVolume || 0;
+        const bVolume = b.ourVolume || b.competitorVolume || 0;
+        if (bVolume !== aVolume) return bVolume - aVolume;
+        const aPos = a.ourPosition || 999;
+        const bPos = b.ourPosition || 999;
+        return aPos - bPos;
+      }),
+      ourOnlyKeywords: ourOnlyKeywords
+        .sort((a, b) => (b.volume || 0) - (a.volume || 0))
+        .slice(0, 100),
+      competitorOnlyKeywords: competitorOnlyKeywords
+        .sort((a, b) => (b.volume || 0) - (a.volume || 0))
+        .slice(0, 100),
+    };
   }
 
   private sleep(ms: number): Promise<void> {
