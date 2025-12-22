@@ -7,17 +7,10 @@ echo "=========================================="
 
 echo ""
 echo "📦 Verificando Prisma Client..."
-npx prisma generate || {
+if ! npx prisma generate; then
     echo "   ❌ Error al generar Prisma Client"
     exit 1
-}
-
-echo ""
-echo "🔄 Verificando conexión a base de datos..."
-npx prisma db execute --stdin <<EOF
-SELECT 1;
-EOF
-|| echo "   ⚠️ No se pudo verificar conexión (puede ser normal)"
+fi
 
 echo ""
 echo "🔄 Resolviendo migraciones fallidas (si existen)..."
@@ -58,5 +51,3 @@ echo ""
 echo "🚀 Iniciando aplicación NestJS..."
 echo "=========================================="
 exec node dist/src/main
-
-
