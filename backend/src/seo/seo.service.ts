@@ -52,8 +52,16 @@ export class SeoService {
     gscProperty?: string;
     countryDefault?: string;
   }) {
-    return this.prisma.seoSite.create({
-      data: {
+    // Usar upsert para evitar errores si el dominio ya existe
+    return this.prisma.seoSite.upsert({
+      where: {
+        domain: data.domain,
+      },
+      update: {
+        gscProperty: data.gscProperty,
+        countryDefault: data.countryDefault || 'ES',
+      },
+      create: {
         domain: data.domain,
         gscProperty: data.gscProperty,
         countryDefault: data.countryDefault || 'ES',
