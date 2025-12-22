@@ -11,16 +11,19 @@ export interface SerpApiKeywordData {
 }
 
 export interface SerpApiResult {
-  organic_results: Array<{
+  organic_results?: Array<{
     position: number;
     title: string;
     link: string;
     snippet: string;
     displayed_link: string;
   }>;
-  search_metadata: {
+  search_metadata?: {
     total_results: number;
   };
+  error?: string;
+  message?: string;
+  detail?: string;
 }
 
 @Injectable()
@@ -86,7 +89,8 @@ export class SerpApiService {
       
       // Verificar si hay error en la respuesta
       if (response.status === 400) {
-        const errorMessage = response.data?.error || response.data?.message || JSON.stringify(response.data) || 'Bad Request';
+        const errorData = response.data as any;
+        const errorMessage = errorData?.error || errorData?.message || errorData?.detail || JSON.stringify(errorData) || 'Bad Request';
         this.logger.error(`❌ SerpAPI 400 para "${keyword}":`, errorMessage);
         this.logger.error(`📋 Parámetros enviados:`, {
           engine: 'google',
