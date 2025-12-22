@@ -11,6 +11,8 @@ import { SeoCronService } from './seo-cron.service';
 import { SeoKeywordImporterService } from './services/seo-keyword-importer.service';
 import { SeoKeywordDiscoveryService } from './services/seo-keyword-discovery.service';
 import { SeoCompetitorAnalysisService } from './services/seo-competitor-analysis.service';
+import { SeoCompetitorSeedService } from './services/seo-competitor-seed.service';
+import { SeoPdfReportService } from './services/seo-pdf-report.service';
 import { PrismaModule } from '../prisma/prisma.module';
 
 @Module({
