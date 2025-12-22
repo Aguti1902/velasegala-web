@@ -214,6 +214,11 @@ Ver documentación completa en: [`backend/INSTRUCCIONES_BACKEND.md`](./backend/I
 - ✅ Breadcrumbs en todas las páginas
 - ✅ Sitemap.xml automático
 - ✅ Core Web Vitals optimizado
+- ✅ **Módulo SEO Completo** con Google Search Console integration
+  - Tracking de keywords y posiciones
+  - Auditoría técnica automática
+  - Recomendaciones priorizadas
+  - Análisis de oportunidades y quick wins
 
 ## 📝 Información del Proyecto
 
@@ -238,6 +243,7 @@ Ver documentación completa en: [`backend/INSTRUCCIONES_BACKEND.md`](./backend/I
 - [**Instrucciones Backend**](./backend/INSTRUCCIONES_BACKEND.md) - API, endpoints, n8n
 - [**Actualizar Reseñas**](./COMO_ACTUALIZAR_RESEÑAS.md) - Cómo gestionar reseñas de Google
 - [**Instrucciones Iniciales**](./INSTRUCCIONES.md) - Contexto y requisitos del proyecto
+- [**Módulo SEO**](./SEO_MODULE_SETUP.md) - Configuración completa del módulo SEO
 
 ## 🔒 Variables de Entorno
 
@@ -265,6 +271,16 @@ FRONTEND_URL="http://localhost:3000"
 APPOINTMENT_EMAIL="segala@velasegala.com"  # Email donde se recibirán las solicitudes de cita (por defecto: segala@velasegala.com)
 RESEND_API_KEY="re_xxxxxxxxxxxx"  # API Key de Resend (obtener en https://resend.com/api-keys)
 EMAIL_FROM="noreply@tudominio.com"  # Email del remitente (debe ser dominio verificado en Resend, o usar onboarding@resend.dev para pruebas)
+
+# Google Analytics Data API (para el dashboard)
+GOOGLE_ANALYTICS_CREDENTIALS="{...}" # Contenido JSON de la cuenta de servicio (en una línea)
+GOOGLE_ANALYTICS_PROPERTY_ID="517091107" # ID numérico de la propiedad GA4 (sin el prefijo G-)
+
+# Google Search Console API (para módulo SEO - opcional)
+GOOGLE_SEARCH_CONSOLE_CREDENTIALS="{...}" # Contenido JSON de la cuenta de servicio de Google Search Console
+SEO_VOLUME_PROVIDER="none" # "dataforseo", "google_ads", o "none"
+DATAFORSEO_API_KEY="" # Solo si usas DataForSEO como proveedor
+DATAFORSEO_API_SECRET="" # Solo si usas DataForSEO como proveedor
 ```
 
 **Configuración de Resend:**

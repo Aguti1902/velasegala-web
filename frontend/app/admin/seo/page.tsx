@@ -8,7 +8,7 @@ import { SeoOpportunities } from "@/components/admin/seo/SeoOpportunities";
 import { SeoTechnical } from "@/components/admin/seo/SeoTechnical";
 import { SeoRecommendations } from "@/components/admin/seo/SeoRecommendations";
 import { getApiUrl } from "@/lib/config";
-import { Settings, RefreshCw } from "lucide-react";
+import { Settings, RefreshCw, Plus } from "lucide-react";
 
 interface SeoSite {
   id: string;
@@ -22,6 +22,12 @@ export default function SeoPage() {
   const [selectedSiteId, setSelectedSiteId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isSyncing, setIsSyncing] = useState(false);
+  const [showCreateForm, setShowCreateForm] = useState(false);
+  const [newSite, setNewSite] = useState({
+    domain: "",
+    gscProperty: "",
+    countryDefault: "ES",
+  });
 
   useEffect(() => {
     loadSites();
@@ -99,18 +105,160 @@ export default function SeoPage() {
     );
   }
 
-  if (sites.length === 0) {
+  const handleCreateSite = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    
+    if (!newSite.domain.trim()) {
+      alert("Por favor, introduce un dominio");
+      return;
+    }
+
+    try {
+      const apiUrl = getApiUrl();
+      const token = document.cookie
+        .split("; ")
+        .find((row) => row.startsWith("admin_token="))
+        ?.split("=")[1];
+
+      const response = await fetch(`${apiUrl}/seo/sites`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
+        body: JSON.stringify({
+          domain: newSite.domain.trim(),
+          gscProperty: newSite.gscProperty.trim() || undefined,
+          countryDefault: newSite.countryDefault,
+        }),
+      });
+
+      if (response.ok) {
+        const createdSite = await response.json();
+        setSites([...sites, createdSite]);
+        setSelectedSiteId(createdSite.id);
+        setShowCreateForm(false);
+        setNewSite({ domain: "", gscProperty: "", countryDefault: "ES" });
+        alert("✅ Sitio creado correctamente. Puedes ejecutar una sincronización para empezar a obtener datos.");
+      } else {
+        const errorData = await response.json().catch(() => ({ message: "Error desconocido" }));
+        alert(`❌ Error al crear el sitio: ${errorData.message || "Error desconocido"}`);
+      }
+    } catch (error) {
+      console.error("Error al crear sitio:", error);
+      alert("❌ Error al crear el sitio. Revisa la consola para más detalles.");
+    }
+  };
+
+  if (sites.length === 0 && !showCreateForm) {
     return (
       <div className="container mx-auto px-4 py-8">
-        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
+        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6 max-w-2xl mx-auto">
           <h2 className="text-xl font-bold mb-2">No hay sitios configurados</h2>
           <p className="text-gray-600 mb-4">
-            Necesitas configurar al menos un sitio para usar el módulo SEO.
+            Necesitas configurar al menos un sitio para usar el módulo SEO. El sitio representa tu dominio web que quieres analizar.
           </p>
-          <button className="btn-primary">
-            <Settings className="w-4 h-4 mr-2" />
-            Configurar Sitio
+          <div className="space-y-3 mb-6 text-sm text-gray-700 bg-white p-4 rounded-lg border border-gray-200">
+            <p><strong>1. Dominio:</strong> El dominio de tu sitio web (ej: www.velasegalaviladecans.com)</p>
+            <p><strong>2. Google Search Console (opcional):</strong> La URL de la propiedad en GSC si ya tienes una configurada</p>
+            <p><strong>3. País:</strong> País por defecto para el análisis (ej: ES para España)</p>
+          </div>
+          <button 
+            onClick={() => setShowCreateForm(true)}
+            className="inline-flex items-center gap-2 px-6 py-3 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors"
+          >
+            <Plus className="w-5 h-5" />
+            Configurar Primer Sitio
           </button>
+        </div>
+      </div>
+    );
+  }
+
+  if (sites.length === 0 && showCreateForm) {
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <div className="bg-white border border-gray-200 rounded-lg p-6 max-w-2xl mx-auto">
+          <h2 className="text-xl font-bold mb-4">Crear Nuevo Sitio</h2>
+          <form onSubmit={handleCreateSite} className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Dominio <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="text"
+                value={newSite.domain}
+                onChange={(e) => setNewSite({ ...newSite, domain: e.target.value })}
+                placeholder="www.velasegalaviladecans.com"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+                required
+              />
+              <p className="text-xs text-gray-500 mt-1">Sin https://, solo el dominio</p>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Google Search Console Property (Opcional)
+              </label>
+              <input
+                type="text"
+                value={newSite.gscProperty}
+                onChange={(e) => setNewSite({ ...newSite, gscProperty: e.target.value })}
+                placeholder="https://www.velasegalaviladecans.com"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+              />
+              <p className="text-xs text-gray-500 mt-1">URL completa de la propiedad en GSC (necesario para sincronizar datos)</p>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                País por defecto
+              </label>
+              <select
+                value={newSite.countryDefault}
+                onChange={(e) => setNewSite({ ...newSite, countryDefault: e.target.value })}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+              >
+                <option value="ES">España (ES)</option>
+                <option value="US">Estados Unidos (US)</option>
+                <option value="GB">Reino Unido (GB)</option>
+                <option value="FR">Francia (FR)</option>
+                <option value="DE">Alemania (DE)</option>
+                <option value="IT">Italia (IT)</option>
+              </select>
+            </div>
+
+            <div className="flex items-center gap-3 pt-4">
+              <button
+                type="submit"
+                className="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors"
+              >
+                <Plus className="w-5 h-5" />
+                Crear Sitio
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setShowCreateForm(false);
+                  setNewSite({ domain: "", gscProperty: "", countryDefault: "ES" });
+                }}
+                className="px-6 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+              >
+                Cancelar
+              </button>
+            </div>
+          </form>
+
+          <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+            <h3 className="font-medium text-blue-900 mb-2">📝 Notas importantes:</h3>
+            <ul className="text-sm text-blue-800 space-y-1 list-disc list-inside">
+              <li>El dominio es obligatorio para crear el sitio</li>
+              <li>Google Search Console es opcional pero necesario para sincronizar datos reales</li>
+              <li>Puedes configurar GSC después creando una cuenta de servicio en Google Cloud</li>
+              <li>Consulta <code className="bg-blue-100 px-1 rounded">SEO_MODULE_SETUP.md</code> para más detalles</li>
+            </ul>
+          </div>
         </div>
       </div>
     );
@@ -139,6 +287,14 @@ export default function SeoPage() {
             ))}
           </select>
           <button
+            onClick={() => setShowCreateForm(true)}
+            className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+            title="Añadir nuevo sitio"
+          >
+            <Plus className="w-4 h-4" />
+            Añadir Sitio
+          </button>
+          <button
             onClick={handleSync}
             disabled={isSyncing}
             className="flex items-center gap-2 px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors disabled:opacity-50"
@@ -149,8 +305,85 @@ export default function SeoPage() {
         </div>
       </div>
 
+      {/* Formulario crear sitio (overlay) */}
+      {showCreateForm && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-lg p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <h2 className="text-xl font-bold mb-4">Crear Nuevo Sitio</h2>
+            <form onSubmit={handleCreateSite} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Dominio <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  value={newSite.domain}
+                  onChange={(e) => setNewSite({ ...newSite, domain: e.target.value })}
+                  placeholder="www.velasegalaviladecans.com"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+                  required
+                />
+                <p className="text-xs text-gray-500 mt-1">Sin https://, solo el dominio</p>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Google Search Console Property (Opcional)
+                </label>
+                <input
+                  type="text"
+                  value={newSite.gscProperty}
+                  onChange={(e) => setNewSite({ ...newSite, gscProperty: e.target.value })}
+                  placeholder="https://www.velasegalaviladecans.com"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+                />
+                <p className="text-xs text-gray-500 mt-1">URL completa de la propiedad en GSC (necesario para sincronizar datos)</p>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  País por defecto
+                </label>
+                <select
+                  value={newSite.countryDefault}
+                  onChange={(e) => setNewSite({ ...newSite, countryDefault: e.target.value })}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+                >
+                  <option value="ES">España (ES)</option>
+                  <option value="US">Estados Unidos (US)</option>
+                  <option value="GB">Reino Unido (GB)</option>
+                  <option value="FR">Francia (FR)</option>
+                  <option value="DE">Alemania (DE)</option>
+                  <option value="IT">Italia (IT)</option>
+                </select>
+              </div>
+
+              <div className="flex items-center gap-3 pt-4">
+                <button
+                  type="submit"
+                  className="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors"
+                >
+                  <Plus className="w-5 h-5" />
+                  Crear Sitio
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowCreateForm(false);
+                    setNewSite({ domain: "", gscProperty: "", countryDefault: "ES" });
+                  }}
+                  className="px-6 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                >
+                  Cancelar
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
       {/* Tabs */}
-      {selectedSiteId && (
+      {selectedSiteId && !showCreateForm && (
         <Tabs defaultValue="overview" className="w-full">
           <TabsList className="grid w-full grid-cols-5 mb-6">
             <TabsTrigger value="overview">Overview</TabsTrigger>
