@@ -221,16 +221,25 @@ export class SeoController {
     @Query('month') month: string | undefined,
     @Res() res: Response,
   ): Promise<void> {
-    const monthDate = month ? new Date(month) : undefined;
-    const pdfBuffer = await this.seoService.generateMonthlyReport(siteId, monthDate);
+    try {
+      const monthDate = month ? new Date(month) : undefined;
+      const pdfBuffer = await this.seoService.generateMonthlyReport(siteId, monthDate);
 
-    const filename = `informe-seo-${siteId}-${new Date().toISOString().split('T')[0]}.pdf`;
+      const filename = `informe-seo-${siteId}-${new Date().toISOString().split('T')[0]}.pdf`;
 
-    res.setHeader('Content-Type', 'application/pdf');
-    res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
-    res.setHeader('Content-Length', pdfBuffer.length.toString());
+      res.setHeader('Content-Type', 'application/pdf');
+      res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+      res.setHeader('Content-Length', pdfBuffer.length.toString());
 
-    res.send(pdfBuffer);
+      res.send(pdfBuffer);
+    } catch (error) {
+      console.error('❌ Error generando PDF:', error);
+      res.status(500).json({
+        message: 'Error al generar el informe PDF',
+        error: error.message,
+        stack: process.env.NODE_ENV === 'development' ? error.stack : undefined,
+      });
+    }
   }
 }
 

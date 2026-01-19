@@ -4,6 +4,7 @@ import "./globals.css";
 import { CLINIC_INFO, SITE_CONFIG } from "@/lib/constants";
 import { LocalBusinessSchema } from "@/components/seo/LocalBusinessSchema";
 import { GoogleAnalytics } from "@/components/seo/GoogleAnalytics";
+import { GoogleTagManager, GoogleTagManagerNoScript } from "@/components/GoogleTagManager";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -101,9 +102,15 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
+
   return (
     <html lang="es" className={`${inter.variable} ${poppins.variable}`}>
+      <head>
+        {GTM_ID && <GoogleTagManager gtmId={GTM_ID} />}
+      </head>
       <body className="font-sans antialiased">
+        {GTM_ID && <GoogleTagManagerNoScript gtmId={GTM_ID} />}
         <GoogleAnalytics measurementId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "G-LF82NH1E0E"} />
         <LocalBusinessSchema />
         {children}
