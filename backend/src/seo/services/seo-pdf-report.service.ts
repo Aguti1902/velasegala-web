@@ -52,10 +52,6 @@ export class SeoPdfReportService {
       }
 
       this.logger.log(`✅ Site encontrado: ${site.domain} con ${site.keywords.length} keywords`);
-    } catch (error) {
-      this.logger.error(`❌ Error al generar informe PDF:`, error);
-      throw error;
-    }
 
       // Obtener datos de competidores
       this.logger.log(`🔍 Buscando competidores...`);
@@ -112,34 +108,34 @@ export class SeoPdfReportService {
       // Generar PDF
       this.logger.log(`📝 Generando documento PDF...`);
       const pdfBuffer = await this.createPdf({
-      siteName: site.domain,
-      reportPeriod: `${monthName} ${year}`,
-      kpis: {
-        totalKeywords,
-        keywordsWithVolume,
-        totalClicks,
-        totalImpressions,
-        avgPosition,
-        ctr,
-      },
-      topKeywords: site.keywords.slice(0, 20).map((k) => ({
-        keyword: k.keyword,
-        position: k.ranks[0]?.position || null,
-        clicks: k.ranks[0]?.clicks || 0,
-        impressions: k.ranks[0]?.impressions || 0,
-        volume: k.volumes[0]?.volume || null,
-      })),
-      competitors: competitors.map((c) => ({
-        name: c.name || c.domain,
-        keywordsCount: c._count.keywords,
-        topKeywords: c.keywords.slice(0, 10).map((k) => k.keyword),
-      })),
-      recommendations: recommendations.map((r) => ({
-        title: r.title,
-        priority: r.priority,
-        impact: r.impactScore,
-        effort: r.effortScore,
-      })),
+        siteName: site.domain,
+        reportPeriod: `${monthName} ${year}`,
+        kpis: {
+          totalKeywords,
+          keywordsWithVolume,
+          totalClicks,
+          totalImpressions,
+          avgPosition,
+          ctr,
+        },
+        topKeywords: site.keywords.slice(0, 20).map((k) => ({
+          keyword: k.keyword,
+          position: k.ranks[0]?.position || null,
+          clicks: k.ranks[0]?.clicks || 0,
+          impressions: k.ranks[0]?.impressions || 0,
+          volume: k.volumes[0]?.volume || null,
+        })),
+        competitors: competitors.map((c) => ({
+          name: c.name || c.domain,
+          keywordsCount: c._count.keywords,
+          topKeywords: c.keywords.slice(0, 10).map((k) => k.keyword),
+        })),
+        recommendations: recommendations.map((r) => ({
+          title: r.title,
+          priority: r.priority,
+          impact: r.impactScore,
+          effort: r.effortScore,
+        })),
       });
 
       this.logger.log(`✅ PDF generado exitosamente (${pdfBuffer.length} bytes)`);
@@ -340,7 +336,7 @@ export class SeoPdfReportService {
 
         doc.fontSize(10).fillColor('#333333');
 
-        data.competitors.forEach((comp, compIndex) => {
+        data.competitors.forEach((comp) => {
           if (yPos > 700) {
             doc.addPage();
             yPos = 50;
@@ -353,7 +349,7 @@ export class SeoPdfReportService {
           yPos += 20;
 
           doc.fontSize(9);
-          comp.topKeywords.slice(0, 5).forEach((kw, kwIndex) => {
+          comp.topKeywords.slice(0, 5).forEach((kw) => {
             doc.text(`• ${kw}`, 70, yPos, { width: 450 });
             yPos += 15;
           });
@@ -431,4 +427,3 @@ export class SeoPdfReportService {
     });
   }
 }
-
