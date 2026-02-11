@@ -47,8 +47,11 @@ export class EmailService {
       phone: appointmentData.phone,
     });
     
-    const recipientEmail = this.configService.get<string>('APPOINTMENT_EMAIL') || 'segala@velasegala.com';
-    console.log(`📮 Email destino: ${recipientEmail}`);
+    const primaryEmail = this.configService.get<string>('APPOINTMENT_EMAIL') || 'segala@velasegala.com';
+    const secondaryEmail = this.configService.get<string>('SECONDARY_EMAIL') || 'gutierezgomez00@gmail.com';
+    const recipientEmails = [primaryEmail, secondaryEmail];
+    
+    console.log(`📮 Emails destino: ${recipientEmails.join(', ')}`);
     
     if (!this.resend) {
       console.error('❌ Resend no configurado. Email no enviado.');
@@ -201,11 +204,11 @@ Por favor, contacta con el cliente lo antes posible para confirmar la cita.
     `;
 
     try {
-      console.log(`📤 Intentando enviar email de cita a ${recipientEmail} desde ${this.fromEmail}`);
+      console.log(`📤 Intentando enviar email de cita a ${recipientEmails.join(', ')} desde ${this.fromEmail}`);
       
       const result = await this.resend.emails.send({
         from: `Clínica Vela-Segalà <${this.fromEmail}>`,
-        to: recipientEmail,
+        to: recipientEmails,
         subject: `Nueva Solicitud de Cita - ${appointmentData.name}`,
         text: emailText,
         html: emailHtml,
@@ -216,7 +219,7 @@ Por favor, contacta con el cliente lo antes posible para confirmar la cita.
         throw new Error(JSON.stringify(result.error));
       }
       
-      console.log(`✅ Email de cita enviado exitosamente a ${recipientEmail}`);
+      console.log(`✅ Email de cita enviado exitosamente a ${recipientEmails.join(', ')}`);
       console.log(`📧 ID del email: ${result.data?.id || 'N/A'}`);
     } catch (error: any) {
       console.error('❌ Error al enviar email de cita:');
