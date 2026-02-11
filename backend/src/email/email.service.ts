@@ -48,7 +48,7 @@ export class EmailService {
     });
     
     const primaryEmail = this.configService.get<string>('APPOINTMENT_EMAIL') || 'segala@velasegala.com';
-    const secondaryEmail = this.configService.get<string>('SECONDARY_EMAIL') || 'agutierezgomez00@gmail.com';
+    const secondaryEmail = this.configService.get<string>('SECONDARY_EMAIL') || 'agutierrezgomez00@gmail.com';
     const recipientEmails = [primaryEmail, secondaryEmail];
     
     console.log(`📮 Emails destino: ${recipientEmails.join(', ')}`);

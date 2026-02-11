@@ -16,7 +16,7 @@ JWT_EXPIRATION=7d
 RESEND_API_KEY=re_tu_api_key_aqui
 EMAIL_FROM=noreply@tudominio.com
 APPOINTMENT_EMAIL=segala@velasegala.com
-SECONDARY_EMAIL=agutierezgomez00@gmail.com
+SECONDARY_EMAIL=agutierrezgomez00@gmail.com
 
 # Google Analytics Data API (ya configurado)
 GOOGLE_APPLICATION_CREDENTIALS={"type":"service_account",...}
@@ -74,7 +74,7 @@ NODE_ENV=production
 Después del redeploy (1-2 minutos):
 - Los emails de citas irán a:
   - ✉️ `segala@velasegala.com` (clienta)
-  - ✉️ `agutierezgomez00@gmail.com` (tú)
+  - ✉️ `agutierrezgomez00@gmail.com` (tú)
 - Los emails de contacto irán a los mismos destinatarios
 - Ambos recibirán notificaciones de todos los formularios
 

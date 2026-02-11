@@ -144,7 +144,7 @@ Después de configurar:
 1. **Envía un email de prueba** (desde el formulario de tu web)
 2. **Verifica en ambos correos**:
    - `segala@velasegala.com`
-   - `agutierezgomez00@gmail.com`
+   - `agutierrezgomez00@gmail.com`
 3. **Revisa la carpeta de SPAM** también
 4. Si llega a inbox → ✅ **Funciona correctamente**
 
@@ -166,12 +166,12 @@ Después de configurar:
 Si no puedes configurar el dominio ahora mismo, añade esto en Railway para que al menos te lleguen a ti también:
 
 ```
-SECONDARY_EMAIL=agutierezgomez00@gmail.com
+SECONDARY_EMAIL=agutierrezgomez00@gmail.com
 ```
 
 Ya modifiqué el código para que envíe a ambos correos. Ahora envía a:
 - ✅ `segala@velasegala.com` (APPOINTMENT_EMAIL)
-- ✅ `agutierezgomez00@gmail.com` (SECONDARY_EMAIL)
+- ✅ `agutierrezgomez00@gmail.com` (SECONDARY_EMAIL)
 
 ---
 
@@ -179,7 +179,7 @@ Ya modifiqué el código para que envíe a ambos correos. Ahora envía a:
 
 **Ahora mismo (temporal):**
 - [x] Código modificado para enviar a 2 emails
-- [ ] Añadir `SECONDARY_EMAIL=agutierezgomez00@gmail.com` en Railway
+- [ ] Añadir `SECONDARY_EMAIL=agutierrezgomez00@gmail.com` en Railway
 - [ ] Redeploy backend
 
 **Para evitar SPAM (definitivo):**
