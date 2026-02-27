@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowRight, ArrowLeft, Check, User, Mail, Phone, Calendar, MessageSquare, Clock } from "lucide-react";
+import { ArrowRight, ArrowLeft, Check, User, Mail, Phone, Calendar, MessageSquare, Clock, AlertCircle } from "lucide-react";
+import Link from "next/link";
 import { getApiUrl } from "@/lib/config";
 import Toast from "@/components/ui/Toast";
 import { useToast } from "@/hooks/useToast";
@@ -147,6 +148,8 @@ const isDayAvailable = (date: Date, treatment: string): boolean => {
 export function MultiStepContactForm() {
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [acceptPrivacy, setAcceptPrivacy] = useState(false);
+  const [privacyError, setPrivacyError] = useState(false);
   const { toasts, hideToast, success, error } = useToast();
   const [formData, setFormData] = useState<FormData>({
     name: "",
@@ -219,6 +222,12 @@ export function MultiStepContactForm() {
 
   const handleSubmit = async () => {
     if (!validateStep(currentStep)) return;
+
+    if (!acceptPrivacy) {
+      setPrivacyError(true);
+      return;
+    }
+    setPrivacyError(false);
 
     setIsSubmitting(true);
 
@@ -650,6 +659,79 @@ export function MultiStepContactForm() {
                     <p className="text-slate-700">{formData.message}</p>
                   </div>
                 </div>
+              )}
+            </div>
+
+            {/* Tabla RGPD 1ª capa */}
+            <div className="bg-gray-50 rounded-xl border border-gray-200 overflow-hidden">
+              <div className="px-4 py-3 bg-gray-100 border-b border-gray-200">
+                <p className="text-xs font-bold text-black uppercase tracking-wide">
+                  Información básica sobre Protección de Datos
+                </p>
+              </div>
+              <table className="w-full text-xs text-left">
+                <tbody>
+                  <tr className="border-b border-gray-200">
+                    <td className="px-4 py-2.5 font-semibold text-black w-32 align-top">Responsable</td>
+                    <td className="px-4 py-2.5 text-slate-600">Dental Vela Segala S.C.P.</td>
+                  </tr>
+                  <tr className="border-b border-gray-200 bg-white">
+                    <td className="px-4 py-2.5 font-semibold text-black align-top">Finalidad</td>
+                    <td className="px-4 py-2.5 text-slate-600">Dar respuesta a las consultas y/o gestión de citas.</td>
+                  </tr>
+                  <tr className="border-b border-gray-200">
+                    <td className="px-4 py-2.5 font-semibold text-black align-top">Legitimación</td>
+                    <td className="px-4 py-2.5 text-slate-600">Consentimiento del interesado.</td>
+                  </tr>
+                  <tr className="border-b border-gray-200 bg-white">
+                    <td className="px-4 py-2.5 font-semibold text-black align-top">Destinatarios</td>
+                    <td className="px-4 py-2.5 text-slate-600">No se cederán datos a terceros, salvo obligación legal.</td>
+                  </tr>
+                  <tr className="border-b border-gray-200">
+                    <td className="px-4 py-2.5 font-semibold text-black align-top">Derechos</td>
+                    <td className="px-4 py-2.5 text-slate-600">
+                      Tiene derecho a acceder, rectificar y suprimir los datos, así como otros derechos, como se explica en la información adicional.
+                    </td>
+                  </tr>
+                  <tr className="bg-white">
+                    <td className="px-4 py-2.5 font-semibold text-black align-top">Inf. adicional</td>
+                    <td className="px-4 py-2.5 text-slate-600">
+                      Puede consultar la información adicional en el{" "}
+                      <Link href="/aviso-legal" className="text-black font-semibold underline hover:text-gray-700" target="_blank">
+                        Aviso Legal y Política de Privacidad
+                      </Link>
+                      .
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            {/* Checkbox consentimiento */}
+            <div>
+              <label className="flex items-start gap-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={acceptPrivacy}
+                  onChange={(e) => {
+                    setAcceptPrivacy(e.target.checked);
+                    if (e.target.checked) setPrivacyError(false);
+                  }}
+                  className={`mt-1 w-5 h-5 rounded cursor-pointer ${privacyError ? "border-red-500" : "border-gray-300"}`}
+                />
+                <span className="text-sm text-slate-700 leading-relaxed">
+                  He leído y acepto el{" "}
+                  <Link href="/aviso-legal" className="text-black font-bold underline hover:text-gray-700" target="_blank">
+                    aviso legal y política de privacidad
+                  </Link>
+                  . <span className="text-red-500">*</span>
+                </span>
+              </label>
+              {privacyError && (
+                <p className="mt-2 text-sm text-red-600 flex items-center gap-1">
+                  <AlertCircle className="w-4 h-4" />
+                  No puede enviar la solicitud sin haber aceptado el aviso legal y política de privacidad.
+                </p>
               )}
             </div>
 
