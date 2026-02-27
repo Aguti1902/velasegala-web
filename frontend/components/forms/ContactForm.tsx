@@ -276,7 +276,64 @@ export function ContactForm() {
         )}
       </div>
 
-      {/* Política de Privacidad */}
+      {/* Información básica sobre Protección de Datos (1ª capa RGPD) */}
+      <div className="bg-gray-50 rounded-xl border border-gray-200 overflow-hidden">
+        <div className="px-4 py-3 bg-gray-100 border-b border-gray-200">
+          <p className="text-xs font-bold text-black uppercase tracking-wide">
+            Información básica sobre Protección de Datos
+          </p>
+        </div>
+        <table className="w-full text-xs text-left">
+          <tbody>
+            <tr className="border-b border-gray-200">
+              <td className="px-4 py-2.5 font-semibold text-black w-32 align-top">Responsable</td>
+              <td className="px-4 py-2.5 text-slate-600">Dental Vela Segala S.C.P.</td>
+            </tr>
+            <tr className="border-b border-gray-200 bg-white">
+              <td className="px-4 py-2.5 font-semibold text-black align-top">Finalidad</td>
+              <td className="px-4 py-2.5 text-slate-600">
+                Dar respuesta a las consultas y/o gestión de citas.
+              </td>
+            </tr>
+            <tr className="border-b border-gray-200">
+              <td className="px-4 py-2.5 font-semibold text-black align-top">Legitimación</td>
+              <td className="px-4 py-2.5 text-slate-600">Consentimiento del interesado.</td>
+            </tr>
+            <tr className="border-b border-gray-200 bg-white">
+              <td className="px-4 py-2.5 font-semibold text-black align-top">Destinatarios</td>
+              <td className="px-4 py-2.5 text-slate-600">
+                No se cederán datos a terceros, salvo obligación legal.
+              </td>
+            </tr>
+            <tr className="border-b border-gray-200">
+              <td className="px-4 py-2.5 font-semibold text-black align-top">Derechos</td>
+              <td className="px-4 py-2.5 text-slate-600">
+                Tiene derecho a acceder, rectificar y suprimir los datos, así como otros derechos,
+                como se explica en la información adicional.
+              </td>
+            </tr>
+            <tr className="bg-white">
+              <td className="px-4 py-2.5 font-semibold text-black align-top">
+                Inf. adicional
+              </td>
+              <td className="px-4 py-2.5 text-slate-600">
+                Puede consultar la información adicional y detallada sobre Protección de Datos
+                Personales en el{" "}
+                <Link
+                  href="/aviso-legal"
+                  className="text-black font-semibold underline hover:text-gray-700"
+                  target="_blank"
+                >
+                  Aviso Legal y Política de Privacidad
+                </Link>
+                .
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      {/* Casilla aceptar política de privacidad */}
       <div>
         <label className="flex items-start gap-3 cursor-pointer group">
           <input
@@ -289,20 +346,22 @@ export function ContactForm() {
             }`}
           />
           <span className="text-sm text-slate-700 leading-relaxed">
-            Conozco y acepto la{" "}
+            He leído y acepto el{" "}
             <Link
-              href="/politica-privacidad"
+              href="/aviso-legal"
               className="text-black font-bold underline hover:text-gray-700"
               target="_blank"
             >
-              Política de Privacidad
+              aviso legal y política de privacidad
             </Link>
+            .{" "}
+            <span className="text-red-500">*</span>
           </span>
         </label>
         {errors.acceptPrivacy && (
           <p className="mt-2 text-sm text-red-600 flex items-center gap-1">
             <AlertCircle className="w-4 h-4" />
-            {errors.acceptPrivacy}
+            No puede enviar la solicitud sin haber aceptado el aviso legal y política de privacidad.
           </p>
         )}
       </div>
