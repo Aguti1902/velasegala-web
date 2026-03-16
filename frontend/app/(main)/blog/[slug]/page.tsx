@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { BlogFeaturedImage } from "@/components/blog/BlogFeaturedImage";
 import { notFound } from "next/navigation";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { Calendar, Clock, Tag, Folder, ArrowLeft, ArrowRight, Sparkles } from "lucide-react";
@@ -249,11 +250,9 @@ export default async function BlogPostPage({
               {/* Featured Image */}
               {post.featuredImage && (
                 <div className="relative aspect-video rounded-2xl overflow-hidden mb-8 shadow-xl">
-                  <Image
+                  <BlogFeaturedImage
                     src={post.featuredImage}
                     alt={post.title}
-                    fill
-                    className="object-cover"
                     priority
                   />
                 </div>
@@ -356,10 +355,9 @@ export default async function BlogPostPage({
                             {/* Image */}
                             {relatedPost.featuredImage && (
                               <div className="relative aspect-video bg-gray-100">
-                                <Image
+                                <BlogFeaturedImage
                                   src={relatedPost.featuredImage}
                                   alt={relatedPost.title}
-                                  fill
                                   className="object-cover group-hover:scale-105 transition-transform duration-300"
                                 />
                               </div>

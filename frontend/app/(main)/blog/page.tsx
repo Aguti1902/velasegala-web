@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { Search, Calendar, Clock, Tag, Folder } from "lucide-react";
 import { getApiUrl } from "@/lib/config";
@@ -38,6 +38,32 @@ interface Post {
 }
 
 const POSTS_PER_PAGE = 6;
+
+function BlogImage({ src, alt }: { src: string | null; alt: string }) {
+  const [imgError, setImgError] = useState(false);
+
+  const handleError = useCallback(() => setImgError(true), []);
+
+  if (!src || imgError) {
+    return (
+      <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex flex-col items-center justify-center gap-2">
+        <span className="text-5xl">🦷</span>
+        <span className="text-xs text-slate-400 text-center px-4 line-clamp-2">{alt}</span>
+      </div>
+    );
+  }
+
+  return (
+    <Image
+      src={src}
+      alt={alt}
+      fill
+      className="object-cover hover:scale-110 transition-transform duration-300"
+      onError={handleError}
+      unoptimized
+    />
+  );
+}
 
 export default function BlogPage() {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -375,17 +401,8 @@ export default function BlogPage() {
                     >
                       {/* Image */}
                       <Link href={`/blog/${post.slug}`}>
-                        <div className="aspect-video bg-gradient-to-br from-gray-100 to-gray-50 flex items-center justify-center overflow-hidden relative">
-                          {post.featuredImage ? (
-                            <Image
-                              src={post.featuredImage}
-                              alt={post.title}
-                              fill
-                              className="object-cover hover:scale-110 transition-transform duration-300"
-                            />
-                          ) : (
-                            <div className="text-6xl">📝</div>
-                          )}
+                        <div className="aspect-video bg-gradient-to-br from-gray-100 to-gray-50 overflow-hidden relative">
+                          <BlogImage src={post.featuredImage} alt={post.title} />
                         </div>
                       </Link>
 
