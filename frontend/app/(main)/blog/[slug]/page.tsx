@@ -145,9 +145,14 @@ export async function generateMetadata({
   return {
     title: post.metaTitle || post.title,
     description: post.metaDescription || post.excerpt,
+    alternates: {
+      canonical: `/blog/${post.slug}`,
+    },
     openGraph: {
       title: post.title,
       description: post.excerpt,
+      type: 'article',
+      publishedTime: post.publishAt,
       images: post.featuredImage ? [post.featuredImage] : [],
     },
   };

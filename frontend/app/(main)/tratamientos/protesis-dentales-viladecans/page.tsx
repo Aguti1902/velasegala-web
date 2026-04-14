@@ -40,6 +40,9 @@ const TREATMENT_FAQS = [
 ];
 
 export const metadata: Metadata = {
+  alternates: {
+    canonical: '/tratamientos/protesis-dentales-viladecans',
+  },
   title: "Prótesis Dentales en Viladecans | Fijas y Removibles",
   description:
     "Prótesis dentales en Viladecans. Prótesis fijas sobre implantes, prótesis removibles y coronas de zirconio. Recupera funcionalidad y estética. Primera visita gratuita.",

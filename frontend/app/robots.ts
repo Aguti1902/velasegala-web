@@ -1,14 +1,17 @@
 import { MetadataRoute } from 'next';
-import { SITE_CONFIG } from '@/lib/constants';
+
+const PROD_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.velasegalaviladecans.com';
 
 export default function robots(): MetadataRoute.Robots {
   return {
-    rules: {
-      userAgent: '*',
-      allow: '/',
-      disallow: ['/admin/', '/api/'],
-    },
-    sitemap: `${SITE_CONFIG.url}/sitemap.xml`,
+    rules: [
+      {
+        userAgent: '*',
+        allow: '/',
+        disallow: ['/admin/', '/api/'],
+      },
+    ],
+    sitemap: `${PROD_URL}/sitemap.xml`,
+    host: PROD_URL,
   };
 }
-

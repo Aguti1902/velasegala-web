@@ -6,6 +6,9 @@ import { CLINIC_INFO } from "@/lib/constants";
 import { MapPin, Phone, Mail, Clock, Calendar } from "lucide-react";
 
 export const metadata: Metadata = {
+  alternates: {
+    canonical: '/contacto',
+  },
   title: "Contacto - Clínica Dental Vela-Segalà Viladecans",
   description:
     `Contacta con nuestra clínica dental en Viladecans. ${CLINIC_INFO.address.street}, ${CLINIC_INFO.address.city}. Teléfono: ${CLINIC_INFO.phoneDisplay}. Email: ${CLINIC_INFO.email}.`,

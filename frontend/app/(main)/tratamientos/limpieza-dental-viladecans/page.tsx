@@ -39,6 +39,9 @@ const TREATMENT_FAQS = [
 ];
 
 export const metadata: Metadata = {
+  alternates: {
+    canonical: '/tratamientos/limpieza-dental-viladecans',
+  },
   title: "Limpieza Dental Profesional en Viladecans | Higiene Bucodental",
   description:
     "Limpieza dental profesional en Viladecans. Higiene bucodental completa con ultrasonidos. Prevención de caries y enfermedades periodontales. Recomendable cada 6-12 meses.",

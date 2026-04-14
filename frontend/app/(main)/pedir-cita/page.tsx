@@ -6,6 +6,9 @@ import { CLINIC_INFO } from "@/lib/constants";
 import { Calendar, Clock, CheckCircle, Phone, Award } from "lucide-react";
 
 export const metadata: Metadata = {
+  alternates: {
+    canonical: '/pedir-cita',
+  },
   title: "Pedir Cita | Clínica Dental Vela-Segalà Viladecans",
   description:
     `Pide tu cita en nuestra clínica dental de Viladecans. Diagnóstico completo y plan de tratamiento personalizado. Llámanos al ${CLINIC_INFO.phoneDisplay} o rellena el formulario online.`,

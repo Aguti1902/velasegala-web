@@ -40,6 +40,9 @@ const TREATMENT_FAQS = [
 ];
 
 export const metadata: Metadata = {
+  alternates: {
+    canonical: '/tratamientos/periodoncia-viladecans',
+  },
   title: "Periodoncia en Viladecans | Tratamiento de Encías y Piorrea",
   description:
     "Periodoncia en Viladecans. Tratamiento de encías, gingivitis, periodontitis y piorrea. Especialistas en enfermedades periodontales. Primera visita gratuita. Clínica Vela-Segalà.",

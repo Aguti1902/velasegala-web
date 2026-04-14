@@ -40,6 +40,9 @@ const TREATMENT_FAQS = [
 ];
 
 export const metadata: Metadata = {
+  alternates: {
+    canonical: '/tratamientos/bruxismo-viladecans',
+  },
   title: "Tratamiento del Bruxismo en Viladecans | Férula de Descarga",
   description:
     "Tratamiento del bruxismo en Viladecans. Férulas de descarga personalizadas a medida. Protege tus dientes del desgaste. Alivia el dolor de mandíbula. Primera visita gratuita.",

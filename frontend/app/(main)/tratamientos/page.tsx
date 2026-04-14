@@ -20,6 +20,9 @@ import {
 } from "lucide-react";
 
 export const metadata: Metadata = {
+  alternates: {
+    canonical: '/tratamientos',
+  },
   title: "Tratamientos Dentales en Viladecans | Clínica Vela-Segalà",
   description:
     "Todos los tratamientos dentales en Viladecans. Implantes dentales, ortodoncia invisible, estética dental, blanqueamiento, periodoncia, endodoncia y más.",

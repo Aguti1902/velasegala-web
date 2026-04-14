@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { Hero } from "@/components/home/Hero";
 import { TreatmentsGrid } from "@/components/home/TreatmentsGrid";
 import { DoctorsSection } from "@/components/home/DoctorsSection";
@@ -6,6 +7,12 @@ import { GoogleReviewsCarousel } from "@/components/reviews/GoogleReviewsCarouse
 import { BlogSection } from "@/components/home/BlogSection";
 import { BeforeAfterGallery } from "@/components/gallery/BeforeAfterGallery";
 import { CTASection } from "@/components/home/CTASection";
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: '/',
+  },
+};
 
 export default function HomePage() {
   return (

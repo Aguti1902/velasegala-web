@@ -19,8 +19,13 @@ const poppins = Poppins({
   display: "swap",
 });
 
+const PROD_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.velasegalaviladecans.com';
+
 export const metadata: Metadata = {
-  metadataBase: new URL(SITE_CONFIG.url),
+  metadataBase: new URL(PROD_URL),
+  alternates: {
+    canonical: '/',
+  },
   title: {
     default: `${CLINIC_INFO.name} - Tu Dentista de Confianza en Viladecans`,
     template: `%s | ${CLINIC_INFO.name}`,
@@ -38,7 +43,7 @@ export const metadata: Metadata = {
     shortcut: "/images/Logos/FAVICON.png",
   },
   description:
-    "Clínica dental en Viladecans con más de X años de experiencia. Implantes dentales, ortodoncia invisible, estética dental y más. Calidad y servicio de excelencia. ¡Pide tu cita!",
+    "Clínica dental en Viladecans con más de 25 años de experiencia. Implantes dentales, ortodoncia invisible, estética dental y más. Calidad y servicio de excelencia. ¡Pide tu cita!",
   keywords: [
     "clínica dental viladecans",
     "dentista viladecans",
@@ -64,7 +69,7 @@ export const metadata: Metadata = {
     siteName: CLINIC_INFO.name,
     title: `${CLINIC_INFO.name} - Tu Dentista de Confianza en Viladecans`,
     description:
-      "Clínica dental en Viladecans con más de X años de experiencia. Implantes dentales, ortodoncia invisible, estética dental y más. Calidad y servicio de excelencia.",
+      "Clínica dental en Viladecans con más de 25 años de experiencia. Implantes dentales, ortodoncia invisible, estética dental y más. Calidad y servicio de excelencia.",
     images: [
       {
         url: `${SITE_CONFIG.url}/og-image.jpg`,

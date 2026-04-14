@@ -39,6 +39,9 @@ const TREATMENT_FAQS = [
 ];
 
 export const metadata: Metadata = {
+  alternates: {
+    canonical: '/tratamientos/urgencias-dentales-viladecans',
+  },
   title: "Urgencias Dentales en Viladecans | Cita el Mismo Día",
   description:
     "Atención dental de urgencia en Viladecans. Tratamos dolor de muelas, dientes rotos, infecciones y traumatismos. Cita el mismo día. Resolvemos tu urgencia rápidamente.",

@@ -40,6 +40,9 @@ const TREATMENT_FAQS = [
 ];
 
 export const metadata: Metadata = {
+  alternates: {
+    canonical: '/tratamientos/ortodoncia-invisible-viladecans',
+  },
   title: "Ortodoncia Invisible en Viladecans | Clínica Vela-Segalà",
   description:
     `Ortodoncia invisible en Viladecans con sistemas Invisalign y Spark. Ortodoncistas certificados con +25 años de experiencia. Alineadores transparentes removibles. Sin brackets metálicos. Financiación sin intereses. Llama al ${CLINIC_INFO.phoneDisplay}`,

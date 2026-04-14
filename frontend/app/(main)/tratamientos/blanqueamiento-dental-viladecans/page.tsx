@@ -40,6 +40,9 @@ const TREATMENT_FAQS = [
 ];
 
 export const metadata: Metadata = {
+  alternates: {
+    canonical: '/tratamientos/blanqueamiento-dental-viladecans',
+  },
   title: "Blanqueamiento Dental en Viladecans | Clínica Vela-Segalà",
   description:
     `Blanqueamiento dental profesional en Viladecans. Tecnología LED avanzada. Dientes varios tonos más blancos en 1 sesión. Primera visita gratuita. Tratamiento seguro e indoloro. Llama al ${CLINIC_INFO.phoneDisplay}`,

@@ -46,6 +46,9 @@ const TREATMENT_FAQS = [
 ];
 
 export const metadata: Metadata = {
+  alternates: {
+    canonical: '/tratamientos/implantes-dentales-viladecans',
+  },
   title: "Implantes Dentales en Viladecans | Especialistas Vela-Segalà",
   description:
     `Implantes dentales en Viladecans con el Dr. Xavier Vela, eminencia en implantología. Especialistas con +25 años de experiencia. Marcas premium Straumann y Nobel Biocare. Técnica BOPT. Primera visita gratuita. Financiación sin intereses. Dientes en el día. Sedación consciente disponible. Llama al ${CLINIC_INFO.phoneDisplay}`,
