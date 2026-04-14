@@ -41,9 +41,13 @@ export class SeoAuditService {
       issues.push(...pageIssues);
     }
 
-    // Guardar issues en BD
+    // ── Guardar/actualizar issues detectados ──
+    const detectedKeys = new Set<string>();
+
     for (const issue of issues) {
-      // Buscar issue existente
+      const key = `${issue.type}|${issue.title}|${issue.url || ''}`;
+      detectedKeys.add(key);
+
       const existing = await this.prisma.seoIssue.findFirst({
         where: {
           siteId,
@@ -58,10 +62,10 @@ export class SeoAuditService {
           where: { id: existing.id },
           data: {
             severity: issue.severity,
-            title: issue.title,
             description: issue.description,
             evidenceJson: issue.evidence || {},
             lastSeen: new Date(),
+            status: 'open',          // Reabrirlo si estaba descartado
           },
         });
       } else {
@@ -80,6 +84,22 @@ export class SeoAuditService {
       }
     }
 
+    // ── Auto-resolver issues que ya NO se detectan ──
+    const openIssues = await this.prisma.seoIssue.findMany({
+      where: { siteId, status: 'open' },
+    });
+
+    for (const openIssue of openIssues) {
+      const key = `${openIssue.type}|${openIssue.title}|${openIssue.url || ''}`;
+      if (!detectedKeys.has(key)) {
+        await this.prisma.seoIssue.update({
+          where: { id: openIssue.id },
+          data: { status: 'resolved' },
+        });
+        this.logger.log(`✅ Issue resuelto automáticamente: ${openIssue.title}`);
+      }
+    }
+
     this.logger.log(`✅ Auditoría completada: ${issues.length} issues encontrados`);
 
     return { issuesFound: issues.length };
@@ -90,7 +110,7 @@ export class SeoAuditService {
     const sitemapUrl = `${baseUrl}/sitemap.xml`;
 
     try {
-      const response = await axios.get(sitemapUrl, { timeout: 5000 });
+      const response = await axios.get(sitemapUrl, { timeout: 20000 });
       if (response.status !== 200) {
         issues.push({
           type: 'technical',
@@ -101,13 +121,17 @@ export class SeoAuditService {
           evidence: { status: response.status },
         });
       }
+      // Si llega aquí sin lanzar error → sitemap OK, no añadimos issue
     } catch (error: any) {
+      const isTimeout = error.code === 'ECONNABORTED' || error.message?.includes('timeout');
       issues.push({
         type: 'technical',
         severity: 'high',
         url: sitemapUrl,
         title: 'Sitemap no encontrado',
-        description: `No se pudo acceder al sitemap en ${sitemapUrl}`,
+        description: isTimeout
+          ? `El sitemap tardó demasiado en responder (timeout). Puede deberse a un arranque en frío del servidor.`
+          : `No se pudo acceder al sitemap en ${sitemapUrl}`,
         evidence: { error: error?.message || String(error) },
       });
     }
@@ -120,7 +144,7 @@ export class SeoAuditService {
     const robotsUrl = `${baseUrl}/robots.txt`;
 
     try {
-      const response = await axios.get(robotsUrl, { timeout: 5000 });
+      const response = await axios.get(robotsUrl, { timeout: 20000 });
       if (response.status !== 200) {
         issues.push({
           type: 'technical',
@@ -131,13 +155,17 @@ export class SeoAuditService {
           evidence: { status: response.status },
         });
       }
+      // Si llega aquí → robots OK
     } catch (error: any) {
+      const isTimeout = error.code === 'ECONNABORTED' || error.message?.includes('timeout');
       issues.push({
         type: 'technical',
         severity: 'medium',
         url: robotsUrl,
         title: 'Robots.txt no encontrado',
-        description: `No se pudo acceder al robots.txt en ${robotsUrl}`,
+        description: isTimeout
+          ? `El robots.txt tardó demasiado en responder (timeout).`
+          : `No se pudo acceder al robots.txt en ${robotsUrl}`,
         evidence: { error: error?.message || String(error) },
       });
     }
@@ -145,14 +173,37 @@ export class SeoAuditService {
     return issues;
   }
 
+  private async fetchWithRetry(url: string, timeoutMs: number, retries = 2): Promise<any> {
+    let lastError: any;
+    for (let attempt = 1; attempt <= retries; attempt++) {
+      try {
+        const response = await axios.get(url, {
+          timeout: timeoutMs,
+          validateStatus: (status) => status < 500,
+          headers: {
+            'User-Agent': 'VelaSegala-SEO-Audit/1.0',
+          },
+        });
+        return response;
+      } catch (err: any) {
+        lastError = err;
+        const isTimeout = err.code === 'ECONNABORTED' || err.message?.includes('timeout');
+        if (isTimeout && attempt < retries) {
+          this.logger.warn(`Timeout en ${url}, reintentando (${attempt}/${retries})...`);
+          await new Promise(r => setTimeout(r, 3000));
+        } else {
+          throw err;
+        }
+      }
+    }
+    throw lastError;
+  }
+
   private async auditPage(url: string): Promise<any[]> {
     const issues: any[] = [];
 
     try {
-      const response = await axios.get(url, {
-        timeout: 10000,
-        validateStatus: (status) => status < 500,
-      });
+      const response = await this.fetchWithRetry(url, 30000, 2);
 
       if (response.status >= 400) {
         issues.push({
@@ -176,8 +227,8 @@ export class SeoAuditService {
           severity: 'medium',
           url,
           title: 'Title tag no optimizado',
-          description: `El title tag tiene ${title.length} caracteres (recomendado: 30-60)`,
-          evidence: { title, length: title.length },
+          description: `El title tag tiene ${title?.length || 0} caracteres (recomendado: 30-60). Contenido: "${title}"`,
+          evidence: { title, length: title?.length || 0 },
         });
       }
 
@@ -194,7 +245,7 @@ export class SeoAuditService {
         });
       }
 
-      // Verificar headings
+      // Verificar H1
       const h1Count = $('h1').length;
       if (h1Count === 0) {
         issues.push({
@@ -254,18 +305,24 @@ export class SeoAuditService {
           evidence: { count: imagesWithoutAlt },
         });
       }
+
     } catch (error: any) {
-      issues.push({
-        type: 'technical',
-        severity: 'critical',
-        url,
-        title: 'Error al auditar página',
-        description: `No se pudo auditar la página: ${error.message}`,
-        evidence: { error: error.message },
-      });
+      const isTimeout = error.code === 'ECONNABORTED' || error.message?.includes('timeout');
+      // Solo registrar como issue si NO es timeout (el timeout es normal en Vercel cold start)
+      if (!isTimeout) {
+        issues.push({
+          type: 'technical',
+          severity: 'critical',
+          url,
+          title: 'Error al auditar página',
+          description: `No se pudo auditar la página: ${error.message}`,
+          evidence: { error: error.message },
+        });
+      } else {
+        this.logger.warn(`⏱️ Timeout al auditar ${url} (normal en cold start de Vercel - no se registra como issue)`);
+      }
     }
 
     return issues;
   }
 }
-

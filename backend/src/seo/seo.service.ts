@@ -411,9 +411,17 @@ export class SeoService {
 
   // ===== TECHNICAL SEO =====
 
+  async resolveAllIssues(siteId: string) {
+    const result = await this.prisma.seoIssue.updateMany({
+      where: { siteId, status: 'open' },
+      data: { status: 'resolved' },
+    });
+    return { resolved: result.count };
+  }
+
   async getTechnicalSeo(siteId: string) {
     const issues = await this.prisma.seoIssue.findMany({
-      where: { siteId },
+      where: { siteId, status: 'open' },   // Solo issues abiertos
       orderBy: [
         { severity: 'asc' },
         { firstSeen: 'desc' },

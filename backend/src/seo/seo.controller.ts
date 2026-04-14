@@ -113,6 +113,11 @@ export class SeoController {
     return this.seoService.getTechnicalSeo(siteId);
   }
 
+  @Post('sites/:siteId/resolve-all-issues')
+  async resolveAllIssues(@Param('siteId') siteId: string) {
+    return this.seoService.resolveAllIssues(siteId);
+  }
+
   // ===== RECOMMENDATIONS =====
 
   @Get('sites/:siteId/recommendations')
