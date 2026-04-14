@@ -37,12 +37,6 @@ interface Post {
   content: string;
 }
 
-export const metadata = {
-  alternates: {
-    canonical: '/blog',
-  },
-};
-
 const POSTS_PER_PAGE = 6;
 
 function BlogImage({ src, alt }: { src: string | null; alt: string }) {
