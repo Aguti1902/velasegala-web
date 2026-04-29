@@ -237,7 +237,7 @@ export default function OrtodonciaInvisiblePage() {
               { src: "/images/ortodoncia-invisible-alineador-viladecans.jpg", alt: "Alineador transparente ortodoncia invisible Viladecans" },
               { src: "/images/ortodoncia-invisible-modelo-viladecans.jpg", alt: "Modelo dental con alineadores invisibles - Clínica Vela-Segalà" },
               { src: "/images/ortodoncia-brackets-metalicos-viladecans.jpg", alt: "Modelo dental con brackets metálicos - ortodoncia Viladecans" },
-              { src: "/images/ortodoncia-brackets-modelo-viladecans.jpg", alt: "Brackets estéticos y cerámicos - ortodoncia Clínica Vela-Segalà Viladecans" },
+              { src: "/images/ortodoncia-interior-modelo-brackets-viladecans.jpg", alt: "Interior modelo dental con brackets - ortodoncia Clínica Vela-Segalà Viladecans" },
               { src: "/images/ortodoncia-brackets-modelo2-viladecans.jpg", alt: "Modelo de ortodoncia con brackets - Clínica Vela-Segalà Viladecans" },
               { src: "/images/ortodoncia-modelo-dental-viladecans.jpg", alt: "Modelo dental - ortodoncia en Viladecans" },
             ].map((img, i) => (
