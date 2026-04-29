@@ -372,44 +372,35 @@ export default function SeoPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="max-w-7xl mx-auto">
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-start justify-between mb-8">
         <div>
-          <h1 className="text-3xl font-bold text-black mb-2">SEO Dashboard</h1>
-          <p className="text-gray-600">
-            Análisis de posicionamiento, keywords y recomendaciones SEO
-          </p>
+          <h1 className="text-3xl font-black text-black">SEO Dashboard</h1>
+          <p className="text-slate-500 mt-1">Posicionamiento, issues técnicos y plan de acción para todas tus webs</p>
         </div>
-        <div className="flex items-center gap-4">
-          <select
-            value={selectedSiteId || ""}
-            onChange={(e) => setSelectedSiteId(e.target.value)}
-            className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => setShowCreateForm(true)}
+            className="inline-flex items-center gap-2 px-4 py-2.5 border-2 border-gray-200 rounded-xl text-sm font-semibold hover:border-gray-400 transition-colors"
           >
-            {sites.map((site) => (
-              <option key={site.id} value={site.id}>
-                {site.domain}
-              </option>
-            ))}
-          </select>
+            <Plus className="w-4 h-4" /> Añadir web
+          </button>
           <button
             onClick={handleDiscoverKeywords}
-            disabled={isDiscovering}
-            className="flex items-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors disabled:opacity-50"
-            title="Descubrir nuevas keywords con alto volumen de búsqueda"
+            disabled={isDiscovering || !selectedSiteId}
+            className="inline-flex items-center gap-2 px-4 py-2.5 bg-purple-600 text-white rounded-xl text-sm font-bold hover:bg-purple-700 transition-colors disabled:opacity-40"
           >
             <Lightbulb className={`w-4 h-4 ${isDiscovering ? "animate-pulse" : ""}`} />
-            {isDiscovering ? "Descubriendo..." : "Descubrir Keywords"}
+            {isDiscovering ? "Descubriendo..." : "Keywords"}
           </button>
           <button
             onClick={handleGenerateReport}
-            disabled={isGeneratingReport}
-            className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors disabled:opacity-50"
-            title="Generar informe PDF mensual"
+            disabled={isGeneratingReport || !selectedSiteId}
+            className="inline-flex items-center gap-2 px-4 py-2.5 bg-black text-white rounded-xl text-sm font-bold hover:bg-gray-800 transition-colors disabled:opacity-40"
           >
             <FileText className={`w-4 h-4 ${isGeneratingReport ? "animate-pulse" : ""}`} />
-            {isGeneratingReport ? "Generando..." : "Generar PDF"}
+            {isGeneratingReport ? "Generando..." : "PDF"}
           </button>
         </div>
       </div>
@@ -422,75 +413,38 @@ export default function SeoPage() {
         />
       )}
 
-      {/* Formulario crear sitio (overlay) */}
+      {/* Formulario crear sitio (modal) */}
       {showCreateForm && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-lg p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            <h2 className="text-xl font-bold mb-4">Crear Nuevo Sitio</h2>
+        <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl p-7 max-w-lg w-full shadow-2xl">
+            <h2 className="text-xl font-black mb-1">Añadir nueva web</h2>
+            <p className="text-sm text-slate-500 mb-5">Introduce el dominio para empezar a analizar su SEO</p>
             <form onSubmit={handleCreateSite} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Dominio <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="text"
-                  value={newSite.domain}
+                <label className="block text-sm font-semibold text-gray-700 mb-1.5">Dominio <span className="text-red-500">*</span></label>
+                <input type="text" value={newSite.domain}
                   onChange={(e) => setNewSite({ ...newSite, domain: e.target.value })}
-                  placeholder="www.velasegalaviladecans.com"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
-                  required
-                />
-                <p className="text-xs text-gray-500 mt-1">Sin https://, solo el dominio</p>
+                  placeholder="esteticavelasegala.com"
+                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-black transition-colors text-sm"
+                  required />
+                <p className="text-xs text-gray-400 mt-1">Sin https://, solo el dominio</p>
               </div>
-
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Google Search Console Property (Opcional)
-                </label>
-                <input
-                  type="text"
-                  value={newSite.gscProperty}
+                <label className="block text-sm font-semibold text-gray-700 mb-1.5">Google Search Console (Opcional)</label>
+                <input type="text" value={newSite.gscProperty}
                   onChange={(e) => setNewSite({ ...newSite, gscProperty: e.target.value })}
-                  placeholder="https://www.velasegalaviladecans.com"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
-                />
-                <p className="text-xs text-gray-500 mt-1">URL completa de la propiedad en GSC (necesario para sincronizar datos)</p>
+                  placeholder="https://esteticavelasegala.com"
+                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-black transition-colors text-sm" />
+                <p className="text-xs text-gray-400 mt-1">Necesario para datos de clics e impresiones reales</p>
               </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  País por defecto
-                </label>
-                <select
-                  value={newSite.countryDefault}
-                  onChange={(e) => setNewSite({ ...newSite, countryDefault: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
-                >
-                  <option value="ES">España (ES)</option>
-                  <option value="US">Estados Unidos (US)</option>
-                  <option value="GB">Reino Unido (GB)</option>
-                  <option value="FR">Francia (FR)</option>
-                  <option value="DE">Alemania (DE)</option>
-                  <option value="IT">Italia (IT)</option>
-                </select>
-              </div>
-
-              <div className="flex items-center gap-3 pt-4">
-                <button
-                  type="submit"
-                  className="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors"
-                >
-                  <Plus className="w-5 h-5" />
-                  Crear Sitio
+              <div className="flex gap-3 pt-2">
+                <button type="submit"
+                  className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 bg-black text-white rounded-xl font-bold hover:bg-gray-800 transition-colors">
+                  <Plus className="w-4 h-4" /> Añadir web
                 </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setShowCreateForm(false);
-                    setNewSite({ domain: "", gscProperty: "", countryDefault: "ES" });
-                  }}
-                  className="px-6 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
-                >
+                <button type="button"
+                  onClick={() => { setShowCreateForm(false); setNewSite({ domain: "", gscProperty: "", countryDefault: "ES" }); }}
+                  className="px-5 py-3 border-2 border-gray-200 rounded-xl font-semibold hover:bg-gray-50 transition-colors">
                   Cancelar
                 </button>
               </div>
@@ -499,47 +453,66 @@ export default function SeoPage() {
         </div>
       )}
 
-      {/* Tabs */}
+      {/* Selector de web activa + Tabs */}
       {selectedSiteId && !showCreateForm && (
-        <Tabs defaultValue="overview" className="w-full">
-          <TabsList className="grid w-full grid-cols-7 mb-6">
-            <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="keywords">Keywords</TabsTrigger>
-            <TabsTrigger value="opportunities">Oportunidades</TabsTrigger>
-            <TabsTrigger value="competitors">Competencia</TabsTrigger>
-            <TabsTrigger value="comparison">Comparativa</TabsTrigger>
-            <TabsTrigger value="technical">Técnico</TabsTrigger>
-            <TabsTrigger value="recommendations">Recomendaciones</TabsTrigger>
-          </TabsList>
+        <div>
+          {/* Web seleccionada */}
+          {sites.length > 1 && (
+            <div className="flex items-center gap-3 mb-5">
+              <span className="text-sm font-semibold text-slate-500">Analizando:</span>
+              <div className="flex gap-2">
+                {sites.map(s => (
+                  <button key={s.id} onClick={() => setSelectedSiteId(s.id)}
+                    className={`px-4 py-2 rounded-xl text-sm font-bold transition-all ${
+                      selectedSiteId === s.id ? "bg-black text-white shadow-sm" : "bg-gray-100 text-slate-600 hover:bg-gray-200"
+                    }`}>
+                    {s.domain}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
 
-          <TabsContent value="overview">
-            <SeoOverview siteId={selectedSiteId} />
-          </TabsContent>
+          <Tabs defaultValue="plan" className="w-full">
+            <TabsList className="flex w-full bg-gray-100 rounded-2xl p-1 mb-7 gap-1 h-auto">
+              {[
+                { value: "plan",          label: "🎯 Plan de Acción" },
+                { value: "technical",     label: "🔧 Técnico" },
+                { value: "overview",      label: "📊 Overview" },
+                { value: "keywords",      label: "🔑 Keywords" },
+                { value: "opportunities", label: "💡 Oportunidades" },
+                { value: "competitors",   label: "🏆 Competencia" },
+                { value: "comparison",    label: "📈 Comparativa" },
+              ].map(tab => (
+                <TabsTrigger key={tab.value} value={tab.value}
+                  className="flex-1 rounded-xl py-2.5 text-xs font-semibold data-[state=active]:bg-white data-[state=active]:shadow-sm transition-all">
+                  {tab.label}
+                </TabsTrigger>
+              ))}
+            </TabsList>
 
-          <TabsContent value="keywords">
-            <SeoKeywords siteId={selectedSiteId} />
-          </TabsContent>
-
-          <TabsContent value="opportunities">
-            <SeoOpportunities siteId={selectedSiteId} />
-          </TabsContent>
-
-          <TabsContent value="competitors">
-            <SeoCompetitors siteId={selectedSiteId} />
-          </TabsContent>
-
-          <TabsContent value="comparison">
-            <SeoCompetitorComparison siteId={selectedSiteId} />
-          </TabsContent>
-
-          <TabsContent value="technical">
-            <SeoTechnical siteId={selectedSiteId} />
-          </TabsContent>
-
-          <TabsContent value="recommendations">
-            <SeoRecommendations siteId={selectedSiteId} />
-          </TabsContent>
-        </Tabs>
+            <TabsContent value="plan">
+              <SeoRecommendations siteId={selectedSiteId} />
+            </TabsContent>
+            <TabsContent value="technical">
+              <SeoTechnical siteId={selectedSiteId} />
+            </TabsContent>
+            <TabsContent value="overview">
+              <SeoOverview siteId={selectedSiteId} />
+            </TabsContent>
+            <TabsContent value="keywords">
+              <SeoKeywords siteId={selectedSiteId} />
+            </TabsContent>
+            <TabsContent value="opportunities">
+              <SeoOpportunities siteId={selectedSiteId} />
+            </TabsContent>
+            <TabsContent value="competitors">
+              <SeoCompetitors siteId={selectedSiteId} />
+            </TabsContent>
+            <TabsContent value="comparison">
+              <SeoCompetitorComparison siteId={selectedSiteId} />
+            </TabsContent>
+          </Tabs>
       )}
     </div>
   );
