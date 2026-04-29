@@ -241,13 +241,13 @@ export default function OrtodonciaInvisiblePage() {
               { src: "/images/ortodoncia-brackets-modelo2-viladecans.jpg", alt: "Modelo de ortodoncia con brackets - Clínica Vela-Segalà Viladecans" },
               { src: "/images/ortodoncia-modelo-dental-viladecans.jpg", alt: "Modelo dental - ortodoncia en Viladecans" },
             ].map((img, i) => (
-              <div key={i} className="aspect-square relative rounded-2xl overflow-hidden shadow-md bg-gray-100">
+              <div key={i} className="aspect-square relative rounded-2xl overflow-hidden shadow-md bg-black">
                 <Image
                   src={img.src}
                   alt={img.alt}
                   fill
                   sizes="(max-width: 768px) 50vw, 33vw"
-                  className="object-cover hover:scale-105 transition-transform duration-300"
+                  className="object-contain"
                   unoptimized
                 />
               </div>
