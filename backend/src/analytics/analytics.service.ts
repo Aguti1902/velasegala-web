@@ -222,6 +222,9 @@ export class AnalyticsService {
             { name: 'averageSessionDuration' },
             { name: 'screenPageViews' },
             { name: 'conversions' },
+            { name: 'advertiserAdCost' },        // Gasto (requiere Ads vinculado a GA4)
+            { name: 'advertiserAdClicks' },       // Clics de anuncio
+            { name: 'advertiserAdImpressions' },  // Impresiones
           ],
           orderBys: [{ metric: { metricName: 'sessions' }, desc: true }],
           limit: 20,
@@ -280,17 +283,29 @@ export class AnalyticsService {
         }),
       ]);
 
-      const campaigns = (campaignsRes[0].rows || []).map(row => ({
-        campaign: row.dimensionValues?.[0]?.value || '(sin campaña)',
-        source: row.dimensionValues?.[1]?.value || '',
-        medium: row.dimensionValues?.[2]?.value || '',
-        sessions: parseInt(row.metricValues?.[0]?.value || '0'),
-        users: parseInt(row.metricValues?.[1]?.value || '0'),
-        bounceRate: Math.round(parseFloat(row.metricValues?.[2]?.value || '0') * 1000) / 10,
-        avgDuration: Math.round(parseFloat(row.metricValues?.[3]?.value || '0')),
-        pageViews: parseInt(row.metricValues?.[4]?.value || '0'),
-        conversions: parseFloat(row.metricValues?.[5]?.value || '0'),
-      }));
+      const campaigns = (campaignsRes[0].rows || []).map(row => {
+        const cost = parseFloat(row.metricValues?.[6]?.value || '0');
+        const clicks = parseInt(row.metricValues?.[7]?.value || '0');
+        const impressions = parseInt(row.metricValues?.[8]?.value || '0');
+        const conversions = parseFloat(row.metricValues?.[5]?.value || '0');
+        return {
+          campaign: row.dimensionValues?.[0]?.value || '(sin campaña)',
+          source: row.dimensionValues?.[1]?.value || '',
+          medium: row.dimensionValues?.[2]?.value || '',
+          sessions: parseInt(row.metricValues?.[0]?.value || '0'),
+          users: parseInt(row.metricValues?.[1]?.value || '0'),
+          bounceRate: Math.round(parseFloat(row.metricValues?.[2]?.value || '0') * 1000) / 10,
+          avgDuration: Math.round(parseFloat(row.metricValues?.[3]?.value || '0')),
+          pageViews: parseInt(row.metricValues?.[4]?.value || '0'),
+          conversions,
+          cost: Math.round(cost * 100) / 100,
+          clicks,
+          impressions,
+          cpc: clicks > 0 ? Math.round((cost / clicks) * 100) / 100 : 0,
+          cpa: conversions > 0 ? Math.round((cost / conversions) * 100) / 100 : 0,
+          ctr: impressions > 0 ? Math.round((clicks / impressions) * 10000) / 100 : 0,
+        };
+      });
 
       const channelGroups = (channelsRes[0].rows || []).map(row => ({
         channel: row.dimensionValues?.[0]?.value || 'Other',

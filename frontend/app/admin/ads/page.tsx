@@ -24,6 +24,12 @@ interface Campaign {
   avgDuration: number;
   pageViews: number;
   conversions: number;
+  cost: number;
+  clicks: number;
+  impressions: number;
+  cpc: number;
+  cpa: number;
+  ctr: number;
 }
 
 interface ChannelGroup {
@@ -181,6 +187,16 @@ export default function AdsPage() {
   const paidSessions = paidData.reduce((s, c) => s + c.sessions, 0);
   const paidPct = totalSessions > 0 ? Math.round((paidSessions / totalSessions) * 100) : 0;
 
+  // Métricas de Ads (disponibles si Google Ads está vinculado a GA4)
+  const totalCost = data.campaigns.reduce((s, c) => s + (c.cost || 0), 0);
+  const totalClicks = data.campaigns.reduce((s, c) => s + (c.clicks || 0), 0);
+  const totalImpressions = data.campaigns.reduce((s, c) => s + (c.impressions || 0), 0);
+  const totalConversions = data.campaigns.reduce((s, c) => s + c.conversions, 0);
+  const avgCpc = totalClicks > 0 ? totalCost / totalClicks : 0;
+  const avgCpa = totalConversions > 0 ? totalCost / totalConversions : 0;
+  const avgCtr = totalImpressions > 0 ? (totalClicks / totalImpressions) * 100 : 0;
+  const hasAdsData = totalCost > 0 || totalClicks > 0;
+
   const pieData = data.channelGroups.map((c, i) => ({
     name: c.channel,
     value: c.sessions,
@@ -234,55 +250,65 @@ export default function AdsPage() {
 
       {/* KPIs principales */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <StatCard
-          label="Sesiones totales"
-          value={totalSessions.toLocaleString()}
-          sub={`Últimos ${days} días`}
-          icon={BarChart3}
-          color="bg-indigo-600"
-        />
-        <StatCard
-          label="Usuarios únicos"
-          value={data.channelGroups.reduce((s, c) => s + c.users, 0).toLocaleString()}
-          icon={Users}
-          color="bg-blue-600"
-        />
-        <StatCard
-          label="Conversiones"
-          value={data.channelGroups.reduce((s, c) => s + c.conversions, 0).toFixed(0)}
-          sub="Eventos de conversión GA4"
-          icon={Target}
-          color="bg-green-600"
-        />
-        <StatCard
-          label="Tráfico de pago"
-          value={`${paidPct}%`}
-          sub={`${paidSessions.toLocaleString()} sesiones CPC`}
-          icon={Megaphone}
-          color="bg-orange-500"
-        />
+        {hasAdsData ? (
+          <>
+            <StatCard label="Gasto total" value={`${totalCost.toLocaleString("es-ES", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €`}
+              sub={`Últimos ${days} días`} icon={TrendingUp} color="bg-red-600" />
+            <StatCard label="Clics totales" value={totalClicks.toLocaleString()}
+              sub={`CTR ${avgCtr.toFixed(2)}%`} icon={MousePointerClick} color="bg-indigo-600" />
+            <StatCard label="Impresiones" value={totalImpressions.toLocaleString()}
+              sub="Anuncios mostrados" icon={BarChart3} color="bg-blue-600" />
+            <StatCard label="CPC medio" value={`${avgCpc.toFixed(2)} €`}
+              sub={`CPA ${avgCpa.toFixed(2)} € · Conv. ${totalConversions.toFixed(0)}`} icon={Target} color="bg-green-600" />
+          </>
+        ) : (
+          <>
+            <StatCard label="Sesiones totales" value={totalSessions.toLocaleString()}
+              sub={`Últimos ${days} días`} icon={BarChart3} color="bg-indigo-600" />
+            <StatCard label="Usuarios únicos" value={data.channelGroups.reduce((s, c) => s + c.users, 0).toLocaleString()}
+              icon={Users} color="bg-blue-600" />
+            <StatCard label="Conversiones" value={data.channelGroups.reduce((s, c) => s + c.conversions, 0).toFixed(0)}
+              sub="Eventos GA4" icon={Target} color="bg-green-600" />
+            <StatCard label="Tráfico de pago" value={`${paidPct}%`}
+              sub={`${paidSessions.toLocaleString()} sesiones CPC`} icon={Megaphone} color="bg-orange-500" />
+          </>
+        )}
       </div>
 
-      {/* Banner Google Ads API */}
-      <div className="bg-gradient-to-r from-blue-600 to-blue-500 rounded-2xl p-5 flex items-center justify-between gap-4 text-white">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center">
-            <Megaphone className="w-5 h-5" />
-          </div>
-          <div>
-            <p className="font-bold">Conecta Google Ads API para ver gasto, CPC e impresiones</p>
-            <p className="text-blue-100 text-sm">Actualmente los datos provienen de Google Analytics 4. Para ver el gasto real por campaña necesitas la Google Ads API.</p>
+      {/* Banner: vinculación GA4 → Ads (solo si no hay datos de Ads aún) */}
+      {!hasAdsData && (
+        <div className="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl p-5 text-white">
+          <div className="flex items-start justify-between gap-4">
+            <div className="flex items-start gap-3">
+              <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5">
+                <Megaphone className="w-5 h-5" />
+              </div>
+              <div>
+                <p className="font-bold mb-1">Vincula Google Ads para ver gasto, CPC e impresiones</p>
+                <p className="text-blue-100 text-sm mb-3">
+                  Solo necesitas vincular tu cuenta de Google Ads a GA4 — sin APIs adicionales. Una vez vinculado, aparecerán aquí el gasto, clics, impresiones, CPC y CPA en tiempo real.
+                </p>
+                <ol className="text-blue-100 text-xs space-y-1 list-decimal list-inside">
+                  <li>Ve a <strong className="text-white">Google Ads → Herramientas → Cuentas vinculadas</strong></li>
+                  <li>Busca <strong className="text-white">Google Analytics</strong> → Vincular</li>
+                  <li>Selecciona la propiedad GA4 de velasegalaviladecans.com</li>
+                  <li>Activa <strong className="text-white">&quot;Importar métricas de coste&quot;</strong></li>
+                </ol>
+              </div>
+            </div>
+            <div className="flex flex-col gap-2 flex-shrink-0">
+              <a href="https://ads.google.com" target="_blank" rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2.5 bg-white text-blue-600 rounded-xl text-sm font-bold hover:bg-blue-50 transition-colors whitespace-nowrap">
+                Abrir Google Ads <ExternalLink className="w-3.5 h-3.5" />
+              </a>
+              <a href="https://analytics.google.com" target="_blank" rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2.5 bg-white/20 text-white rounded-xl text-sm font-semibold hover:bg-white/30 transition-colors whitespace-nowrap">
+                Abrir GA4 <ExternalLink className="w-3.5 h-3.5" />
+              </a>
+            </div>
           </div>
         </div>
-        <a
-          href="https://developers.google.com/google-ads/api/docs/start"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex-shrink-0 inline-flex items-center gap-2 px-4 py-2.5 bg-white text-blue-600 rounded-xl text-sm font-bold hover:bg-blue-50 transition-colors"
-        >
-          Configurar <ExternalLink className="w-3.5 h-3.5" />
-        </a>
-      </div>
+      )}
 
       {/* Tabs */}
       <div>
@@ -434,41 +460,43 @@ export default function AdsPage() {
                   <thead className="bg-gray-50 text-slate-500 text-xs uppercase tracking-wide">
                     <tr>
                       <th className="px-6 py-3 text-left">Campaña</th>
-                      <th className="px-6 py-3 text-left">Fuente / Medio</th>
+                      <th className="px-6 py-3 text-left">Medio</th>
                       <th className="px-6 py-3 text-right">Sesiones</th>
-                      <th className="px-6 py-3 text-right">Usuarios</th>
+                      {hasAdsData && <th className="px-6 py-3 text-right">Gasto</th>}
+                      {hasAdsData && <th className="px-6 py-3 text-right">Clics</th>}
+                      {hasAdsData && <th className="px-6 py-3 text-right">CPC</th>}
                       <th className="px-6 py-3 text-right">Conversiones</th>
+                      {hasAdsData && <th className="px-6 py-3 text-right">CPA</th>}
                       <th className="px-6 py-3 text-right">% Rebote</th>
-                      <th className="px-6 py-3 text-right">Duración media</th>
                     </tr>
                   </thead>
                   <tbody>
                     {data.campaigns.map((c, i) => (
                       <tr key={i} className="border-t border-gray-100 hover:bg-gray-50 transition-colors">
                         <td className="px-6 py-3">
-                          <p className="font-semibold text-black truncate max-w-[200px]">{c.campaign}</p>
+                          <p className="font-semibold text-black truncate max-w-[180px]">{c.campaign}</p>
+                          <p className="text-xs text-slate-400">{c.source}</p>
                         </td>
                         <td className="px-6 py-3">
-                          <div className="flex items-center gap-1">
-                            <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${
-                              c.medium === "cpc" ? "bg-orange-100 text-orange-700" :
-                              c.medium === "organic" ? "bg-green-100 text-green-700" :
-                              "bg-gray-100 text-gray-600"
-                            }`}>{c.medium || "–"}</span>
-                            <span className="text-xs text-slate-400">{c.source}</span>
-                          </div>
+                          <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${
+                            c.medium === "cpc" ? "bg-orange-100 text-orange-700" :
+                            c.medium === "organic" ? "bg-green-100 text-green-700" :
+                            "bg-gray-100 text-gray-600"
+                          }`}>{c.medium || "–"}</span>
                         </td>
                         <td className="px-6 py-3 text-right font-semibold">{c.sessions.toLocaleString()}</td>
-                        <td className="px-6 py-3 text-right text-slate-600">{c.users.toLocaleString()}</td>
+                        {hasAdsData && <td className="px-6 py-3 text-right font-bold text-red-600">{c.cost > 0 ? `${c.cost.toFixed(2)} €` : "–"}</td>}
+                        {hasAdsData && <td className="px-6 py-3 text-right text-slate-600">{c.clicks > 0 ? c.clicks.toLocaleString() : "–"}</td>}
+                        {hasAdsData && <td className="px-6 py-3 text-right text-slate-600">{c.cpc > 0 ? `${c.cpc.toFixed(2)} €` : "–"}</td>}
                         <td className="px-6 py-3 text-right">
                           <span className="font-semibold text-green-700">{c.conversions.toFixed(0)}</span>
                         </td>
+                        {hasAdsData && <td className="px-6 py-3 text-right text-slate-600">{c.cpa > 0 ? `${c.cpa.toFixed(2)} €` : "–"}</td>}
                         <td className="px-6 py-3 text-right">
                           <span className={c.bounceRate > 70 ? "text-red-600 font-semibold" : "text-slate-600"}>
                             {c.bounceRate}%
                           </span>
                         </td>
-                        <td className="px-6 py-3 text-right text-slate-600">{fmtDuration(c.avgDuration)}</td>
                       </tr>
                     ))}
                   </tbody>
