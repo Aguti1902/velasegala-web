@@ -160,8 +160,8 @@ export default function OrtodonciaInvisiblePage() {
 
             <div className="aspect-[4/3] bg-gradient-to-br from-gray-100 to-gray-50 rounded-3xl overflow-hidden shadow-xl relative">
               <Image
-                src="/images/invisiline-clinica-dental-viladecans-2.jpg"
-                alt="Ortodoncia Invisible Invisalign en Viladecans - Clínica Vela-Segalà"
+                src="/images/ortodoncia-invisible-alineador-viladecans.jpg"
+                alt="Alineador transparente de ortodoncia invisible en Viladecans - Clínica Vela-Segalà"
                 fill
                 className="object-cover"
                 priority
@@ -229,8 +229,46 @@ export default function OrtodonciaInvisiblePage() {
         </div>
       </section>
 
-      {/* Férulas transparentes a medida */}
+      {/* Galería ortodoncia */}
       <section className="section-padding bg-gray-50">
+        <div className="container-custom">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-5xl mx-auto">
+            <div className="aspect-square relative rounded-2xl overflow-hidden shadow-md">
+              <Image src="/images/ortodoncia-invisible-alineador-viladecans.jpg"
+                alt="Alineador transparente ortodoncia invisible Viladecans"
+                fill className="object-cover hover:scale-105 transition-transform duration-300" />
+            </div>
+            <div className="aspect-square relative rounded-2xl overflow-hidden shadow-md">
+              <Image src="/images/ortodoncia-invisible-modelo-viladecans.jpg"
+                alt="Modelo dental con alineadores invisibles - Clínica Vela-Segalà"
+                fill className="object-cover hover:scale-105 transition-transform duration-300" />
+            </div>
+            <div className="aspect-square relative rounded-2xl overflow-hidden shadow-md">
+              <Image src="/images/ortodoncia-brackets-metalicos-viladecans.jpg"
+                alt="Modelo dental con brackets metálicos - ortodoncia Viladecans"
+                fill className="object-cover hover:scale-105 transition-transform duration-300" />
+            </div>
+            <div className="aspect-square relative rounded-2xl overflow-hidden shadow-md">
+              <Image src="/images/ortodoncia-brackets-modelo-viladecans.jpg"
+                alt="Brackets estéticos y cerámicos - ortodoncia Clínica Vela-Segalà Viladecans"
+                fill className="object-cover hover:scale-105 transition-transform duration-300" />
+            </div>
+            <div className="aspect-square relative rounded-2xl overflow-hidden shadow-md">
+              <Image src="/images/ortodoncia-brackets-modelo2-viladecans.jpg"
+                alt="Modelo de ortodoncia con brackets - Clínica Vela-Segalà Viladecans"
+                fill className="object-cover hover:scale-105 transition-transform duration-300" />
+            </div>
+            <div className="aspect-square relative rounded-2xl overflow-hidden shadow-md">
+              <Image src="/images/ortodoncia-modelo-dental-viladecans.jpg"
+                alt="Modelo dental - ortodoncia en Viladecans"
+                fill className="object-cover hover:scale-105 transition-transform duration-300" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Férulas transparentes a medida */}
+      <section className="section-padding bg-white">
         <div className="container-custom">
           <div className="grid lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
             <div className="aspect-[4/3] bg-gradient-to-br from-gray-100 to-gray-50 rounded-3xl overflow-hidden shadow-xl relative order-2 lg:order-1">

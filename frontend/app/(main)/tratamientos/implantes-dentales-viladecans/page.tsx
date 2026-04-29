@@ -609,6 +609,52 @@ export default function ImplantesDentalesPage() {
         </div>
       </section>
 
+      {/* Galería — Clínica e implantología */}
+      <section className="section-padding bg-white">
+        <div className="container-custom">
+          <div className="max-w-3xl mx-auto text-center mb-10">
+            <h2 className="text-3xl md:text-4xl font-bold text-black mb-4">
+              Tecnología e instalaciones para implantología
+            </h2>
+            <p className="text-lg text-slate-600">
+              Planificamos y ejecutamos cada implante con la tecnología más avanzada y un equipo especializado de primer nivel.
+            </p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            <div className="aspect-[4/3] relative rounded-2xl overflow-hidden shadow-md col-span-2 md:col-span-1">
+              <Image src="/images/implantes-planificacion-equipo-viladecans.jpg"
+                alt="Equipo de especialistas planificando implantes dentales en Viladecans"
+                fill className="object-cover hover:scale-105 transition-transform duration-300" />
+            </div>
+            <div className="aspect-[4/3] relative rounded-2xl overflow-hidden shadow-md">
+              <Image src="/images/implante-dental-modelo-viladecans.jpg"
+                alt="Modelo de implante dental siendo colocado - Clínica Vela-Segalà Viladecans"
+                fill className="object-cover hover:scale-105 transition-transform duration-300" />
+            </div>
+            <div className="aspect-[4/3] relative rounded-2xl overflow-hidden shadow-md">
+              <Image src="/images/implante-dental-tornillo-viladecans.jpg"
+                alt="Tornillo de implante dental - tecnología de implantología en Viladecans"
+                fill className="object-cover hover:scale-105 transition-transform duration-300" />
+            </div>
+            <div className="aspect-[4/3] relative rounded-2xl overflow-hidden shadow-md">
+              <Image src="/images/implantes-cabina-tecnologia-viladecans.jpg"
+                alt="Cabina de implantología con tecnología avanzada en Clínica Vela-Segalà"
+                fill className="object-cover hover:scale-105 transition-transform duration-300" />
+            </div>
+            <div className="aspect-[4/3] relative rounded-2xl overflow-hidden shadow-md">
+              <Image src="/images/cirugia-oral-doctor-viladecans.jpg"
+                alt="Dr. Xavier Vela cirujano oral - Clínica Vela-Segalà Viladecans"
+                fill className="object-cover hover:scale-105 transition-transform duration-300" />
+            </div>
+            <div className="aspect-[4/3] relative rounded-2xl overflow-hidden shadow-md">
+              <Image src="/images/implantes-equipo-reunion-viladecans.jpg"
+                alt="Equipo de especialistas en reunión de planificación de implantes - Viladecans"
+                fill className="object-cover hover:scale-105 transition-transform duration-300" />
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* FAQs */}
       <section className="section-padding bg-gray-50">
         <div className="container-custom max-w-3xl">
