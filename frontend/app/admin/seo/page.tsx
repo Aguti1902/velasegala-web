@@ -9,6 +9,7 @@ import { SeoTechnical } from "@/components/admin/seo/SeoTechnical";
 import { SeoRecommendations } from "@/components/admin/seo/SeoRecommendations";
 import { SeoCompetitors } from "@/components/admin/seo/SeoCompetitors";
 import { SeoCompetitorComparison } from "@/components/admin/seo/SeoCompetitorComparison";
+import { SeoMultiSiteOverview } from "@/components/admin/seo/SeoMultiSiteOverview";
 import { getApiUrl } from "@/lib/config";
 import { Lightbulb, FileText, Plus } from "lucide-react";
 
@@ -412,6 +413,14 @@ export default function SeoPage() {
           </button>
         </div>
       </div>
+
+      {/* Resumen multi-site */}
+      {sites.length > 0 && !showCreateForm && (
+        <SeoMultiSiteOverview
+          sites={sites}
+          onSelectSite={(id) => setSelectedSiteId(id)}
+        />
+      )}
 
       {/* Formulario crear sitio (overlay) */}
       {showCreateForm && (
