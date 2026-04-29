@@ -172,7 +172,7 @@ export default function AdsPage() {
           </p>
           <div className="bg-white rounded-xl border border-amber-200 p-4 text-left text-sm text-amber-800 space-y-2 max-w-md mx-auto">
             <p className="font-semibold">Variables de entorno necesarias en Railway:</p>
-            <code className="block bg-amber-100 rounded p-2 text-xs">GOOGLE_ANALYTICS_CREDENTIALS={"{"}"type":"service_account"...{"}"}</code>
+            <code className="block bg-amber-100 rounded p-2 text-xs">{'GOOGLE_ANALYTICS_CREDENTIALS={"type":"service_account"...}'}</code>
             <code className="block bg-amber-100 rounded p-2 text-xs">GOOGLE_ANALYTICS_PROPERTY_ID=517091107</code>
           </div>
         </div>
