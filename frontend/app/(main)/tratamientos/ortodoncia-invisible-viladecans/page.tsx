@@ -233,36 +233,25 @@ export default function OrtodonciaInvisiblePage() {
       <section className="section-padding bg-gray-50">
         <div className="container-custom">
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-5xl mx-auto">
-            <div className="aspect-square relative rounded-2xl overflow-hidden shadow-md">
-              <Image src="/images/ortodoncia-invisible-alineador-viladecans.jpg"
-                alt="Alineador transparente ortodoncia invisible Viladecans"
-                fill className="object-cover hover:scale-105 transition-transform duration-300" />
-            </div>
-            <div className="aspect-square relative rounded-2xl overflow-hidden shadow-md">
-              <Image src="/images/ortodoncia-invisible-modelo-viladecans.jpg"
-                alt="Modelo dental con alineadores invisibles - Clínica Vela-Segalà"
-                fill className="object-cover hover:scale-105 transition-transform duration-300" />
-            </div>
-            <div className="aspect-square relative rounded-2xl overflow-hidden shadow-md">
-              <Image src="/images/ortodoncia-brackets-metalicos-viladecans.jpg"
-                alt="Modelo dental con brackets metálicos - ortodoncia Viladecans"
-                fill className="object-cover hover:scale-105 transition-transform duration-300" />
-            </div>
-            <div className="aspect-square relative rounded-2xl overflow-hidden shadow-md">
-              <Image src="/images/ortodoncia-brackets-modelo-viladecans.jpg"
-                alt="Brackets estéticos y cerámicos - ortodoncia Clínica Vela-Segalà Viladecans"
-                fill className="object-cover hover:scale-105 transition-transform duration-300" />
-            </div>
-            <div className="aspect-square relative rounded-2xl overflow-hidden shadow-md">
-              <Image src="/images/ortodoncia-brackets-modelo2-viladecans.jpg"
-                alt="Modelo de ortodoncia con brackets - Clínica Vela-Segalà Viladecans"
-                fill className="object-cover hover:scale-105 transition-transform duration-300" />
-            </div>
-            <div className="aspect-square relative rounded-2xl overflow-hidden shadow-md">
-              <Image src="/images/ortodoncia-modelo-dental-viladecans.jpg"
-                alt="Modelo dental - ortodoncia en Viladecans"
-                fill className="object-cover hover:scale-105 transition-transform duration-300" />
-            </div>
+            {[
+              { src: "/images/ortodoncia-invisible-alineador-viladecans.jpg", alt: "Alineador transparente ortodoncia invisible Viladecans" },
+              { src: "/images/ortodoncia-invisible-modelo-viladecans.jpg", alt: "Modelo dental con alineadores invisibles - Clínica Vela-Segalà" },
+              { src: "/images/ortodoncia-brackets-metalicos-viladecans.jpg", alt: "Modelo dental con brackets metálicos - ortodoncia Viladecans" },
+              { src: "/images/ortodoncia-brackets-modelo-viladecans.jpg", alt: "Brackets estéticos y cerámicos - ortodoncia Clínica Vela-Segalà Viladecans" },
+              { src: "/images/ortodoncia-brackets-modelo2-viladecans.jpg", alt: "Modelo de ortodoncia con brackets - Clínica Vela-Segalà Viladecans" },
+              { src: "/images/ortodoncia-modelo-dental-viladecans.jpg", alt: "Modelo dental - ortodoncia en Viladecans" },
+            ].map((img, i) => (
+              <div key={i} className="aspect-square relative rounded-2xl overflow-hidden shadow-md bg-gray-100">
+                <Image
+                  src={img.src}
+                  alt={img.alt}
+                  fill
+                  sizes="(max-width: 768px) 50vw, 33vw"
+                  className="object-cover hover:scale-105 transition-transform duration-300"
+                  unoptimized
+                />
+              </div>
+            ))}
           </div>
         </div>
       </section>
