@@ -42,9 +42,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/tratamientos/limpieza-dental-viladecans',
   },
-  title: "Limpieza Dental Profesional en Viladecans | Higiene Bucodental",
+  title: "Limpieza Dental Profesional en Viladecans | Vela-Segalà",
   description:
-    "Limpieza dental profesional en Viladecans. Higiene bucodental completa con ultrasonidos. Prevención de caries y enfermedades periodontales. Recomendable cada 6-12 meses.",
+    "Limpieza dental en Viladecans. Eliminación de sarro con ultrasonidos, pulido y flúor. Prevención de caries y enfermedades. Recomendable cada 6-12 meses.",
   keywords: [
     "limpieza dental viladecans",
     "limpieza dental profesional viladecans",

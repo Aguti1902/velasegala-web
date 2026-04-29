@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/clinica-dental-viladecans',
   },
-  title: "Clínica Dental en Viladecans - Dentista de Confianza | Vela-Segalà",
+  title: "Clínica Dental en Viladecans | Dentistas Vela-Segalà",
   description:
     `Clínica dental en Viladecans con más de 25 años de experiencia. Especialistas en implantes dentales, ortodoncia invisible y estética dental. ${CLINIC_INFO.address.street}, 08840 Viladecans. Tel: ${CLINIC_INFO.phoneDisplay}.`,
   keywords: [

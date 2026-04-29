@@ -44,7 +44,7 @@ export const metadata: Metadata = {
   },
   title: "Cirugía Oral en Viladecans | Muelas del Juicio e Injertos",
   description:
-    "Cirugía oral y maxilofacial en Viladecans. Extracción de muelas del juicio, injertos de hueso, elevación de seno maxilar y frenectomías. Cirugía mínimamente invasiva. Primera visita gratuita.",
+    "Cirugía oral en Viladecans. Extracción muelas del juicio, injertos óseos y elevación de seno. Cirugía piezoeléctrica mínimamente invasiva. Vela-Segalà.",
   keywords: [
     "cirugía oral viladecans",
     "extracción muelas juicio viladecans",

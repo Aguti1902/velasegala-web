@@ -45,7 +45,7 @@ export const metadata: Metadata = {
   },
   title: "Tratamiento del Bruxismo en Viladecans | Férula de Descarga",
   description:
-    "Tratamiento del bruxismo en Viladecans. Férulas de descarga personalizadas a medida. Protege tus dientes del desgaste. Alivia el dolor de mandíbula. Primera visita gratuita.",
+    "Bruxismo en Viladecans. Férulas de descarga personalizadas. Protege tus dientes y alivia el dolor mandibular. Primera visita gratuita. Clínica Vela-Segalà.",
   keywords: [
     "bruxismo viladecans",
     "férula descarga viladecans",

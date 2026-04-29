@@ -45,7 +45,7 @@ export const metadata: Metadata = {
   },
   title: "Odontopediatría en Viladecans | Dentista para Niños",
   description:
-    "Odontopediatría en Viladecans. Dentista especializado en niños y bebés. Ambiente adaptado y técnicas específicas. Primera visita gratuita. Prevención de caries infantil. Clínica Vela-Segalà.",
+    "Odontopediatría en Viladecans. Dentista para niños y bebés. Ambiente adaptado, prevención de caries y técnicas gentiles. Primera visita gratuita.",
   keywords: [
     "odontopediatría viladecans",
     "dentista infantil viladecans",

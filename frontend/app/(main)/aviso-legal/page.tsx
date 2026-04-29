@@ -3,9 +3,9 @@ import Link from "next/link";
 import { CLINIC_INFO } from "@/lib/constants";
 
 export const metadata: Metadata = {
-  title: "Aviso Legal y Política de Privacidad | Clínica Dental Vela-Segalà",
+  title: "Aviso Legal y Política de Privacidad | Vela-Segalà",
   description:
-    "Aviso legal, política de privacidad y condiciones de uso de la web de Clínica Dental Vela-Segalà en Viladecans.",
+    "Aviso legal y política de privacidad de Clínica Dental Vela-Segalà, Viladecans. Información sobre responsable, finalidad del tratamiento y derechos del usuario.",
   robots: { index: false, follow: false },
 };
 

@@ -5,7 +5,7 @@ import { CLINIC_INFO } from "@/lib/constants";
 export const metadata: Metadata = {
   title: "Política de Cookies | Clínica Dental Vela-Segalà",
   description:
-    "Información sobre las cookies utilizadas en la web de Clínica Dental Vela-Segalà en Viladecans.",
+    "Política de cookies de Clínica Dental Vela-Segalà, Viladecans. Tipos de cookies, finalidad, duración y cómo configurar o desactivar su uso.",
   robots: { index: false, follow: false },
 };
 

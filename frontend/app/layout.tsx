@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     shortcut: "/images/Logos/FAVICON.png",
   },
   description:
-    "Clínica dental en Viladecans con más de 25 años de experiencia. Implantes dentales, ortodoncia invisible, estética dental y más. Calidad y servicio de excelencia. ¡Pide tu cita!",
+    "Clínica dental en Viladecans con más de 25 años de experiencia. Implantes, ortodoncia invisible y estética dental. ¡Pide tu cita!",
   keywords: [
     "clínica dental viladecans",
     "dentista viladecans",

@@ -45,7 +45,7 @@ export const metadata: Metadata = {
   },
   title: "Endodoncia en Viladecans | Tratamiento de Conductos",
   description:
-    "Endodoncia en Viladecans. Tratamiento de conductos radiculares sin dolor. Salva tu diente con endodoncia. Microscopio dental para máxima precisión. Primera visita gratuita.",
+    "Endodoncia en Viladecans. Tratamiento de conductos sin dolor con microscopio dental. Salva tus dientes con éxito superior al 95%. Primera visita gratuita.",
   keywords: [
     "endodoncia viladecans",
     "tratamiento conductos viladecans",
