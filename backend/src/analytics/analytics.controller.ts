@@ -12,5 +12,12 @@ export class AnalyticsController {
     const daysNum = days ? parseInt(days) : 7;
     return this.analyticsService.getAnalyticsData(daysNum);
   }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('campaigns')
+  async getCampaigns(@Query('days') days?: string) {
+    const daysNum = days ? parseInt(days) : 30;
+    return this.analyticsService.getCampaignData(daysNum);
+  }
 }
 

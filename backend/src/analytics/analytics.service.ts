@@ -194,6 +194,137 @@ export class AnalyticsService {
     }
   }
 
+  async getCampaignData(days: number = 30) {
+    if (!this.analyticsDataClient) {
+      return { campaigns: [], channelGroups: [], keywords: [], summary: { sessions: 0, users: 0, conversions: 0, bounceRate: 0 } };
+    }
+
+    const startDate = new Date();
+    startDate.setDate(startDate.getDate() - days);
+    const endDate = new Date();
+    const dateRange = [{ startDate: this.formatDate(startDate), endDate: this.formatDate(endDate) }];
+
+    try {
+      const [campaignsRes, channelsRes, keywordsRes, summaryRes] = await Promise.all([
+        // Campañas con métricas
+        this.analyticsDataClient.runReport({
+          property: this.propertyId,
+          dateRanges: dateRange,
+          dimensions: [
+            { name: 'sessionCampaignName' },
+            { name: 'sessionSource' },
+            { name: 'sessionMedium' },
+          ],
+          metrics: [
+            { name: 'sessions' },
+            { name: 'activeUsers' },
+            { name: 'bounceRate' },
+            { name: 'averageSessionDuration' },
+            { name: 'screenPageViews' },
+            { name: 'conversions' },
+          ],
+          orderBys: [{ metric: { metricName: 'sessions' }, desc: true }],
+          limit: 20,
+        }),
+        // Grupos de canal
+        this.analyticsDataClient.runReport({
+          property: this.propertyId,
+          dateRanges: dateRange,
+          dimensions: [{ name: 'sessionDefaultChannelGroup' }],
+          metrics: [
+            { name: 'sessions' },
+            { name: 'activeUsers' },
+            { name: 'conversions' },
+            { name: 'bounceRate' },
+          ],
+          orderBys: [{ metric: { metricName: 'sessions' }, desc: true }],
+        }),
+        // Keywords de pago
+        this.analyticsDataClient.runReport({
+          property: this.propertyId,
+          dateRanges: dateRange,
+          dimensions: [
+            { name: 'sessionGoogleAdsKeyword' },
+            { name: 'sessionCampaignName' },
+          ],
+          metrics: [
+            { name: 'sessions' },
+            { name: 'conversions' },
+            { name: 'bounceRate' },
+          ],
+          dimensionFilter: {
+            filter: {
+              fieldName: 'sessionMedium',
+              stringFilter: { value: 'cpc', matchType: 'EXACT' },
+            },
+          },
+          orderBys: [{ metric: { metricName: 'sessions' }, desc: true }],
+          limit: 15,
+        }),
+        // Resumen general de tráfico de pago
+        this.analyticsDataClient.runReport({
+          property: this.propertyId,
+          dateRanges: dateRange,
+          metrics: [
+            { name: 'sessions' },
+            { name: 'activeUsers' },
+            { name: 'conversions' },
+            { name: 'bounceRate' },
+          ],
+          dimensionFilter: {
+            filter: {
+              fieldName: 'sessionMedium',
+              stringFilter: { value: 'cpc', matchType: 'EXACT' },
+            },
+          },
+        }),
+      ]);
+
+      const campaigns = (campaignsRes[0].rows || []).map(row => ({
+        campaign: row.dimensionValues?.[0]?.value || '(sin campaña)',
+        source: row.dimensionValues?.[1]?.value || '',
+        medium: row.dimensionValues?.[2]?.value || '',
+        sessions: parseInt(row.metricValues?.[0]?.value || '0'),
+        users: parseInt(row.metricValues?.[1]?.value || '0'),
+        bounceRate: Math.round(parseFloat(row.metricValues?.[2]?.value || '0') * 1000) / 10,
+        avgDuration: Math.round(parseFloat(row.metricValues?.[3]?.value || '0')),
+        pageViews: parseInt(row.metricValues?.[4]?.value || '0'),
+        conversions: parseFloat(row.metricValues?.[5]?.value || '0'),
+      }));
+
+      const channelGroups = (channelsRes[0].rows || []).map(row => ({
+        channel: row.dimensionValues?.[0]?.value || 'Other',
+        sessions: parseInt(row.metricValues?.[0]?.value || '0'),
+        users: parseInt(row.metricValues?.[1]?.value || '0'),
+        conversions: parseFloat(row.metricValues?.[2]?.value || '0'),
+        bounceRate: Math.round(parseFloat(row.metricValues?.[3]?.value || '0') * 1000) / 10,
+      }));
+
+      const keywords = (keywordsRes[0].rows || [])
+        .filter(row => (row.dimensionValues?.[0]?.value || '') !== '(not set)')
+        .map(row => ({
+          keyword: row.dimensionValues?.[0]?.value || '',
+          campaign: row.dimensionValues?.[1]?.value || '',
+          sessions: parseInt(row.metricValues?.[0]?.value || '0'),
+          conversions: parseFloat(row.metricValues?.[1]?.value || '0'),
+          bounceRate: Math.round(parseFloat(row.metricValues?.[2]?.value || '0') * 1000) / 10,
+        }));
+
+      const summaryRow = summaryRes[0].rows?.[0];
+      const summary = {
+        sessions: parseInt(summaryRow?.metricValues?.[0]?.value || '0'),
+        users: parseInt(summaryRow?.metricValues?.[1]?.value || '0'),
+        conversions: parseFloat(summaryRow?.metricValues?.[2]?.value || '0'),
+        bounceRate: Math.round(parseFloat(summaryRow?.metricValues?.[3]?.value || '0') * 1000) / 10,
+      };
+
+      return { campaigns, channelGroups, keywords, summary };
+    } catch (error: any) {
+      console.error('Error al obtener datos de campañas:', error);
+      return { campaigns: [], channelGroups: [], keywords: [], summary: { sessions: 0, users: 0, conversions: 0, bounceRate: 0 } };
+    }
+  }
+
   private formatDate(date: Date): string {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0');
