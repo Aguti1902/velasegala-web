@@ -123,7 +123,7 @@ export function SeoMultiSiteOverview({
         .split("; ")
         .find((row) => row.startsWith("admin_token="))
         ?.split("=")[1];
-      const headers = token ? { Authorization: `Bearer ${token}` } : {};
+      const headers: HeadersInit = token ? { Authorization: `Bearer ${token}` } : {};
 
       setSiteScores((prev) =>
         prev.map((s) => (s.id === site.id ? { ...s, isLoading: true } : s))
