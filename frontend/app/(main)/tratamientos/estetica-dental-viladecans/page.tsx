@@ -186,17 +186,17 @@ export default function EsteticaDentalPage() {
 
             <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-6 shadow-lg">
               <h3 className="text-xl font-bold mb-3 flex items-center gap-2">
-                <Smile className="w-6 h-6" />
-                Diseño de Sonrisa Digital (DSD)
+                <Sparkles className="w-6 h-6" />
+                Blanqueamiento Dental Profesional (ZOOM)
               </h3>
               <p className="text-slate-700 leading-relaxed mb-3">
-                El <strong>diseño de sonrisa digital (Digital Smile Design)</strong> es una tecnología que 
-                permite planificar tu sonrisa ideal de forma virtual antes de realizar cualquier tratamiento. 
-                Analizamos tu rostro, proporciones faciales y características dentales.
+                El <strong>blanqueamiento dental profesional</strong> aclara el color de los dientes de forma 
+                segura y eficaz. En Clínicas Vela-Segalà utilizamos la tecnología <strong>ZOOM</strong>, 
+                el sistema de blanqueamiento con lámpara líder en resultados clínicos.
               </p>
               <p className="text-slate-700 leading-relaxed">
-                Te mostramos el resultado final en 3D para que apruebes el diseño antes de empezar. Así 
-                garantizamos que el resultado cumple tus expectativas y es armónico con tu rostro.
+                Consigues dientes varios tonos más blancos en una sola sesión de 45-60 minutos. También 
+                ofrecemos blanqueamiento ambulatorio con férulas personalizadas para usar en casa.
               </p>
             </div>
 
@@ -247,12 +247,13 @@ export default function EsteticaDentalPage() {
             <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-6 shadow-lg">
               <h3 className="text-xl font-bold mb-3 flex items-center gap-2">
                 <Sparkles className="w-6 h-6" />
-                Remodelado Estético (Stripping)
+                Remodelado Gingival
               </h3>
               <p className="text-slate-700 leading-relaxed">
-                El <strong>remodelado estético dental</strong> consiste en pulir y dar forma a los dientes para 
-                mejorar su contorno, simetría y proporciones. Técnica mínimamente invasiva que se realiza en una 
-                sola sesión. Ideal para dientes con forma irregular o asimétrica.
+                El <strong>remodelado gingival</strong> consiste en esculpir y dar forma a la encía para 
+                conseguir una sonrisa más equilibrada y armónica. Corrección de encías asimétricas, 
+                sonrisa gingival o encías que cubren en exceso los dientes. Técnica mínimamente invasiva 
+                con láser o bisturí eléctrico.
               </p>
             </div>
           </div>

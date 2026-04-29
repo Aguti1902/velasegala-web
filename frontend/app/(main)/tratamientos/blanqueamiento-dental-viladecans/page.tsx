@@ -100,9 +100,10 @@ export default function BlanqueamientoDentalPage() {
                 dientes para que luzcas <strong>una sonrisa más blanca</strong> sin perder su naturalidad.
               </p>
               <p className="text-lg text-slate-600 mb-6 leading-relaxed">
-                Tratamiento con <strong>lámparas LED de última generación</strong>. Elimina manchas causadas por café, 
-                té, vino, tabaco y envejecimiento. También ofrecemos <strong>blanqueamiento ambulatorio</strong> con 
-                férulas personalizadas para casa.
+                Utilizamos la tecnología <strong>ZOOM</strong>, el sistema de blanqueamiento con lámpara líder en 
+                resultados clínicos. Elimina manchas causadas por café, té, vino, tabaco y envejecimiento en una 
+                sola sesión. También ofrecemos <strong>blanqueamiento ambulatorio</strong> con férulas 
+                personalizadas para usar en casa.
               </p>
               
               <div className="bg-gradient-to-br from-black to-gray-800 rounded-2xl p-5 shadow-xl mb-6 text-white">

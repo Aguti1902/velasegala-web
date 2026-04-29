@@ -43,24 +43,24 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/tratamientos/ortodoncia-invisible-viladecans',
   },
-  title: "Ortodoncia Invisible en Viladecans | Clínica Vela-Segalà",
+  title: "Ortodoncia en Viladecans | Invisible y Brackets | Vela-Segalà",
   description:
-    `Ortodoncia invisible en Viladecans con sistemas Invisalign y Spark. Ortodoncistas certificados con +25 años de experiencia. Alineadores transparentes removibles. Sin brackets metálicos. Financiación sin intereses. Llama al ${CLINIC_INFO.phoneDisplay}`,
+    `Ortodoncia en Viladecans para adultos y niños. Ortodoncia invisible con Invisalign y Spark, y brackets tradicionales. Ortodoncistas certificados con +25 años de experiencia. Financiación sin intereses. Llama al ${CLINIC_INFO.phoneDisplay}`,
   keywords: [
+    "ortodoncia viladecans",
     "ortodoncia invisible viladecans",
     "invisalign viladecans",
+    "brackets viladecans",
     "ortodoncia adultos viladecans",
+    "ortodoncia niños viladecans",
     "alineadores transparentes viladecans",
-    "ortodoncia sin brackets viladecans",
-    "invisalign certificado viladecans",
-    "férulas transparentes viladecans",
     "ortodoncista viladecans",
     "ortodoncia removible viladecans",
   ],
   openGraph: {
-    title: "Ortodoncia Invisible en Viladecans | Clínica Vela-Segalà",
+    title: "Ortodoncia en Viladecans | Invisible y Brackets | Vela-Segalà",
     description:
-      "Transforma tu sonrisa sin brackets metálicos. Alineadores transparentes removibles. Ortodoncistas certificados con +25 años. Sistemas Invisalign y Spark.",
+      "Ortodoncia invisible con Invisalign y Spark, y brackets tradicionales para adultos y niños. Ortodoncistas certificados con +25 años en Viladecans.",
     images: ["/images/ortodoncia-invisalign-viladecans.jpg"],
   },
 };
@@ -77,7 +77,7 @@ export default function OrtodonciaInvisiblePage() {
             items={[
               { name: "Tratamientos", href: "/tratamientos" },
               {
-                name: "Ortodoncia Invisible Viladecans",
+                name: "Ortodoncia Viladecans",
                 href: "/tratamientos/ortodoncia-invisible-viladecans",
               },
             ]}
@@ -86,13 +86,13 @@ export default function OrtodonciaInvisiblePage() {
           <div className="mt-8 grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <div className="inline-block bg-black text-white px-4 py-2 rounded-lg text-sm font-bold mb-4">
-                ORTODONCIA INVISIBLE
+                ORTODONCIA
               </div>
               <h1 className="text-4xl md:text-5xl font-bold text-black mb-6">
-                Ortodoncia Invisible en Viladecans
+                Ortodoncia en Viladecans
               </h1>
               <p className="text-xl text-slate-700 mb-4 leading-relaxed font-semibold">
-                Transforma tu sonrisa sin necesidad de colocar aparatos metálicos sobre tus dientes
+                Ortodoncia invisible y brackets para adultos y niños — la solución más adecuada para cada caso
               </p>
               <p className="text-lg text-slate-600 mb-4 leading-relaxed">
                 En <strong>Clínicas Vela-Segalà de Viladecans</strong> podemos transformar tu sonrisa con{" "}
@@ -171,8 +171,66 @@ export default function OrtodonciaInvisiblePage() {
         </div>
       </section>
 
-      {/* Férulas transparentes a medida */}
+      {/* Dos modalidades de ortodoncia */}
       <section className="section-padding bg-white">
+        <div className="container-custom">
+          <div className="max-w-3xl mx-auto text-center mb-10">
+            <h2 className="text-3xl md:text-4xl font-bold text-black mb-4">
+              Nuestras modalidades de ortodoncia
+            </h2>
+            <p className="text-lg text-slate-600">
+              Elegimos contigo la opción más adecuada según tu caso, tu estilo de vida y tus preferencias.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            {/* Ortodoncia invisible */}
+            <div className="bg-gradient-to-br from-black to-gray-800 rounded-2xl p-7 text-white">
+              <div className="inline-block bg-white/20 px-3 py-1 rounded-lg text-xs font-bold mb-4 uppercase tracking-wide">
+                Adultos y niños
+              </div>
+              <h3 className="text-2xl font-bold mb-3">Ortodoncia Invisible</h3>
+              <p className="text-gray-300 leading-relaxed mb-5">
+                Sistema de <strong className="text-white">férulas transparentes fabricadas a medida</strong> con tecnología 3D.
+                Trabajamos con <strong className="text-white">Invisalign y Spark</strong>. Prácticamente imperceptibles,
+                removibles y muy cómodas. Ideal para quien busca el máximo nivel de discreción.
+              </p>
+              <ul className="space-y-2 text-sm text-gray-200">
+                <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0" />Prácticamente invisible</li>
+                <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0" />Totalmente removible</li>
+                <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0" />Come y bebe lo que quieras</li>
+                <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0" />Higiene oral mucho más fácil</li>
+                <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0" />Ortodoncistas certificados en Invisalign y Spark</li>
+                <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0" />Duración media: 6–18 meses</li>
+              </ul>
+            </div>
+
+            {/* Brackets */}
+            <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-7 border-2 border-gray-200 shadow-sm">
+              <div className="inline-block bg-black text-white px-3 py-1 rounded-lg text-xs font-bold mb-4 uppercase tracking-wide">
+                Adultos y niños
+              </div>
+              <h3 className="text-2xl font-bold text-black mb-3">Brackets</h3>
+              <p className="text-slate-600 leading-relaxed mb-5">
+                Los <strong>brackets tradicionales</strong> siguen siendo una solución muy eficaz para correcciones
+                dentales de todo tipo de complejidad. Disponemos de brackets metálicos y estéticos (cerámicos o de zafiro),
+                adaptados a niños y adultos.
+              </p>
+              <ul className="space-y-2 text-sm text-slate-700">
+                <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-black flex-shrink-0" />Brackets metálicos y estéticos (cerámicos)</li>
+                <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-black flex-shrink-0" />Aptos para todos los tipos de maloclusión</li>
+                <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-black flex-shrink-0" />Mayor control en casos complejos</li>
+                <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-black flex-shrink-0" />Opción más accesible económicamente</li>
+                <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-black flex-shrink-0" />Ideal para ortodoncia infantil y adolescente</li>
+                <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-black flex-shrink-0" />Duración media: 18–24 meses</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Férulas transparentes a medida */}
+      <section className="section-padding bg-gray-50">
         <div className="container-custom">
           <div className="grid lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
             <div className="aspect-[4/3] bg-gradient-to-br from-gray-100 to-gray-50 rounded-3xl overflow-hidden shadow-xl relative order-2 lg:order-1">

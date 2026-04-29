@@ -173,12 +173,12 @@ export default function ImplantesDentalesPage() {
         </div>
       </section>
 
-      {/* No es solo estética */}
+      {/* No es sólo estética */}
       <section className="section-padding bg-white">
         <div className="container-custom">
           <div className="max-w-3xl mx-auto text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-black mb-6">
-              No es solo estética
+              No es sólo estética
             </h2>
             <p className="text-lg text-slate-600 leading-relaxed">
               Queremos ayudarte a <strong>recuperar la funcionalidad total de tu boca y frenar la degeneración de hueso</strong>.
