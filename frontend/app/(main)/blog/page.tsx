@@ -211,20 +211,9 @@ export default function BlogPage() {
 
   const hasActiveFilters = selectedCategory || selectedTags.length > 0 || searchQuery;
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-black mx-auto mb-4"></div>
-          <p className="text-gray-600">Cargando blog...</p>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <>
-      {/* Hero */}
+      {/* Hero — siempre visible (H1 en HTML inicial para SEO) */}
       <section className="section-padding bg-gradient-to-b from-white to-gray-50">
         <div className="container-custom">
           <Breadcrumbs items={[{ name: "Blog", href: "/blog" }]} />
@@ -241,8 +230,20 @@ export default function BlogPage() {
         </div>
       </section>
 
-      {/* Blog Content */}
-      <section className="section-padding bg-white">
+      {/* Spinner mientras carga — solo afecta al contenido, no al H1 */}
+      {isLoading && (
+        <section className="section-padding bg-white">
+          <div className="container-custom flex items-center justify-center py-24">
+            <div className="text-center">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-black mx-auto mb-4"></div>
+              <p className="text-gray-600">Cargando artículos...</p>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Blog Content — solo se muestra cuando los datos están cargados */}
+      {!isLoading && <section className="section-padding bg-white">
         <div className="container-custom">
           <div className="lg:grid lg:grid-cols-12 lg:gap-12">
             {/* Sidebar */}
@@ -492,7 +493,7 @@ export default function BlogPage() {
             </div>
           </div>
         </div>
-      </section>
+      </section>}
 
       {/* Toasts */}
       {toasts.map((toast) => (

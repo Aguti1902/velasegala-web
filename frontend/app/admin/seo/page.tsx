@@ -11,7 +11,7 @@ import { SeoCompetitors } from "@/components/admin/seo/SeoCompetitors";
 import { SeoCompetitorComparison } from "@/components/admin/seo/SeoCompetitorComparison";
 import { SeoMultiSiteOverview } from "@/components/admin/seo/SeoMultiSiteOverview";
 import { getApiUrl } from "@/lib/config";
-import { Lightbulb, FileText, Plus, X } from "lucide-react";
+import { Lightbulb, FileText, Plus, X, RefreshCw } from "lucide-react";
 
 interface SeoSite {
   id: string;
@@ -26,6 +26,7 @@ export default function SeoPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [isDiscovering, setIsDiscovering] = useState(false);
   const [isGeneratingReport, setIsGeneratingReport] = useState(false);
+  const [isAuditing, setIsAuditing] = useState(false);
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [newSite, setNewSite] = useState({ domain: "", gscProperty: "", countryDefault: "ES" });
 
@@ -77,6 +78,35 @@ export default function SeoPage() {
       alert("Error al descubrir keywords");
     } finally {
       setIsDiscovering(false);
+    }
+  };
+
+  const handleRunAudit = async () => {
+    if (!selectedSiteId || isAuditing) return;
+    setIsAuditing(true);
+    try {
+      // 1. Resolver issues anteriores
+      await fetch(`${getApiUrl()}/seo/sites/${selectedSiteId}/resolve-all-issues`, {
+        method: "POST", credentials: "include",
+        headers: authHeaders({ "Content-Type": "application/json" }),
+      });
+      // 2. Re-auditar
+      const res = await fetch(`${getApiUrl()}/seo/sync`, {
+        method: "POST", credentials: "include",
+        headers: authHeaders({ "Content-Type": "application/json" }),
+        body: JSON.stringify({ siteId: selectedSiteId }),
+      });
+      if (res.ok) {
+        alert("✅ Auditoría completada. Recarga la página para ver los nuevos resultados.");
+        window.location.reload();
+      } else {
+        alert("Error al ejecutar la auditoría");
+      }
+    } catch (e) {
+      console.error(e);
+      alert("Error al ejecutar la auditoría");
+    } finally {
+      setIsAuditing(false);
     }
   };
 
@@ -192,6 +222,15 @@ export default function SeoPage() {
           >
             <Plus className="w-4 h-4" />
             Añadir web
+          </button>
+          <button
+            onClick={handleRunAudit}
+            disabled={isAuditing || !selectedSiteId}
+            className="inline-flex items-center gap-2 px-4 py-2.5 bg-green-600 text-white rounded-xl text-sm font-bold hover:bg-green-700 transition-colors disabled:opacity-40"
+            title="Limpia issues viejos y ejecuta una auditoría SEO nueva"
+          >
+            <RefreshCw className={`w-4 h-4 ${isAuditing ? "animate-spin" : ""}`} />
+            {isAuditing ? "Auditando..." : "Re-auditar"}
           </button>
           <button
             onClick={handleDiscoverKeywords}
