@@ -29,15 +29,17 @@ export function ArticleSchema({
     datePublished: publishedDate,
     dateModified: modifiedDate,
     author: {
-      "@type": "Person",
+      "@type": "Organization",
       name: authorName,
+      url: SITE_CONFIG.url,
     },
+    inLanguage: "es-ES",
     publisher: {
       "@type": "Organization",
       name: CLINIC_INFO.name,
       logo: {
         "@type": "ImageObject",
-        url: `${SITE_CONFIG.url}/logo.png`,
+        url: `${SITE_CONFIG.url}/images/Logos/Logo.png`,
       },
     },
     mainEntityOfPage: {

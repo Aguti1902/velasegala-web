@@ -206,6 +206,22 @@ EOF
 fi
 
 echo ""
+echo "🖼️  Asegurando tabla BlogImage (imágenes del blog)..."
+npx prisma db execute --stdin <<'EOFSQL' 2>&1 || echo "   ⚠️ No se pudo crear BlogImage"
+CREATE TABLE IF NOT EXISTS "BlogImage" (
+    "id" TEXT NOT NULL,
+    "filename" TEXT NOT NULL,
+    "mimeType" TEXT NOT NULL,
+    "data" BYTEA NOT NULL,
+    "alt" TEXT,
+    "size" INTEGER NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT "BlogImage_pkey" PRIMARY KEY ("id")
+);
+CREATE UNIQUE INDEX IF NOT EXISTS "BlogImage_filename_key" ON "BlogImage"("filename");
+EOFSQL
+
+echo ""
 echo "🌱 Ejecutando seed de base de datos..."
 npx prisma db seed || echo "   ⚠️ Seed falló o ya fue ejecutado (no crítico)"
 

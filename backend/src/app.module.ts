@@ -12,6 +12,7 @@ import { AppointmentsModule } from './appointments/appointments.module';
 import { AdminModule } from './admin/admin.module';
 import { AnalyticsModule } from './analytics/analytics.module';
 import { SeoModule } from './seo/seo.module';
+import { MediaModule } from './media/media.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { SeoModule } from './seo/seo.module';
     AdminModule,
     AnalyticsModule,
     SeoModule,
+    MediaModule,
   ],
 })
 export class AppModule {}

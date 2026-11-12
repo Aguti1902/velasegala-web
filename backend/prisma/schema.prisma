@@ -344,3 +344,15 @@ model SeoCompetitorRanking {
   @@index([keyword])
 }
 
+
+// ===== BLOG IMAGES (imágenes almacenadas en la BD, servidas por /api/media) =====
+
+model BlogImage {
+  id        String   @id @default(cuid())
+  filename  String   @unique // slug-legible.webp (se usa en la URL pública)
+  mimeType  String
+  data      Bytes
+  alt       String?
+  size      Int
+  createdAt DateTime @default(now())
+}

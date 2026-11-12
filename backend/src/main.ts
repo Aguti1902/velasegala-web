@@ -2,12 +2,17 @@ import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { AppModule } from './app.module';
 import helmet from 'helmet';
+import { NestExpressApplication } from '@nestjs/platform-express';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+
+  // Permitir payloads grandes (artículos largos + imágenes en base64)
+  app.useBodyParser('json', { limit: '12mb' });
 
   // Security
-  app.use(helmet());
+  // crossOriginResourcePolicy: las imágenes del blog se cargan desde el dominio del frontend
+  app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
 
   // CORS - Permitir frontend de Vercel, dominio propio y desarrollo local
   const allowedOrigins = [

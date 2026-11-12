@@ -11,6 +11,9 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { ArticleSchema } from "@/components/seo/ArticleSchema";
 import { FAQSchema } from "@/components/seo/FAQSchema";
+import { extractFaqs, relatedTreatment, absoluteUrl } from "@/lib/blog-seo";
+
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.velasegalaviladecans.com";
 
 interface Post {
   id: string;
@@ -22,6 +25,7 @@ interface Post {
   metaTitle: string | null;
   metaDescription: string | null;
   publishAt: string;
+  updatedAt?: string;
   categories: Array<{ id: string; name: string; slug: string }>;
   tags: Array<{ id: string; name: string; slug: string }>;
 }
@@ -142,18 +146,31 @@ export async function generateMetadata({
     };
   }
 
+  const image = absoluteUrl(post.featuredImage, SITE_URL);
+  const description = post.metaDescription || post.excerpt;
+
   return {
-    title: post.metaTitle || post.title,
-    description: post.metaDescription || post.excerpt,
+    title: { absolute: post.metaTitle || `${post.title} | Clínica Dental Vela-Segalà` },
+    description,
     alternates: {
       canonical: `/blog/${post.slug}`,
     },
     openGraph: {
-      title: post.title,
-      description: post.excerpt,
-      type: 'article',
+      title: post.metaTitle || post.title,
+      description,
+      type: "article",
+      url: `/blog/${post.slug}`,
       publishedTime: post.publishAt,
-      images: post.featuredImage ? [post.featuredImage] : [],
+      modifiedTime: post.updatedAt || post.publishAt,
+      section: post.categories[0]?.name,
+      tags: post.tags.map((t) => t.name),
+      images: image ? [{ url: image, width: 1536, height: 864, alt: post.title }] : [],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.metaTitle || post.title,
+      description,
+      images: image ? [image] : [],
     },
   };
 }
@@ -179,18 +196,21 @@ export default async function BlogPostPage({
     getAllCategories(),
   ]);
 
+  const faqs = extractFaqs(post.content);
+  const treatment = relatedTreatment(post);
+
   return (
     <>
       <ArticleSchema
         title={post.title}
-        description={post.excerpt || post.metaDescription || ""}
+        description={post.metaDescription || post.excerpt || ""}
         publishedDate={post.publishAt}
-        modifiedDate={post.publishAt}
-        authorName="Clínica Dental Vela-Segalà"
-        imageUrl={post.featuredImage || `${process.env.NEXT_PUBLIC_SITE_URL || 'https://velasegala-web-emc8.vercel.app'}/images/logo.png`}
+        modifiedDate={post.updatedAt || post.publishAt}
+        authorName="Equipo médico Clínica Dental Vela-Segalà"
+        imageUrl={absoluteUrl(post.featuredImage, SITE_URL) || `${SITE_URL}/images/equipo-dentistas-vela-segala-viladecans.jpg`}
         slug={post.slug}
       />
-      <FAQSchema faqs={[]} />
+      {faqs.length > 0 && <FAQSchema faqs={faqs} />}
 
       {/* Hero - Solo Breadcrumbs y Back Button */}
       <section className="pt-8 pb-4 bg-gradient-to-b from-white to-gray-50">
@@ -267,7 +287,7 @@ export default async function BlogPostPage({
               <div className="prose prose-slate prose-lg max-w-none">
                 <div className="prose-headings:font-bold prose-headings:text-black prose-p:text-slate-700 prose-p:leading-relaxed prose-a:text-black prose-a:font-bold prose-strong:text-black prose-ul:text-slate-700 prose-ol:text-slate-700 [&>h1:first-child]:hidden">
                   <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                    {post.content}
+                    {post.content.replace(/^\s*#\s[^\n]*\n/, "")}
                   </ReactMarkdown>
                 </div>
               </div>
@@ -290,6 +310,23 @@ export default async function BlogPostPage({
                       </Link>
                     ))}
                   </div>
+                </div>
+              )}
+
+              {/* Enlace interno al tratamiento relacionado */}
+              {treatment && (
+                <div className="mt-12 p-6 border-2 border-black rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                  <div>
+                    <p className="text-sm text-slate-500 mb-1">Tratamiento relacionado</p>
+                    <p className="text-lg font-bold text-black">{treatment.label}</p>
+                  </div>
+                  <Link
+                    href={treatment.href}
+                    className="inline-flex items-center gap-2 px-6 py-3 bg-black text-white rounded-xl font-bold hover:bg-gray-800 transition-colors"
+                  >
+                    Ver tratamiento
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
                 </div>
               )}
 
