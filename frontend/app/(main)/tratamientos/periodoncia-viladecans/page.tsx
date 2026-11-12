@@ -43,7 +43,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/tratamientos/periodoncia-viladecans',
   },
-  title: "Periodoncia en Viladecans | Tratamiento de Encías y Piorrea",
+  title: { absolute: "Periodoncia en Viladecans | Tratamiento de Encías y Piorrea" },
   description:
     "Periodoncia en Viladecans. Tratamiento de encías, gingivitis y periodontitis. Especialistas en salud periodontal. Primera visita gratuita.",
   keywords: [

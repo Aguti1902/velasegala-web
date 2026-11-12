@@ -42,7 +42,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/tratamientos/urgencias-dentales-viladecans',
   },
-  title: "Urgencias Dentales en Viladecans | Cita el Mismo Día",
+  title: { absolute: "Urgencias Dentales en Viladecans | Cita el Mismo Día" },
   description:
     "Urgencias dentales en Viladecans. Atendemos dolor de muelas, dientes rotos e infecciones. Cita el mismo día. Clínica Vela-Segalà, expertos en urgencias.",
   keywords: [

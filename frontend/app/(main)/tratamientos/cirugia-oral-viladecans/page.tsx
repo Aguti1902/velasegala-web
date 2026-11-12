@@ -42,7 +42,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/tratamientos/cirugia-oral-viladecans',
   },
-  title: "Cirugía Oral en Viladecans | Muelas del Juicio e Injertos",
+  title: { absolute: "Cirugía Oral en Viladecans | Muelas del Juicio e Injertos" },
   description:
     "Cirugía oral en Viladecans. Extracción muelas del juicio, injertos óseos y elevación de seno. Cirugía piezoeléctrica mínimamente invasiva. Vela-Segalà.",
   keywords: [

@@ -43,7 +43,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/tratamientos/ortodoncia-invisible-viladecans',
   },
-  title: "Ortodoncia en Viladecans | Invisible y Brackets | Vela-Segalà",
+  title: { absolute: "Ortodoncia en Viladecans | Invisible y Brackets | Vela-Segalà" },
   description:
     `Ortodoncia en Viladecans para adultos y niños. Ortodoncia invisible con Invisalign y Spark, y brackets tradicionales. Ortodoncistas certificados con +25 años de experiencia. Financiación sin intereses. Llama al ${CLINIC_INFO.phoneDisplay}`,
   keywords: [
