@@ -40,6 +40,17 @@ def req(method, path, body=None):
         return json.loads(resp.read())
 
 
+def calentar(url):
+    """Visita la página 2 veces para que Next.js (ISR) regenere la caché con los datos nuevos."""
+    import time
+    for _ in range(2):
+        try:
+            urllib.request.urlopen(url, timeout=30).read()
+        except Exception:
+            pass
+        time.sleep(3)
+
+
 def main():
     js = (ROOT / "frontend" / "blog-redirects.js").read_text()
     duplicados = set(re.findall(r"\['([^']+)',", js))
@@ -61,6 +72,7 @@ def main():
                 print("UPDATE  ", slug, list(cambios))
                 if not DRY:
                     req("PATCH", f"/webhooks/posts/{p['id']}", cambios)
+                    calentar(f"{SITE}/blog/{slug}")
     print("OK")
 
 
