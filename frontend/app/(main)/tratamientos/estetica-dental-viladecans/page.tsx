@@ -43,7 +43,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/tratamientos/estetica-dental-viladecans',
   },
-  title: "Estética Dental en Viladecans | Carillas y Diseño de Sonrisa",
+  title: { absolute: "Estética Dental en Viladecans | Carillas y Diseño de Sonrisa" },
   description:
     "Estética dental en Viladecans. Carillas de porcelana, diseño de sonrisa digital DSD y blanqueamiento. Especialistas con +25 años. Primera visita gratuita.",
   keywords: [

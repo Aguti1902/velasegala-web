@@ -43,7 +43,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/tratamientos/endodoncia-viladecans',
   },
-  title: "Endodoncia en Viladecans | Tratamiento de Conductos",
+  title: { absolute: "Endodoncia en Viladecans | Tratamiento de Conductos" },
   description:
     "Endodoncia en Viladecans. Tratamiento de conductos sin dolor con microscopio dental. Salva tus dientes con éxito superior al 95%. Primera visita gratuita.",
   keywords: [

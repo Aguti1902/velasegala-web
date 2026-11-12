@@ -43,7 +43,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/tratamientos/odontopediatria-viladecans',
   },
-  title: "Odontopediatría en Viladecans | Dentista para Niños",
+  title: { absolute: "Odontopediatría en Viladecans | Dentista para Niños" },
   description:
     "Odontopediatría en Viladecans. Dentista para niños y bebés. Ambiente adaptado, prevención de caries y técnicas gentiles. Primera visita gratuita.",
   keywords: [
