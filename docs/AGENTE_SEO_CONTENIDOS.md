@@ -100,8 +100,22 @@ funda dental precio
 
 ## Backlog de temas (volumen mensual en España, noviembre de 2026)
 
-Publicados en noviembre de 2026: dolor de muelas (qué tomar), muela del juicio infectada
-y funda dental (precio).
+**Ya publicados (no repetir):** dolor-de-muelas-que-tomar, muela-del-juicio-infectada,
+funda-dental-precio, endodoncia-que-es-precio, invisalign-precio, flemon-dental,
+carillas-dentales-precio, implantes-dentales-precio, implantes-dentales-sin-tornillos,
+periodontitis-piorrea-tratamiento, diastema-separacion-dientes, empaste-dental-precio,
+encias-retraidas-tratamiento, además de los 9 canónicos antiguos.
+
+**Prioridad alta (investigación de competencia, 12/11/2026):** blanqueamiento-dental-precio (4.400) ·
+alveolitis-seca (4.400) · sonrisa-gingival (2.900) · mordida-cruzada (2.900) ·
+limpieza-dental-precio (2.400) · composite-dental (1.900) · mal-aliento-causas (1.600) ·
+dientes-amarillos-causas (1.300) · puente-dental-precio (2.900; ojo, roza el de prótesis) ·
+ferula-de-descarga-precio (880; ojo, roza el de bruxismo).
+
+**Competencia:** las clínicas locales (Puigdemasa, Dental Pla, Dr. Gallegos, Baldrich) casi no
+tienen blog. Quien se lleva la demanda informativa es la cadena Abaden Dentistas, con artículos
+de precios comparando Vitaldent, Adeslas, Sanitas y Dentix (limpieza #1, piorrea #3, endodoncia
+precio #4, flemón #6). Estrategia: artículos de precio transparentes y de síntomas, mejores que los suyos.
 
 | Tema | Keyword principal | Vol. | Enlaza a |
 |---|---|---|---|
