@@ -6,29 +6,16 @@ const prisma = new PrismaClient();
 async function main() {
   console.log('🌱 Iniciando seed de la base de datos...');
 
-  // Actualizar fechas de posts con fechas futuras (sin borrar)
-  const updatedPosts = await prisma.post.updateMany({
-    where: {
-      publishStatus: PublishStatus.PUBLISHED,
-      publishAt: {
-        gt: new Date(),
-      },
-    },
-    data: {
-      publishAt: new Date('2024-11-01'),
-    },
-  });
-  console.log(`✅ Fechas actualizadas en ${updatedPosts.count} posts`);
+  // NOTA: antes aquí se movían a 2024-11-01 todos los posts con fecha futura en
+  // cada despliegue. Eso rompía la programación de artículos (publishAt a las 09:00),
+  // así que se ha eliminado.
 
   // Crear o actualizar usuario admin
   const hashedPassword = await bcrypt.hash('Admin123!', 10);
   const admin = await prisma.user.upsert({
     where: { email: 'admin@velasegala.com' },
-    update: {
-      password: hashedPassword,
-      name: 'Dr. Admin',
-      role: 'admin',
-    },
+    // No sobrescribir la contraseña en cada despliegue (solo se usa al crear el usuario)
+    update: {},
     create: {
       email: 'admin@velasegala.com',
       name: 'Dr. Admin',
