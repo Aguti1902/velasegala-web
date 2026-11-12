@@ -4,19 +4,19 @@ Este documento es el **manual de trabajo** de la tarea programada que cada seman
 publica 3 artículos en el blog y envía un informe SEO de www.velasegalaviladecans.com.
 Sustituye al antiguo flujo de n8n, que dejó de funcionar en abril de 2026.
 
-## Calendario
+## Arquitectura: 3 agentes programados
 
-| Cuándo | Qué |
-|---|---|
-| Jueves por la tarde (tarea programada) | Investigación de keywords, redacción de 3 artículos, imágenes, programación e informe por email |
-| Viernes 09:00 | Se publica el artículo 1 |
-| Lunes 09:00 | Se publica el artículo 2 |
-| Miércoles 09:00 | Se publica el artículo 3 |
+| Agente | Cuándo se ejecuta | Qué hace |
+|---|---|---|
+| **1. Contenidos** | Lunes y jueves, 18:43 | Mantiene siempre **al menos 3 artículos programados** en el calendario lunes/miércoles/viernes a las 09:00. Investiga keywords, redacta, genera imágenes y programa. Al ejecutarse dos veces por semana, si una ejecución falla la siguiente recupera el hueco. |
+| **2. Informe SEO semanal** | Lunes, 10:17 | Posiciones de las keywords de seguimiento, visibilidad, tráfico (Search Console si está conectado), artículos publicados, estado técnico y de 3 a 5 tareas priorizadas. Lo envía por email. |
+| **3. Auditoría mensual** | Día 2 de cada mes, 10:37 | Auditoría técnica (`audit_site`), análisis de competencia y gap de keywords, revisión de los artículos que pierden posiciones (propone o hace un *refresh*) y actualización del backlog de temas. Lo envía por email. |
 
-Los artículos se crean con `publishStatus: published` y `publishAt` a las 09:00 de
-Madrid. **La hora va en UTC**: 08:00Z en horario de invierno (CET, de finales de
-octubre a finales de marzo) y 07:00Z en horario de verano (CEST). La API pública solo
-muestra artículos cuya fecha ya ha llegado, así que aparecen solos en el blog y en el sitemap.
+Publicación: los artículos se crean con `publishStatus: published` y `publishAt` a las 09:00 de
+Madrid. **La hora va en UTC**: 08:00Z en horario de invierno (CET, de finales de octubre a
+finales de marzo) y 07:00Z en horario de verano (CEST). La API pública solo muestra
+artículos cuya fecha ya ha llegado, así que aparecen solos en el blog y en el sitemap
+(el listado tarda como mucho 5 minutos por la caché).
 
 ## Contexto del sitio (noviembre de 2026)
 
@@ -59,7 +59,7 @@ muestra artículos cuya fecha ya ha llegado, así que aparecen solos en el blog 
    `gpt_image_2_6`, 0,25 créditos). Usa `scripts/descargar_imagen.py` y súbela con
    `scripts/publicar_articulo.py`, que la guarda en la BD y la sirve en `/media/<slug>.webp`.
 
-## Rutina semanal paso a paso
+## Rutina del agente de contenidos paso a paso
 
 1. `git pull` y lee este documento.
 2. **Datos:** con OpenRush (ubicación Spain, idioma Spanish):
@@ -71,14 +71,24 @@ muestra artículos cuya fecha ya ha llegado, así que aparecen solos en el blog 
 3. **Elige 3 temas**, con volumen y dificultad razonables, sin repetir temas ni canibalizar.
    Si es posible, mezcla 1 de urgencia o síntoma, 1 de precio o comparativa y 1 de prevención.
 4. Redacta los 3 artículos y genera las 3 imágenes.
-5. Publica con `python3 -I scripts/publicar_articulo.py art.json imagen.webp`, con fechas
-   viernes, lunes y miércoles a las 09:00 Madrid.
+5. Publica con `python3 -I scripts/publicar_articulo.py art.json imagen.webp` en los
+   siguientes huecos libres lunes/miércoles/viernes a las 09:00 Madrid, después del último
+   artículo ya programado. El script sube la imagen y "calienta" la caché de la página.
 6. **Comprobaciones técnicas** (con curl): la home, `/blog`, `/sitemap.xml`, `robots.txt`
    y una página de tratamiento devuelven 200; los artículos programados la semana anterior
    aparecen en `/blog` y en el sitemap; sus imágenes cargan.
 7. Si los duplicados siguen publicados, ejecuta `python3 -I scripts/blog_consolidacion.py`
    (es idempotente).
-8. **Informe por email** (ver la plantilla). Ni commits ni PRs, salvo que se pida.
+8. Resumen final en la sesión (el informe completo lo envía el agente 2). Ni commits ni PRs, salvo que se pida.
+
+## Rutina del agente de auditoría mensual
+
+1. `audit_site` de www.velasegalaviladecans.com y lista de problemas técnicos priorizados.
+2. `compare_keyword_coverage` contra 3 a 5 competidores locales: keywords que ellos tienen y nosotros no.
+3. `inspect_page` de los artículos con más de 60 días: si un artículo tiene impresiones pero
+   posición entre 8 y 30, haz un *refresh*. Amplía secciones, añade FAQs y enlaces internos, y
+   actualízalo con `PATCH /api/webhooks/posts/:id`. Como máximo 2 por mes.
+4. Propón 10 temas nuevos para el backlog y envía el informe mensual por email.
 
 ## Keywords de seguimiento
 
@@ -90,8 +100,22 @@ funda dental precio
 
 ## Backlog de temas (volumen mensual en España, noviembre de 2026)
 
-Publicados en noviembre de 2026: dolor de muelas (qué tomar), muela del juicio infectada
-y funda dental (precio).
+**Ya publicados (no repetir):** dolor-de-muelas-que-tomar, muela-del-juicio-infectada,
+funda-dental-precio, endodoncia-que-es-precio, invisalign-precio, flemon-dental,
+carillas-dentales-precio, implantes-dentales-precio, implantes-dentales-sin-tornillos,
+periodontitis-piorrea-tratamiento, diastema-separacion-dientes, empaste-dental-precio,
+encias-retraidas-tratamiento, además de los 9 canónicos antiguos.
+
+**Prioridad alta (investigación de competencia, 12/11/2026):** blanqueamiento-dental-precio (4.400) ·
+alveolitis-seca (4.400) · sonrisa-gingival (2.900) · mordida-cruzada (2.900) ·
+limpieza-dental-precio (2.400) · composite-dental (1.900) · mal-aliento-causas (1.600) ·
+dientes-amarillos-causas (1.300) · puente-dental-precio (2.900; ojo, roza el de prótesis) ·
+ferula-de-descarga-precio (880; ojo, roza el de bruxismo).
+
+**Competencia:** las clínicas locales (Puigdemasa, Dental Pla, Dr. Gallegos, Baldrich) casi no
+tienen blog. Quien se lleva la demanda informativa es la cadena Abaden Dentistas, con artículos
+de precios comparando Vitaldent, Adeslas, Sanitas y Dentix (limpieza #1, piorrea #3, endodoncia
+precio #4, flemón #6). Estrategia: artículos de precio transparentes y de síntomas, mejores que los suyos.
 
 | Tema | Keyword principal | Vol. | Enlaza a |
 |---|---|---|---|

@@ -35,6 +35,18 @@ def req(method, path, body):
         sys.exit(f"HTTP {e.code} en {path}: {e.read().decode()[:500]}")
 
 
+def calentar(url, veces=2):
+    """Next.js (ISR) sirve la copia en caché en la 1ª visita y regenera en segundo plano.
+    Visitar la página justo después de publicar/actualizar evita que el público vea datos viejos."""
+    import time
+    for _ in range(veces):
+        try:
+            urllib.request.urlopen(url, timeout=30).read()
+        except Exception:
+            pass
+        time.sleep(3)
+
+
 def main():
     art = json.load(open(sys.argv[1]))
     for k in ("title", "slug", "content", "excerpt", "metaTitle", "metaDescription", "publishAt"):
@@ -57,7 +69,10 @@ def main():
     art.setdefault("publishStatus", "published")
     post = req("POST", "/webhooks/n8n/blog-post", art)
     print("Artículo creado:", post["id"], post["slug"], post["publishStatus"], post["publishAt"])
-    print("URL:", f"{SITE}/blog/{post['slug']}")
+    url = f"{SITE}/blog/{post['slug']}"
+    calentar(url)
+    calentar(f"{SITE}/blog")
+    print("URL:", url)
 
 
 if __name__ == "__main__":
