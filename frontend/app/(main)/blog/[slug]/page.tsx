@@ -287,7 +287,7 @@ export default async function BlogPostPage({
               <div className="prose prose-slate prose-lg max-w-none">
                 <div className="prose-headings:font-bold prose-headings:text-black prose-p:text-slate-700 prose-p:leading-relaxed prose-a:text-black prose-a:font-bold prose-strong:text-black prose-ul:text-slate-700 prose-ol:text-slate-700 [&>h1:first-child]:hidden">
                   <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                    {post.content}
+                    {post.content.replace(/^\s*#\s[^\n]*\n/, "")}
                   </ReactMarkdown>
                 </div>
               </div>
