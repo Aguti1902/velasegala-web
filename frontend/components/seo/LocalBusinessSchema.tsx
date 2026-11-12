@@ -9,8 +9,8 @@ export function LocalBusinessSchema() {
     legalName: CLINIC_INFO.legalName,
     description:
       "Clínica dental en Viladecans especializada en implantes dentales, ortodoncia invisible, estética dental, blanqueamiento, odontopediatría y más. Primera visita gratuita.",
-    image: `${SITE_CONFIG.url}/images/clinica-exterior.jpg`,
-    logo: `${SITE_CONFIG.url}/logo.png`,
+    image: `${SITE_CONFIG.url}/images/instalaciones-vela-segala.webp`,
+    logo: `${SITE_CONFIG.url}/images/Logos/Logo.png`,
     url: SITE_CONFIG.url,
     telephone: CLINIC_INFO.phone,
     email: CLINIC_INFO.email,

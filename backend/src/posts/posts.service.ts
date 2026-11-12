@@ -172,9 +172,11 @@ export class PostsService {
     return post;
   }
 
-  async findBySlug(slug: string) {
-    const post = await this.prisma.post.findUnique({
-      where: { slug },
+  async findBySlug(slug: string, onlyPublished = false) {
+    const post = await this.prisma.post.findFirst({
+      where: onlyPublished
+        ? { slug, publishStatus: PublishStatus.PUBLISHED, publishAt: { lte: new Date() } }
+        : { slug },
       include: {
         categories: true,
         tags: true,
@@ -363,7 +365,7 @@ export class PostsService {
     }
 
     // Auto-generar slug si no se proporciona
-    let postSlug = slug || this.slugify(title);
+    let postSlug = this.slugify(slug || title);
 
     // Verificar si el slug ya existe y hacer único
     let slugExists = await this.prisma.post.findUnique({
@@ -404,10 +406,13 @@ export class PostsService {
   private slugify(text: string): string {
     return text
       .toString()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '') // quitar acentos (á -> a, ñ -> n)
       .toLowerCase()
       .trim()
       .replace(/\s+/g, '-')
-      .replace(/[^\w\-]+/g, '')
-      .replace(/\-\-+/g, '-');
+      .replace(/[^a-z0-9\-]+/g, '')
+      .replace(/\-\-+/g, '-')
+      .replace(/^-+|-+$/g, '');
   }
 }

@@ -108,8 +108,10 @@ export class PostsController {
   }
 
   @Get('slug/:slug')
-  findBySlug(@Param('slug') slug: string) {
-    return this.postsService.findBySlug(slug);
+  findBySlug(@Param('slug') slug: string, @Query('preview') preview?: string) {
+    // La web pública solo ve artículos publicados cuya fecha ya ha llegado
+    // (permite programar artículos a las 9:00). ?preview=1 para el admin.
+    return this.postsService.findBySlug(slug, preview !== '1');
   }
 
   @Patch(':id')
