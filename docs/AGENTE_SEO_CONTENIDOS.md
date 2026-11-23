@@ -104,11 +104,10 @@ funda dental precio
 funda-dental-precio, endodoncia-que-es-precio, invisalign-precio, flemon-dental,
 carillas-dentales-precio, implantes-dentales-precio, implantes-dentales-sin-tornillos,
 periodontitis-piorrea-tratamiento, diastema-separacion-dientes, empaste-dental-precio,
-encias-retraidas-tratamiento, blanqueamiento-dental-precio (20/11), alveolitis-seca (23/11), sonrisa-gingival (25/11),
+encias-retraidas-tratamiento, blanqueamiento-dental-precio (20/11), alveolitis-seca (23/11), sonrisa-gingival (25/11), mordida-cruzada (27/11), limpieza-dental-precio (30/11),
 además de los 9 canónicos antiguos.
 
-**Prioridad alta (investigación de competencia, 12/11/2026):** mordida-cruzada (2.900) ·
-limpieza-dental-precio (2.400) · composite-dental (1.900) · mal-aliento-causas (1.600) ·
+**Prioridad alta (investigación de competencia, 12/11/2026):** composite-dental (1.900) · mal-aliento-causas (1.600) ·
 dientes-amarillos-causas (1.300) · puente-dental-precio (2.900; ojo, roza el de prótesis) ·
 ferula-de-descarga-precio (880; ojo, roza el de bruxismo).
 
