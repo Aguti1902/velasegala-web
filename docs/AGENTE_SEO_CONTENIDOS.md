@@ -55,7 +55,8 @@ artículos cuya fecha ya ha llegado, así que aparecen solos en el blog y en el 
    en minúsculas, sin acentos y sin números de versión.
 6. Categorías existentes: Salud Bucodental, Tratamientos, Higiene Dental, Ortodoncia,
    Estética Dental, Prevención, Urgencias Dentales, Cirugía Oral. Pon de 2 a 4 tags.
-7. Imagen: fotografía editorial realista en 16:9, sin texto ni logos (Higgsfield
+7. Imagen (si Higgsfield no tiene créditos, usa una foto real de la clínica de
+   `frontend/public/images/` adaptada a 16:9, sin pacientes identificables): fotografía editorial realista en 16:9, sin texto ni logos (Higgsfield
    `gpt_image_2_6`, 0,25 créditos). Usa `scripts/descargar_imagen.py` y súbela con
    `scripts/publicar_articulo.py`, que la guarda en la BD y la sirve en `/media/<slug>.webp`.
 
@@ -104,10 +105,10 @@ funda dental precio
 funda-dental-precio, endodoncia-que-es-precio, invisalign-precio, flemon-dental,
 carillas-dentales-precio, implantes-dentales-precio, implantes-dentales-sin-tornillos,
 periodontitis-piorrea-tratamiento, diastema-separacion-dientes, empaste-dental-precio,
-encias-retraidas-tratamiento, blanqueamiento-dental-precio (20/11), alveolitis-seca (23/11), sonrisa-gingival (25/11), mordida-cruzada (27/11), limpieza-dental-precio (30/11),
+encias-retraidas-tratamiento, blanqueamiento-dental-precio (20/11), alveolitis-seca (23/11), sonrisa-gingival (25/11), mordida-cruzada (27/11), limpieza-dental-precio (30/11), composite-dental (02/12),
 además de los 9 canónicos antiguos.
 
-**Prioridad alta (investigación de competencia, 12/11/2026):** composite-dental (1.900) · mal-aliento-causas (1.600) ·
+**Prioridad alta (investigación de competencia, 12/11/2026):** mal-aliento-causas (1.600) ·
 dientes-amarillos-causas (1.300) · puente-dental-precio (2.900; ojo, roza el de prótesis) ·
 ferula-de-descarga-precio (880; ojo, roza el de bruxismo).
 
